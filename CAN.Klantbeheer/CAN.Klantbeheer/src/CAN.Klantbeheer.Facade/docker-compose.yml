@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  case3.facade:
+    image: user/case3.facade${TAG}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80"
