@@ -59,11 +59,22 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: var(--app-primary-color);
       }
 
-      .logo {
+
+      .logo{
+          margin-right:auto;
+          max-width:150px;
+          margin-top:10px;
+      }
+
+      .logo img {
+           max-height:40px;
+      }
+
+      .headertext {
         text-align: center;
       }
 
-      .logo a {
+      .headertext a {
         font-size: 16px;
         font-weight: 600;
         letter-spacing: 0.3em;
@@ -263,14 +274,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-icon-button icon="arrow-back" aria-label="Go back"></paper-icon-button>
           </a>
         </div>
-        <div class="logo" main-title><a href="/" aria-label="SHOP Home">Kantilever Fietsenwinkel</a></div>
-        <div class="cart-btn-container">
-          <a href="/cart" tabindex="-1">
-            <paper-icon-button icon="shopping-cart" aria-label$="Shopping cart: [[_computePluralizedQuantity(numItems)]]"></paper-icon-button>
-          </a>
-          <div class="cart-badge" aria-hidden="true" hidden$="[[!numItems]]">[[numItems]]</div>
-        </div>
-      </app-toolbar>
+              <div class="headertext" main-title>
+                  <a href="/" aria-label="SHOP Home">Kantilever Fietsenwinkel</a>
+              </div>
+              <div class="cart-btn-container">
+                  <a href="/cart" tabindex="-1">
+                      <paper-icon-button icon="shopping-cart" aria-label$="Shopping cart: [[_computePluralizedQuantity(numItems)]]"></paper-icon-button>
+                  </a>
+                  <div class="cart-badge" aria-hidden="true" hidden$="[[!numItems]]">[[numItems]]</div>
+              </div>
+</app-toolbar>
 
       <!-- Lazy-create the tabs for larger screen sizes. -->
       <div id="tabContainer" sticky$="[[_shouldShowTabs]]" hidden$="[[!_shouldShowTabs]]">
