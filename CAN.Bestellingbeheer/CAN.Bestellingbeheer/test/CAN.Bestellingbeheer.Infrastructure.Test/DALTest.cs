@@ -46,7 +46,10 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                 {
                     Artikelen = new List<Artikel>
                     {
-                        new Artikel { Prijs = 2.50M }
+                        new Artikel
+                        {
+                            Prijs = 2.50M
+                        }
                     }
                 });
             }
@@ -67,7 +70,8 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                 {
                     Artikelen = new List<Artikel>
                     {
-                        new Artikel {
+                        new Artikel
+                        {
                             Prijs = 2.50M,
                             Naam = "Artikel 1",
                             Aantal = 5
@@ -92,7 +96,8 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                 {
                     Artikelen = new List<Artikel>
                     {
-                        new Artikel {
+                        new Artikel
+                        {
                             Prijs = 2.50M
                         }
                     }
@@ -115,7 +120,8 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                 {
                     Artikelen = new List<Artikel>
                     {
-                        new Artikel {
+                        new Artikel
+                        {
                             Prijs = 2.50M
                         }
                     }
@@ -125,7 +131,8 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                 {
                     Artikelen = new List<Artikel>
                     {
-                        new Artikel {
+                        new Artikel
+                        {
                             Prijs = 3.50M
                         }
                     }
@@ -147,7 +154,8 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                 {
                     Artikelen = new List<Artikel>
                     {
-                        new Artikel {
+                        new Artikel
+                        {
                             Prijs = 2.50M,
                             Naam = "Artikel 1",
                             Aantal = 5
