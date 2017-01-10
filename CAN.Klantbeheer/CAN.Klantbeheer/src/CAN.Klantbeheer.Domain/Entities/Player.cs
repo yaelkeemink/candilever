@@ -1,8 +1,8 @@
 ﻿namespace CAN.Klantbeheer.Domain.Domain.Entities
 {
-    public class Player
+    public class Klant
     {
-        public int Id { get; set; }
+        public long Klantnummer { get; set; }
 
         public string Name { get; set; }
     }
