@@ -8,9 +8,8 @@ services:
       RABBITMQ_DEFAULT_USER: Kantilever
       RABBITMQ_DEFAULT_PASS: Kant1lever
     ports:
-      - 5700:5672
-      - 12345:15672
-      - 8080:8080
+      - 11999:5672
+      - 11998:15672
     networks: 
       - can_main_network
 
