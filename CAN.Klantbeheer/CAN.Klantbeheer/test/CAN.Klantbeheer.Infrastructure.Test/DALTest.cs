@@ -46,7 +46,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
             {
                 repo.Insert(new Klant()
                 {
-                    Name = "Naam"
+                    Voornaam = "Naam"
                 });
             }
 
@@ -64,7 +64,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
             {
                 repo.Insert(new Klant()
                 {
-                    Name = "Name"
+                    Voornaam = "Name"
                 });
             }
 
@@ -72,7 +72,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
             {
                 var result = repo.Find(1);
                 Assert.AreEqual(1, result.Klantnummer);
-                Assert.AreEqual("Name", result.Name);
+                Assert.AreEqual("Name", result.Voornaam);
             }
         }
         [TestMethod]
@@ -82,7 +82,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
             {
                 var player = new Klant()
                 {
-                    Name = "Name"
+                    Voornaam = "Name"
                 };
                 repo.Insert(player);
                 repo.Delete(1);
@@ -100,12 +100,12 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
             {
                 var player = new Klant()
                 {
-                    Name = "Entity"
+                    Voornaam = "Entity"
                 };
                 repo.Insert(player);
                 player = new Klant()
                 {
-                    Name = "Name"
+                    Voornaam = "Name"
                 };
                 repo.Insert(player);
             }
@@ -122,11 +122,11 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
             {
                 var player = new Klant()
                 {
-                    Name = "Entity"
+                    Voornaam = "Entity"
                 };
                 repo.Insert(player);
                 player = repo.Find(1);
-                player.Name = "UpdatedName";
+                player.Voornaam = "UpdatedName";
                 repo.Update(player);
             }
 
@@ -134,7 +134,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
             {
                 var player = repo.Find(1);
                 Assert.AreEqual(1, player.Klantnummer);
-                Assert.AreEqual("UpdatedName", player.Name);
+                Assert.AreEqual("UpdatedName", player.Voornaam);
             }
         }
     }

@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  case3.facade:
+  can.klantbeheer.facade:
     build:
       args:
         source: obj/Docker/empty/
