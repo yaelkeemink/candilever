@@ -5,8 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.Swagger.Model;
 using Microsoft.EntityFrameworkCore;
-using Minor.WSA.Commons;
-using Minor.WSA.EventBus.Publisher;
 using Serilog;
 using CAN.Bestellingbeheer.Infrastructure.DAL;
 using CAN.Bestellingbeheer.Domain.Domain.Entities;
@@ -47,11 +45,7 @@ namespace CAN.Bestellingbeheer.Facade.Facade
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=db;Database=GameServer;UserID=sa,Password=admin"));
-            services.AddScoped<IRepository<Player, long>, PlayerRepository>();
-            services.AddScoped<IEventPublisher, EventPublisher>(config => {
-                System.Console.WriteLine("Ding aanmaken");
-                return new EventPublisher(null);
-                });
+            services.AddScoped<IRepository<Player, long>, PlayerRepository>();            
 
             services.ConfigureSwaggerGen(options =>
             {
