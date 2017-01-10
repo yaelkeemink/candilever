@@ -1,5 +1,5 @@
 ﻿
-namespace CAN.Klantbeheer.Facade.Facade.Errors
+namespace CAN.Klantbeheer.Facade.Errors
 {
     internal class ErrorMessage
     {

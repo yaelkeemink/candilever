@@ -1,4 +1,4 @@
-﻿using CAN.Klantbeheer.Domain.Domain.Entities;
+﻿using CAN.Klantbeheer.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CAN.Klantbeheer.Infrastructure.DAL

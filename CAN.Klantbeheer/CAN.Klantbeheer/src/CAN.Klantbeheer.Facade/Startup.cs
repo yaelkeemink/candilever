@@ -9,11 +9,11 @@ using Minor.WSA.Commons;
 using Minor.WSA.EventBus.Publisher;
 using Serilog;
 using CAN.Klantbeheer.Infrastructure.DAL;
-using CAN.Klantbeheer.Domain.Domain.Interfaces;
-using CAN.Klantbeheer.Infrastructure.Infrastructure.Repositories;
-using CAN.Klantbeheer.Domain.Domain.Entities;
+using CAN.Klantbeheer.Domain.Interfaces;
+using CAN.Klantbeheer.Infrastructure.Repositories;
+using CAN.Klantbeheer.Domain.Entities;
 
-namespace CAN.Klantbeheer.Facade.Facade
+namespace CAN.Klantbeheer.Facade
 {
     public class Startup
     {

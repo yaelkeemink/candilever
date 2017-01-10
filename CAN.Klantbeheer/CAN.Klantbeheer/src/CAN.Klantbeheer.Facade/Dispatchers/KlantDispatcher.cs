@@ -1,7 +1,7 @@
 ﻿using Minor.WSA.EventBus.Dispatcher;
 using Minor.WSA.EventBus.Config;
 
-namespace CAN.Klantbeheer.Facade.Facade.Dispatchers 
+namespace CAN.Klantbeheer.Facade.Dispatchers 
 {
     [RoutingKey("#")]
     public class PlayerDispatcher : EventDispatcher 

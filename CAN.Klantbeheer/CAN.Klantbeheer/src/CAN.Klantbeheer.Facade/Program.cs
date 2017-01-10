@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 
-namespace CAN.Klantbeheer.Facade.Facade
+namespace CAN.Klantbeheer.Facade
 {
     public class Program
     {

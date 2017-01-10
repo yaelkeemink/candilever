@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.SwaggerGen.Annotations;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
-using CAN.Klantbeheer.Domain.Domain.Entities;
-using CAN.Klantbeheer.Facade.Facade.Errors;
-using CAN.Klantbeheer.Domain.Domain.Services;
+using CAN.Klantbeheer.Domain.Entities;
+using CAN.Klantbeheer.Facade.Errors;
+using CAN.Klantbeheer.Domain.Services;
 
-namespace CAN.Klantbeheer.Facade.Facade.Controllers
+namespace CAN.Klantbeheer.Facade.Controllers
 {
     [Route("api/[controller]")]
     public class KlantController : Controller
@@ -33,7 +33,7 @@ namespace CAN.Klantbeheer.Facade.Facade.Controllers
             }
                 try
                 {
-                    var room = _service.CreatePlayer(klant);
+                    var room = _service.CreateKlant(klant);
                     return Ok(room);
                 }
                 catch (Exception ex)
@@ -60,7 +60,7 @@ namespace CAN.Klantbeheer.Facade.Facade.Controllers
             }
             try
             {
-                var room = _service.UpdatePlayer(klant);
+                var room = _service.UpdateKlant(klant);
                 return Ok(room);
             }
             catch (DbUpdateException ex)

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CAN.Klantbeheer.Domain.Domain.Entities
+namespace CAN.Klantbeheer.Domain.Entities
 {
     public class Klant
     {
