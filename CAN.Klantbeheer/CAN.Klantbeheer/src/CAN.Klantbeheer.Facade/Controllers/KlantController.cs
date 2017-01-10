@@ -10,11 +10,11 @@ using CAN.Klantbeheer.Domain.Domain.Services;
 namespace CAN.Klantbeheer.Facade.Facade.Controllers
 {
     [Route("api/[controller]")]
-    public class PlayerController : Controller
+    public class KlantController : Controller
     {
         private readonly PlayerService _service;
 
-        public PlayerController(PlayerService service)
+        public KlantController(PlayerService service)
         {
             _service = service;
         }

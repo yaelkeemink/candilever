@@ -6,5 +6,39 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      dbconnectionstring: Server=can_klantbeheer_mssql;Database=CAN_Klantbeheer;User Id=sa;Password=P@55w0rd;
+      rabbitmq-exchange: KantileverBus
+      rabbitmq-queue: ReplayService
+      rabbitmq-host: can-kantilever-eventbus
+      rabbitmq-username: Kantilever
+      rabbitmq-password: Kant1lever
+      rabbitmq-port: 11998
+      logpath: /var/log/Kantilever/KlantbeheerLogging/
     ports:
-      - "80"
+      - 11400:80
+    networks:
+      - can_klantbeheer_network
+      - can_main_network
+    volumes:
+      - "C:/Docker/.KlantbeheerData/Log:/var/log/Kantilever/KlantbeheerLogging/"
+
+  can.klantbeheer.mssql:
+    image: microsoft/mssql-server-linux
+    container_name: can_klantbeheer_mssql
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: P@55w0rd
+    networks:
+      - can_klantbeheer_network
+    ports:
+      - 11410:1433
+    volumes:
+      - "C:/Docker/.OnderhoudsbeheerData/db:/var/opt/mssql/"
+
+
+networks:
+  can_main_network: 
+    external:
+      name: can_main_network
+  can_klantbeheer_network:
