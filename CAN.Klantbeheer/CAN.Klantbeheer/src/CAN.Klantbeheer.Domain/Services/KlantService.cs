@@ -1,6 +1,7 @@
 ﻿using CAN.Klantbeheer.Domain.Entities;
 using CAN.Klantbeheer.Domain.Interfaces;
 using System;
+using inf
 
 namespace CAN.Klantbeheer.Domain.Services {
     public class KlantService : IDisposable
@@ -14,7 +15,12 @@ namespace CAN.Klantbeheer.Domain.Services {
 
         public int CreateKlant(Klant klant)
         {
-            return _repository.Insert(klant);
+            int toReturn = _repository.Insert(klant);
+            using (var publisher = new EventPublisher(busOptions))
+            {
+                publisher.Publish(new AutoKlaargemeld());
+            }
+            return toReturn;
         }
         public int UpdateKlant(Klant klant)
         {

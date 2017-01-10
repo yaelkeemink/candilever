@@ -7,7 +7,9 @@
   "dependencies": {
     "Microsoft.NETCore.App": {
       "type": "platform",
-      "version": "1.0.1"
+      "version": "1.0.1",
+      "InfoSupport.WSA.InfraStructure": "1.7.0",
+      "InfoSupport.WSA.Common": "1.7.0"
     }
   },
 
