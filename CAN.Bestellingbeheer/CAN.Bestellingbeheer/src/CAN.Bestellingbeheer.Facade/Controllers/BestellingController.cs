@@ -3,11 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.SwaggerGen.Annotations;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
-using CAN.Bestellingbeheer.Domain.Domain.Services;
-using CAN.Bestellingbeheer.Facade.Facade.Errors;
-using CAN.Bestellingbeheer.Domain.Domain.Entities;
+using CAN.Bestellingbeheer.Domain.Services;
+using CAN.Bestellingbeheer.Domain.Entities;
+using CAN.Bestellingbeheer.Facade.Errors;
 
-namespace CAN.Bestellingbeheer.Facade.Facade.Controllers
+namespace CAN.Bestellingbeheer.Facade.Controllers
 {
     [Route("api/[controller]")]
     public class BestellingController : Controller

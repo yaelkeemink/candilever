@@ -7,9 +7,9 @@ using Swashbuckle.Swagger.Model;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using CAN.Bestellingbeheer.Infrastructure.DAL;
-using CAN.Bestellingbeheer.Domain.Domain.Entities;
-using CAN.Bestellingbeheer.Domain.Domain.Interfaces;
-using CAN.Bestellingbeheer.Infrastructure.Infrastructure.Repositories;
+using CAN.Bestellingbeheer.Domain.Interfaces;
+using CAN.Bestellingbeheer.Domain.Entities;
+using CAN.Bestellingbeheer.Infrastructure.Repositories;
 
 namespace CAN.Bestellingbeheer.Facade.Facade
 {

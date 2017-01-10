@@ -1,7 +1,6 @@
-﻿using CAN.Bestellingbeheer.Domain.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace CAN.Bestellingbeheer.Domain.Domain.Entities
+namespace CAN.Bestellingbeheer.Domain.Entities
 {
     public class Bestelling
     {

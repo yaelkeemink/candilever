@@ -1,8 +1,8 @@
-﻿using CAN.Bestellingbeheer.Domain.Domain.Entities;
-using CAN.Bestellingbeheer.Domain.Domain.Interfaces;
+﻿using CAN.Bestellingbeheer.Domain.Entities;
+using CAN.Bestellingbeheer.Domain.Interfaces;
 using System;
 
-namespace CAN.Bestellingbeheer.Domain.Domain.Services {
+namespace CAN.Bestellingbeheer.Domain.Services {
     public class BestellingService : IDisposable
     {
         private readonly IRepository<Bestelling, long> _repository;

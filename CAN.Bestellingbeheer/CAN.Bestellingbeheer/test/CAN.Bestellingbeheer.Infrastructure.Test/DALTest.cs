@@ -1,17 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using CAN.Bestellingbeheer.Domain.Domain.Entities;
 using CAN.Bestellingbeheer.Infrastructure.DAL;
-using CAN.Bestellingbeheer.Infrastructure.Infrastructure.Repositories;
-using System.Collections;
 using CAN.Bestellingbeheer.Domain.Entities;
+using CAN.Bestellingbeheer.Infrastructure.Repositories;
 
-namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
+namespace CAN.Bestellingbeheer.Infrastructure.Test
 {
     [TestClass]
     public class DALTest

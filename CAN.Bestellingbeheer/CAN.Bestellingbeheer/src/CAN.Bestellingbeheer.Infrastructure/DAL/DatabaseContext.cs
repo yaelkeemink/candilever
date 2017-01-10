@@ -1,5 +1,4 @@
-﻿using CAN.Bestellingbeheer.Domain.Domain.Entities;
-using CAN.Bestellingbeheer.Domain.Entities;
+﻿using CAN.Bestellingbeheer.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CAN.Bestellingbeheer.Infrastructure.DAL

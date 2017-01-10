@@ -1,10 +1,10 @@
-﻿using CAN.Bestellingbeheer.Domain.Domain.Entities;
+﻿using CAN.Bestellingbeheer.Domain.Entities;
 using CAN.Bestellingbeheer.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CAN.Bestellingbeheer.Infrastructure.Infrastructure.Repositories
+namespace CAN.Bestellingbeheer.Infrastructure.Repositories
 {
     public class BestellingRepository
         : BaseRepository<Bestelling, long, DatabaseContext>
