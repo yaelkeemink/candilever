@@ -1,4 +1,5 @@
 ﻿using CAN.Bestellingbeheer.Domain.Domain.Entities;
+using CAN.Bestellingbeheer.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CAN.Bestellingbeheer.Infrastructure.DAL
@@ -6,6 +7,8 @@ namespace CAN.Bestellingbeheer.Infrastructure.DAL
     public class DatabaseContext : DbContext
     {
         public virtual DbSet<Bestelling> Bestellingen { get; set; }
+
+        public virtual DbSet<Artikel> Artikelen { get; set; }
 
         public DatabaseContext()
         {

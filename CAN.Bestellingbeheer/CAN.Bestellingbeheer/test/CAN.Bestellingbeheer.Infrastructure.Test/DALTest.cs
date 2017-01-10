@@ -8,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using CAN.Bestellingbeheer.Domain.Domain.Entities;
 using CAN.Bestellingbeheer.Infrastructure.DAL;
 using CAN.Bestellingbeheer.Infrastructure.Infrastructure.Repositories;
+using System.Collections;
+using CAN.Bestellingbeheer.Domain.Entities;
 
 namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
 {
@@ -46,7 +48,10 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
             {
                 repo.Insert(new Bestelling()
                 {
-                    Name = "Naam"
+                    Artikelen = new List<Artikel>
+                    {
+                        new Artikel { Prijs = 2.50M }
+                    }
                 });
             }
 
@@ -64,7 +69,10 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
             {
                 repo.Insert(new Bestelling()
                 {
-                    Name = "Name"
+                    Artikelen = new List<Artikel>
+                    {
+                        new Artikel { Prijs = 2.50M }
+                    }
                 });
             }
 
@@ -72,7 +80,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
             {
                 var result = repo.Find(1);
                 Assert.AreEqual(1, result.Id);
-                Assert.AreEqual("Name", result.Name);
+                Assert.AreEqual(2.50M, result.Artikelen.First().Prijs);
             }
         }
         [TestMethod]
@@ -82,7 +90,10 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
             {
                 var bestelling = new Bestelling()
                 {
-                    Name = "Name"
+                    Artikelen = new List<Artikel>
+                    {
+                        new Artikel { Prijs = 2.50M }
+                    }
                 };
                 repo.Insert(bestelling);
                 repo.Delete(1);
@@ -100,12 +111,18 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
             {
                 var bestelling = new Bestelling()
                 {
-                    Name = "Entity"
+                    Artikelen = new List<Artikel>
+                    {
+                        new Artikel { Prijs = 2.50M }
+                    }
                 };
                 repo.Insert(bestelling);
                 bestelling = new Bestelling()
                 {
-                    Name = "Name"
+                    Artikelen = new List<Artikel>
+                    {
+                        new Artikel { Prijs = 3.50M }
+                    }
                 };
                 repo.Insert(bestelling);
             }
@@ -122,11 +139,14 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
             {
                 var bestelling = new Bestelling()
                 {
-                    Name = "Entity"
+                    Artikelen = new List<Artikel>
+                    {
+                        new Artikel { Prijs = 2.50M }
+                    }
                 };
                 repo.Insert(bestelling);
                 bestelling = repo.Find(1);
-                bestelling.Name = "UpdatedName";
+                bestelling.Artikelen.First().Prijs = 3.50M;
                 repo.Update(bestelling);
             }
 
@@ -134,7 +154,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
             {
                 var bestelling = repo.Find(1);
                 Assert.AreEqual(1, bestelling.Id);
-                Assert.AreEqual("UpdatedName", bestelling.Name);
+                Assert.AreEqual(3.50M, bestelling.Artikelen.First().Prijs);
             }
         }
     }

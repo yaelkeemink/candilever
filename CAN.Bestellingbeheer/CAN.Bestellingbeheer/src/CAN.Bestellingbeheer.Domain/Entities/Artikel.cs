@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CAN.Bestellingbeheer.Domain.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,10 @@ namespace CAN.Bestellingbeheer.Domain.Entities
     {
         public long Id { get; set; }
 
+        public string Naam { get; set; }
+
         public decimal Prijs { get; set; }
+
+        public int Aantal { get; set; }
     }
 }
