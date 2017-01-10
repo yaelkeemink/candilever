@@ -12,6 +12,9 @@ using Microsoft.Extensions.Logging;
 using CAN.Webwinkel.Data;
 using CAN.Webwinkel.Models;
 using CAN.Webwinkel.Services;
+using Serilog;
+using CAN.Webwinkel.Infrastructure.EventListener;
+using InfoSupport.WSA.Infrastructure;
 
 namespace CAN.Webwinkel
 {
@@ -35,13 +38,19 @@ namespace CAN.Webwinkel
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
+            
+            
+            StartEventListener();
         }
+
 
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
@@ -67,6 +76,7 @@ namespace CAN.Webwinkel
 
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+            loggerFactory.AddSerilog();
 
             app.UseApplicationInsightsRequestTelemetry();
 
@@ -89,6 +99,22 @@ namespace CAN.Webwinkel
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
    
+        }
+
+
+
+        private void StartEventListener()
+        {
+            var factory = new LoggerFactory();
+         
+            factory.AddConsole(Configuration.GetSection("Logging"));
+            factory.AddDebug();
+            factory.AddSerilog();
+
+            var dbconnectionString = Configuration.GetConnectionString("DefaultConnection")
+
+
+    //        var listener = new EventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, factory.CreateLogger<EventListener>());
         }
     }
 }

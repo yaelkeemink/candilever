@@ -15,7 +15,7 @@ namespace CAN.Webwinkel.Infrastructure.DAL.Repositories
 
         protected override IQueryable<Artikel> GetDbSet()
         {
-            return _context.Artikels.Include(ar => ar.ArtikelCategory);
+            return _context.Artikels.Include(ar => ar.ArtikelCategory).ThenInclude(ac => ac.Category);
         }
 
         protected override int GetKeyFrom(Artikel item)
