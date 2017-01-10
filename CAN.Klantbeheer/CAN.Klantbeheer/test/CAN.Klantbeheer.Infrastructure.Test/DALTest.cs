@@ -42,7 +42,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         public void TestAdd()
         {
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
                 repo.Insert(new Klant()
                 {
@@ -51,7 +51,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
             }
 
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(1, repo.Count());
             }
@@ -60,7 +60,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestFind()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
                 repo.Insert(new Klant()
                 {
@@ -68,7 +68,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                 });
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
                 var result = repo.Find(1);
                 Assert.AreEqual(1, result.Klantnummer);
@@ -78,7 +78,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestDelete()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
                 var player = new Klant()
                 {
@@ -88,7 +88,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                 repo.Delete(1);
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(0, repo.Count());
             }
@@ -96,7 +96,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestFindAll()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
                 var player = new Klant()
                 {
@@ -110,7 +110,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                 repo.Insert(player);
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(2, repo.Count());
             }
@@ -118,7 +118,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestUpdate()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
                 var player = new Klant()
                 {
@@ -130,7 +130,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                 repo.Update(player);
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
                 var player = repo.Find(1);
                 Assert.AreEqual(1, player.Klantnummer);
