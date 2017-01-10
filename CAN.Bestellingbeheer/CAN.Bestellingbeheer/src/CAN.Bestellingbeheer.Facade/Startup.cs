@@ -44,7 +44,7 @@ namespace CAN.Bestellingbeheer.Facade.Facade
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=can_bestellingbeheer_mssql;Database=CAN_Bestellingbeheer;UserID=sa,Password=admin"));
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=can_bestellingbeheer_mssql;Database=CAN_Bestellingbeheer;UserID=sa,Password=P@55w0rd"));
             services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
 
             services.ConfigureSwaggerGen(options =>
