@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CAN.Bestellingbeheer.Domain.Domain.Entities;
+using CAN.Bestellingbeheer.Domain.Domain.Interfaces;
+using System;
 
 namespace CAN.Bestellingbeheer.Domain.Domain.Services {
     public class PlayerService : IDisposable

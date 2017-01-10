@@ -8,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Minor.WSA.Commons;
 using Minor.WSA.EventBus.Publisher;
 using Serilog;
+using CAN.Klantbeheer.Infrastructure.DAL;
+using CAN.Klantbeheer.Domain.Domain.Interfaces;
+using CAN.Klantbeheer.Infrastructure.Infrastructure.Repositories;
+using CAN.Klantbeheer.Domain.Domain.Entities;
 
 namespace CAN.Klantbeheer.Facade.Facade
 {
@@ -43,11 +47,8 @@ namespace CAN.Klantbeheer.Facade.Facade
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=db;Database=GameServer;UserID=sa,Password=admin"));
-            services.AddScoped<IRepository<Player, long>, PlayerRepository>();
-            services.AddScoped<IEventPublisher, EventPublisher>(config => {
-                System.Console.WriteLine("Ding aanmaken");
-                return new EventPublisher(null);
-                });
+            services.AddScoped<IRepository<Klant, long>, KlantRepository>();
+            services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(null));
 
             services.ConfigureSwaggerGen(options =>
             {

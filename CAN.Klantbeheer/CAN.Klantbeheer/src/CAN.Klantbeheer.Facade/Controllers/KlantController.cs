@@ -3,16 +3,18 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.SwaggerGen.Annotations;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
-
+using CAN.Klantbeheer.Domain.Domain.Entities;
+using CAN.Klantbeheer.Facade.Facade.Errors;
+using CAN.Klantbeheer.Domain.Domain.Services;
 
 namespace CAN.Klantbeheer.Facade.Facade.Controllers
 {
     [Route("api/[controller]")]
-    public class PlayerController : Controller
+    public class KlantController : Controller
     {
-        private readonly PlayerService _service;
+        private readonly KlantService _service;
 
-        public PlayerController(PlayerService service)
+        public KlantController(KlantService service)
         {
             _service = service;
         }
@@ -20,9 +22,9 @@ namespace CAN.Klantbeheer.Facade.Facade.Controllers
         // POST api/values
         [HttpPost]        
         [SwaggerOperation("Post")]
-        [ProducesResponseType(typeof(Player), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Klant), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
-        public IActionResult CreatePlayer([FromBody]Player player)
+        public IActionResult Createklant([FromBody]Klant klant)
         {
             if (!ModelState.IsValid)
             {
@@ -31,13 +33,13 @@ namespace CAN.Klantbeheer.Facade.Facade.Controllers
             }
                 try
                 {
-                    var room = _service.CreatePlayer(player);
+                    var room = _service.CreatePlayer(klant);
                     return Ok(room);
                 }
                 catch (Exception ex)
                 {
                     var error = new ErrorMessage(ErrorTypes.Unknown,
-                        $"Onbekende fout in create player: {player},/nException: {ex}");
+                        $"Onbekende fout in create player: {klant},/nException: {ex}");
                     return BadRequest(error);
                 }
 
@@ -47,9 +49,9 @@ namespace CAN.Klantbeheer.Facade.Facade.Controllers
         // PUT api/values/5
         [HttpPut]
         [SwaggerOperation("Update")]
-        [ProducesResponseType(typeof(Player), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Klant), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
-        public IActionResult UpdatePlayer([FromBody]Player player)
+        public IActionResult UpdateKlant([FromBody]Klant klant)
         {
             if (ModelState.IsValid)
             {
@@ -58,19 +60,19 @@ namespace CAN.Klantbeheer.Facade.Facade.Controllers
             }
             try
             {
-                var room = _service.UpdatePlayer(player);
+                var room = _service.UpdatePlayer(klant);
                 return Ok(room);
             }
             catch (DbUpdateException ex)
             {
                 var error = new ErrorMessage(ErrorTypes.NotFound,
-                        $"Fout met updaten in db: {player}/nException: {ex}");
+                        $"Fout met updaten in db: {klant}/nException: {ex}");
                 return NotFound(error);
             }
             catch (Exception ex)
             {
                 var error = new ErrorMessage(ErrorTypes.Unknown,
-                        $"Onbekende fout bij updaten: {player}/nException: {ex}");
+                        $"Onbekende fout bij updaten: {klant}/nException: {ex}");
                 return BadRequest(error);
             }
         }

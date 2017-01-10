@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using CAN.Klantbeheer.Infrastructure.DAL;
+using CAN.Klantbeheer.Infrastructure.Infrastructure.Repositories;
+using CAN.Klantbeheer.Domain.Domain.Entities;
 
 namespace CAN.Klantbeheer.Infrastructure.Test.Test
 {
@@ -39,16 +42,17 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         public void TestAdd()
         {
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
-                repo.Insert(new Player()
+                repo.Insert(new Klant()
                 {
-                    Name = "Naam"
+                    Voornaam = "Yael",
+                    Tussenvoegsels = "De",
+                    Achternaam = "Keemink",                    
+                    Postcode = "2361VJ",                    
                 });
             }
-
-
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(1, repo.Count());
             }
@@ -57,35 +61,44 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestFind()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
-                repo.Insert(new Player()
+                repo.Insert(new Klant()
                 {
-                    Name = "Name"
+                    Voornaam = "Yael",
+                    Tussenvoegsels = "De",
+                    Achternaam = "Keemink",                    
+                    Postcode = "2361VJ",
                 });
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
                 var result = repo.Find(1);
-                Assert.AreEqual(1, result.Id);
-                Assert.AreEqual("Name", result.Name);
+                Assert.AreEqual(1, result.Klantnummer);
+                Assert.AreEqual("De", result.Tussenvoegsels);
+                Assert.AreEqual("Yael", result.Voornaam);                
+                Assert.AreEqual("Keemink", result.Achternaam);
+                Assert.AreEqual("2361VJ", result.Postcode);
             }
         }
         [TestMethod]
         public void TestDelete()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
-                var player = new Player()
+                var klant = new Klant()
                 {
-                    Name = "Name"
+                    Voornaam = "Yael",
+                    Tussenvoegsels = "De",
+                    Achternaam = "Keemink",
+                    Postcode = "2361VJ",
                 };
-                repo.Insert(player);
+                repo.Insert(klant);
                 repo.Delete(1);
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(0, repo.Count());
             }
@@ -93,21 +106,26 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestFindAll()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
-                var player = new Player()
+                var klant = new Klant()
                 {
-                    Name = "Entity"
+                    Voornaam = "Yael",
+                    Tussenvoegsels = "De",
+                    Achternaam = "Keemink",
+                    Postcode = "2361VJ",
                 };
-                repo.Insert(player);
-                player = new Player()
+                repo.Insert(klant);
+                klant = new Klant()
                 {
-                    Name = "Name"
+                    Voornaam = "Rob",
+                    Achternaam = "Gerritsen",
+                    Postcode = "1265DS",
                 };
-                repo.Insert(player);
+                repo.Insert(klant);
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(2, repo.Count());
             }
@@ -115,23 +133,26 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestUpdate()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
-                var player = new Player()
+                var klant = new Klant()
                 {
-                    Name = "Entity"
+                    Voornaam = "Yael",
+                    Tussenvoegsels = "De",
+                    Achternaam = "Keemink",
+                    Postcode = "2361VJ",
                 };
-                repo.Insert(player);
-                player = repo.Find(1);
-                player.Name = "UpdatedName";
-                repo.Update(player);
+                repo.Insert(klant);
+                klant = repo.Find(1);
+                klant.Voornaam = "UpdatedName";
+                repo.Update(klant);
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
-                var player = repo.Find(1);
-                Assert.AreEqual(1, player.Id);
-                Assert.AreEqual("UpdatedName", player.Name);
+                var klant = repo.Find(1);
+                Assert.AreEqual(1, klant.Klantnummer);
+                Assert.AreEqual("UpdatedName", klant.Voornaam);
             }
         }
     }

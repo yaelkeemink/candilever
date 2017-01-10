@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CAN.Klantbeheer.Domain.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CAN.Klantbeheer.Infrastructure.DAL
 {
     public class DatabaseContext : DbContext
     {
-        public virtual DbSet<Player> Players { get; set; }
+        public virtual DbSet<Klant> Klanten { get; set; }
 
         public DatabaseContext()
         {
@@ -16,7 +17,7 @@ namespace CAN.Klantbeheer.Infrastructure.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Player>().Property(p => p.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Klant>().Property(p => p.Klantnummer).ValueGeneratedOnAdd();
 
             base.OnModelCreating(modelBuilder);
         }
