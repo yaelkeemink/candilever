@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using CAN.Bestellingbeheer.Domain.Domain.Interfaces;
 
 namespace CAN.Bestellingbeheer.Infrastructure.Infrastructure.Repositories
 {
