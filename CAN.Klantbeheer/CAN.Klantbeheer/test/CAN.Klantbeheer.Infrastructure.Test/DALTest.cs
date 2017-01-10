@@ -46,11 +46,12 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
             {
                 repo.Insert(new Klant()
                 {
-                    Voornaam = "Naam"
+                    Voornaam = "Yael",
+                    Tussenvoegsels = "De",
+                    Achternaam = "Keemink",                    
+                    Postcode = "2361VJ",                    
                 });
             }
-
-
             using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(1, repo.Count());
@@ -64,7 +65,10 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
             {
                 repo.Insert(new Klant()
                 {
-                    Voornaam = "Name"
+                    Voornaam = "Yael",
+                    Tussenvoegsels = "De",
+                    Achternaam = "Keemink",                    
+                    Postcode = "2361VJ",
                 });
             }
 
@@ -72,7 +76,10 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
             {
                 var result = repo.Find(1);
                 Assert.AreEqual(1, result.Klantnummer);
-                Assert.AreEqual("Name", result.Voornaam);
+                Assert.AreEqual("De", result.Tussenvoegsels);
+                Assert.AreEqual("Yael", result.Voornaam);                
+                Assert.AreEqual("Keemink", result.Achternaam);
+                Assert.AreEqual("2361VJ", result.Postcode);
             }
         }
         [TestMethod]
@@ -80,11 +87,14 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         {
             using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
-                var player = new Klant()
+                var klant = new Klant()
                 {
-                    Voornaam = "Name"
+                    Voornaam = "Yael",
+                    Tussenvoegsels = "De",
+                    Achternaam = "Keemink",
+                    Postcode = "2361VJ",
                 };
-                repo.Insert(player);
+                repo.Insert(klant);
                 repo.Delete(1);
             }
 
@@ -98,16 +108,21 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         {
             using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
-                var player = new Klant()
+                var klant = new Klant()
                 {
-                    Voornaam = "Entity"
+                    Voornaam = "Yael",
+                    Tussenvoegsels = "De",
+                    Achternaam = "Keemink",
+                    Postcode = "2361VJ",
                 };
-                repo.Insert(player);
-                player = new Klant()
+                repo.Insert(klant);
+                klant = new Klant()
                 {
-                    Voornaam = "Name"
+                    Voornaam = "Rob",
+                    Achternaam = "Gerritsen",
+                    Postcode = "1265DS",
                 };
-                repo.Insert(player);
+                repo.Insert(klant);
             }
 
             using (var repo = new KlantRepository(new DatabaseContext(_options)))
@@ -120,21 +135,24 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         {
             using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
-                var player = new Klant()
+                var klant = new Klant()
                 {
-                    Voornaam = "Entity"
+                    Voornaam = "Yael",
+                    Tussenvoegsels = "De",
+                    Achternaam = "Keemink",
+                    Postcode = "2361VJ",
                 };
-                repo.Insert(player);
-                player = repo.Find(1);
-                player.Voornaam = "UpdatedName";
-                repo.Update(player);
+                repo.Insert(klant);
+                klant = repo.Find(1);
+                klant.Voornaam = "UpdatedName";
+                repo.Update(klant);
             }
 
             using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
-                var player = repo.Find(1);
-                Assert.AreEqual(1, player.Klantnummer);
-                Assert.AreEqual("UpdatedName", player.Voornaam);
+                var klant = repo.Find(1);
+                Assert.AreEqual(1, klant.Klantnummer);
+                Assert.AreEqual("UpdatedName", klant.Voornaam);
             }
         }
     }

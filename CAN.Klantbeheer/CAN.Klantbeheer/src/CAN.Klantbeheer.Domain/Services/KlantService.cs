@@ -3,11 +3,11 @@ using CAN.Klantbeheer.Domain.Domain.Interfaces;
 using System;
 
 namespace CAN.Klantbeheer.Domain.Domain.Services {
-    public class PlayerService : IDisposable
+    public class KlantService : IDisposable
     {
         private readonly IRepository<Klant, long> _repository;
 
-        public PlayerService(IRepository<Klant, long> repository)
+        public KlantService(IRepository<Klant, long> repository)
         {
             _repository = repository;
         }
