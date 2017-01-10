@@ -12,13 +12,13 @@ namespace CAN.Klantbeheer.Domain.Services {
             _repository = repository;
         }
 
-        public int CreateKlant(Klant player)
+        public int CreateKlant(Klant klant)
         {
-            return _repository.Insert(player);
+            return _repository.Insert(klant);
         }
-        public int UpdateKlant(Klant player)
+        public int UpdateKlant(Klant klant)
         {
-            return _repository.Update(player);
+            return _repository.Update(klant);
         }
         public void Dispose()
         {

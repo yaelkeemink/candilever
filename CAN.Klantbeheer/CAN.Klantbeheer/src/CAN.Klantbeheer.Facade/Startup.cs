@@ -46,7 +46,7 @@ namespace CAN.Klantbeheer.Facade
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=db;Database=GameServer;UserID=sa,Password=admin"));
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=db;Database=can_klantbeheer_db;UserID=sa,Password=admin"));
             services.AddScoped<IRepository<Klant, long>, KlantRepository>();
             services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(null));
 
@@ -55,8 +55,8 @@ namespace CAN.Klantbeheer.Facade
                 options.SingleApiVersion(new Info
                 {
                     Version = "v1",
-                    Title = "A Monument service",
-                    Description = "Restauration of monuments",
+                    Title = "Klanten domain service",
+                    Description = "Domain service",
                     TermsOfService = "None"
                 });
             });

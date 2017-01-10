@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using CAN.Klantbeheer.Facade;
 using Microsoft.AspNetCore.TestHost;
 using System.Net.Http;
+using System.Net;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace CAN.Klantbeheer.IntegratieTest
 {
@@ -18,17 +21,19 @@ namespace CAN.Klantbeheer.IntegratieTest
         public async void TestAddZonderVoornaam()
         {
             // Arrange
-            var server = new TestServer(new WebHostBuilder()
+            var _server = new TestServer(new WebHostBuilder()
                 .UseStartup<Startup>());
-            var client = server.CreateClient();
+            var _client = _server.CreateClient();
+
+            var monument = new Monument { Id = 4, Naam = "Gert", Hoogte = 2 };
+            var json = JsonConvert.SerializeObject(monument);
 
             // Act
-            var response = await client.GetAsync("api/v1/Klant");
+            var response = await _client.PostAsync("api/v1/monumenten", new StringContent(json, Encoding.UTF8, "application/json"));
             response.EnsureSuccessStatusCode();
 
-            var responseString = await response.Content.ReadAsStringAsync();
             // Assert
-            Assert.AreEqual("[{\"id\":1,\"hoogte\":300,\"naam\":\"Eiffeltoren\"},{\"id\":2,\"hoogte\":56,\"naam\":\"Toren van Pisa\"},{\"id\":3,\"hoogte\":381,\"naam\":\"Empire State Building\"}]", responseString);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
     }
 }
