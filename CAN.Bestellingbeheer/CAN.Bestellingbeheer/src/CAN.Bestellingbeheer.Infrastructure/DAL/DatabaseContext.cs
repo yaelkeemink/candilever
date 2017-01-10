@@ -1,11 +1,11 @@
-﻿using CAN.Bestellingbeheer.Domain.Domain.Entities;
+﻿using CAN.Bestellingbeheer.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CAN.Bestellingbeheer.Infrastructure.DAL
 {
     public class DatabaseContext : DbContext
     {
-        public virtual DbSet<Player> Players { get; set; }
+        public virtual DbSet<Bestelling> Bestellingen { get; set; }
 
         public DatabaseContext()
         {
@@ -17,8 +17,6 @@ namespace CAN.Bestellingbeheer.Infrastructure.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Player>().Property(p => p.Id).ValueGeneratedOnAdd();
-
             base.OnModelCreating(modelBuilder);
         }
 
@@ -26,7 +24,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.DAL
         {
             if (!optionsBuilder.IsConfigured) 
             {
-                optionsBuilder.UseSqlServer(@"Server=db;Database=GameServer;UserID=sa,Password=admin");
+                optionsBuilder.UseSqlServer(@"Server=can_bestellingbeheer_mssql;Database=CAN_Bestellingbeheer;UserID=sa,Password=P@55w0rd");
             }
         }
     }

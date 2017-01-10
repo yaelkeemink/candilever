@@ -3,9 +3,9 @@
   "testRunner": "mstest",
 
   "dependencies": {
-    "CAN.Bestellingbeheer.Domain": "1.0.0-*",
-    "CAN.Bestellingbeheer.Infrastructure": "1.0.0-*",
+    "CAN.Klantbeheer.Facade": "1.0.0-*",
     "dotnet-test-mstest": "1.1.1-preview",
+    "Microsoft.AspNetCore.Hosting": "1.0.0",
     "Microsoft.EntityFrameworkCore.InMemory": "1.0.1",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",
     "Microsoft.EntityFrameworkCore.SqlServer.Design": "1.0.1",

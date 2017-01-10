@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CAN.Klantbeheer.Facade.Facade.AuditLogAgents
+namespace CAN.Klantbeheer.Facade.AuditLogAgents
 {
     /// <summary>
     /// Don't know for now. You should retrieve events from auditlog here

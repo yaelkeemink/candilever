@@ -7,9 +7,9 @@ using Swashbuckle.Swagger.Model;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using CAN.Bestellingbeheer.Infrastructure.DAL;
-using CAN.Bestellingbeheer.Domain.Domain.Entities;
-using CAN.Bestellingbeheer.Domain.Domain.Interfaces;
-using CAN.Bestellingbeheer.Infrastructure.Infrastructure.Repositories;
+using CAN.Bestellingbeheer.Domain.Interfaces;
+using CAN.Bestellingbeheer.Domain.Entities;
+using CAN.Bestellingbeheer.Infrastructure.Repositories;
 
 namespace CAN.Bestellingbeheer.Facade.Facade
 {
@@ -44,16 +44,16 @@ namespace CAN.Bestellingbeheer.Facade.Facade
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=db;Database=GameServer;UserID=sa,Password=admin"));
-            services.AddScoped<IRepository<Player, long>, PlayerRepository>();            
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=can_bestellingbeheer_mssql;Database=CAN_Bestellingbeheer;UserID=sa,Password=P@55w0rd"));
+            services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
 
             services.ConfigureSwaggerGen(options =>
             {
                 options.SingleApiVersion(new Info
                 {
                     Version = "v1",
-                    Title = "A Monument service",
-                    Description = "Restauration of monuments",
+                    Title = "Bestellingbeheer Service",
+                    Description = "Bestellingbeheer Service voor het bestellen van artikelen",
                     TermsOfService = "None"
                 });
             });

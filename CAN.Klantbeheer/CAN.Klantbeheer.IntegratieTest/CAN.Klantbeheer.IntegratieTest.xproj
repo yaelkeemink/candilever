@@ -6,8 +6,8 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>2ac7eb81-c958-42d3-8d41-369ae8dbbd36</ProjectGuid>
-    <RootNamespace>CAN.Bestellingbeheer.Infrastructure.Test</RootNamespace>
+    <ProjectGuid>384ce833-3faa-4a15-98b2-7c27f2a7ceab</ProjectGuid>
+    <RootNamespace>CAN.Klantbeheer.IntegratieTest</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>

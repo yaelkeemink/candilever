@@ -3,45 +3,51 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.SwaggerGen.Annotations;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
-using CAN.Klantbeheer.Domain.Domain.Entities;
-using CAN.Klantbeheer.Facade.Facade.Errors;
-using CAN.Klantbeheer.Domain.Domain.Services;
+using CAN.Klantbeheer.Domain.Entities;
+using CAN.Klantbeheer.Facade.Errors;
+using CAN.Klantbeheer.Domain.Services;
+using Microsoft.Extensions.Logging;
 
-namespace CAN.Klantbeheer.Facade.Facade.Controllers
+namespace CAN.Klantbeheer.Facade.Controllers
 {
     [Route("api/[controller]")]
-    public class PlayerController : Controller
+    public class KlantController : Controller
     {
-        private readonly PlayerService _service;
+        private readonly KlantService _service;
+        private readonly ILogger<KlantController> _logger;
 
-        public PlayerController(PlayerService service)
+        public KlantController(ILogger<KlantController> logger, KlantService service)
         {
+            _logger = logger;
             _service = service;
         }
 
         // POST api/values
-        [HttpPost]        
+        [HttpPost]
         [SwaggerOperation("Post")]
         [ProducesResponseType(typeof(Klant), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
-        public IActionResult CreatePlayer([FromBody]Klant player)
+        public IActionResult CreateKlant([FromBody]Klant klant)
         {
+            _logger.LogInformation("Create Klant called", klant);
             if (!ModelState.IsValid)
             {
                 var error = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
+                _logger.LogError("Create Klant Model State invalid", error);
                 return BadRequest(error);
             }
-                try
-                {
-                    var room = _service.CreatePlayer(player);
-                    return Ok(room);
-                }
-                catch (Exception ex)
-                {
-                    var error = new ErrorMessage(ErrorTypes.Unknown,
-                        $"Onbekende fout in create player: {player},/nException: {ex}");
-                    return BadRequest(error);
-                }
+            try
+            {
+                var room = _service.CreateKlant(klant);
+                return Ok(room);
+            }
+            catch (Exception ex)
+            {
+                var error = new ErrorMessage(ErrorTypes.Unknown,
+                    $"Onbekende fout in create player: {klant},/nException: {ex}");
+                _logger.LogError("Create Klant unkown error occured", error);
+                return BadRequest(error);
+            }
 
 
         }
@@ -51,28 +57,32 @@ namespace CAN.Klantbeheer.Facade.Facade.Controllers
         [SwaggerOperation("Update")]
         [ProducesResponseType(typeof(Klant), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
-        public IActionResult UpdatePlayer([FromBody]Klant player)
+        public IActionResult UpdateKlant([FromBody]Klant klant)
         {
-            if (ModelState.IsValid)
+            _logger.LogInformation("Update Klant called", klant);
+            if (!ModelState.IsValid)
             {
                 var error = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
+                _logger.LogError("Update Klant Model State invalid", error);
                 return BadRequest(error);
             }
             try
             {
-                var room = _service.UpdatePlayer(player);
+                var room = _service.UpdateKlant(klant);
                 return Ok(room);
             }
             catch (DbUpdateException ex)
             {
                 var error = new ErrorMessage(ErrorTypes.NotFound,
-                        $"Fout met updaten in db: {player}/nException: {ex}");
+                        $"Fout met updaten in db: {klant}/nException: {ex}");
+                _logger.LogError("Update klant failed, klant not found", error);
                 return NotFound(error);
             }
             catch (Exception ex)
             {
                 var error = new ErrorMessage(ErrorTypes.Unknown,
-                        $"Onbekende fout bij updaten: {player}/nException: {ex}");
+                        $"Onbekende fout bij updaten: {klant}/nException: {ex}");
+                _logger.LogError("Create Klant unkown error occured", error);
                 return BadRequest(error);
             }
         }

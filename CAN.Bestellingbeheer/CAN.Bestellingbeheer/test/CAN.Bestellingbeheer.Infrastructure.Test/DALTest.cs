@@ -1,12 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using CAN.Bestellingbeheer.Infrastructure.DAL;
+using CAN.Bestellingbeheer.Domain.Entities;
+using CAN.Bestellingbeheer.Infrastructure.Repositories;
 
-namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
+namespace CAN.Bestellingbeheer.Infrastructure.Test
 {
     [TestClass]
     public class DALTest
@@ -39,16 +40,22 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
         public void TestAdd()
         {
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                repo.Insert(new Player()
+                repo.Insert(new Bestelling()
                 {
-                    Name = "Naam"
+                    Artikelen = new List<Artikel>
+                    {
+                        new Artikel
+                        {
+                            Prijs = 2.50M
+                        }
+                    }
                 });
             }
 
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(1, repo.Count());
             }
@@ -57,35 +64,49 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestFind()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                repo.Insert(new Player()
+                repo.Insert(new Bestelling()
                 {
-                    Name = "Name"
+                    Artikelen = new List<Artikel>
+                    {
+                        new Artikel
+                        {
+                            Prijs = 2.50M,
+                            Naam = "Artikel 1",
+                            Aantal = 5
+                        }
+                    }
                 });
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
                 var result = repo.Find(1);
                 Assert.AreEqual(1, result.Id);
-                Assert.AreEqual("Name", result.Name);
+                Assert.AreEqual(2.50M, result.Artikelen.First().Prijs);
             }
         }
         [TestMethod]
         public void TestDelete()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                var player = new Player()
+                var bestelling = new Bestelling()
                 {
-                    Name = "Name"
+                    Artikelen = new List<Artikel>
+                    {
+                        new Artikel
+                        {
+                            Prijs = 2.50M
+                        }
+                    }
                 };
-                repo.Insert(player);
+                repo.Insert(bestelling);
                 repo.Delete(1);
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(0, repo.Count());
             }
@@ -93,21 +114,33 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestFindAll()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                var player = new Player()
+                var bestelling = new Bestelling()
                 {
-                    Name = "Entity"
+                    Artikelen = new List<Artikel>
+                    {
+                        new Artikel
+                        {
+                            Prijs = 2.50M
+                        }
+                    }
                 };
-                repo.Insert(player);
-                player = new Player()
+                repo.Insert(bestelling);
+                bestelling = new Bestelling()
                 {
-                    Name = "Name"
+                    Artikelen = new List<Artikel>
+                    {
+                        new Artikel
+                        {
+                            Prijs = 3.50M
+                        }
+                    }
                 };
-                repo.Insert(player);
+                repo.Insert(bestelling);
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(2, repo.Count());
             }
@@ -115,23 +148,41 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestUpdate()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                var player = new Player()
+                var bestelling = new Bestelling()
                 {
-                    Name = "Entity"
+                    Artikelen = new List<Artikel>
+                    {
+                        new Artikel
+                        {
+                            Prijs = 2.50M,
+                            Naam = "Artikel 1",
+                            Aantal = 5
+                        }
+                    }
                 };
-                repo.Insert(player);
-                player = repo.Find(1);
-                player.Name = "UpdatedName";
-                repo.Update(player);
+                repo.Insert(bestelling);
+
+                bestelling = repo.Find(1);
+
+                var artikel = bestelling.Artikelen.First();
+                artikel.Prijs = 3.50M;
+                artikel.Naam = "Artikel 2";
+                artikel.Aantal = 10;
+                
+                repo.Update(bestelling);
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                var player = repo.Find(1);
-                Assert.AreEqual(1, player.Id);
-                Assert.AreEqual("UpdatedName", player.Name);
+                var bestelling = repo.Find(1);
+                Assert.AreEqual(1, bestelling.Id);
+
+                var updatedArtikel = bestelling.Artikelen.First();
+                Assert.AreEqual(3.50M, updatedArtikel.Prijs);
+                Assert.AreEqual("Artikel 2", updatedArtikel.Naam);
+                Assert.AreEqual(10, updatedArtikel.Aantal);
             }
         }
     }
