@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using CAN.Klantbeheer.Infrastructure.DAL;
-using CAN.Klantbeheer.Infrastructure.Infrastructure.Repositories;
-using CAN.Klantbeheer.Domain.Domain.Entities;
+using CAN.Klantbeheer.Infrastructure.Repositories;
+using CAN.Klantbeheer.Domain.Entities;
 
 namespace CAN.Klantbeheer.Infrastructure.Test.Test
 {

@@ -1,5 +1,5 @@
 ﻿
-namespace CAN.Klantbeheer.Infrastructure.Infrastructure
+namespace CAN.Klantbeheer.Infrastructure
 {
     public class Program
     {

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using CAN.Klantbeheer.Domain.Domain.Interfaces;
+using CAN.Klantbeheer.Domain.Interfaces;
 
-namespace CAN.Klantbeheer.Infrastructure.Infrastructure.Repositories
+namespace CAN.Klantbeheer.Infrastructure.Repositories
 {
     public abstract class BaseRepository<Entity, Key, Context>
    : IRepository<Entity, Key>,

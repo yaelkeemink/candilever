@@ -1,8 +1,9 @@
-﻿using CAN.Klantbeheer.Domain.Domain.Entities;
+﻿using CAN.Klantbeheer.Domain.Entities;
 using CAN.Klantbeheer.Infrastructure.DAL;
+using CAN.Klantbeheer.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace CAN.Klantbeheer.Infrastructure.Infrastructure.Repositories
+namespace CAN.Klantbeheer.Infrastructure.Repositories
 {
     public class KlantRepository
         : BaseRepository<Klant, long, DatabaseContext>
