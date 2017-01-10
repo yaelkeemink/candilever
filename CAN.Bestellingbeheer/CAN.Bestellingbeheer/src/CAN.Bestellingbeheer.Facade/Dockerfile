@@ -1,5 +1,5 @@
 FROM microsoft/aspnetcore:1.0.1
-ENTRYPOINT ["dotnet", "Case3.Facade.dll"]
+ENTRYPOINT ["dotnet", "CAN.Bestellingbeheer.Facade.dll"]
 ARG source=.
 WORKDIR /app
 EXPOSE 80

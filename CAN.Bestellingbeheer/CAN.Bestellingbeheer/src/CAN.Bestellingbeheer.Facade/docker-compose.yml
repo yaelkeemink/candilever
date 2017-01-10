@@ -1,10 +1,44 @@
 version: '2'
 
 services:
-  case3.facade:
-    image: user/case3.facade${TAG}
+  can.bestellingbeheer.facade:
+    image: can.bestellingbeheer.facade
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      dbconnectionstring: Server=can_bestellingbeheer_mssql;Database=CAN_Bestellingbeheer;User Id=sa;Password=P@55w0rd;
+      rabbitmq-exchange: KantileverBus
+      rabbitmq-queue: ReplayService
+      rabbitmq-host: can-kantilever-eventbus
+      rabbitmq-username: Kantilever
+      rabbitmq-password: Kant1lever
+      rabbitmq-port: 11998
+      logpath: /var/log/Kantilever/BestellingbeheerLogging/
     ports:
-      - "80"
+      - 11300:80
+    networks:
+      - can_bestellingbeheer_network
+      - can_main_network
+    volumes:
+      - "C:/Docker/.BestellingbeheerData/Log:/var/log/Kantilever/BestellingbeheerLogging/"
+
+  can.bestellingbeheer.mssql:
+    image: microsoft/mssql-server-linux
+    container_name: can_bestellingbeheer_mssql
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: P@55w0rd
+    networks:
+      - can_bestellingbeheer_network
+    ports:
+      - 11310:1433
+    volumes:
+      - "C:/Docker/.BestellingbeheerData/db:/var/opt/mssql/"
+
+
+networks:
+  can_main_network: 
+    external:
+      name: can_main_network
+  can_bestellingbeheer_network:
