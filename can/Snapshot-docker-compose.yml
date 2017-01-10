@@ -1,0 +1,19 @@
+version: '2'
+
+services:      
+  can.kantilever.snapshotbuilder:
+    image: robg66/kantilever.snapshotbuilder
+    container_name: can-kantilever-snapshotbuilder
+    environment:
+      eventbus-exchangename: "KantileverBus"
+      eventbus-hostname: "can-kantilever-eventbus"
+      eventbus-username: "Kantilever"
+      eventbus-password: "Kant1lever" 
+      startup-delay-in-seconds : 5
+    networks:
+      - can_main_network
+
+networks:
+  can_main_network: 
+    external:
+      name: can_main_network
