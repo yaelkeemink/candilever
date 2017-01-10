@@ -26,12 +26,15 @@ namespace CAN.Bestellingbeheer.Infrastructure.Infrastructure.Repositories
 
         public override IEnumerable<Bestelling> FindAll()
         {
-            return GetDbSet().Include(n => n.Artikelen);
+            return GetDbSet()
+                .Include(n => n.Artikelen);
         }
         
         public override Bestelling Find(long id)
         {
-            return GetDbSet().Include(n => n.Artikelen).Single(a => GetKeyFrom(a).Equals(id));
+            return GetDbSet().
+                Include(n => n.Artikelen)
+                .Single(a => GetKeyFrom(a).Equals(id));
         }
     }
 }

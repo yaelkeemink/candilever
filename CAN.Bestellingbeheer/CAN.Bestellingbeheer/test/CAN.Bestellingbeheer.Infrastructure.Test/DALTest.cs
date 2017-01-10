@@ -71,7 +71,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
                 {
                     Artikelen = new List<Artikel>
                     {
-                        new Artikel { Prijs = 2.50M }
+                        new Artikel { Prijs = 2.50M, Naam = "Artikel 1", Aantal = 5 }
                     }
                 });
             }

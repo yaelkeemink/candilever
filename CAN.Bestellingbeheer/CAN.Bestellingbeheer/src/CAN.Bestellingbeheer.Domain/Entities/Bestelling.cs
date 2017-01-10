@@ -8,5 +8,10 @@ namespace CAN.Bestellingbeheer.Domain.Domain.Entities
         public long Id { get; set; }
 
         public IList<Artikel> Artikelen { get; set; }
+
+        public Bestelling()
+        {
+            Artikelen = new List<Artikel>();
+        }
     }
 }

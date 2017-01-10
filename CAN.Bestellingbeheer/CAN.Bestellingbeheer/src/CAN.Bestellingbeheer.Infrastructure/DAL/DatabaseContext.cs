@@ -8,8 +8,6 @@ namespace CAN.Bestellingbeheer.Infrastructure.DAL
     {
         public virtual DbSet<Bestelling> Bestellingen { get; set; }
 
-        public virtual DbSet<Artikel> Artikelen { get; set; }
-
         public DatabaseContext()
         {
             Database.Migrate();
@@ -20,8 +18,6 @@ namespace CAN.Bestellingbeheer.Infrastructure.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Bestelling>().Property(p => p.Id).ValueGeneratedOnAdd();
-
             base.OnModelCreating(modelBuilder);
         }
 
@@ -29,7 +25,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.DAL
         {
             if (!optionsBuilder.IsConfigured) 
             {
-                optionsBuilder.UseSqlServer(@"Server=db;Database=GameServer;UserID=sa,Password=admin");
+                optionsBuilder.UseSqlServer(@"Server=db;Database=can-kantilever-eventbus;UserID=sa,Password=admin");
             }
         }
     }

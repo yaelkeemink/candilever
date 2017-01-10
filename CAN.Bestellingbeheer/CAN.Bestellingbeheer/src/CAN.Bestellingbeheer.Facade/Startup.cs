@@ -44,12 +44,8 @@ namespace CAN.Bestellingbeheer.Facade.Facade
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=db;Database=GameServer;UserID=sa,Password=admin"));
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=db;Database=can-kantilever-eventbus;UserID=sa,Password=admin"));
             services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
-            services.AddScoped<IEventPublisher, EventPublisher>(config => {
-                System.Console.WriteLine("Ding aanmaken");
-                return new EventPublisher(null);
-                });
 
             services.ConfigureSwaggerGen(options =>
             {
