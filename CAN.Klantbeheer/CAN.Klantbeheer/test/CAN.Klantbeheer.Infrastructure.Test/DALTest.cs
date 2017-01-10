@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using CAN.Klantbeheer.Infrastructure.DAL;
+using CAN.Klantbeheer.Infrastructure.Infrastructure.Repositories;
+using CAN.Klantbeheer.Domain.Domain.Entities;
 
 namespace CAN.Klantbeheer.Infrastructure.Test.Test
 {
@@ -41,7 +44,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
 
             using (var repo = new PlayerRepository(new DatabaseContext(_options)))
             {
-                repo.Insert(new Player()
+                repo.Insert(new Klant()
                 {
                     Name = "Naam"
                 });
@@ -59,7 +62,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         {
             using (var repo = new PlayerRepository(new DatabaseContext(_options)))
             {
-                repo.Insert(new Player()
+                repo.Insert(new Klant()
                 {
                     Name = "Name"
                 });
@@ -68,7 +71,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
             using (var repo = new PlayerRepository(new DatabaseContext(_options)))
             {
                 var result = repo.Find(1);
-                Assert.AreEqual(1, result.Id);
+                Assert.AreEqual(1, result.Klantnummer);
                 Assert.AreEqual("Name", result.Name);
             }
         }
@@ -77,7 +80,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         {
             using (var repo = new PlayerRepository(new DatabaseContext(_options)))
             {
-                var player = new Player()
+                var player = new Klant()
                 {
                     Name = "Name"
                 };
@@ -95,12 +98,12 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         {
             using (var repo = new PlayerRepository(new DatabaseContext(_options)))
             {
-                var player = new Player()
+                var player = new Klant()
                 {
                     Name = "Entity"
                 };
                 repo.Insert(player);
-                player = new Player()
+                player = new Klant()
                 {
                     Name = "Name"
                 };
@@ -117,7 +120,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
         {
             using (var repo = new PlayerRepository(new DatabaseContext(_options)))
             {
-                var player = new Player()
+                var player = new Klant()
                 {
                     Name = "Entity"
                 };
@@ -130,7 +133,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
             using (var repo = new PlayerRepository(new DatabaseContext(_options)))
             {
                 var player = repo.Find(1);
-                Assert.AreEqual(1, player.Id);
+                Assert.AreEqual(1, player.Klantnummer);
                 Assert.AreEqual("UpdatedName", player.Name);
             }
         }
