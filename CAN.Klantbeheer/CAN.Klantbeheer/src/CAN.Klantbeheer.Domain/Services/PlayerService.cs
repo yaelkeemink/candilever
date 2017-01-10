@@ -1,20 +1,22 @@
-﻿using System;
+﻿using CAN.Klantbeheer.Domain.Domain.Entities;
+using CAN.Klantbeheer.Domain.Domain.Interfaces;
+using System;
 
 namespace CAN.Klantbeheer.Domain.Domain.Services {
     public class PlayerService : IDisposable
     {
-        private readonly IRepository<Player, long> _repository;
+        private readonly IRepository<Klant, long> _repository;
 
-        public PlayerService(IRepository<Player, long> repository)
+        public PlayerService(IRepository<Klant, long> repository)
         {
             _repository = repository;
         }
 
-        public int CreatePlayer(Player player)
+        public int CreatePlayer(Klant player)
         {
             return _repository.Insert(player);
         }
-        public int UpdatePlayer(Player player)
+        public int UpdatePlayer(Klant player)
         {
             return _repository.Update(player);
         }

@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.SwaggerGen.Annotations;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
-
+using CAN.Klantbeheer.Domain.Domain.Entities;
+using CAN.Klantbeheer.Facade.Facade.Errors;
+using CAN.Klantbeheer.Domain.Domain.Services;
 
 namespace CAN.Klantbeheer.Facade.Facade.Controllers
 {
@@ -20,9 +22,9 @@ namespace CAN.Klantbeheer.Facade.Facade.Controllers
         // POST api/values
         [HttpPost]        
         [SwaggerOperation("Post")]
-        [ProducesResponseType(typeof(Player), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Klant), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
-        public IActionResult CreatePlayer([FromBody]Player player)
+        public IActionResult CreatePlayer([FromBody]Klant player)
         {
             if (!ModelState.IsValid)
             {
@@ -47,9 +49,9 @@ namespace CAN.Klantbeheer.Facade.Facade.Controllers
         // PUT api/values/5
         [HttpPut]
         [SwaggerOperation("Update")]
-        [ProducesResponseType(typeof(Player), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Klant), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
-        public IActionResult UpdatePlayer([FromBody]Player player)
+        public IActionResult UpdatePlayer([FromBody]Klant player)
         {
             if (ModelState.IsValid)
             {
