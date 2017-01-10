@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CAN.Bestellingbeheer.Domain.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CAN.Bestellingbeheer.Infrastructure.DAL
 {

@@ -8,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Minor.WSA.Commons;
 using Minor.WSA.EventBus.Publisher;
 using Serilog;
+using CAN.Bestellingbeheer.Infrastructure.DAL;
+using CAN.Bestellingbeheer.Domain.Domain.Entities;
+using CAN.Bestellingbeheer.Domain.Domain.Interfaces;
+using CAN.Bestellingbeheer.Infrastructure.Infrastructure.Repositories;
 
 namespace CAN.Bestellingbeheer.Facade.Facade
 {

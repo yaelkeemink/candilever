@@ -3,6 +3,7 @@
   "testRunner": "mstest",
 
   "dependencies": {
+    "CAN.Bestellingbeheer.Infrastructure": "1.0.0-*",
     "dotnet-test-mstest": "1.1.1-preview",
     "Microsoft.EntityFrameworkCore.InMemory": "1.0.1",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",

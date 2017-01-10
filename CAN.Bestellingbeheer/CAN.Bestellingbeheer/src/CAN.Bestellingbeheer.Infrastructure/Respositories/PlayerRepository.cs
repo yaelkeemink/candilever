@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CAN.Bestellingbeheer.Domain.Domain.Entities;
+using CAN.Bestellingbeheer.Infrastructure.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace CAN.Bestellingbeheer.Infrastructure.Infrastructure.Repositories
 {
