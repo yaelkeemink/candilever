@@ -67,7 +67,11 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                 {
                     Artikelen = new List<Artikel>
                     {
-                        new Artikel { Prijs = 2.50M, Naam = "Artikel 1", Aantal = 5 }
+                        new Artikel {
+                            Prijs = 2.50M,
+                            Naam = "Artikel 1",
+                            Aantal = 5
+                        }
                     }
                 });
             }
@@ -88,7 +92,9 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                 {
                     Artikelen = new List<Artikel>
                     {
-                        new Artikel { Prijs = 2.50M }
+                        new Artikel {
+                            Prijs = 2.50M
+                        }
                     }
                 };
                 repo.Insert(bestelling);
@@ -109,7 +115,9 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                 {
                     Artikelen = new List<Artikel>
                     {
-                        new Artikel { Prijs = 2.50M }
+                        new Artikel {
+                            Prijs = 2.50M
+                        }
                     }
                 };
                 repo.Insert(bestelling);
@@ -117,7 +125,9 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                 {
                     Artikelen = new List<Artikel>
                     {
-                        new Artikel { Prijs = 3.50M }
+                        new Artikel {
+                            Prijs = 3.50M
+                        }
                     }
                 };
                 repo.Insert(bestelling);
@@ -137,12 +147,22 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                 {
                     Artikelen = new List<Artikel>
                     {
-                        new Artikel { Prijs = 2.50M }
+                        new Artikel {
+                            Prijs = 2.50M,
+                            Naam = "Artikel 1",
+                            Aantal = 5
+                        }
                     }
                 };
                 repo.Insert(bestelling);
+
                 bestelling = repo.Find(1);
-                bestelling.Artikelen.First().Prijs = 3.50M;
+
+                var artikel = bestelling.Artikelen.First();
+                artikel.Prijs = 3.50M;
+                artikel.Naam = "Artikel 2";
+                artikel.Aantal = 10;
+                
                 repo.Update(bestelling);
             }
 
@@ -150,7 +170,11 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
             {
                 var bestelling = repo.Find(1);
                 Assert.AreEqual(1, bestelling.Id);
-                Assert.AreEqual(3.50M, bestelling.Artikelen.First().Prijs);
+
+                var updatedArtikel = bestelling.Artikelen.First();
+                Assert.AreEqual(3.50M, updatedArtikel.Prijs);
+                Assert.AreEqual("Artikel 2", updatedArtikel.Naam);
+                Assert.AreEqual(10, updatedArtikel.Aantal);
             }
         }
     }
