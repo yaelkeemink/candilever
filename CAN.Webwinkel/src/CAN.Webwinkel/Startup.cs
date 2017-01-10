@@ -62,6 +62,9 @@ namespace CAN.Webwinkel
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -80,18 +83,12 @@ namespace CAN.Webwinkel
 
             app.UseApplicationInsightsExceptionTelemetry();
 
-            app.UseStaticFiles();
 
             app.UseIdentity();
-
+            app.UseMvc();
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+   
         }
     }
 }
