@@ -4,20 +4,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CAN.Bestellingbeheer.Infrastructure.Infrastructure.Repositories
 {
-    public class PlayerRepository
-        : BaseRepository<Player, long, DatabaseContext>
+    public class BestellingRepository
+        : BaseRepository<Bestelling, long, DatabaseContext>
     {
-        public PlayerRepository(DatabaseContext context) 
+        public BestellingRepository(DatabaseContext context) 
             : base(context)
         {
         }
 
-        protected override DbSet<Player> GetDbSet()
+        protected override DbSet<Bestelling> GetDbSet()
         {
-            return _context.Players;
+            return _context.Bestellingen;
         }
 
-        protected override long GetKeyFrom(Player item)
+        protected override long GetKeyFrom(Bestelling item)
         {
             return item.Id;
         }

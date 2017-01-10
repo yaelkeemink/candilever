@@ -4,9 +4,9 @@ using Minor.WSA.EventBus.Config;
 namespace CAN.Bestellingbeheer.Facade.Facade.Dispatchers 
 {
     [RoutingKey("#")]
-    public class PlayerDispatcher : EventDispatcher 
+    public class BestellingDispatcher : EventDispatcher 
     {
-        public PlayerDispatcher(EventBusConfig config) 
+        public BestellingDispatcher(EventBusConfig config) 
             : base(config) 
         {
 

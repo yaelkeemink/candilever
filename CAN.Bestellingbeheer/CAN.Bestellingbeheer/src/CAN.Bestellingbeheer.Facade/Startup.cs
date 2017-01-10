@@ -47,7 +47,7 @@ namespace CAN.Bestellingbeheer.Facade.Facade
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=db;Database=GameServer;UserID=sa,Password=admin"));
-            services.AddScoped<IRepository<Player, long>, PlayerRepository>();
+            services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
             services.AddScoped<IEventPublisher, EventPublisher>(config => {
                 System.Console.WriteLine("Ding aanmaken");
                 return new EventPublisher(null);
@@ -58,8 +58,8 @@ namespace CAN.Bestellingbeheer.Facade.Facade
                 options.SingleApiVersion(new Info
                 {
                     Version = "v1",
-                    Title = "A Monument service",
-                    Description = "Restauration of monuments",
+                    Title = "Bestellingbeheer Service",
+                    Description = "Bestellingbeheer Service voor het bestellen van artikelen",
                     TermsOfService = "None"
                 });
             });

@@ -5,7 +5,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.DAL
 {
     public class DatabaseContext : DbContext
     {
-        public virtual DbSet<Player> Players { get; set; }
+        public virtual DbSet<Bestelling> Bestellingen { get; set; }
 
         public DatabaseContext()
         {
@@ -17,7 +17,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Player>().Property(p => p.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Bestelling>().Property(p => p.Id).ValueGeneratedOnAdd();
 
             base.OnModelCreating(modelBuilder);
         }

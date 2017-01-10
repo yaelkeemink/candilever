@@ -10,11 +10,11 @@ using CAN.Bestellingbeheer.Domain.Domain.Entities;
 namespace CAN.Bestellingbeheer.Facade.Facade.Controllers
 {
     [Route("api/[controller]")]
-    public class PlayerController : Controller
+    public class BestellingController : Controller
     {
-        private readonly PlayerService _service;
+        private readonly BestellingService _service;
 
-        public PlayerController(PlayerService service)
+        public BestellingController(BestellingService service)
         {
             _service = service;
         }
@@ -22,9 +22,9 @@ namespace CAN.Bestellingbeheer.Facade.Facade.Controllers
         // POST api/values
         [HttpPost]        
         [SwaggerOperation("Post")]
-        [ProducesResponseType(typeof(Player), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Bestelling), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
-        public IActionResult CreatePlayer([FromBody]Player player)
+        public IActionResult CreateBestelling([FromBody]Bestelling bestelling)
         {
             if (!ModelState.IsValid)
             {
@@ -33,13 +33,13 @@ namespace CAN.Bestellingbeheer.Facade.Facade.Controllers
             }
                 try
                 {
-                    var room = _service.CreatePlayer(player);
+                    var room = _service.CreateBestelling(bestelling);
                     return Ok(room);
                 }
                 catch (Exception ex)
                 {
                     var error = new ErrorMessage(ErrorTypes.Unknown,
-                        $"Onbekende fout in create player: {player},/nException: {ex}");
+                        $"Onbekende fout in create bestelling: {bestelling},/nException: {ex}");
                     return BadRequest(error);
                 }
 
@@ -49,9 +49,9 @@ namespace CAN.Bestellingbeheer.Facade.Facade.Controllers
         // PUT api/values/5
         [HttpPut]
         [SwaggerOperation("Update")]
-        [ProducesResponseType(typeof(Player), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Bestelling), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
-        public IActionResult UpdatePlayer([FromBody]Player player)
+        public IActionResult UpdateBestelling([FromBody]Bestelling bestelling)
         {
             if (ModelState.IsValid)
             {
@@ -60,19 +60,19 @@ namespace CAN.Bestellingbeheer.Facade.Facade.Controllers
             }
             try
             {
-                var room = _service.UpdatePlayer(player);
+                var room = _service.UpdateBestelling(bestelling);
                 return Ok(room);
             }
             catch (DbUpdateException ex)
             {
                 var error = new ErrorMessage(ErrorTypes.NotFound,
-                        $"Fout met updaten in db: {player}/nException: {ex}");
+                        $"Fout met updaten in db: {bestelling}/nException: {ex}");
                 return NotFound(error);
             }
             catch (Exception ex)
             {
                 var error = new ErrorMessage(ErrorTypes.Unknown,
-                        $"Onbekende fout bij updaten: {player}/nException: {ex}");
+                        $"Onbekende fout bij updaten: {bestelling}/nException: {ex}");
                 return BadRequest(error);
             }
         }

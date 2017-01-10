@@ -5,6 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using CAN.Bestellingbeheer.Domain.Domain.Entities;
+using CAN.Bestellingbeheer.Infrastructure.DAL;
+using CAN.Bestellingbeheer.Infrastructure.Infrastructure.Repositories;
 
 namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
 {
@@ -39,16 +42,16 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
         public void TestAdd()
         {
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                repo.Insert(new Player()
+                repo.Insert(new Bestelling()
                 {
                     Name = "Naam"
                 });
             }
 
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(1, repo.Count());
             }
@@ -57,15 +60,15 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestFind()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                repo.Insert(new Player()
+                repo.Insert(new Bestelling()
                 {
                     Name = "Name"
                 });
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
                 var result = repo.Find(1);
                 Assert.AreEqual(1, result.Id);
@@ -75,17 +78,17 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestDelete()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                var player = new Player()
+                var bestelling = new Bestelling()
                 {
                     Name = "Name"
                 };
-                repo.Insert(player);
+                repo.Insert(bestelling);
                 repo.Delete(1);
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(0, repo.Count());
             }
@@ -93,21 +96,21 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestFindAll()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                var player = new Player()
+                var bestelling = new Bestelling()
                 {
                     Name = "Entity"
                 };
-                repo.Insert(player);
-                player = new Player()
+                repo.Insert(bestelling);
+                bestelling = new Bestelling()
                 {
                     Name = "Name"
                 };
-                repo.Insert(player);
+                repo.Insert(bestelling);
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(2, repo.Count());
             }
@@ -115,23 +118,23 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestUpdate()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                var player = new Player()
+                var bestelling = new Bestelling()
                 {
                     Name = "Entity"
                 };
-                repo.Insert(player);
-                player = repo.Find(1);
-                player.Name = "UpdatedName";
-                repo.Update(player);
+                repo.Insert(bestelling);
+                bestelling = repo.Find(1);
+                bestelling.Name = "UpdatedName";
+                repo.Update(bestelling);
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                var player = repo.Find(1);
-                Assert.AreEqual(1, player.Id);
-                Assert.AreEqual("UpdatedName", player.Name);
+                var bestelling = repo.Find(1);
+                Assert.AreEqual(1, bestelling.Id);
+                Assert.AreEqual("UpdatedName", bestelling.Name);
             }
         }
     }

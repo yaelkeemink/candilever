@@ -1,6 +1,6 @@
 ﻿namespace CAN.Bestellingbeheer.Domain.Domain.Entities
 {
-    public class Player
+    public class Bestelling
     {
         public long Id { get; set; }
 
