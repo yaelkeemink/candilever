@@ -1,0 +1,7 @@
+*Thumbs.db
+
+*obj/
+*bin/
+*.csproj.user
+*.suo
+.vs/
