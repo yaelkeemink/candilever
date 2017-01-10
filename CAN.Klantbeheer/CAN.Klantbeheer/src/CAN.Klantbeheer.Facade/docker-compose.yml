@@ -34,7 +34,7 @@ services:
     ports:
       - 11410:1433
     volumes:
-      - "C:/Docker/.OnderhoudsbeheerData/db:/var/opt/mssql/"
+      - "C:/Docker/.KlantbeheerData/db:/var/opt/mssql/"
 
 
 networks:
