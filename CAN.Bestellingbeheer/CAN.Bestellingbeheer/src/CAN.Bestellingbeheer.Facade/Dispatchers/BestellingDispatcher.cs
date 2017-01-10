@@ -1,7 +1,7 @@
 ﻿using Minor.WSA.EventBus.Dispatcher;
 using Minor.WSA.EventBus.Config;
 
-namespace CAN.Bestellingbeheer.Facade.Facade.Dispatchers 
+namespace CAN.Bestellingbeheer.Facade.Dispatchers 
 {
     [RoutingKey("#")]
     public class BestellingDispatcher : EventDispatcher 

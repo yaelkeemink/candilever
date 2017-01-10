@@ -5,8 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.Swagger.Model;
 using Microsoft.EntityFrameworkCore;
-using Minor.WSA.Commons;
-using Minor.WSA.EventBus.Publisher;
 using Serilog;
 using CAN.Bestellingbeheer.Infrastructure.DAL;
 using CAN.Bestellingbeheer.Domain.Domain.Entities;
