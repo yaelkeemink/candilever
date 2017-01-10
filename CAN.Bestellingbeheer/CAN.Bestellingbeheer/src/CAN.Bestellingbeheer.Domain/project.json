@@ -8,7 +8,9 @@
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.1"
-    }
+    },
+    "InfoSupport.WSA.Common": "1.7.0",
+    "CAN.Common": "1.0.0"
   },
 
   "frameworks": {

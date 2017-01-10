@@ -1,12 +1,11 @@
 ﻿{
   "name": "CAN.Common",
-  "version": "1.0.0-*",
+  "version": "1.0.1-*",
   "description": "Events for publishing and dispatching events",
   "title": "Candeliver Common Package",
 
   "dependencies": {
     "NETStandard.Library": "1.6.0",
-    "InfoSupport.WSA.InfraStructure": "1.7.0",
     "InfoSupport.WSA.Common": "1.7.0"
   },
 

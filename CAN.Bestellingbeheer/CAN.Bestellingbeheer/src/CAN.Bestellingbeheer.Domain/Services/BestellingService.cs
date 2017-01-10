@@ -1,5 +1,6 @@
 ﻿using CAN.Bestellingbeheer.Domain.Entities;
 using CAN.Bestellingbeheer.Domain.Interfaces;
+using InfoSupport.WSA.Infrastructure;
 using System;
 
 namespace CAN.Bestellingbeheer.Domain.Services {
@@ -7,7 +8,7 @@ namespace CAN.Bestellingbeheer.Domain.Services {
     {
         private readonly IRepository<Bestelling, long> _repository;
 
-        public BestellingService(IRepository<Bestelling, long> repository)
+        public BestellingService(IEventPublisher publisher, IRepository<Bestelling, long> repository)
         {
             _repository = repository;
         }
