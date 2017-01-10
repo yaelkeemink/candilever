@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using CAN.Bestellingbeheer.Domain.Domain.Interfaces;
+using CAN.Bestellingbeheer.Domain.Interfaces;
 
-namespace CAN.Bestellingbeheer.Infrastructure.Infrastructure.Repositories
+namespace CAN.Bestellingbeheer.Infrastructure.Repositories
 {
     public abstract class BaseRepository<Entity, Key, Context>
    : IRepository<Entity, Key>,

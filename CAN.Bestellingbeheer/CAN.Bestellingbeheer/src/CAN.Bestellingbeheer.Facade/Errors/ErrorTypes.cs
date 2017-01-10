@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CAN.Bestellingbeheer.Facade.Facade.Errors
+﻿
+namespace CAN.Bestellingbeheer.Facade.Errors
 {
     public enum ErrorTypes
     {
