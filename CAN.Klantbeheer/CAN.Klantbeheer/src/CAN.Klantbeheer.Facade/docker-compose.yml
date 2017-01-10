@@ -1,8 +1,8 @@
 version: '2'
 
 services:
-  case3.facade:
-    image: user/case3.facade${TAG}
+  can.klantbeheer.facade:
+    image: can.klantbeheer.facade
     build:
       context: .
       dockerfile: Dockerfile

@@ -47,7 +47,7 @@ namespace CAN.Klantbeheer.Facade.Facade
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=db;Database=GameServer;UserID=sa,Password=admin"));
-            services.AddScoped<IRepository<Klant, long>, PlayerRepository>();
+            services.AddScoped<IRepository<Klant, long>, KlantRepository>();
             services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(null));
 
             services.ConfigureSwaggerGen(options =>

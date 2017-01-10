@@ -5,7 +5,7 @@ namespace CAN.Klantbeheer.Infrastructure.DAL
 {
     public class DatabaseContext : DbContext
     {
-        public virtual DbSet<Klant> Players { get; set; }
+        public virtual DbSet<Klant> Klanten { get; set; }
 
         public DatabaseContext()
         {
