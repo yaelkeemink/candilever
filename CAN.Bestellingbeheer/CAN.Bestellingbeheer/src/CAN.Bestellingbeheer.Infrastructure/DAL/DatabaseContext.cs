@@ -24,7 +24,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.DAL
         {
             if (!optionsBuilder.IsConfigured) 
             {
-                optionsBuilder.UseSqlServer(@"Server=db;Database=can-kantilever-eventbus;UserID=sa,Password=admin");
+                optionsBuilder.UseSqlServer(@"Server=can-kantilever-eventbus;Database=can-kantilever-database;UserID=sa,Password=admin");
             }
         }
     }
