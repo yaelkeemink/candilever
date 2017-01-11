@@ -96,9 +96,9 @@ namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
         /// <returns></returns>
         public bool IsConnected()
         {
-            if (Channel == null)
+            if(Channel == null)
             {
-                _logger.Information("Channel not set");
+                return false;
             }
             return Channel.IsOpen;
         }
