@@ -1,0 +1,62 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/app-route/app-route.html">
+<link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="shop-common-styles.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/gold-phone-input/gold-phone-input.html">
+
+<dom-module id="shop-register">
+
+    <template>
+
+    <!--<app-route
+        route="[[route]]"
+        pattern="/:register"
+        data="{{routeData}}"></app-route>-->
+ <div class="main-frame">
+      <div class="subsection" visible$="[[!_hasItems]]">
+        <p class="empty-cart">Your <iron-icon icon="shopping-cart"></iron-icon> is empty.</p>
+      </div>
+      <div class="subsection" visible$="[[_hasItems]]">
+        <header>
+          <h1>Your Cart</h1>
+          <span>([[_getPluralizedQuantity(cart.length)]])</span>
+        </header>
+        <div class="list">
+          <template is="dom-repeat" items="[[cart]]" as="entry">
+            <shop-cart-item entry="[[entry]]"></shop-cart-item>
+          </template>
+        </div>
+        <div class="checkout-box">
+          Total: <span class="subtotal">[[_formatTotal(total)]]</span>
+          <shop-button responsive>
+            <a href="/checkout">Checkout</a>
+          </shop-button>
+        </div>
+      </div>
+    </div>
+
+    <form is="iron-form" id="form" method="POST" action="/handler">
+        <paper-input name="voornaam" label="Voornaam"></paper-input>
+        <paper-input name="tussenvoegsel" label="Tussenvoegsel"></paper-input>
+        <paper-input name="achternaam" label="Achternaam"></paper-input>
+        <paper-input name="postcode" label="Postcode"></paper-input>
+        <gold-phone-input
+            country-code="31"
+            phone-number-pattern="X-XX-XX-XX-XX">
+        </gold-phone-input>
+
+        <paper-button raised on-tap="submitForm()">Registreer</paper-button>
+    </form>
+<template>
+    <script>
+        Polymer({
+            is: 'shop-register',
+
+            submitForm: function() {
+                document.getElementById('form').submit();
+            }
+        })
+
+    </script>
+</dom-module>

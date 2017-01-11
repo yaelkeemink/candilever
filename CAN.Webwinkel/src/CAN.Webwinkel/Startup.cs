@@ -111,7 +111,7 @@ namespace CAN.Webwinkel
             factory.AddDebug();
             factory.AddSerilog();
 
-            var dbconnectionString = Configuration.GetConnectionString("DefaultConnection")
+            var dbconnectionString = Configuration.GetConnectionString("DefaultConnection");
 
 
     //        var listener = new EventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, factory.CreateLogger<EventListener>());
