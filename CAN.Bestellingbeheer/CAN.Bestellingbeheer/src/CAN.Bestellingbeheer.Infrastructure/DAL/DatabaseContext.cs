@@ -9,11 +9,13 @@ namespace CAN.Bestellingbeheer.Infrastructure.DAL
 
         public DatabaseContext()
         {
-            Database.Migrate();
+            Database.EnsureCreated();
         }
 
-        public DatabaseContext(DbContextOptions options)
-            : base(options) { }
+        public DatabaseContext(DbContextOptions options): base(options)
+        {
+            Database.EnsureCreated();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -22,10 +24,12 @@ namespace CAN.Bestellingbeheer.Infrastructure.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
         {
+            /*
             if (!optionsBuilder.IsConfigured) 
             {
                 optionsBuilder.UseSqlServer(@"Server=can_bestellingbeheer_mssql;Database=CAN_Bestellingbeheer;UserID=sa,Password=P@55w0rd");
             }
+            */
         }
     }
 }

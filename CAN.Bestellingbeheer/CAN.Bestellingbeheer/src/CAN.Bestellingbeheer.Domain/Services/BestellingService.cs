@@ -19,17 +19,24 @@ namespace CAN.Bestellingbeheer.Domain.Services {
             _repository = repository;
         }
 
-        public int CreateBestelling(Bestelling bestelling)
-        {
+        public Bestelling CreateBestelling(Bestelling bestelling)
+         {
             try
             {
                 long bestellingsnummer = _repository.Insert(bestelling);
-                _publisher.Publish(new BestellingCreatedEvent("l")
+
+                var createdEvent = new BestellingCreatedEvent("can.bestellingbeheer.bestellingcreated")
                 {
                     Bestellingsnummer = bestellingsnummer,
                     BestelDatum = bestelling.BestelDatum,
+                };
+
+                foreach(var artikel in bestelling.Artikelen)
+                {
+                    createdEvent.AddArtikel(artikel.Id, artikel.Naam, artikel.Prijs, artikel.Aantal);
                 }
-                );
+                
+                _publisher.Publish(createdEvent);
 
                 _logger.LogInformation("Bestelling created.", bestelling);
 
@@ -38,8 +45,9 @@ namespace CAN.Bestellingbeheer.Domain.Services {
                 _logger.LogError("Bestelling created failed.", bestelling, e.Message);
             }
 
-            return _repository.Insert(bestelling);
+            return bestelling;
         }
+
         public int UpdateBestelling(Bestelling bestelling)
         {
             return _repository.Update(bestelling);
@@ -47,6 +55,7 @@ namespace CAN.Bestellingbeheer.Domain.Services {
         public void Dispose()
         {
             _repository?.Dispose();
+            _publisher?.Dispose();
         }
 
 

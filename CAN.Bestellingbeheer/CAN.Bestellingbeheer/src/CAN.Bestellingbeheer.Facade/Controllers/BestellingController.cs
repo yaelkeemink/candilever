@@ -19,6 +19,8 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
             _service = service;
         }
 
+
+
         // POST api/values
         [HttpPost]        
         [SwaggerOperation("Post")]
@@ -31,19 +33,18 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
                 var error = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
                 return BadRequest(error);
             }
-                try
-                {
-                    var room = _service.CreateBestelling(bestelling);
-                    return Ok(room);
-                }
-                catch (Exception ex)
-                {
-                    var error = new ErrorMessage(ErrorTypes.Unknown,
-                        $"Onbekende fout in create bestelling: {bestelling},/nException: {ex}");
-                    return BadRequest(error);
-                }
 
-
+            try
+            {
+                var room = _service.CreateBestelling(bestelling);
+                return Ok(room);
+            }
+            catch (Exception ex)
+            {
+                var error = new ErrorMessage(ErrorTypes.Unknown,
+                    $"Onbekende fout in create bestelling: {bestelling},/nException: {ex}");
+                return BadRequest(error);
+            }
         }
 
         // PUT api/values/5

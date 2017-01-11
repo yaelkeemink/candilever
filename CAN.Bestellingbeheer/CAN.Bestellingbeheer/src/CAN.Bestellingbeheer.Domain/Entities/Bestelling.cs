@@ -8,7 +8,7 @@ namespace CAN.Bestellingbeheer.Domain.Entities
         public long Id { get; set; }
 
         public IList<Artikel> Artikelen { get; set; }
-        public DateTime BestelDatum { get; set; }
+        public DateTime BestelDatum { get; set; } = DateTime.Now;
 
         public Bestelling()
         {
