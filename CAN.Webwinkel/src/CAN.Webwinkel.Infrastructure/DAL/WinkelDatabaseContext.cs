@@ -1,4 +1,5 @@
-﻿using CAN.Webwinkel.Infrastructure.DAL.Entities;
+﻿using System;
+using CAN.Webwinkel.Infrastructure.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CAN.Webwinkel.Infrastructure.DAL
@@ -41,6 +42,14 @@ namespace CAN.Webwinkel.Infrastructure.DAL
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+        }
+
+        internal void PurgeCachedData()
+        {
+            Database.ExecuteSqlCommand("Delete from ArtikelCategory");
+            Database.ExecuteSqlCommand("Delete from Artikels");
+            Database.ExecuteSqlCommand("Delete from Categorieen");
+
         }
     }
 }

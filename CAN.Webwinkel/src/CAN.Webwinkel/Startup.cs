@@ -109,8 +109,9 @@ namespace CAN.Webwinkel
         {
             var log = new LoggerConfiguration().ReadFrom.Configuration(Configuration).MinimumLevel.Debug().CreateLogger();
             var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
-            var listener = new WinkelEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log);
+            var listener = new WinkelEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log, "ReplayService");
             listener.Start();
+            /// wachten
         }
     }
 }
