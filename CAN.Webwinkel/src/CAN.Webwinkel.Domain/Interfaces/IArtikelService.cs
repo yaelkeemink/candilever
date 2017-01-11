@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CAN.Webwinkel.Domain.Interfaces
 {
-    interface IArtikelService
+    public interface IArtikelService
     {
         IEnumerable<Artikel> ArtikelenBijCategorie(string categorieNaam); 
     }
