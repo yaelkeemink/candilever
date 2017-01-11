@@ -1,0 +1,25 @@
+﻿{
+  "name": "CAN.Common",
+  "version": "1.0.2-*",
+  "description": "Events for publishing and dispatching events",
+  "title": "Candeliver Common Package",
+
+  "dependencies": {
+    "NETStandard.Library": "1.6.0",
+    "InfoSupport.WSA.Common": "1.7.0"
+  },
+
+  "packOptions": {
+    "owners": [ "Lars Celie", "Rob Gerritsen", "Yeal Keemink", "Michiel Blaauw", "Robert-Jan Kooijman", "Vincent van de Meent" ]
+  },
+
+  "frameworks": {
+    "netstandard1.6": {
+      "imports": "dnxcore50"
+    }
+  },
+
+  "scripts": {
+    "postcompile": "dotnet pack -o C:\\_localNugetFeed --no-build --configuration %compile:Configuration%"
+  }
+}
