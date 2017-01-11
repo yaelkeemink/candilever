@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using CAN.Bestellingbeheer.Domain.Services;
 using CAN.Bestellingbeheer.Domain.Entities;
 using CAN.Bestellingbeheer.Facade.Errors;
+using Microsoft.Extensions.Logging;
 
 namespace CAN.Bestellingbeheer.Facade.Controllers
 {
@@ -13,10 +14,12 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
     public class BestellingController : Controller
     {
         private readonly BestellingService _service;
+        private readonly ILogger<BestellingService> _logger;
 
-        public BestellingController(BestellingService service)
+        public BestellingController(BestellingService service, ILogger<BestellingService> logger)
         {
             _service = service;
+            _logger = logger;
         }
 
         // POST api/values
@@ -29,21 +32,25 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
             if (!ModelState.IsValid)
             {
                 var error = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
+
+                _logger.LogWarning("Create bestelling failed, Modelstate Invalide", bestelling);
                 return BadRequest(error);
             }
-                try
-                {
-                    var room = _service.CreateBestelling(bestelling);
-                    return Ok(room);
-                }
-                catch (Exception ex)
-                {
-                    var error = new ErrorMessage(ErrorTypes.Unknown,
-                        $"Onbekende fout in create bestelling: {bestelling},/nException: {ex}");
-                    return BadRequest(error);
-                }
 
+            try
+            {
+                var result = _service.CreateBestelling(bestelling);
 
+                _logger.LogInformation("Create bestelling success", result);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                var error = new ErrorMessage(ErrorTypes.Unknown, $"Onbekende fout in create bestelling: {bestelling},/nException: {ex}");
+
+                _logger.LogError("Create bestelling failed, Unknown Error", bestelling, ex);
+                return BadRequest(error);
+            }
         }
 
         // PUT api/values/5
@@ -53,7 +60,7 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
         public IActionResult UpdateBestelling([FromBody]Bestelling bestelling)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 var error = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
                 return BadRequest(error);

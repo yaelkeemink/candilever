@@ -13,6 +13,7 @@ namespace CAN.Bestellingbeheer.Domain.Entities
         public Bestelling()
         {
             Artikelen = new List<Artikel>();
+            BestelDatum = DateTime.Now; 
         }
     }
 }
