@@ -2,24 +2,24 @@
 using CAN.Webwinkel.Infrastructure.EventListener.Dispatchers;
 using InfoSupport.WSA.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Serilog;
 
 namespace CAN.Webwinkel.Infrastructure.EventListener
 {
-    public class EventListener
+    public class WinkelEventListener
     {
 
         private BusOptions _busOptions;
         private string _dbConnectionString;
-        private ILogger<EventListener> _logger;
+        private ILogger _logger;
 
 
-        public EventListener(BusOptions busOptions, string dbConnectionString, ILogger<EventListener> logger)
+        public WinkelEventListener(BusOptions busOptions, string dbConnectionString, ILogger logger)
         {
             _busOptions = busOptions;
             _dbConnectionString = dbConnectionString;
@@ -48,20 +48,25 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
 
             while (true)
             {
+
                 try
                 {
-                    using (var dispatcher = new ArtikelEventDispatcher(_busOptions, dbOptions))
+                    using (var dispatcher = new ArtikelEventDispatcher(_busOptions, dbOptions, _logger))
                     {
-                        while (dispatcher.GetConnection().IsOpen)
+                        _logger.Information("Opening connection with Rabbit mq");
+                        dispatcher.Open();
+                        _logger.Information("Connection with Rabbit mq is open");
+                        while (dispatcher.IsConnected())
                         {
+                            _logger.Information("Connected with Rabbit Mq");
                             Thread.Sleep(60000);
                         }
-                        _logger.LogInformation("Connection with Rabbit Mq lost");
+                        _logger.Information("Connection with Rabbit Mq lost");
                     }
                 }
                 catch (Exception e)
                 {
-                    _logger.LogError("Error with EventDispatcher", e);
+                    _logger.Error($"Error with EventDispatcher {e.Message}");
                     Thread.Sleep(5000);
                 }
             }

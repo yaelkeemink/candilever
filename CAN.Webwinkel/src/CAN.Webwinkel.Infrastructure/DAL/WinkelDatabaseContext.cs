@@ -15,6 +15,7 @@ namespace CAN.Webwinkel.Infrastructure.DAL
         public WinkelDatabaseContext(DbContextOptions options)
             : base(options)
         {
+
             Database.EnsureCreated();
         }
 
