@@ -5,18 +5,19 @@ using System.Net;
 using Microsoft.EntityFrameworkCore;
 using CAN.Klantbeheer.Domain.Entities;
 using CAN.Klantbeheer.Facade.Errors;
-using CAN.Klantbeheer.Domain.Services;
 using Microsoft.Extensions.Logging;
+using CAN.Klantbeheer.Domain.Interfaces;
+
 
 namespace CAN.Klantbeheer.Facade.Controllers
 {
     [Route("api/[controller]")]
     public class KlantController : Controller
     {
-        private readonly KlantService _service;
+        private readonly IKlantService _service;
         private readonly ILogger<KlantController> _logger;
 
-        public KlantController(ILogger<KlantController> logger, KlantService service)
+        public KlantController(ILogger<KlantController> logger, IKlantService service)
         {
             _logger = logger;
             _service = service;
@@ -30,26 +31,28 @@ namespace CAN.Klantbeheer.Facade.Controllers
         public IActionResult CreateKlant([FromBody]Klant klant)
         {
             _logger.LogInformation("Create Klant called", klant);
-            if (!ModelState.IsValid)
-            {
-                var error = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
-                _logger.LogError("Create Klant Model State invalid", error);
-                return BadRequest(error);
-            }
             try
             {
-                var room = _service.CreateKlant(klant);
-                return Ok(room);
+                if (ModelState.IsValid)
+                {
+                    var result = _service.CreateKlant(klant);
+                    if (result != 0)
+                    {
+                        return Ok(result);
+                    }
+                }
             }
             catch (Exception ex)
             {
                 var error = new ErrorMessage(ErrorTypes.Unknown,
-                    $"Onbekende fout in create player: {klant},/nException: {ex}");
+                    $"Onbekende fout in create klant: {klant},/nException: {ex}");
                 _logger.LogError("Create Klant unkown error occured", error);
                 return BadRequest(error);
-            }
+            }            
 
-
+            var modelstateInvalidError = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
+            _logger.LogError("Create Klant Model State invalid", modelstateInvalidError);
+            return BadRequest(modelstateInvalidError);
         }
 
         // PUT api/values/5
@@ -60,16 +63,13 @@ namespace CAN.Klantbeheer.Facade.Controllers
         public IActionResult UpdateKlant([FromBody]Klant klant)
         {
             _logger.LogInformation("Update Klant called", klant);
-            if (!ModelState.IsValid)
-            {
-                var error = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
-                _logger.LogError("Update Klant Model State invalid", error);
-                return BadRequest(error);
-            }
             try
             {
-                var room = _service.UpdateKlant(klant);
-                return Ok(room);
+                if (ModelState.IsValid)
+                {
+                    var room = _service.UpdateKlant(klant);
+                    return Ok(room);
+                }
             }
             catch (DbUpdateException ex)
             {
@@ -85,10 +85,12 @@ namespace CAN.Klantbeheer.Facade.Controllers
                 _logger.LogError("Create Klant unkown error occured", error);
                 return BadRequest(error);
             }
+            var modelstateError = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
+            _logger.LogError("Update Klant Model State invalid", modelstateError);
+            return BadRequest(modelstateError);
         }
         protected override void Dispose(bool disposing)
         {
-            _service.Dispose();
             base.Dispose(disposing);
         }
     }
