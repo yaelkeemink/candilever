@@ -48,12 +48,17 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
 
             while (true)
             {
+
                 try
                 {
-                    using (var dispatcher = new ArtikelEventDispatcher(_busOptions, dbOptions))
+                    using (var dispatcher = new ArtikelEventDispatcher(_busOptions, dbOptions, _logger))
                     {
-                        while (dispatcher.GetConnection().IsOpen)
+                        _logger.Information("Opening connection with Rabbit mq");
+                        dispatcher.Open();
+                        _logger.Information("Connection with Rabbit mq is open");
+                        while (dispatcher.IsConnected())
                         {
+                            _logger.Information("Connected with Rabbit Mq");
                             Thread.Sleep(60000);
                         }
                         _logger.Information("Connection with Rabbit Mq lost");
@@ -61,7 +66,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
                 }
                 catch (Exception e)
                 {
-                    _logger.Error("Error with EventDispatcher", e);
+                    _logger.Error($"Error with EventDispatcher {e.Message}");
                     Thread.Sleep(5000);
                 }
             }

@@ -11,15 +11,17 @@ using CAN.Webwinkel.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
 using CAN.Webwinkel.Infrastructure.DAL.Repositories;
 using CAN.Webwinkel.Infrastructure.DAL.Entities;
+using Serilog;
 
 namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
 {
     public class ArtikelEventDispatcher : EventDispatcher
     {
         private DbContextOptions<WinkelDatabaseContext> _dbOptions;
-
-        public ArtikelEventDispatcher(BusOptions options = null, DbContextOptions<WinkelDatabaseContext> dbOptions = null) : base(options)
+        private ILogger _logger;
+        public ArtikelEventDispatcher(BusOptions options, DbContextOptions<WinkelDatabaseContext> dbOptions, ILogger logger) : base(options)
         {
+            _logger = logger;
             _dbOptions = dbOptions;
         }
 
@@ -29,28 +31,49 @@ namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
         /// <param name="evt"></param>
         public void ArtikelAanCatalogusToegevoegd(ArtikelAanCatalogusToegevoegd evt)
         {
+            _logger.Debug($"Artikel toegevoegd {evt.Artikelnummer} {evt.Naam}");
             using (var context = new WinkelDatabaseContext(_dbOptions))
             using (var repo = new ArtikelRepository(context))
-            {
+            {                
                 var artikel = new Artikel(evt);
                 repo.Insert(artikel);
                 
             }
         }
+
         public void ArtikelUitCatalogusVerwijderd(ArtikelUitCatalogusVerwijderd evt)
         {
-            Console.WriteLine(evt.GetType().Name);
-            Console.WriteLine(evt.Artikelnummer);
+            _logger.Debug($"Artikel verwijdert {evt.Artikelnummer}");
+            using (var context = new WinkelDatabaseContext(_dbOptions))
+            using (var repo = new ArtikelRepository(context))
+            {
+                repo.Delete(evt.Artikelnummer);
+
+            }
         }
+
         public void ArtikelInMagazijnGezet(ArtikelInMagazijnGezet evt)
         {
-            Console.WriteLine(evt.GetType().Name);
-            Console.WriteLine($"nr={evt.ArtikelID}, voorraad={evt.Voorraad}");
+            _logger.Debug($"Artikel in magazijn {evt.ArtikelID} nieuwe voorraad {evt.Voorraad}");
+            using (var context = new WinkelDatabaseContext(_dbOptions))
+            using (var repo = new ArtikelRepository(context))
+            {
+               var artikel = repo.Find(evt.ArtikelID);
+                artikel.Voorraad = evt.Voorraad;
+                repo.Update(artikel);
+            }
+
         }
         public void ArtikelInMagazijnGezet(ArtikelUitMagazijnGehaald evt)
         {
-            Console.WriteLine(evt.GetType().Name);
-            Console.WriteLine($"nr={evt.ArtikelID}, voorraad={evt.Voorraad}");
+            _logger.Debug($"Artikel uit magazijn {evt.ArtikelID} nieuwe voorraad {evt.Voorraad}");
+            using (var context = new WinkelDatabaseContext(_dbOptions))
+            using (var repo = new ArtikelRepository(context))
+            {
+                var artikel = repo.Find(evt.ArtikelID);
+                artikel.Voorraad = evt.Voorraad;
+                repo.Update(artikel);
+            }
         }
 
 
@@ -58,9 +81,13 @@ namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
         /// 
         /// </summary>
         /// <returns></returns>
-        public IModel GetConnection()
+        public bool IsConnected()
         {
-            return Channel;
+            if(Channel == null)
+            {
+                _logger.Information("Channel not set");
+            }
+            return Channel.IsOpen;
         }
     }
 }

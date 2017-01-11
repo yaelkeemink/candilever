@@ -42,6 +42,7 @@ namespace CAN.Webwinkel.Infrastructure.DAL.Entities
         public DateTime? LeverbaarTot { get; set; }
         public string LeverancierCode { get; set; }
         public string Leverancier { get; set; }
+        public int Voorraad { get; set; } = 0;
 
         public List<ArtikelCategory> ArtikelCategory { get; set; } = new List<ArtikelCategory>();
 
