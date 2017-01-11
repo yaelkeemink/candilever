@@ -16,6 +16,9 @@ using CAN.Webwinkel.Infrastructure.EventListener;
 using InfoSupport.WSA.Infrastructure;
 using CAN.Webwinkel.Domain.Interfaces;
 using CAN.Webwinkel.Domain.Services;
+using CAN.Webwinkel.Domain.Entities;
+using CAN.Webwinkel.Infrastructure.DAL.Repositories;
+using CAN.Webwinkel.Infrastructure.DAL;
 
 namespace CAN.Webwinkel
 {
@@ -67,6 +70,12 @@ namespace CAN.Webwinkel
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            services.AddDbContext<WinkelDatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddScoped<IRepository<Categorie, int>, CategorieRepository>();
+            services.AddScoped<IRepository<Artikel, int>, ArtikelRepository>();
+            services.AddScoped<ICategorieService, CategorieService>();
+            services.AddScoped<IArtikelService, ArtikelService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

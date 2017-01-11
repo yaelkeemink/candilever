@@ -9,6 +9,7 @@ using CAN.Webwinkel.Infrastructure.DAL.Repositories;
 using CAN.Webwinkel.Domain.Entities;
 using CAN.Webwinkel.Domain.Interfaces;
 using CAN.Webwinkel.Domain.Services;
+using CAN.Webwinkel.Models;
 
 namespace CAN.Webwinkel.Controllers
 {
@@ -27,9 +28,10 @@ namespace CAN.Webwinkel.Controllers
         }
 
         [Route("{categorieNaam}")]
-        public IEnumerable<Artikel> Get(string categorieNaam)
+        public IEnumerable<ApiArtikelenModel> Get(string categorieNaam)
         {
             var artikelen = _service.ArtikelenBijCategorie(categorieNaam);
+            return artikelen.Select(a => new ApiArtikelenModel(a));
         }
     }
 }

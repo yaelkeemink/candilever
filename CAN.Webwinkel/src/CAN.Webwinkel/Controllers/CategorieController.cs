@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using CAN.Webwinkel.Domain.Interfaces;
 
 namespace CAN.Webwinkel.Controllers
 {
@@ -13,15 +14,17 @@ namespace CAN.Webwinkel.Controllers
     public class CategorieController : Controller
     {
         private readonly ILogger<CategorieController> _logger;
+        private readonly ICategorieService _service;
 
-        public CategorieController(ILogger<CategorieController> logger)
+        public CategorieController(ILogger<CategorieController> logger, ICategorieService service)
         {
             _logger = logger;
+            _service = service;
         }
 
-        public IEnumerable<Object> Get()
+        public IEnumerable<string> Get()
         {
-            return null;
+            return _service.AlleCategorieen();
         }
     }
 }

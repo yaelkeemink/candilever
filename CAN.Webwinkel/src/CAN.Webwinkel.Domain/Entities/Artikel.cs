@@ -1,4 +1,5 @@
-﻿using Kantilever.Catalogusbeheer.Events;
+﻿using CAN.Webwinkel.Domain.Entities;
+using Kantilever.Catalogusbeheer.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,12 @@ namespace CAN.Webwinkel.Domain.Entities
         public string Naam { get; set; }
         public string Beschrijving { get; set; }
         public decimal Prijs { get; set; }
-
         public string AfbeeldingUrl { get; set; }
         public DateTime LeverbaarVanaf { get; set; }
         public DateTime? LeverbaarTot { get; set; }
         public string LeverancierCode { get; set; }
         public string Leverancier { get; set; }
+        public int Voorraad { get; set; }
 
         public List<ArtikelCategorie> ArtikelCategorie { get; set; }
 
@@ -39,14 +40,14 @@ namespace CAN.Webwinkel.Domain.Entities
             LeverancierCode = evt.LeverancierCode;
             Leverancier = evt.Leverancier;
 
-            ArtikelCategory = new List<ArtikelCategory>();
+            ArtikelCategorie = new List<ArtikelCategorie>();
             foreach (var category in evt.Categorieen)
             {
-                ArtikelCategory.Add(
-                    new ArtikelCategory()
+                ArtikelCategorie.Add(
+                    new ArtikelCategorie()
                     {
                         Artikel = this,
-                        Category = new Category()
+                        Categorie = new Categorie()
                         {
                             Naam = category
                         }
