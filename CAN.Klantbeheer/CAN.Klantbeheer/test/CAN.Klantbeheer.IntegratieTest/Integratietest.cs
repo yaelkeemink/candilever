@@ -27,10 +27,14 @@ namespace CAN.Klantbeheer.IntegratieTest
 
             var klant = new Klant
             {
-                Achternaam = "Keemink",
                 Tussenvoegsels = "de",
+                Achternaam = "Keemink",
                 Postcode = "2361VJ",
                 Telefoonnummer = "0640480381",
+                Adres = "2361VJ",
+                Email = "yaelkeemink@gmail.com",
+                Huisnummer = "14",
+                Land = "Nederland",
             };
             var json = JsonConvert.SerializeObject(klant);
 

@@ -20,9 +20,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CAN.Klantbeheer.IntegratieTest", "CAN.Klantbeheer.IntegratieTest\CAN.Klantbeheer.IntegratieTest.xproj", "{384CE833-3FAA-4A15-98B2-7C27F2A7CEAB}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CAN.Klantbeheer.IntegratieTest", "CAN.Klantbeheer\test\CAN.Klantbeheer.IntegratieTest\CAN.Klantbeheer.IntegratieTest.xproj", "{384CE833-3FAA-4A15-98B2-7C27F2A7CEAB}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CAN.Klantbeheer.Domain.Test", "CAN.Klantbeheer.Domain.Test\CAN.Klantbeheer.Domain.Test.xproj", "{75CD0E89-0879-48F8-8E40-A3EA0EAD1B52}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CAN.Klantbeheer.Domain.Test", "CAN.Klantbeheer\test\CAN.Klantbeheer.Domain.Test\CAN.Klantbeheer.Domain.Test.xproj", "{75CD0E89-0879-48F8-8E40-A3EA0EAD1B52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
