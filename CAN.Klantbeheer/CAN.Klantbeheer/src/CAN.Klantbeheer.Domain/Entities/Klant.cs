@@ -18,5 +18,6 @@ namespace CAN.Klantbeheer.Domain.Entities
         public string Email { get; set; }
         public string Huisnummer { get; set; }
         public string Adres { get; set; }
+        public string Land { get; set; }
     }
 }

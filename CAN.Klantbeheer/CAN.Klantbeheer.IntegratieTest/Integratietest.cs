@@ -18,7 +18,7 @@ namespace CAN.Klantbeheer.IntegratieTest
     public class Integratietest
     {
         //[TestMethod]
-        //Werkt nog niet!
+        //Werkt nog niet door IIS-express probleem
         public async void TestAddZonderVoornaam()
         {
             // Arrange
@@ -36,7 +36,7 @@ namespace CAN.Klantbeheer.IntegratieTest
             var json = JsonConvert.SerializeObject(klant);
 
             // Act
-            var response = await _client.PostAsync("api/v1/monumenten", new StringContent(json, Encoding.UTF8, "application/json"));
+            var response = await _client.PostAsync("api/v1/klant", new StringContent(json, Encoding.UTF8, "application/json"));
             response.EnsureSuccessStatusCode();
 
             // Assert

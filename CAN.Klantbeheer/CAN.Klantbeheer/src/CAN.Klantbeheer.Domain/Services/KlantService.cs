@@ -28,6 +28,10 @@ namespace CAN.Klantbeheer.Domain.Services {
                 Achternaam = klant.Achternaam,
                 Postcode = klant.Postcode,
                 Telefoonnummer = klant.Telefoonnummer,
+                Adres = klant.Adres,
+                Email = klant.Email,
+                Huisnummer = klant.Huisnummer,
+                Land = klant.Land,
             });
             
             return toReturn;
