@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "buildOptions": {
     "emitEntryPoint": true
@@ -9,8 +9,8 @@
       "type": "platform",
       "version": "1.0.1"
     },
-    "InfoSupport.WSA.Common": "1.7.0",
-    "CAN.Common": "1.0.0"
+    "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
+    "CAN.Common": "1.0.1"
   },
 
   "frameworks": {

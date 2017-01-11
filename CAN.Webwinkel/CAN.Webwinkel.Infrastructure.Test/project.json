@@ -1,0 +1,22 @@
+{
+  "version": "1.0.0-*",
+  "testRunner": "mstest",
+  "dependencies": {
+    "CAN.Webwinkel.Infrastructure": "1.0.0-*",
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.1"
+    },
+    "dotnet-test-mstest": "1.1.2-preview",
+    "MSTest.TestFramework": "1.0.6-preview",
+    "Moq": "4.6.38-alpha",
+    "Microsoft.CodeCoverage": "1.0.2",
+    "Microsoft.EntityFrameworkCore.InMemory": "1.1.0"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": "dnxcore50"
+    }
+  }
+}
