@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using CAN.Webwinkel.Infrastructure.DAL.Repositories;
 using CAN.Webwinkel.Domain.Entities;
 using CAN.Webwinkel.Domain.Interfaces;
+using CAN.Webwinkel.Domain.Services;
 
 namespace CAN.Webwinkel.Controllers
 {
@@ -17,20 +18,18 @@ namespace CAN.Webwinkel.Controllers
     {
 
         private readonly ILogger<ArtikelController> _logger;
-        private readonly IRepository<Categorie, int> _repository;
+        private readonly IArtikelService _service;
 
-        public ArtikelController(ILogger<ArtikelController> logger, IRepository<Categorie, int> repository)
+        public ArtikelController(ILogger<ArtikelController> logger, IArtikelService service)
         {
             _logger = logger;
-            _repository = repository;
+            _service = service;
         }
 
         [Route("{categorieNaam}")]
         public IEnumerable<Artikel> Get(string categorieNaam)
         {
-            var query = _repository.FindAll()
-                .Select(c => c.ArtikelCategorie.Select(ac => ac.Artikel));
-            return null;
+            var artikelen = _service.ArtikelenBijCategorie(categorieNaam);
         }
     }
 }
