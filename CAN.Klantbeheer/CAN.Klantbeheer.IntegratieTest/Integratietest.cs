@@ -70,61 +70,7 @@ namespace CAN.Klantbeheer.IntegratieTest
             // Assert
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
-        [TestMethod]
-        public async Task TestAddZonderZonderTelefoonnummer()
-        {
-            // Arrange
-            var _server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>());
-            var _client = _server.CreateClient();
-
-            var klant = new Klant
-            {
-                Voornaam = "Yael",
-                Achternaam = "Keemink",
-                Tussenvoegsels = "de",
-                Postcode = "2361VJ",
-                Adres = "2361VJ",
-                Email = "yaelkeemink@gmail.com",
-                Huisnummer = "14",
-                Land = "Nederland",
-            };
-            var json = JsonConvert.SerializeObject(klant);
-
-            // Act
-            var response = await _client.PostAsync("api/klant", new StringContent(json, Encoding.UTF8, "application/json"));
-
-
-            // Assert
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        }
-        [TestMethod]
-        public async Task TestAddZonderZonderEmail()
-        {
-            // Arrange
-            var _server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>());
-            var _client = _server.CreateClient();
-
-            var klant = new Klant
-            {
-                Voornaam = "Yael",
-                Tussenvoegsels = "de",
-                Achternaam = "Keemink",
-                Postcode = "2361VJ",
-                Telefoonnummer = "0640480381",
-                Adres = "2361VJ",
-                Huisnummer = "14",
-                Land = "Nederland",
-            };
-            var json = JsonConvert.SerializeObject(klant);
-
-            // Act
-            var response = await _client.PostAsync("api/klant", new StringContent(json, Encoding.UTF8, "application/json"));
-            
-            // Assert
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        }
+        
         [TestMethod]
         public async Task TestAddZonderZonderEmailEnTelefoonnummer()
         {

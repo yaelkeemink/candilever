@@ -22,6 +22,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CAN.Klantbeheer.IntegratieTest", "CAN.Klantbeheer.IntegratieTest\CAN.Klantbeheer.IntegratieTest.xproj", "{384CE833-3FAA-4A15-98B2-7C27F2A7CEAB}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CAN.Klantbeheer.Domain.Test", "CAN.Klantbeheer.Domain.Test\CAN.Klantbeheer.Domain.Test.xproj", "{75CD0E89-0879-48F8-8E40-A3EA0EAD1B52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{384CE833-3FAA-4A15-98B2-7C27F2A7CEAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{384CE833-3FAA-4A15-98B2-7C27F2A7CEAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{384CE833-3FAA-4A15-98B2-7C27F2A7CEAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75CD0E89-0879-48F8-8E40-A3EA0EAD1B52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75CD0E89-0879-48F8-8E40-A3EA0EAD1B52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75CD0E89-0879-48F8-8E40-A3EA0EAD1B52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75CD0E89-0879-48F8-8E40-A3EA0EAD1B52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,5 +64,6 @@ Global
 		{1ACCA827-8F55-4A56-9558-665ABF171E77} = {490C8F17-B827-48C4-9E22-ABDB7BBBCFF7}
 		{94C322A7-A9EE-4238-A060-E659B52C9B61} = {10992D2E-0228-4806-ABB9-FF496C7E310A}
 		{384CE833-3FAA-4A15-98B2-7C27F2A7CEAB} = {10992D2E-0228-4806-ABB9-FF496C7E310A}
+		{75CD0E89-0879-48F8-8E40-A3EA0EAD1B52} = {10992D2E-0228-4806-ABB9-FF496C7E310A}
 	EndGlobalSection
 EndGlobal

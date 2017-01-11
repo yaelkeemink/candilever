@@ -20,7 +20,7 @@ namespace CAN.Klantbeheer.Domain.Services {
         public int CreateKlant(Klant klant)
         {
             int toReturn = 0;
-            if (!string.IsNullOrEmpty(klant.Telefoonnummer) || string.IsNullOrEmpty(klant.Email))
+            if (!string.IsNullOrEmpty(klant.Telefoonnummer) || !string.IsNullOrEmpty(klant.Email))
             {
                 klant.Email = "";
                 toReturn = _repository.Insert(klant);
