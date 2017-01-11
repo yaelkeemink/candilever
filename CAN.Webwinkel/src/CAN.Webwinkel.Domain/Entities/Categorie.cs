@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CAN.Webwinkel.Infrastructure.DAL.Entities
+namespace CAN.Webwinkel.Domain.Entities
 {
-    public class Category
+    public class Categorie
     {
         public long Id { get; set; }
         public string Naam { get; set; }
-        public List<ArtikelCategory> ArtikelCategory { get; set; } = new List<ArtikelCategory>();
+        public List<ArtikelCategorie> ArtikelCategorie { get; set; } = new List<ArtikelCategorie>();
     }
 }

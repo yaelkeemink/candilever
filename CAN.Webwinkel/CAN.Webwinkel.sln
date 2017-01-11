@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{314243C7-F
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CAN.Webwinkel.Infrastructure.Test", "CAN.Webwinkel.Infrastructure.Test\CAN.Webwinkel.Infrastructure.Test.xproj", "{EFFD4A72-1C48-40BD-A944-AC2929AB375A}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CAN.Webwinkel.Domain", "src\CAN.Webwinkel.Domain\CAN.Webwinkel.Domain.xproj", "{CC04D72F-43C2-44FD-A8EA-ED2CA6998D17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{EFFD4A72-1C48-40BD-A944-AC2929AB375A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFFD4A72-1C48-40BD-A944-AC2929AB375A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFFD4A72-1C48-40BD-A944-AC2929AB375A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC04D72F-43C2-44FD-A8EA-ED2CA6998D17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC04D72F-43C2-44FD-A8EA-ED2CA6998D17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC04D72F-43C2-44FD-A8EA-ED2CA6998D17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC04D72F-43C2-44FD-A8EA-ED2CA6998D17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,5 +50,6 @@ Global
 		{AEDDE55C-1DCD-45C1-B374-7D79CE244672} = {96539C5B-DDEC-4F6C-BBE1-AF90BC6398CF}
 		{509C532B-8D1A-41E2-BF74-9AA3C62392CE} = {96539C5B-DDEC-4F6C-BBE1-AF90BC6398CF}
 		{EFFD4A72-1C48-40BD-A944-AC2929AB375A} = {314243C7-F1F5-448F-934F-12DA7CADAF74}
+		{CC04D72F-43C2-44FD-A8EA-ED2CA6998D17} = {96539C5B-DDEC-4F6C-BBE1-AF90BC6398CF}
 	EndGlobalSection
 EndGlobal

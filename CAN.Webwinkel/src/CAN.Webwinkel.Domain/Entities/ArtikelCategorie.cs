@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CAN.Webwinkel.Infrastructure.DAL.Entities
+namespace CAN.Webwinkel.Domain.Entities
 {
-    public class ArtikelCategory
+    public class ArtikelCategorie
     {
         public long ArtikelId { get; set; }
         public Artikel Artikel { get; set; }
 
         public long CategoryId { get; set; }
-        public Category Category { get; set; }
+        public Categorie Categorie { get; set; }
     }
 }

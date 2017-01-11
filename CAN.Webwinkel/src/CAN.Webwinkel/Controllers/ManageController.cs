@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CAN.Webwinkel.Models;
 using CAN.Webwinkel.Models.ManageViewModels;
-using CAN.Webwinkel.Services;
+using CAN.Webwinkel.Domain.Interfaces;
 
 namespace CAN.Webwinkel.Controllers
 {

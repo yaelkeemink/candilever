@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CAN.Webwinkel.Services
+namespace CAN.Webwinkel.Domain.Interfaces
 {
     public interface ISmsSender
     {
