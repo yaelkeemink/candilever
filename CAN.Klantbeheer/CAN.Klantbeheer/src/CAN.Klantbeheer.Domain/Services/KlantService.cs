@@ -36,7 +36,7 @@ namespace CAN.Klantbeheer.Domain.Services {
                     Adres = klant.Adres,
                     Email = klant.Email,
                     Huisnummer = klant.Huisnummer,
-                    Land = klant.Land,
+                    Land = klant.Land.ToString(),
                 });
             }
             return toReturn;

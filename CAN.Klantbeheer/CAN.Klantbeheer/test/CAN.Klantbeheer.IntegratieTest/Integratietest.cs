@@ -11,6 +11,7 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json;
 using CAN.Klantbeheer.Domain.Entities;
+using CAN.Klantbeheer.Domain.Enums;
 
 namespace CAN.Klantbeheer.IntegratieTest
 {
@@ -34,7 +35,7 @@ namespace CAN.Klantbeheer.IntegratieTest
                 Adres = "2361VJ",
                 Email = "yaelkeemink@gmail.com",
                 Huisnummer = "14",
-                Land = "Nederland",
+                Land = Land.Nederland,
             };
             var json = JsonConvert.SerializeObject(klant);
 
@@ -63,7 +64,7 @@ namespace CAN.Klantbeheer.IntegratieTest
                 Adres = "2361VJ",
                 Email = "yaelkeemink@gmail.com",
                 Huisnummer = "14",
-                Land = "Nederland",
+                Land = Land.Nederland,
             };
             var json = JsonConvert.SerializeObject(klant);
 
@@ -91,7 +92,7 @@ namespace CAN.Klantbeheer.IntegratieTest
                 Postcode = "2361VJ",
                 Adres = "2361VJ",
                 Huisnummer = "14",
-                Land = "Nederland",
+                Land = Land.Nederland,
             };
             var json = JsonConvert.SerializeObject(klant);
 
