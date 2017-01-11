@@ -17,7 +17,7 @@ namespace CAN.Bestellingbeheer.Domain.Test
         public void CreateBestelling()
         {
             //arrange
-            var mockBestelling = new Bestelling
+            var bestelling = new Bestelling
             {
                 Artikelen = new List<Artikel>
                 {
@@ -30,28 +30,28 @@ namespace CAN.Bestellingbeheer.Domain.Test
                 }
             };
 
-            var mockLogger = new Mock<ILogger<BestellingService>>();
             var mockPublisher = new Mock<IEventPublisher>();
 
             var mockRepository = new Mock<IRepository<Bestelling, long>>();
-            mockRepository.Setup(n => n.Insert(mockBestelling)).Returns(1);
-            
-            BestellingService service = new BestellingService(mockLogger.Object, mockPublisher.Object, mockRepository.Object);
+            mockRepository.Setup(n => n.Insert(bestelling)).Returns(1);
 
-            //act
-            Bestelling response = service.CreateBestelling(mockBestelling);
+            using (BestellingService service = new BestellingService(mockPublisher.Object, mockRepository.Object))
+            {
+                //act
+                Bestelling response = service.CreateBestelling(bestelling);
 
-            //assert
-            Assert.IsNotNull(response);
-            Assert.IsInstanceOfType(response, typeof(Bestelling));
+                //assert
+                Assert.IsNotNull(response);
+                Assert.IsInstanceOfType(response, typeof(Bestelling));
 
-            Assert.IsNotNull(response.Id);
-            Assert.AreEqual(mockBestelling.BestelDatum, response.BestelDatum);
+                Assert.IsNotNull(response.Id);
+                Assert.AreEqual(bestelling.BestelDatum, response.BestelDatum);
 
-            Assert.IsNotNull(response.Artikelen.First().Id);
-            Assert.AreEqual(mockBestelling.Artikelen.First().Naam, response.Artikelen.First().Naam);
-            Assert.AreEqual(mockBestelling.Artikelen.First().Prijs, response.Artikelen.First().Prijs);
-            Assert.AreEqual(mockBestelling.Artikelen.First().Aantal, response.Artikelen.First().Aantal);
+                Assert.IsNotNull(response.Artikelen.First().Id);
+                Assert.AreEqual(bestelling.Artikelen.First().Naam, response.Artikelen.First().Naam);
+                Assert.AreEqual(bestelling.Artikelen.First().Prijs, response.Artikelen.First().Prijs);
+                Assert.AreEqual(bestelling.Artikelen.First().Aantal, response.Artikelen.First().Aantal);
+            };
         }
     }
 }

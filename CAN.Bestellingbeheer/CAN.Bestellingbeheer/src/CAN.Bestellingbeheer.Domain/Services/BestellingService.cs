@@ -10,40 +10,29 @@ namespace CAN.Bestellingbeheer.Domain.Services {
     {
         private readonly IRepository<Bestelling, long> _repository;
         private readonly IEventPublisher _publisher;
-        private readonly ILogger<BestellingService> _logger;
 
-        public BestellingService(ILogger<BestellingService> logger, IEventPublisher publisher, IRepository<Bestelling, long> repository)
+        public BestellingService(IEventPublisher publisher, IRepository<Bestelling, long> repository)
         {
-            _logger = logger;
             _publisher = publisher;
             _repository = repository;
         }
 
         public Bestelling CreateBestelling(Bestelling bestelling)
-         {
-            try
+        {
+            long bestellingsnummer = _repository.Insert(bestelling);
+
+            var createdEvent = new BestellingCreatedEvent("can.bestellingbeheer.bestellingcreated")
             {
-                long bestellingsnummer = _repository.Insert(bestelling);
+                Bestellingsnummer = bestellingsnummer,
+                BestelDatum = bestelling.BestelDatum,
+            };
 
-                var createdEvent = new BestellingCreatedEvent("can.bestellingbeheer.bestellingcreated")
-                {
-                    Bestellingsnummer = bestellingsnummer,
-                    BestelDatum = bestelling.BestelDatum,
-                };
-
-                foreach(var artikel in bestelling.Artikelen)
-                {
-                    createdEvent.AddArtikel(artikel.Id, artikel.Naam, artikel.Prijs, artikel.Aantal);
-                }
-                
-                _publisher.Publish(createdEvent);
-
-                _logger.LogInformation("Bestelling created.", bestelling);
-
-            } catch(Exception e)
+            foreach (var artikel in bestelling.Artikelen)
             {
-                _logger.LogError("Bestelling created failed.", bestelling, e.Message);
+                createdEvent.AddArtikel(artikel.Id, artikel.Naam, artikel.Prijs, artikel.Aantal);
             }
+
+            _publisher.Publish(createdEvent);
 
             return bestelling;
         }
