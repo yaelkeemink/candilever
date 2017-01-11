@@ -48,8 +48,60 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                 {
                     Voornaam = "Yael",
                     Tussenvoegsels = "De",
-                    Achternaam = "Keemink",                    
-                    Postcode = "2361VJ",                    
+                    Achternaam = "Keemink", 
+                    Telefoonnummer = "0640480381",                   
+                    Postcode = "2361VJ", 
+                    Adres = "van Leydenstraat",
+                    Huisnummer = "14",
+                    Email = "yaelkeemink@gmail.com",                
+                });
+            }
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
+            {
+                Assert.AreEqual(1, repo.Count());
+            }
+        }
+
+        [TestMethod]
+        public void TestAddMetPlusInTelefoonnummer()
+        {
+
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
+            {
+                repo.Insert(new Klant()
+                {
+                    Voornaam = "Yael",
+                    Tussenvoegsels = "De",
+                    Achternaam = "Keemink",
+                    Telefoonnummer = "+31640480381",
+                    Postcode = "2361VJ",
+                    Adres = "van Leydenstraat",
+                    Huisnummer = "14",
+                    Email = "yaelkeemink@gmail.com",
+                });
+            }
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
+            {
+                Assert.AreEqual(1, repo.Count());
+            }
+        }
+
+        [TestMethod]
+        public void TestAddMetToevoegingInHuisnummer()
+        {
+
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
+            {
+                repo.Insert(new Klant()
+                {
+                    Voornaam = "Yael",
+                    Tussenvoegsels = "De",
+                    Achternaam = "Keemink",
+                    Telefoonnummer = "+31640480381",
+                    Postcode = "2361VJ",
+                    Adres = "van Leydenstraat",
+                    Huisnummer = "14 A",
+                    Email = "yaelkeemink@gmail.com",
                 });
             }
             using (var repo = new KlantRepository(new DatabaseContext(_options)))
@@ -69,6 +121,10 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Tussenvoegsels = "De",
                     Achternaam = "Keemink",                    
                     Postcode = "2361VJ",
+                    Adres = "van Leydenstraat",
+                    Huisnummer = "14",
+                    Email = "yaelkeemink@gmail.com",
+                    Telefoonnummer = "+31640480381",
                 });
             }
 
@@ -80,6 +136,10 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                 Assert.AreEqual("Yael", result.Voornaam);                
                 Assert.AreEqual("Keemink", result.Achternaam);
                 Assert.AreEqual("2361VJ", result.Postcode);
+                Assert.AreEqual("van Leydenstraat", result.Adres);
+                Assert.AreEqual("14", result.Huisnummer);
+                Assert.AreEqual("yaelkeemink@gmail.com", result.Email);
+                Assert.AreEqual("+31640480381", result.Telefoonnummer);
             }
         }
         [TestMethod]
@@ -93,6 +153,10 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Tussenvoegsels = "De",
                     Achternaam = "Keemink",
                     Postcode = "2361VJ",
+                    Adres = "van Leydenstraat",
+                    Huisnummer = "14",
+                    Email = "yaelkeemink@gmail.com",
+                    Telefoonnummer = "+31640480381",
                 };
                 repo.Insert(klant);
                 repo.Delete(1);
@@ -114,6 +178,10 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Tussenvoegsels = "De",
                     Achternaam = "Keemink",
                     Postcode = "2361VJ",
+                    Adres = "van Leydenstraat",
+                    Huisnummer = "14",
+                    Email = "yaelkeemink@gmail.com",
+                    Telefoonnummer = "+31640480381",
                 };
                 repo.Insert(klant);
                 klant = new Klant()
@@ -121,6 +189,10 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Voornaam = "Rob",
                     Achternaam = "Gerritsen",
                     Postcode = "1265DS",
+                    Adres = "van Leydenstraat",
+                    Huisnummer = "14",
+                    Email = "yaelkeemink@gmail.com",
+                    Telefoonnummer = "+31640480381",
                 };
                 repo.Insert(klant);
             }
@@ -141,6 +213,10 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Tussenvoegsels = "De",
                     Achternaam = "Keemink",
                     Postcode = "2361VJ",
+                    Adres = "van Leydenstraat",
+                    Huisnummer = "14",
+                    Email = "yaelkeemink@gmail.com",
+                    Telefoonnummer = "+31640480381",
                 };
                 repo.Insert(klant);
                 klant = repo.Find(1);
@@ -150,9 +226,16 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
 
             using (var repo = new KlantRepository(new DatabaseContext(_options)))
             {
-                var klant = repo.Find(1);
-                Assert.AreEqual(1, klant.Klantnummer);
-                Assert.AreEqual("UpdatedName", klant.Voornaam);
+                var result = repo.Find(1);
+                Assert.AreEqual(1, result.Klantnummer);
+                Assert.AreEqual("UpdatedName", result.Voornaam);
+                Assert.AreEqual("De", result.Tussenvoegsels);
+                Assert.AreEqual("Keemink", result.Achternaam);
+                Assert.AreEqual("2361VJ", result.Postcode);
+                Assert.AreEqual("van Leydenstraat", result.Adres);
+                Assert.AreEqual("14", result.Huisnummer);
+                Assert.AreEqual("yaelkeemink@gmail.com", result.Email);
+                Assert.AreEqual("+31640480381", result.Telefoonnummer);
             }
         }
     }

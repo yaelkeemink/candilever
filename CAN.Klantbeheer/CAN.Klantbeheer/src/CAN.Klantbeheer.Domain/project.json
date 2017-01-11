@@ -5,11 +5,11 @@
   },
 
   "dependencies": {
+    "InfoSupport.WSA.Common": "1.7.0",
+    "CAN.Common": "1.0.1",
     "Microsoft.NETCore.App": {
       "type": "platform",
-      "version": "1.0.1",
-      "InfoSupport.WSA.InfraStructure": "1.7.0",
-      "InfoSupport.WSA.Common": "1.7.0"
+      "version": "1.0.1"
     }
   },
 

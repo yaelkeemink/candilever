@@ -14,6 +14,9 @@ namespace CAN.Klantbeheer.Domain.Entities
         public string Tussenvoegsels { get; set; }
 
         public string Postcode { get; set; }
-        public int Telefoonnummer { get; set; }
+        public string Telefoonnummer { get; set; }
+        public string Email { get; set; }
+        public string Huisnummer { get; set; }
+        public string Adres { get; set; }
     }
 }

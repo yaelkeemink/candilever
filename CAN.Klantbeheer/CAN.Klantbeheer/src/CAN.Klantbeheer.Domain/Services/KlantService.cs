@@ -1,25 +1,35 @@
-﻿using CAN.Klantbeheer.Domain.Entities;
+﻿using CAN.Common.Events;
+using CAN.Klantbeheer.Domain.Entities;
 using CAN.Klantbeheer.Domain.Interfaces;
+using InfoSupport.WSA.Infrastructure;
 using System;
-using inf
 
 namespace CAN.Klantbeheer.Domain.Services {
     public class KlantService : IDisposable
     {
         private readonly IRepository<Klant, long> _repository;
+        private readonly IEventPublisher _publisher;
 
-        public KlantService(IRepository<Klant, long> repository)
+        public KlantService(IRepository<Klant, long> repository, IEventPublisher publisher)
         {
             _repository = repository;
+            _publisher = publisher;
         }
 
         public int CreateKlant(Klant klant)
         {
             int toReturn = _repository.Insert(klant);
-            using (var publisher = new EventPublisher(busOptions))
+            //TODO: routingkey
+            _publisher.Publish(new KlantCreatedEvent("")
             {
-                publisher.Publish(new AutoKlaargemeld());
-            }
+                Klantnummer = klant.Klantnummer,
+                Voornaam = klant.Voornaam,
+                Tussenvoegsels = klant.Tussenvoegsels,
+                Achternaam = klant.Achternaam,
+                Postcode = klant.Postcode,
+                Telefoonnummer = klant.Telefoonnummer,
+            });
+            
             return toReturn;
         }
         public int UpdateKlant(Klant klant)

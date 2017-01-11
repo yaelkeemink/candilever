@@ -5,13 +5,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.Swagger.Model;
 using Microsoft.EntityFrameworkCore;
-using Minor.WSA.Commons;
-using Minor.WSA.EventBus.Publisher;
 using Serilog;
 using CAN.Klantbeheer.Infrastructure.DAL;
 using CAN.Klantbeheer.Domain.Interfaces;
 using CAN.Klantbeheer.Infrastructure.Repositories;
 using CAN.Klantbeheer.Domain.Entities;
+using InfoSupport.WSA.Infrastructure;
 
 namespace CAN.Klantbeheer.Facade
 {
@@ -46,7 +45,7 @@ namespace CAN.Klantbeheer.Facade
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=db;Database=can_klantbeheer_db;UserID=sa,Password=admin"));
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=can_klantbeheer_db;Database=can_klantbeheerDb;UserID=sa,Password=admin"));
             services.AddScoped<IRepository<Klant, long>, KlantRepository>();
             services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(null));
 

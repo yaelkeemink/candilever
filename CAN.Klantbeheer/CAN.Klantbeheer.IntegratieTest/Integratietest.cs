@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
+using CAN.Klantbeheer.Domain.Entities;
 
 namespace CAN.Klantbeheer.IntegratieTest
 {
@@ -25,8 +26,14 @@ namespace CAN.Klantbeheer.IntegratieTest
                 .UseStartup<Startup>());
             var _client = _server.CreateClient();
 
-            var monument = new Monument { Id = 4, Naam = "Gert", Hoogte = 2 };
-            var json = JsonConvert.SerializeObject(monument);
+            var klant = new Klant
+            {
+                Achternaam = "Keemink",
+                Tussenvoegsels = "de",
+                Postcode = "2361VJ",
+                Telefoonnummer = ""
+            };
+            var json = JsonConvert.SerializeObject(klant);
 
             // Act
             var response = await _client.PostAsync("api/v1/monumenten", new StringContent(json, Encoding.UTF8, "application/json"));
