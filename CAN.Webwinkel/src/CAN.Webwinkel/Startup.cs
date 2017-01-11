@@ -38,8 +38,8 @@ namespace CAN.Webwinkel
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
-            
-            
+
+
             StartEventListener();
         }
 
@@ -50,7 +50,7 @@ namespace CAN.Webwinkel
         public void ConfigureServices(IServiceCollection services)
         {
 
-            
+
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
@@ -98,23 +98,22 @@ namespace CAN.Webwinkel
             app.UseMvc();
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
-   
+
         }
 
 
 
         private void StartEventListener()
         {
-            var factory = new LoggerFactory();
-         
-            factory.AddConsole(Configuration.GetSection("Logging"));
-            factory.AddDebug();
-            factory.AddSerilog();
+            // var factory = new LoggerFactory();
 
-            var dbconnectionString = Configuration.GetConnectionString("DefaultConnection")
+            //  factory.AddConsole(Configuration.GetSection("Logging"));
+            //   factory.AddDebug();
+            //  factory.AddSerilog();
 
+            //var dbconnectionString = Configuration.GetConnectionString("DefaultConnection");
 
-    //        var listener = new EventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, factory.CreateLogger<EventListener>());
+            //  var listener = new EventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, factory.CreateLogger<EventListener>());
         }
     }
 }
