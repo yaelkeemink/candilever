@@ -23,11 +23,48 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
         {
             // Use InMemory database for testing, records are not removed afterwards from Local Database
             //_options = TestDatabaseProvider.CreateInMemoryDatabaseOptions();
-            _options = TestDatabaseProvider.CreateMsSQLDatabaseOptions();
+            _options = TestDatabaseProvider.CreateInMemoryDatabaseOptions();
         }
+
 
         [TestMethod]
         public void SaveArtikel()
+        {
+            var demo = new DemoEntities();
+            var herenFiets = demo.HerenFiets;
+            using (var context = new WinkelDatabaseContext(_options))
+            using (var repo = new ArtikelRepository(context))
+            {
+                repo.Insert(herenFiets);
+
+            }
+
+            using (var context = new WinkelDatabaseContext(_options))
+            using (var repo = new ArtikelRepository(context))
+            {
+                Assert.AreEqual(1, repo.Count());
+                
+                var fiets = repo.Find(demo.HerenFiets.Artikelnummer);
+                Assert.AreEqual(herenFiets.Artikelnummer, fiets.Artikelnummer);
+                Assert.AreEqual(herenFiets.AfbeeldingUrl, fiets.AfbeeldingUrl);
+                Assert.AreEqual(herenFiets.Beschrijving, fiets.Beschrijving);
+                Assert.AreEqual(herenFiets.LeverbaarTot, fiets.LeverbaarTot);
+                Assert.AreEqual(herenFiets.Leverancier, fiets.Leverancier);
+                Assert.AreEqual(herenFiets.LeverbaarVanaf, fiets.LeverbaarVanaf);
+                Assert.AreEqual(herenFiets.LeverancierCode, fiets.LeverancierCode);
+                Assert.AreEqual(herenFiets.Prijs, fiets.Prijs);
+                Assert.AreEqual(herenFiets.Naam, fiets.Naam);
+
+                Assert.IsNotNull(fiets.ArtikelCategory[0].Category);
+                Assert.IsNotNull(fiets.ArtikelCategory[0].Category.Naam);
+                Assert.AreEqual(herenFiets.ArtikelCategory[0].Category.Naam, fiets.ArtikelCategory[0].Category.Naam);
+
+            }
+        }
+
+
+        [TestMethod]
+        public void SaveArtikelCheckCategory()
         {
             var demo = new DemoEntities();
 
@@ -39,8 +76,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
                 repo.Insert(demo.DamesFiets);
 
             }
-
-
+            
             using (var context = new WinkelDatabaseContext(_options))
             using (var repo = new ArtikelRepository(context))
             {
@@ -51,8 +87,6 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
 
                 Assert.AreEqual(fiets.ArtikelCategory[0].CategoryId, herenFiets.ArtikelCategory[0].CategoryId);
             }
-            
-
         }
 
 
