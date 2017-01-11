@@ -1,62 +1,90 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 <link rel="import" href="../bower_components/iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="shop-common-styles.html">
-<link rel="import" href="../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../bower_components/gold-phone-input/gold-phone-input.html">
+<link rel="import" href="../bower_components/iron-form/iron-form.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
 
 <dom-module id="shop-register">
 
     <template>
 
+    <style is="custom-form-style">
+  paper-button.indigo {
+    background-color: var(--paper-indigo-500);
+    color: white;
+    --paper-button-raised-keyboard-focus: {
+      background-color: var(--paper-pink-a200) !important;
+      color: white !important;
+    };
+  }
+
+  button.no-style {
+    -webkit-appearance: none;
+    border: 0;
+    padding: 0;
+    background: transparent;
+  }
+    </style>
     <!--<app-route
         route="[[route]]"
         pattern="/:register"
         data="{{routeData}}"></app-route>-->
- <div class="main-frame">
-      <div class="subsection" visible$="[[!_hasItems]]">
-        <p class="empty-cart">Your <iron-icon icon="shopping-cart"></iron-icon> is empty.</p>
-      </div>
-      <div class="subsection" visible$="[[_hasItems]]">
-        <header>
-          <h1>Your Cart</h1>
-          <span>([[_getPluralizedQuantity(cart.length)]])</span>
-        </header>
-        <div class="list">
-          <template is="dom-repeat" items="[[cart]]" as="entry">
-            <shop-cart-item entry="[[entry]]"></shop-cart-item>
-          </template>
-        </div>
-        <div class="checkout-box">
-          Total: <span class="subtotal">[[_formatTotal(total)]]</span>
-          <shop-button responsive>
-            <a href="/checkout">Checkout</a>
-          </shop-button>
-        </div>
-      </div>
-    </div>
 
-    <form is="iron-form" id="form" method="POST" action="/handler">
-        <paper-input name="voornaam" label="Voornaam"></paper-input>
-        <paper-input name="tussenvoegsel" label="Tussenvoegsel"></paper-input>
-        <paper-input name="achternaam" label="Achternaam"></paper-input>
-        <paper-input name="postcode" label="Postcode"></paper-input>
-        <gold-phone-input
-            country-code="31"
-            phone-number-pattern="X-XX-XX-XX-XX">
-        </gold-phone-input>
 
-        <paper-button raised on-tap="submitForm()">Registreer</paper-button>
+    <form is="iron-form" id="form">
+        <paper-input id="voornaam" name="voornaam" label="Voornaam" value={{voornaam}}></paper-input>
+        <paper-input name="tussenvoegsel" label="Tussenvoegsel" value={{tussenvoegsel}}></paper-input>
+        <paper-input name="achternaam" label="Achternaam" value={{achternaam}}></paper-input>
+        <paper-input name="postcode" label="Postcode" value={{postcode}}></paper-input>
+        <paper-input label="Telefoonnummer" name="telefoonnummer" value={{telefoonnummer}}></paper-input>
+
+    <paper-button raised class="indigo" on-tap="_submit">Registreer</paper-button>
     </form>
-<template>
+
+    <iron-ajax id="AjaxPost"
+    url="/api/Home/Register"
+    method="POST"
+    content-type="application/json"
+    handle-as="json"
+    on-response="_handleAjaxResponse"
+    on-error="_handleAjaxPostError"></iron-ajax>
+</template>
     <script>
-        Polymer({
+
+Polymer({
             is: 'shop-register',
 
-            submitForm: function() {
-                document.getElementById('form').submit();
+            properties: {
+              voornaam: {
+                type: String
+              },
+              tussenvoegsel: {
+                type: String
+              },
+              achternaam: {
+                type: String
+              },
+              postcode: {
+                type: String
+              },
+              telefoonnummer: {
+                type: Number
+              }
+            },
+            
+            _submit: function _submit(event) {
+              var json = JSON.stringify(this.voornaam, this.tussenvoegsel, this.achternaam)
+              console.log(json);
+            var body = '{ "voornaam":"' + this.voornaam + '","tussenvoegsel":"' + this.tussenvoegsel + '","achternaam":"' + this.achternaam +'","postcode":"' + this.postcode + '","telefoonnummer":"'+ this.telefoonnummer + '" }'
+            console.log(body);
             }
         })
+        
+
+        
 
     </script>
 </dom-module>
