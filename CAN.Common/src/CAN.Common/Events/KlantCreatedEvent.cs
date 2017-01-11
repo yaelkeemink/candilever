@@ -18,6 +18,6 @@ namespace CAN.Common.Events
         public string Achternaam { get; set; }
         public string Tussenvoegsels { get; set; }
         public string Postcode { get; set; }
-        public int Telefoonnummer { get; set; }
+        public string Telefoonnummer { get; set; }
     }
 }
