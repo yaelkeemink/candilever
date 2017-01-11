@@ -45,7 +45,7 @@ namespace CAN.Klantbeheer.Facade.Controllers
             catch (Exception ex)
             {
                 var error = new ErrorMessage(ErrorTypes.Unknown,
-                    $"Onbekende fout in create player: {klant},/nException: {ex}");
+                    $"Onbekende fout in create klant: {klant},/nException: {ex}");
                 _logger.LogError("Create Klant unkown error occured", error);
                 return BadRequest(error);
             }            

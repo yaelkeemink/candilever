@@ -1,11 +1,9 @@
 ﻿using CAN.Klantbeheer.Domain.Entities;
+using CAN.Klantbeheer.Domain.Interfaces;
 using CAN.Klantbeheer.Domain.Services;
-using CAN.Klantbeheer.Domain.Test.Mocks;
+using InfoSupport.WSA.Infrastructure;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Moq;
 
 namespace CAN.Klantbeheer.Domain.Test
 {
@@ -16,9 +14,9 @@ namespace CAN.Klantbeheer.Domain.Test
         public void TestAddZonderZonderTelefoonnummer()
         {
             //Arrange
-            var publishMock = new PublishMock();
-            var repoMock = new RepoMock();
-            using (var service = new KlantService(repoMock, publishMock))
+            var publishMock = new Mock<IEventPublisher>();
+            var repoMock = new Mock<IRepository<Klant, long>>();            
+            using (var service = new KlantService(repoMock.Object, publishMock.Object))
             {
                 var klant = new Klant
                 {
@@ -29,8 +27,9 @@ namespace CAN.Klantbeheer.Domain.Test
                     Adres = "2361VJ",
                     Email = "yaelkeemink@gmail.com",
                     Huisnummer = "14",
-                    Land = "Nederland",
-                };
+                    Land = Enums.Land.Nederland,
+                };                
+                repoMock.Setup(a => a.Insert(klant)).Returns(1);
 
                 //Act
                 var result = service.CreateKlant(klant);
@@ -42,9 +41,9 @@ namespace CAN.Klantbeheer.Domain.Test
         public void TestAddZonderZonderEmail()
         {
             //Arrange
-            var publishMock = new PublishMock();
-            var repoMock = new RepoMock();
-            using (var service = new KlantService(repoMock, publishMock))
+            var publishMock = new Mock<IEventPublisher>();
+            var repoMock = new Mock<IRepository<Klant, long>>();
+            using (var service = new KlantService(repoMock.Object, publishMock.Object))
             {
                 var klant = new Klant
                 {
@@ -55,8 +54,9 @@ namespace CAN.Klantbeheer.Domain.Test
                     Adres = "2361VJ",
                     Telefoonnummer = "0640480381",
                     Huisnummer = "14",
-                    Land = "Nederland",
+                    Land = Enums.Land.Nederland,
                 };
+                repoMock.Setup(a => a.Insert(klant)).Returns(1);
 
                 //Act
                 var result = service.CreateKlant(klant);
@@ -68,9 +68,9 @@ namespace CAN.Klantbeheer.Domain.Test
         public void TestAddZonderZonderEmailEnTelefoonnummer()
         {
             //Arrange
-            var publishMock = new PublishMock();
-            var repoMock = new RepoMock();
-            using (var service = new KlantService(repoMock, publishMock))
+            var publishMock = new Mock<IEventPublisher>();
+            var repoMock = new Mock<IRepository<Klant, long>>();
+            using (var service = new KlantService(repoMock.Object, publishMock.Object))
             {
                 var klant = new Klant
                 {
@@ -81,8 +81,9 @@ namespace CAN.Klantbeheer.Domain.Test
                     Adres = "2361VJ",
                     Telefoonnummer = "0640480381",
                     Huisnummer = "14",
-                    Land = "Nederland",
+                    Land = Enums.Land.Nederland,
                 };
+                repoMock.Setup(a => a.Insert(klant)).Returns(1);
 
                 //Act
                 var result = service.CreateKlant(klant);
