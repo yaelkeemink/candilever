@@ -5,9 +5,9 @@ using System.Net;
 using Microsoft.EntityFrameworkCore;
 using CAN.Klantbeheer.Domain.Entities;
 using CAN.Klantbeheer.Facade.Errors;
-using CAN.Klantbeheer.Domain.Services;
 using Microsoft.Extensions.Logging;
 using CAN.Klantbeheer.Domain.Interfaces;
+
 
 namespace CAN.Klantbeheer.Facade.Controllers
 {
@@ -63,16 +63,13 @@ namespace CAN.Klantbeheer.Facade.Controllers
         public IActionResult UpdateKlant([FromBody]Klant klant)
         {
             _logger.LogInformation("Update Klant called", klant);
-            if (!ModelState.IsValid)
-            {
-                var error = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
-                _logger.LogError("Update Klant Model State invalid", error);
-                return BadRequest(error);
-            }
             try
             {
-                var room = _service.UpdateKlant(klant);
-                return Ok(room);
+                if (ModelState.IsValid)
+                {
+                    var room = _service.UpdateKlant(klant);
+                    return Ok(room);
+                }
             }
             catch (DbUpdateException ex)
             {
@@ -88,6 +85,9 @@ namespace CAN.Klantbeheer.Facade.Controllers
                 _logger.LogError("Create Klant unkown error occured", error);
                 return BadRequest(error);
             }
+            var modelstateError = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
+            _logger.LogError("Update Klant Model State invalid", modelstateError);
+            return BadRequest(modelstateError);
         }
         protected override void Dispose(bool disposing)
         {
