@@ -104,12 +104,9 @@ namespace CAN.Webwinkel
 
 
         private void StartEventListener()
-        {
-        
+        {       
 
             var dbconnectionString = Configuration.GetConnectionString("DefaultConnection");
-
-
             var listener = new WinkelEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, Log.Logger);
         }
     }
