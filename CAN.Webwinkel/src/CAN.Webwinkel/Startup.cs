@@ -105,16 +105,12 @@ namespace CAN.Webwinkel
 
         private void StartEventListener()
         {
-            var factory = new LoggerFactory();
-         
-            factory.AddConsole(Configuration.GetSection("Logging"));
-            factory.AddDebug();
-            factory.AddSerilog();
+        
 
-            var dbconnectionString = Configuration.GetConnectionString("DefaultConnection")
+            var dbconnectionString = Configuration.GetConnectionString("DefaultConnection");
 
 
-    //        var listener = new EventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, factory.CreateLogger<EventListener>());
+            var listener = new WinkelEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, Log.Logger);
         }
     }
 }
