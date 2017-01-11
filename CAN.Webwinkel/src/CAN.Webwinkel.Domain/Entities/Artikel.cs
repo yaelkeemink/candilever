@@ -38,10 +38,20 @@ namespace CAN.Webwinkel.Domain.Entities
             LeverbaarTot = evt.LeverbaarTot;
             LeverancierCode = evt.LeverancierCode;
             Leverancier = evt.Leverancier;
-            ArtikelCategorie = new List<ArtikelCategorie>();
-            foreach (var categorie in evt.Categorieen)
+
+            ArtikelCategory = new List<ArtikelCategory>();
+            foreach (var category in evt.Categorieen)
             {
-                ArtikelCategorie.Add(new ArtikelCategorie() { Artikel = this, Categorie = new Categorie() { Naam = categorie } });
+                ArtikelCategory.Add(
+                    new ArtikelCategory()
+                    {
+                        Artikel = this,
+                        Category = new Category()
+                        {
+                            Naam = category
+                        }
+                    }
+                );
             }
         }
 

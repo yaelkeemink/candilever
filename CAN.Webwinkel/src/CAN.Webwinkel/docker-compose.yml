@@ -8,11 +8,11 @@ services:
       dockerfile: Dockerfile
     environment:
       dbconnectionstring: Server=can_webwinkel_mssql;Database=CAN_Webwinkel;User Id=sa;Password=P@55w0rd;
-      rabbitmq-exchange: KantileverBus
-      rabbitmq-queue: ReplayService
-      rabbitmq-host: can-kantilever-eventbus
-      rabbitmq-username: Kantilever
-      rabbitmq-password: Kant1lever
+      eventbus-exchangename: "KantileverBus"
+      eventbus-queuename: "webwinkel-queue"
+      eventbus-hostname: "can-kantilever-eventbus"
+      eventbus-username: "Kantilever"
+      eventbus-password: "Kant1lever"
       logpath: /var/log/Kantilever/WebWinkelLog/
     ports:
       - 11500:80
