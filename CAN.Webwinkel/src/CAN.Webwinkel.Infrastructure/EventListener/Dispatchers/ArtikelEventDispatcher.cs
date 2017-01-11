@@ -30,17 +30,21 @@ namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
         /// </summary>
         /// <param name="evt"></param>
         public void ArtikelAanCatalogusToegevoegd(ArtikelAanCatalogusToegevoegd evt)
-        {
+        {          
             _logger.Debug($"Artikel toegevoegd {evt.Artikelnummer} {evt.Naam}");
             using (var context = new WinkelDatabaseContext(_dbOptions))
             using (var repo = new ArtikelRepository(context))
-            {                
+            {
                 var artikel = new Artikel(evt);
                 repo.Insert(artikel);
-                
+
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="evt"></param>
         public void ArtikelUitCatalogusVerwijderd(ArtikelUitCatalogusVerwijderd evt)
         {
             _logger.Debug($"Artikel verwijdert {evt.Artikelnummer}");
@@ -52,26 +56,35 @@ namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="evt"></param>
         public void ArtikelInMagazijnGezet(ArtikelInMagazijnGezet evt)
         {
             _logger.Debug($"Artikel in magazijn {evt.ArtikelID} nieuwe voorraad {evt.Voorraad}");
-            using (var context = new WinkelDatabaseContext(_dbOptions))
-            using (var repo = new ArtikelRepository(context))
-            {
-               var artikel = repo.Find(evt.ArtikelID);
-                artikel.Voorraad = evt.Voorraad;
-                repo.Update(artikel);
-            }
+            UpdateArtikelVoorraad(evt.ArtikelID, evt.Voorraad);
 
         }
-        public void ArtikelInMagazijnGezet(ArtikelUitMagazijnGehaald evt)
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="evt"></param>
+        public void ArtikelUitMagazijnGehaald(ArtikelUitMagazijnGehaald evt)
         {
             _logger.Debug($"Artikel uit magazijn {evt.ArtikelID} nieuwe voorraad {evt.Voorraad}");
+            UpdateArtikelVoorraad(evt.ArtikelID, evt.Voorraad);
+        }
+
+
+        private void UpdateArtikelVoorraad(int artikelNummer, int nieuweVoorrraad)
+        {
             using (var context = new WinkelDatabaseContext(_dbOptions))
             using (var repo = new ArtikelRepository(context))
             {
-                var artikel = repo.Find(evt.ArtikelID);
-                artikel.Voorraad = evt.Voorraad;
+                var artikel = repo.Find(artikelNummer);
+                artikel.Voorraad = nieuweVoorrraad;
                 repo.Update(artikel);
             }
         }
@@ -83,7 +96,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
         /// <returns></returns>
         public bool IsConnected()
         {
-            if(Channel == null)
+            if (Channel == null)
             {
                 _logger.Information("Channel not set");
             }
