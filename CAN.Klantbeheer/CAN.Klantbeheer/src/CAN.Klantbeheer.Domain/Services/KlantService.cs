@@ -20,7 +20,7 @@ namespace CAN.Klantbeheer.Domain.Services {
         {
             int toReturn = _repository.Insert(klant);
             //TODO: routingkey
-            _publisher.Publish(new KlantCreatedEvent("")
+            _publisher.Publish(new KlantCreatedEvent("can.klantbeheer.klantcreated")
             {
                 Klantnummer = klant.Klantnummer,
                 Voornaam = klant.Voornaam,
