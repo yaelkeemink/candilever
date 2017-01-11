@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CAN.Klantbeheer.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace CAN.Klantbeheer.Domain.Entities
 {
@@ -21,6 +22,6 @@ namespace CAN.Klantbeheer.Domain.Entities
         [Required]
         public string Adres { get; set; }
         [Required]
-        public string Land { get; set; }
+        public Landen Land { get; set; }
     }
 }
