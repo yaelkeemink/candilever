@@ -11,10 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using CAN.Webwinkel.Data;
 using CAN.Webwinkel.Models;
-using CAN.Webwinkel.Services;
 using Serilog;
 using CAN.Webwinkel.Infrastructure.EventListener;
 using InfoSupport.WSA.Infrastructure;
+using CAN.Webwinkel.Domain.Interfaces;
+using CAN.Webwinkel.Domain.Services;
 
 namespace CAN.Webwinkel
 {
