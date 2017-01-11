@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace CAN.Klantbeheer.Domain.Enums
 {
-    public enum Landen
+    public enum Land
     {
-        Onbekend = 0,
-        Nederland = 10,
+        Nederland = 0,
         België = 50,
     }
 }

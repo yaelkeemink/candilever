@@ -22,6 +22,6 @@ namespace CAN.Klantbeheer.Domain.Entities
         [Required]
         public string Adres { get; set; }
         [Required]
-        public Landen Land { get; set; }
+        public Land Land { get; set; }
     }
 }
