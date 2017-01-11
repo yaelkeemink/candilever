@@ -53,12 +53,12 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
                 {
                     using (var dispatcher = new ArtikelEventDispatcher(_busOptions, dbOptions, _logger))
                     {
-                        _logger.Information("Opening connection with Rabbit mq");
+                        _logger.Debug("Opening connection with Rabbit mq");
                         dispatcher.Open();
-                        _logger.Information("Connection with Rabbit mq is open");
+                        _logger.Debug("Connection with Rabbit mq is open");
                         while (dispatcher.IsConnected())
                         {
-                            _logger.Information("Connected with Rabbit Mq");
+                            _logger.Information("Connected with Rabbit Mq is stil open");
                             Thread.Sleep(60000);
                         }
                         _logger.Information("Connection with Rabbit Mq lost");
