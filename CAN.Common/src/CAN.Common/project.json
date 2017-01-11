@@ -1,6 +1,6 @@
 ﻿{
   "name": "CAN.Common",
-  "version": "1.0.2-*",
+  "version": "1.0.3-*",
   "description": "Events for publishing and dispatching events",
   "title": "Candeliver Common Package",
 
@@ -10,7 +10,7 @@
   },
 
   "packOptions": {
-    "owners": [ "Lars Celie", "Rob Gerritsen", "Yeal Keemink", "Michiel Blaauw", "Robert-Jan Kooijman", "Vincent van de Meent" ]
+    "owners": [ "Lars Celie", "Rob Gerritsen", "Yael Keemink", "Michiel Blaauw", "Robert-Jan Kooijman", "Vincent van de Meent" ]
   },
 
   "frameworks": {
