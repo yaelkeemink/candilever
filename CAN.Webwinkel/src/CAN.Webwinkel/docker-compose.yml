@@ -1,0 +1,42 @@
+version: '2'
+
+services:
+  can.webwinkel:
+    image: can.webwinkel
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      dbconnectionstring: Server=can_webwinkel_mssql;Database=CAN_Webwinkel;User Id=sa;Password=P@55w0rd;
+      eventbus-exchangename: "KantileverBus"
+      eventbus-queuename: "webwinkel-queue"
+      eventbus-hostname: "can-kantilever-eventbus"
+      eventbus-username: "Kantilever"
+      eventbus-password: "Kant1lever"
+      logpath: /var/log/Kantilever/WebWinkelLog/
+    ports:
+      - 11500:80
+    networks:
+      - can_webwinkel_network
+      - can_main_network
+    volumes:
+      - "C:/Docker/.WebWinkelData/Log:/var/log/Kantilever/WebWinkelLog/"
+
+  can.klantbeheer.mssql:
+    image: microsoft/mssql-server-linux
+    container_name: can_webwinkel_mssql
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: P@55w0rd
+    networks:
+      - can_webwinkel_network
+    ports:
+      - 11510:1433
+    volumes:
+      - "C:/Docker/.WebWinkelData/db:/var/opt/mssql/"
+
+networks:
+  can_main_network: 
+    external:
+      name: can_main_network
+  can_webwinkel_network:

@@ -12,6 +12,9 @@ using Microsoft.Extensions.Logging;
 using CAN.Webwinkel.Data;
 using CAN.Webwinkel.Models;
 using CAN.Webwinkel.Services;
+using Serilog;
+using CAN.Webwinkel.Infrastructure.EventListener;
+using InfoSupport.WSA.Infrastructure;
 
 namespace CAN.Webwinkel
 {
@@ -35,18 +38,24 @@ namespace CAN.Webwinkel
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
+
+
+            StartEventListener();
         }
+
 
         public IConfigurationRoot Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -65,8 +74,9 @@ namespace CAN.Webwinkel
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddConsole(Configuration.GetSection("Serilog"));
             loggerFactory.AddDebug();
+            loggerFactory.AddSerilog();
 
             app.UseApplicationInsightsRequestTelemetry();
 
@@ -88,7 +98,19 @@ namespace CAN.Webwinkel
             app.UseMvc();
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
-   
+
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void StartEventListener()
+        {
+            var log = new LoggerConfiguration().ReadFrom.Configuration(Configuration).MinimumLevel.Debug().CreateLogger();
+            var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
+            var listener = new WinkelEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log);
+            listener.Start();
         }
     }
 }
