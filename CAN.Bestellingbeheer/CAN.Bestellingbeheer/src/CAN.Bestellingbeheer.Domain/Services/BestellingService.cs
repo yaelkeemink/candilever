@@ -23,13 +23,14 @@ namespace CAN.Bestellingbeheer.Domain.Services {
 
             var createdEvent = new BestellingCreatedEvent("can.bestellingbeheer.bestellingcreated")
             {
+                Klantnummer = bestelling.Klantnummer,
                 Bestellingsnummer = bestellingsnummer,
                 BestelDatum = bestelling.BestelDatum,
             };
 
             foreach (var artikel in bestelling.Artikelen)
             {
-                createdEvent.AddArtikel(artikel.Id, artikel.Naam, artikel.Prijs, artikel.Aantal);
+                createdEvent.AddArtikel(artikel.Artikelnummer, artikel.Naam, artikel.Prijs, artikel.Aantal);
             }
 
             _publisher.Publish(createdEvent);
