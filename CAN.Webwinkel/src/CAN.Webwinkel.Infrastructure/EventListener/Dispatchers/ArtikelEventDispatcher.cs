@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using CAN.Webwinkel.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
 using CAN.Webwinkel.Infrastructure.DAL.Repositories;
-using CAN.Webwinkel.Infrastructure.DAL.Entities;
+using CAN.Webwinkel.Domain.Entities;
 using Serilog;
 
 namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers

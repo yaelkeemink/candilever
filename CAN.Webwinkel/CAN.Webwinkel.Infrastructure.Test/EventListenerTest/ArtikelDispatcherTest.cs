@@ -57,9 +57,9 @@ namespace CAN.Webwinkel.Infrastructure.Test.EventListenerTest
                 Assert.AreEqual(artikelEvent.Naam, fiets.Naam);
                 Assert.AreEqual(0, fiets.Voorraad);
 
-                Assert.IsNotNull(fiets.ArtikelCategory[0].Category);
-                Assert.IsNotNull(fiets.ArtikelCategory[0].Category.Naam);
-                Assert.AreEqual(artikelEvent.Categorieen[0], fiets.ArtikelCategory[0].Category.Naam);
+                Assert.IsNotNull(fiets.ArtikelCategorie[0].Categorie);
+                Assert.IsNotNull(fiets.ArtikelCategorie[0].Categorie.Naam);
+                Assert.AreEqual(artikelEvent.Categorieen[0], fiets.ArtikelCategorie[0].Categorie.Naam);
             }
         }
 

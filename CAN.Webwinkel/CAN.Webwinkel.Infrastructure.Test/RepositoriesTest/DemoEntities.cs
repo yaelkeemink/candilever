@@ -1,4 +1,4 @@
-﻿using CAN.Webwinkel.Infrastructure.DAL.Entities;
+﻿using CAN.Webwinkel.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,16 +24,16 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
                     LeverbaarVanaf = new DateTime(2017, 1, 1),
                     Naam = "Fiets",
                     Prijs = 159.67M,
-                    ArtikelCategory = new List<ArtikelCategory>()
+                    ArtikelCategorie = new List<ArtikelCategorie>()
                 };
 
-                ArtikelCategory arCat = new ArtikelCategory() {
+                ArtikelCategorie arCat = new ArtikelCategorie() {
                     Artikel = ar,
-                    Category = new Category() {
+                    Categorie = new Categorie() {
                         Naam = "Heren fiets"
                     }
                 };
-                ar.ArtikelCategory.Add(arCat);
+                ar.ArtikelCategorie.Add(arCat);
 
                 return ar;
             }
@@ -54,18 +54,18 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
                     LeverbaarVanaf = new DateTime(2017, 1, 1),
                     Naam = "Heren fiets",
                     Prijs = 259.67M,
-                    ArtikelCategory = new List<ArtikelCategory>()
+                    ArtikelCategorie = new List<ArtikelCategorie>()
                 };
 
-                ArtikelCategory arCat = new ArtikelCategory()
+                ArtikelCategorie arCat = new ArtikelCategorie()
                 {
                     Artikel = ar,
-                    Category = new Category()
+                    Categorie = new Categorie()
                     {
                         Naam = "Heren fiets"
                     }
                 };
-                ar.ArtikelCategory.Add(arCat);
+                ar.ArtikelCategorie.Add(arCat);
 
                 return ar;
             }
@@ -86,18 +86,18 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
                     LeverbaarVanaf = new DateTime(2017, 1, 1),
                     Naam = "dames fiets",
                     Prijs = 59.67M,
-                    ArtikelCategory = new List<ArtikelCategory>() 
+                    ArtikelCategorie = new List<ArtikelCategorie>() 
                 };
 
-                ArtikelCategory arCat = new ArtikelCategory()
+                ArtikelCategorie arCat = new ArtikelCategorie()
                 {
                     Artikel = ar,
-                    Category = new Category()
+                    Categorie = new Categorie()
                     {
                         Naam = "Dames fiets"
                     }
                 };
-                ar.ArtikelCategory.Add(arCat);
+                ar.ArtikelCategorie.Add(arCat);
                 return ar;
             }
         }

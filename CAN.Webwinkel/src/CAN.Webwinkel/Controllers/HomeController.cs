@@ -9,6 +9,7 @@ namespace CAN.Webwinkel.Controllers
     [Route("api/[controller]")]
     public class HomeController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return Json("Index");

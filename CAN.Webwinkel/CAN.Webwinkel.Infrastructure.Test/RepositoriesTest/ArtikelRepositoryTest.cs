@@ -55,9 +55,9 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
                 Assert.AreEqual(herenFiets.Prijs, fiets.Prijs);
                 Assert.AreEqual(herenFiets.Naam, fiets.Naam);
 
-                Assert.IsNotNull(fiets.ArtikelCategory[0].Category);
-                Assert.IsNotNull(fiets.ArtikelCategory[0].Category.Naam);
-                Assert.AreEqual(herenFiets.ArtikelCategory[0].Category.Naam, fiets.ArtikelCategory[0].Category.Naam);
+                Assert.IsNotNull(fiets.ArtikelCategorie[0].Categorie);
+                Assert.IsNotNull(fiets.ArtikelCategorie[0].Categorie.Naam);
+                Assert.AreEqual(herenFiets.ArtikelCategorie[0].Categorie.Naam, fiets.ArtikelCategorie[0].Categorie.Naam);
 
             }
         }
@@ -85,7 +85,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
                 var fiets = repo.Find(demo.Fiets.Artikelnummer);
                 var herenFiets = repo.Find(demo.HerenFiets.Artikelnummer);
 
-                Assert.AreEqual(fiets.ArtikelCategory[0].CategoryId, herenFiets.ArtikelCategory[0].CategoryId);
+                Assert.AreEqual(fiets.ArtikelCategorie[0].CategoryId, herenFiets.ArtikelCategorie[0].CategoryId);
             }
         }
 
