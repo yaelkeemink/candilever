@@ -21,7 +21,9 @@ namespace CAN.Webwinkel.Domain.Services
         }
         public IEnumerable<Artikel> ArtikelenBijCategorie(string categorieNaam)
         {
-            return _repository.FindBy(c => c.ArtikelCategorie.Any(ac => ac.Categorie.Naam == categorieNaam)).ToList();
+            return _repository.FindBy(
+                    c => c.ArtikelCategorie.Any(ac => ac.Categorie.Naam == categorieNaam))
+                .ToList();
         }
     }
 }
