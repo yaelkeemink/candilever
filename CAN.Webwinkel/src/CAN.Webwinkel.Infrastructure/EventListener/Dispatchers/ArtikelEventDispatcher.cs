@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using CAN.Webwinkel.Infrastructure.DAL.Repositories;
 using CAN.Webwinkel.Infrastructure.DAL.Entities;
 using Serilog;
+using RabbitMQ.Client.Events;
 
 namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
 {
@@ -19,10 +20,18 @@ namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
     {
         private DbContextOptions<WinkelDatabaseContext> _dbOptions;
         private ILogger _logger;
+        private EventListenerLock _locker;
         public ArtikelEventDispatcher(BusOptions options, DbContextOptions<WinkelDatabaseContext> dbOptions, ILogger logger) : base(options)
         {
             _logger = logger;
             _dbOptions = dbOptions;
+        }
+
+        public ArtikelEventDispatcher(BusOptions options, DbContextOptions<WinkelDatabaseContext> dbOptions, ILogger logger, EventListenerLock locker) : base(options)
+        {
+            _logger = logger;
+            _dbOptions = dbOptions;
+            _locker = locker;
         }
 
         /// <summary>
@@ -89,6 +98,15 @@ namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
             }
         }
 
+        protected override void EventReceived(object sender, BasicDeliverEventArgs e)
+        {
+            if (_locker != null)
+            {
+                _locker.EventReceived();
+            }
+
+            base.EventReceived(sender, e);
+        }
 
         /// <summary>
         /// 

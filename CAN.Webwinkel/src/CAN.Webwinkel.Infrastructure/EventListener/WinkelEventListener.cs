@@ -19,13 +19,14 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
         private string _dbConnectionString;
         private ILogger _logger;
         private string _replayEndPoint;
-
-        public WinkelEventListener(BusOptions busOptions, string dbConnectionString, ILogger logger, string replayEndPoint)
+        private EventListenerLock _locker;
+        public WinkelEventListener(BusOptions busOptions, string dbConnectionString, ILogger logger, string replayEndPoint, EventListenerLock locker)
         {
             _busOptions = busOptions;
             _dbConnectionString = dbConnectionString;
             _logger = logger;
             _replayEndPoint = replayEndPoint;
+            _locker = locker;
         }
 
 
@@ -47,7 +48,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
             var builder = new DbContextOptionsBuilder<WinkelDatabaseContext>();
             builder.UseSqlServer(_dbConnectionString);
             var dbOptions = builder.Options;
-
+            var first = true;
 
 
             while (true)
@@ -57,11 +58,15 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
                 {
                     using (var dispatcher = new ArtikelEventDispatcher(_busOptions, dbOptions, _logger))
                     {
-
-                        _logger.Information("Start rebuilding cache");
-                        ReplayAuditlog(dbOptions);
-                        _logger.Information("Done rebuilding cache");
-
+                        if (first)
+                        {
+                            _logger.Information("Start rebuilding cache");
+                            ReplayAuditlog(dbOptions);
+                            first = false;
+                            _logger.Information("Releasing Startup lock");
+                            _locker.StartUpLock.Set();
+                            _logger.Information("Done rebuilding cache");
+                        }
 
                         _logger.Debug("Opening connection with Rabbit mq");
                         dispatcher.Open();
@@ -88,6 +93,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
             using (var context = new WinkelDatabaseContext(dbOptions))
             {
                 context.PurgeCachedData();
+                _logger.Debug($"Count artikels: {context.Artikels.Count()}");
             }
             _logger.Information("Purge complete");
 
@@ -102,10 +108,10 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
                 Password = _busOptions.Password
             };
 
-            using (var listener = new ArtikelEventDispatcher(replayBusOptions, dbOptions, _logger))
+            using (var listener = new ArtikelEventDispatcher(replayBusOptions, dbOptions, _logger, _locker))
             using (var auditlogproxy = new MicroserviceProxy(_replayEndPoint, _busOptions))
             {
-                listener.Open();
+
 
                 var replayCommand = new ReplayEventsCommand
                 {
@@ -114,9 +120,16 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
                 };
 
                 _logger.Information($"Start replaying Events on Exchange={replayCommand.ExchangeName}...");
-                auditlogproxy.Execute(replayCommand);
+
+
+                var replayResult = auditlogproxy.Execute<ReplayResult>(replayCommand);
+                _locker.SetExpectedEvents(replayResult.Count);
+                _logger.Information($"Expected events set {replayResult.Count}");
+
+                listener.Open();
+
+                _locker.EventReplayLock.WaitOne();
                 _logger.Information("Done replaying events.");
-                Thread.Sleep(60000);
             }
 
 
