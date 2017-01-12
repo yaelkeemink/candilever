@@ -1,4 +1,5 @@
 ﻿using CAN.Webwinkel.Domain.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,11 @@ namespace CAN.Webwinkel.Models
         public decimal Prijs { get; set; }
         public string AfbeeldingUrl { get; set; }
         public int Voorraad { get; set; }
+
+        public string GetJSON()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
 
         public ApiArtikelenModel()
         {
