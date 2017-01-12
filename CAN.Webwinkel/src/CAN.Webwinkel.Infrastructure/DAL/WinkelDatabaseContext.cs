@@ -1,4 +1,4 @@
-﻿using CAN.Webwinkel.Infrastructure.DAL.Entities;
+﻿using CAN.Webwinkel.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CAN.Webwinkel.Infrastructure.DAL
@@ -21,9 +21,9 @@ namespace CAN.Webwinkel.Infrastructure.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+
             modelBuilder.Entity<ArtikelCategorie>().HasKey(x => new { x.ArtikelId, x.CategoryId });
-      
+
 
             modelBuilder.Entity<ArtikelCategorie>()
              .HasOne(a => a.Artikel)
@@ -36,7 +36,7 @@ namespace CAN.Webwinkel.Infrastructure.DAL
                 .HasForeignKey(ac => ac.CategoryId);
 
             modelBuilder.Entity<Categorie>().HasAlternateKey(c => c.Naam).HasName("AlternateKey_CategoryName");
-
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
         }
