@@ -20,6 +20,9 @@ using CAN.Webwinkel.Domain.Entities;
 using CAN.Webwinkel.Infrastructure.DAL.Repositories;
 using CAN.Webwinkel.Infrastructure.DAL;
 using Swashbuckle.Swagger.Model;
+using CAN.Webwinkel.Agents;
+using CAN.Webwinkel.Agents.KlantAgent;
+using CAN.Webwinkel.Agents.BestellingsAgent;
 
 namespace CAN.Webwinkel
 {
@@ -83,11 +86,14 @@ namespace CAN.Webwinkel
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
+            //o => new OnderhoudsServiceAgent() { BaseUri = new Uri("http://lapiwe-onderhoudservice:80") }
             services.AddDbContext<WinkelDatabaseContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
             services.AddScoped<IRepository<Categorie, int>, CategorieRepository>();
             services.AddScoped<IRepository<Artikel, int>, ArtikelRepository>();
             services.AddScoped<ICategorieService, CategorieService>();
             services.AddScoped<IArtikelService, ArtikelService>();
+            services.AddScoped<IKlantAgent, KlantAgent>(s => new KlantAgent() { BaseUri = new Uri("http://klantbeheer:80") });
+            services.AddScoped<IBestellingsAgent, BestellingsAgent>(s => new BestellingsAgent() { BaseUri = new Uri("https://can-bestellingbeheer:80") });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -19,6 +19,8 @@ services:
     networks:
       - can_klantbeheer_network
       - can_main_network
+        aliases:
+          - can-klantbeheer
     volumes:
       - "C:/Docker/.KlantbeheerData/Log:/var/log/Kantilever/KlantbeheerLogging/"
 

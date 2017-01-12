@@ -52,6 +52,7 @@
     "Serilog.Sinks.Literate": "2.0.0",
     "Serilog.Sinks.RollingFile": "3.3.0",
     "Swashbuckle": "6.0.0-beta902",
+    "Microsoft.Rest.ClientRuntime": "2.3.4"
   },
 
   "tools": {

@@ -1,6 +1,4 @@
-﻿using CAN.Webwinkel.Infrastructure.DAL;
-using CAN.Webwinkel.Infrastructure.EventListener.Dispatchers;
-using CAN.Webwinkel.Infrastructure.Test.Provider;
+﻿using CAN.Webwinkel.Infrastructure.Test.Provider;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -9,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Serilog;
+using CAN.Webwinkel.Infrastructure.DAL;
+using CAN.Webwinkel.Infrastructure.EventListener.Dispatchers;
 using CAN.Webwinkel.Infrastructure.DAL.Repositories;
 
 namespace CAN.Webwinkel.Infrastructure.Test.EventListenerTest
