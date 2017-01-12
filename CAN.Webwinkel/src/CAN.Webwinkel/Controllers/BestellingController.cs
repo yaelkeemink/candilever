@@ -10,6 +10,7 @@ using CAN.Webwinkel.Agents.BestellingsAgent.Models;
 
 namespace CAN.Webwinkel.Controllers
 {
+    [Route("api/[controller]")]
     public class BestellingController : Controller
     {
         private readonly IBestellingsAgent _agent;

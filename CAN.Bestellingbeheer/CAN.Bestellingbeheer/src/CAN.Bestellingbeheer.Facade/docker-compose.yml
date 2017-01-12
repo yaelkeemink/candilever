@@ -19,6 +19,8 @@ services:
     networks:
       - can_bestellingbeheer_network
       - can_main_network
+        aliases:
+          - can-bestellingbeheer
     volumes:
       - "C:/Docker/.BestellingbeheerData/Log:/var/log/Kantilever/BestellingbeheerLogging/"
 

@@ -10,6 +10,7 @@ using CAN.Webwinkel.Agents.KlantAgent.Models;
 
 namespace CAN.Webwinkel.Controllers
 {
+    [Route("api/[controller]")]
     public class KlantController : Controller
     {
         private readonly IKlantAgent _agent;
