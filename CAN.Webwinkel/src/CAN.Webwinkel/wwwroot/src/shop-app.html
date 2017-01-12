@@ -21,6 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="shop-category-data.html">
 <!-- Since 'home' is the default route, eagerly load it. -->
 <link rel="import" href="shop-home.html">
+<link rel="import" href="shop-register.html">
 
 <dom-module id="shop-app">
 
@@ -293,7 +294,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               attr-for-selected="name">
             <template is="dom-repeat" items="[[categories]]" as="category" initial-count="4">
               <shop-tab name="[[category.name]]">
-                <a href="/list/[[category.name]]">[[category.title]]</a>
+                <a href="/[[category.name]]">[[category.title]]</a>
               </shop-tab>
             </template>
           </shop-tabs>
@@ -324,6 +325,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <shop-cart name="cart" cart="[[cart]]" total="[[total]]"></shop-cart>
       <!-- checkout view -->
       <shop-checkout name="checkout" cart="[[cart]]" total="[[total]]" route="{{subroute}}"></shop-checkout>
+      <!-- register view -->
+      <shop-register name="register" route="[[register]]" offline="[[offline]]"></shop-register>
     </iron-pages>
 
     <footer>
@@ -399,6 +402,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       _routePageChanged: function(page) {
         this.page = page || 'home';
+        console.log(page);
         // Scroll to the top of the page on every *route* change. Use `Polymer.AppLayout.scroll`
         // with `behavior: 'silent'` to disable header scroll effects during the scroll.
         Polymer.AppLayout.scroll({ top: 0, behavior: 'silent' });

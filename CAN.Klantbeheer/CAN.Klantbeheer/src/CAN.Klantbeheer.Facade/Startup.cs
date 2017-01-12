@@ -12,6 +12,7 @@ using CAN.Klantbeheer.Infrastructure.Repositories;
 using CAN.Klantbeheer.Domain.Entities;
 using InfoSupport.WSA.Infrastructure;
 using CAN.Klantbeheer.Domain.Services;
+using System;
 
 namespace CAN.Klantbeheer.Facade
 {
@@ -46,9 +47,9 @@ namespace CAN.Klantbeheer.Facade
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=can_klantbeheer_db;Database=can_klantbeheerDb;UserID=sa,Password=admin"));
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
             services.AddScoped<IRepository<Klant, long>, KlantRepository>();
-            services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(null));
+            services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(BusOptions.CreateFromEnvironment()));
             services.AddScoped<IKlantService, KlantService>();
 
             services.ConfigureSwaggerGen(options =>
