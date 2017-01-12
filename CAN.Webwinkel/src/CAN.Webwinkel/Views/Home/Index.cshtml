@@ -42,7 +42,7 @@
             <div class="productvoorraad">@Html.DisplayFor(a => artikel.Voorraad)</div>
             <div class="productprice">
                 <div class="pull-right"><a href="#" onclick="addToCart(@artikel.GetJSON())" class="btn btn-danger btn-sm" role="button">Koop</a></div>
-                <div class="pricetext">@Html.DisplayFor(a => artikel.Prijs)</div>
+                <div class="pricetext">&euro;@Html.DisplayFor(a => artikel.Prijs)</div>
            </div>
         </div>
 
@@ -52,6 +52,6 @@
 
     function addToCart(artikel){
         console.log(artikel);
-    
     }
+
 </script>

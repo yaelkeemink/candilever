@@ -33,7 +33,7 @@ namespace CAN.Webwinkel.Models
             Naam = artikel.Naam;
             Beschrijving = artikel.Beschrijving;
             Prijs = artikel.Prijs;
-            AfbeeldingUrl = artikel.AfbeeldingUrl;
+            AfbeeldingUrl = "images/"+artikel.AfbeeldingUrl;
             Voorraad = artikel.Voorraad;
         }
     }

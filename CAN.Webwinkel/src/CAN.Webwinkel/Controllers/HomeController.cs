@@ -24,15 +24,16 @@ namespace CAN.Webwinkel.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            //var artikelen = _service.AlleArtikelen();
-            //var lijst = artikelen.Select(a => new ApiArtikelenModel(a));
+            var artikelen = _service.AlleArtikelen();
+            var lijst = artikelen.Select(a => new ApiArtikelenModel(a))
+                .ToList();
 
-            var lijst = new List<ApiArtikelenModel>
-            {
-                new ApiArtikelenModel { Naam = "artikel 1", Prijs = 23, Voorraad = 1, AfbeeldingUrl = "images/wheel_small.gif"},
-                  new ApiArtikelenModel { Naam = "artikel 2", Prijs = 253, Voorraad = 3},
-                    new ApiArtikelenModel { Naam = "artikel 3", Prijs = 123, Voorraad = 2}
-            };
+            //var lijst = new List<ApiArtikelenModel>
+            //{
+            //    new ApiArtikelenModel { Naam = "artikel 1", Prijs = 23, Voorraad = 1, AfbeeldingUrl = "images/wheel_small.gif"},
+            //      new ApiArtikelenModel { Naam = "artikel 2", Prijs = 253, Voorraad = 3},
+            //        new ApiArtikelenModel { Naam = "artikel 3", Prijs = 123, Voorraad = 2}
+            //};
 
             return View(lijst);
         }
