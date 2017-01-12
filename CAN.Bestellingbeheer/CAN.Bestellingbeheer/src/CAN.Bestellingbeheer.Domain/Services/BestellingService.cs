@@ -23,6 +23,7 @@ namespace CAN.Bestellingbeheer.Domain.Services {
 
             var createdEvent = new BestellingCreatedEvent("can.bestellingbeheer.bestellingcreated")
             {
+                Klantnummer = bestelling.Klantnummer,
                 Bestellingsnummer = bestellingsnummer,
                 BestelDatum = bestelling.BestelDatum,
             };
