@@ -14,6 +14,7 @@ namespace CAN.Webwinkel.Controllers
             return Json("Index");
         }
 
+        [Route("Register")]
         [HttpPost]
         public IActionResult Register()
         {
