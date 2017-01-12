@@ -185,5 +185,6 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                 Assert.AreEqual(10, updatedArtikel.Aantal);
             }
         }
+
     }
 }
