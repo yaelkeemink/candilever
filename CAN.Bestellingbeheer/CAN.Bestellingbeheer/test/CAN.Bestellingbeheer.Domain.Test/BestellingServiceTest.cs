@@ -44,10 +44,10 @@ namespace CAN.Bestellingbeheer.Domain.Test
                 Assert.IsNotNull(response);
                 Assert.IsInstanceOfType(response, typeof(Bestelling));
 
-                Assert.IsNotNull(response.Id);
+                Assert.IsNotNull(response.Bestellingnummer);
                 Assert.AreEqual(bestelling.BestelDatum, response.BestelDatum);
 
-                Assert.IsNotNull(response.Artikelen.First().Id);
+                Assert.IsNotNull(response.Artikelen.First().Artikelnummer);
                 Assert.AreEqual(bestelling.Artikelen.First().Naam, response.Artikelen.First().Naam);
                 Assert.AreEqual(bestelling.Artikelen.First().Prijs, response.Artikelen.First().Prijs);
                 Assert.AreEqual(bestelling.Artikelen.First().Aantal, response.Artikelen.First().Aantal);

@@ -19,6 +19,9 @@ namespace CAN.Bestellingbeheer.Infrastructure.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Bestelling>().HasKey(e => e.Bestellingnummer);
+            modelBuilder.Entity<Artikel>().HasKey(e => e.Artikelnummer);
+
             base.OnModelCreating(modelBuilder);
         }
 

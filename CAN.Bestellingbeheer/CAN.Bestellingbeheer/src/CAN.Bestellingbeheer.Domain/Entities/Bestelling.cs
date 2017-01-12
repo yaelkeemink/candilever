@@ -5,7 +5,9 @@ namespace CAN.Bestellingbeheer.Domain.Entities
 {
     public class Bestelling
     {
-        public long Id { get; set; }
+        public long Bestellingnummer { get; set; }
+
+        public long Klantnummer { get; set; }
 
         public IList<Artikel> Artikelen { get; set; }
         public DateTime BestelDatum { get; set; }
