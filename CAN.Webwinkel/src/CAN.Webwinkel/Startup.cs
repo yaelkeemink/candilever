@@ -20,6 +20,9 @@ using CAN.Webwinkel.Domain.Entities;
 using CAN.Webwinkel.Infrastructure.DAL.Repositories;
 using CAN.Webwinkel.Infrastructure.DAL;
 using Swashbuckle.Swagger.Model;
+using CAN.Webwinkel.Agents;
+using CAN.Webwinkel.Agents.KlantAgent;
+using CAN.Webwinkel.Agents.BestellingsAgent;
 
 namespace CAN.Webwinkel
 {
@@ -88,6 +91,8 @@ namespace CAN.Webwinkel
             services.AddScoped<IRepository<Artikel, int>, ArtikelRepository>();
             services.AddScoped<ICategorieService, CategorieService>();
             services.AddScoped<IArtikelService, ArtikelService>();
+            services.AddScoped<IKlantAgent, KlantAgent>();
+            services.AddScoped<IBestellingsAgent, BestellingsAgent>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
