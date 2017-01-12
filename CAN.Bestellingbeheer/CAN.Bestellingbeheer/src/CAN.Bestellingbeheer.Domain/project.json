@@ -10,7 +10,7 @@
       "version": "1.0.1"
     },
     "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
-    "CAN.Common": "1.0.1"
+    "CAN.Common": "1.0.3"
   },
 
   "frameworks": {

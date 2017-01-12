@@ -11,6 +11,8 @@ using CAN.Bestellingbeheer.Domain.Interfaces;
 using CAN.Bestellingbeheer.Domain.Entities;
 using CAN.Bestellingbeheer.Infrastructure.Repositories;
 using InfoSupport.WSA.Infrastructure;
+using CAN.Bestellingbeheer.Domain.Services;
+using System;
 
 namespace CAN.Bestellingbeheer.Facade.Facade
 {
@@ -45,10 +47,13 @@ namespace CAN.Bestellingbeheer.Facade.Facade
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(@"Server=can_bestellingbeheer_mssql;Database=CAN_Bestellingbeheer;UserID=sa,Password=P@55w0rd"));
-            services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
-            services.AddScoped<IEventPublisher, EventPublisher>(s => new EventPublisher(BusOptions.CreateFromEnvironment()));
 
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
+
+            services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
+            services.AddScoped<IEventPublisher, EventPublisher>(e => new EventPublisher(BusOptions.CreateFromEnvironment()));
+            services.AddScoped<BestellingService, BestellingService>();
+            
             services.ConfigureSwaggerGen(options =>
             {
                 options.SingleApiVersion(new Info

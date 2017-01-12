@@ -31,6 +31,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.Provider
         public static DbContextOptions<WinkelDatabaseContext> CreateMsSQLDatabaseOptions()
         {
             var builder = new DbContextOptionsBuilder<WinkelDatabaseContext>();
+           
             builder.UseSqlServer("Server=.\\SQLEXPRESS; Database=Webshop; Trusted_Connection=True;");
             return builder.Options;
         }

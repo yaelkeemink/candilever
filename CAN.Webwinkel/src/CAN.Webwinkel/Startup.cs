@@ -55,7 +55,7 @@ namespace CAN.Webwinkel
             services.AddApplicationInsightsTelemetry(Configuration);
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -74,7 +74,7 @@ namespace CAN.Webwinkel
             app.UseDefaultFiles();
             app.UseStaticFiles();
 
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddConsole(Configuration.GetSection("Serilog"));
             loggerFactory.AddDebug();
             loggerFactory.AddSerilog();
 
@@ -102,18 +102,15 @@ namespace CAN.Webwinkel
         }
 
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         private void StartEventListener()
         {
-            // var factory = new LoggerFactory();
-
-            //  factory.AddConsole(Configuration.GetSection("Logging"));
-            //   factory.AddDebug();
-            //  factory.AddSerilog();
-
-            //var dbconnectionString = Configuration.GetConnectionString("DefaultConnection");
-
-            //  var listener = new EventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, factory.CreateLogger<EventListener>());
+            var log = new LoggerConfiguration().ReadFrom.Configuration(Configuration).MinimumLevel.Debug().CreateLogger();
+            var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
+            var listener = new WinkelEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log);
+            listener.Start();
         }
     }
 }

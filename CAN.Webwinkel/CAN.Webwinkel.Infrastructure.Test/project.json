@@ -11,7 +11,9 @@
     "MSTest.TestFramework": "1.0.6-preview",
     "Moq": "4.6.38-alpha",
     "Microsoft.CodeCoverage": "1.0.2",
-    "Microsoft.EntityFrameworkCore.InMemory": "1.1.0"
+    "Microsoft.EntityFrameworkCore.InMemory": "1.1.0",
+    "Serilog": "2.3.0",
+    "Serilog.Extensions.Logging": "1.3.1"
   },
 
   "frameworks": {
