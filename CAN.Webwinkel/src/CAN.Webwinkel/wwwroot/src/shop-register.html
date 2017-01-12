@@ -5,7 +5,9 @@
 <link rel="import" href="../bower_components/iron-form/iron-form.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
-
+<link rel="import" href="../bower_components/gold-email-input/gold-email-input.html">
+<link rel="import" href="../bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../bower_components/paper-menu/paper-menu.html">
 
 <dom-module id="shop-register">
 
@@ -35,12 +37,20 @@
 
 
     <form is="iron-form" id="form">
-        <paper-input id="voornaam" name="voornaam" label="Voornaam" value={{voornaam}}></paper-input>
+        <paper-input name="voornaam" label="Voornaam" value={{voornaam}}></paper-input>
         <paper-input name="tussenvoegsel" label="Tussenvoegsel" value={{tussenvoegsel}}></paper-input>
         <paper-input name="achternaam" label="Achternaam" value={{achternaam}}></paper-input>
         <paper-input name="postcode" label="Postcode" value={{postcode}}></paper-input>
         <paper-input label="Telefoonnummer" name="telefoonnummer" value={{telefoonnummer}}></paper-input>
-
+        <gold-email-input name="email" value={{email}}></gold-email-input>
+        <paper-input name="huisnummer" label="Huisnummer" value={{huisnummer}}></paper-input>
+        <paper-input name="straatnaam" label="Straatnaam" value={{straat}}></paper-input>
+        <paper-dropdown-menu label="Land">
+          <paper-menu attr-for-selected="value" selected="{{land}}" class="dropdown-content">
+            <paper-item value="0">Nederland</paper-item>
+            <paper-item value="50">België</paper-item>
+          </paper-menu>
+        </paper-dropdown-menu>
     <paper-button raised class="indigo" on-tap="_submit">Registreer</paper-button>
     </form>
 
@@ -72,14 +82,33 @@ Polymer({
               },
               telefoonnummer: {
                 type: Number
+              },
+              email: {
+                type: String
+              },
+              huisnummer: {
+                type: String
+              },
+              straat: {
+                type: String
+              },
+              land: {
+                type: Number
               }
             },
             
             _submit: function _submit(event) {
-              var json = JSON.stringify(this.voornaam, this.tussenvoegsel, this.achternaam)
-              console.log(json);
-            var body = '{ "voornaam":"' + this.voornaam + '","tussenvoegsel":"' + this.tussenvoegsel + '","achternaam":"' + this.achternaam +'","postcode":"' + this.postcode + '","telefoonnummer":"'+ this.telefoonnummer + '" }'
-            console.log(body);
+              var body = '{ "voornaam":"' + this.voornaam + '","achternaam":"'+ this.achternaam+'","tussenvoegsels":"'+ this.tussenvoegsel +'","postcode":"'+ this.postcode +'","telefoonnummer":"'+ this.telefoonnummer +'","email":"'+ this.email+'","huisnummer":"' + this.huisnummer +'","adres": "'+ this.straat + '","land":"' + this.land + '"}';
+
+              this.$.AjaxPost.body = body;
+              console.log(body);
+
+              this.$.AjaxPost.generateRequest();
+              console.log("JSON is gepost naar de controller")
+            },
+
+            _handleAjaxResponse: function (data){
+              console.log(data.detail.response)
             }
         })
         

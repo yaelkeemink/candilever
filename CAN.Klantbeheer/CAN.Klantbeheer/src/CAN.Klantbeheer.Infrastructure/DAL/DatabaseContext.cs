@@ -9,11 +9,11 @@ namespace CAN.Klantbeheer.Infrastructure.DAL
 
         public DatabaseContext()
         {
-            Database.Migrate();
+            Database.EnsureCreated();
         }
 
         public DatabaseContext(DbContextOptions options)
-            : base(options) { }
+            : base(options) { Database.EnsureCreated(); }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
