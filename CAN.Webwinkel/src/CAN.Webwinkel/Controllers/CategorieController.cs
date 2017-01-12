@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using CAN.Webwinkel.Domain.Interfaces;
+using System.Net;
+using Swashbuckle.SwaggerGen.Annotations;
 
 namespace CAN.Webwinkel.Controllers
 {
@@ -22,9 +24,12 @@ namespace CAN.Webwinkel.Controllers
             _service = service;
         }
 
-        public IEnumerable<string> Get()
+        [HttpGet]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
+        [SwaggerOperation("AlleCategorieen")]
+        public IActionResult Get()
         {
-            return _service.AlleCategorieen();
+            return Json(_service.AlleCategorieen());
         }
     }
 }

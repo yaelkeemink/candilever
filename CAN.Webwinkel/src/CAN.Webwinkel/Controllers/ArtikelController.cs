@@ -10,6 +10,8 @@ using CAN.Webwinkel.Domain.Entities;
 using CAN.Webwinkel.Domain.Interfaces;
 using CAN.Webwinkel.Domain.Services;
 using CAN.Webwinkel.Models;
+using Swashbuckle.SwaggerGen.Annotations;
+using System.Net;
 
 namespace CAN.Webwinkel.Controllers
 {
@@ -27,11 +29,15 @@ namespace CAN.Webwinkel.Controllers
             _service = service;
         }
 
+        [HttpGet]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
+        [SwaggerOperation("AlleArtikelenBijCategorie")]
         [Route("{categorieNaam}")]
-        public IEnumerable<ApiArtikelenModel> Get(string categorieNaam)
+        public IActionResult Get(string categorieNaam)
         {
             var artikelen = _service.ArtikelenBijCategorie(categorieNaam);
-            return artikelen.Select(a => new ApiArtikelenModel(a));
+            var lijst = artikelen.Select(a => new ApiArtikelenModel(a));
+            return Json(lijst);
         }
     }
 }
