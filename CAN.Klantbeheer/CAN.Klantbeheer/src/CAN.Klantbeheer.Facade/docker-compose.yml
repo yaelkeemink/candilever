@@ -8,18 +8,19 @@ services:
       dockerfile: Dockerfile
     environment:
       dbconnectionstring: Server=can_klantbeheer_mssql;Database=CAN_Klantbeheer;User Id=sa;Password=P@55w0rd;
-      rabbitmq-exchange: KantileverBus
-      rabbitmq-queue: ReplayService
-      rabbitmq-host: can-kantilever-eventbus
-      rabbitmq-username: Kantilever
-      rabbitmq-password: Kant1lever
-      rabbitmq-port: 11998
+      eventbus-exchangename: KantileverBus
+      eventbus-queuename: bestellingbeheer
+      eventbus-hostname: can-kantilever-eventbus
+      eventbus-username: Kantilever
+      eventbus-password: Kant1lever
       logpath: /var/log/Kantilever/KlantbeheerLogging/
     ports:
       - 11400:80
     networks:
       - can_klantbeheer_network
       - can_main_network
+        aliases:
+          - can-klantbeheer
     volumes:
       - "C:/Docker/.KlantbeheerData/Log:/var/log/Kantilever/KlantbeheerLogging/"
 

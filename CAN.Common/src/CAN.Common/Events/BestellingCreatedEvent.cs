@@ -13,6 +13,8 @@ namespace CAN.Common.Events
             Artikelen = new List<Artikel>();
         }
 
+        public long Klantnummer { get; set; }
+
         public long Bestellingsnummer { get; set; }
 
         public DateTime BestelDatum { get; set; }

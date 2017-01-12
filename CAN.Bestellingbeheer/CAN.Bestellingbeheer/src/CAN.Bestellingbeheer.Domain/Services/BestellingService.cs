@@ -10,36 +10,34 @@ namespace CAN.Bestellingbeheer.Domain.Services {
     {
         private readonly IRepository<Bestelling, long> _repository;
         private readonly IEventPublisher _publisher;
-        private readonly ILogger<BestellingService> _logger;
 
-        public BestellingService(ILogger<BestellingService> logger, IEventPublisher publisher, IRepository<Bestelling, long> repository)
+        public BestellingService(IEventPublisher publisher, IRepository<Bestelling, long> repository)
         {
-            _logger = logger;
             _publisher = publisher;
             _repository = repository;
         }
 
-        public int CreateBestelling(Bestelling bestelling)
+        public Bestelling CreateBestelling(Bestelling bestelling)
         {
-            try
-            {
-                long bestellingsnummer = _repository.Insert(bestelling);
-                _publisher.Publish(new BestellingCreatedEvent("l")
-                {
-                    Bestellingsnummer = bestellingsnummer,
-                    BestelDatum = bestelling.BestelDatum,
-                }
-                );
+            long bestellingsnummer = _repository.Insert(bestelling);
 
-                _logger.LogInformation("Bestelling created.", bestelling);
-
-            } catch(Exception e)
+            var createdEvent = new BestellingCreatedEvent("can.bestellingbeheer.bestellingcreated")
             {
-                _logger.LogError("Bestelling created failed.", bestelling, e.Message);
+                Klantnummer = bestelling.Klantnummer,
+                Bestellingsnummer = bestellingsnummer,
+                BestelDatum = bestelling.BestelDatum,
+            };
+
+            foreach (var artikel in bestelling.Artikelen)
+            {
+                createdEvent.AddArtikel(artikel.Artikelnummer, artikel.Naam, artikel.Prijs, artikel.Aantal);
             }
 
-            return _repository.Insert(bestelling);
+            _publisher.Publish(createdEvent);
+
+            return bestelling;
         }
+
         public int UpdateBestelling(Bestelling bestelling)
         {
             return _repository.Update(bestelling);
@@ -47,6 +45,7 @@ namespace CAN.Bestellingbeheer.Domain.Services {
         public void Dispose()
         {
             _repository?.Dispose();
+            _publisher?.Dispose();
         }
 
 

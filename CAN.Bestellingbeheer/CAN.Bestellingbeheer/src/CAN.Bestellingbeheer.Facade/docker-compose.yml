@@ -8,18 +8,19 @@ services:
       dockerfile: Dockerfile
     environment:
       dbconnectionstring: Server=can_bestellingbeheer_mssql;Database=CAN_Bestellingbeheer;User Id=sa;Password=P@55w0rd;
-      rabbitmq-exchange: KantileverBus
-      rabbitmq-queue: ReplayService
-      rabbitmq-host: can-kantilever-eventbus
-      rabbitmq-username: Kantilever
-      rabbitmq-password: Kant1lever
-      rabbitmq-port: 11998
+      eventbus-exchangename: KantileverBus
+      eventbus-queuename: bestellingbeheer
+      eventbus-hostname: can-kantilever-eventbus
+      eventbus-username: Kantilever
+      eventbus-password: Kant1lever
       logpath: /var/log/Kantilever/BestellingbeheerLogging/
     ports:
       - 11300:80
     networks:
       - can_bestellingbeheer_network
       - can_main_network
+        aliases:
+          - can-bestellingbeheer
     volumes:
       - "C:/Docker/.BestellingbeheerData/Log:/var/log/Kantilever/BestellingbeheerLogging/"
 
@@ -28,7 +29,7 @@ services:
     container_name: can_bestellingbeheer_mssql
     environment:
       ACCEPT_EULA: Y
-      SA_PASSWORD: P@55w0rd
+      SA_PASSWORD: P@55w0rd;
     networks:
       - can_bestellingbeheer_network
     ports:

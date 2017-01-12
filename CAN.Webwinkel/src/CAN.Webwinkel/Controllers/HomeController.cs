@@ -9,10 +9,17 @@ namespace CAN.Webwinkel.Controllers
     [Route("api/[controller]")]
     public class HomeController : Controller
     {
+        [HttpGet]
         public IActionResult Index()
         {
             return Json("Index");
         }
 
+        [Route("Register")]
+        [HttpPost]
+        public IActionResult Register()
+        {
+            return Json("test");
+        }
     }
 }

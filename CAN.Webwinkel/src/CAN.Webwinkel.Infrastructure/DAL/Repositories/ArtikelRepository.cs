@@ -1,9 +1,9 @@
-﻿using CAN.Webwinkel.Infrastructure.DAL.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using CAN.Webwinkel.Domain.Entities;
 
 namespace CAN.Webwinkel.Infrastructure.DAL.Repositories
 {
@@ -15,7 +15,8 @@ namespace CAN.Webwinkel.Infrastructure.DAL.Repositories
 
         protected override IQueryable<Artikel> GetDbSet()
         {
-            return _context.Artikels.Include(ar => ar.ArtikelCategory).ThenInclude(ac => ac.Category);
+            return _context.Artikels.Include(ar => ar.ArtikelCategorie)
+                .ThenInclude(ac => ac.Categorie);
         }
 
         protected override int GetKeyFrom(Artikel item)
@@ -25,15 +26,15 @@ namespace CAN.Webwinkel.Infrastructure.DAL.Repositories
 
         public override int Insert(Artikel item)
         {
-            var artikelCategories = item.ArtikelCategory;
+            var artikelCategories = item.ArtikelCategorie;
 
             foreach(var ac in artikelCategories)
             {
-                var catNam = ac.Category.Naam;
-                Category realCat =_context.Categorieen.FirstOrDefault(c => c.Naam == catNam);
+                var catNam = ac.Categorie.Naam;
+                Categorie realCat =_context.Categorieen.FirstOrDefault(c => c.Naam == catNam);
                 if(realCat != null)
                 {
-                    ac.Category = realCat;
+                    ac.Categorie = realCat;
                 }
             }
 

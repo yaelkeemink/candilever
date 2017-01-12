@@ -1,7 +1,8 @@
-﻿{
+{
   "version": "1.0.0-*",
 
   "dependencies": {
+    "CAN.Webwinkel.Domain": "1.0.0-*",
     // Shared Events and Commands
     "InfoSupport.WSA.Auditlog.Shared": "1.0.1",
     // Info Support Eventbus

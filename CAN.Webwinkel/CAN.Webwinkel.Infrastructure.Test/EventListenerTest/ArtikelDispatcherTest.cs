@@ -1,6 +1,4 @@
-﻿using CAN.Webwinkel.Infrastructure.DAL;
-using CAN.Webwinkel.Infrastructure.EventListener.Dispatchers;
-using CAN.Webwinkel.Infrastructure.Test.Provider;
+﻿using CAN.Webwinkel.Infrastructure.Test.Provider;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -9,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Serilog;
+using CAN.Webwinkel.Infrastructure.DAL;
+using CAN.Webwinkel.Infrastructure.EventListener.Dispatchers;
 using CAN.Webwinkel.Infrastructure.DAL.Repositories;
 
 namespace CAN.Webwinkel.Infrastructure.Test.EventListenerTest
@@ -57,9 +57,9 @@ namespace CAN.Webwinkel.Infrastructure.Test.EventListenerTest
                 Assert.AreEqual(artikelEvent.Naam, fiets.Naam);
                 Assert.AreEqual(0, fiets.Voorraad);
 
-                Assert.IsNotNull(fiets.ArtikelCategory[0].Category);
-                Assert.IsNotNull(fiets.ArtikelCategory[0].Category.Naam);
-                Assert.AreEqual(artikelEvent.Categorieen[0], fiets.ArtikelCategory[0].Category.Naam);
+                Assert.IsNotNull(fiets.ArtikelCategorie[0].Categorie);
+                Assert.IsNotNull(fiets.ArtikelCategorie[0].Categorie.Naam);
+                Assert.AreEqual(artikelEvent.Categorieen[0], fiets.ArtikelCategorie[0].Categorie.Naam);
             }
         }
 

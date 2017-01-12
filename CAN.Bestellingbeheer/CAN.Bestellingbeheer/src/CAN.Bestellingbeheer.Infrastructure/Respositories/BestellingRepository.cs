@@ -21,7 +21,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.Repositories
 
         protected override long GetKeyFrom(Bestelling item)
         {
-            return item.Id;
+            return item.Bestellingnummer;
         }
 
         public override IEnumerable<Bestelling> FindAll()

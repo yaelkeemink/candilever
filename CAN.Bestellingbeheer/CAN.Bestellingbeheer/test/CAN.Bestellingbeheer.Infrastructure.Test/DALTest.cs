@@ -83,7 +83,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
             using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
                 var result = repo.Find(1);
-                Assert.AreEqual(1, result.Id);
+                Assert.AreEqual(1, result.Bestellingnummer);
                 Assert.AreEqual(2.50M, result.Artikelen.First().Prijs);
             }
         }
@@ -177,7 +177,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
             using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
                 var bestelling = repo.Find(1);
-                Assert.AreEqual(1, bestelling.Id);
+                Assert.AreEqual(1, bestelling.Bestellingnummer);
 
                 var updatedArtikel = bestelling.Artikelen.First();
                 Assert.AreEqual(3.50M, updatedArtikel.Prijs);
@@ -185,5 +185,6 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                 Assert.AreEqual(10, updatedArtikel.Aantal);
             }
         }
+
     }
 }

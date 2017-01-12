@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using CAN.Webwinkel.Domain.Interfaces;
 
 namespace CAN.Webwinkel.Infrastructure.DAL.Repositories
 {
