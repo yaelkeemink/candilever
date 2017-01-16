@@ -48,7 +48,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
             var builder = new DbContextOptionsBuilder<WinkelDatabaseContext>();
             builder.UseSqlServer(_dbConnectionString);
             var dbOptions = builder.Options;
-            var first = true;
+            var firstConnection = true;
 
 
             while (true)
@@ -58,11 +58,11 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
                 {
                     using (var dispatcher = new ArtikelEventDispatcher(_busOptions, dbOptions, _logger))
                     {
-                        if (first)
+                        if (firstConnection)
                         {
                             _logger.Information("Start rebuilding cache");
                             ReplayAuditlog(dbOptions);
-                            first = false;
+                            firstConnection = false;
                             _logger.Information("Releasing Startup lock");
                             _locker.StartUpLock.Set();
                             _logger.Information("Done rebuilding cache");
@@ -101,7 +101,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
             var replayBusOptions = new BusOptions
             {
                 ExchangeName = $"Kantilever.Voorbeeld.ReplayExchange.{DateTime.Now.Millisecond}",
-                QueueName = "TempQueue",
+                QueueName = "WebwinkelReplayQueue",
                 HostName = _busOptions.HostName,
                 Port = _busOptions.Port,
                 UserName = _busOptions.UserName,
