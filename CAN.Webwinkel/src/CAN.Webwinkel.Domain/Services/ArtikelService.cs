@@ -25,5 +25,10 @@ namespace CAN.Webwinkel.Domain.Services
                     c => c.ArtikelCategorie.Any(ac => ac.Categorie.Naam == categorieNaam))
                 .ToList();
         }
+
+        public IEnumerable<Artikel> AlleArtikelen()
+        {
+            return _repository.FindAll();
+        }
     }
 }

@@ -8,6 +8,7 @@ namespace CAN.Webwinkel.Domain.Interfaces
 {
     public interface IArtikelService
     {
-        IEnumerable<Artikel> ArtikelenBijCategorie(string categorieNaam); 
+        IEnumerable<Artikel> ArtikelenBijCategorie(string categorieNaam);
+        IEnumerable<Artikel> AlleArtikelen();
     }
 }
