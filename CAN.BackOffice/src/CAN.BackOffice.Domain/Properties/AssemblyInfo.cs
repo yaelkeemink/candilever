@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Can.BackOffice.Domain")]
+[assembly: AssemblyProduct("CAN.BackOffice.Domain")]
 [assembly: AssemblyTrademark("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
@@ -16,4 +16,4 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("39281328-a7be-49c7-a44d-1f026c4790c0")]
+[assembly: Guid("451a1a5c-6dc2-4e26-8274-3e5af486d984")]
