@@ -2,7 +2,7 @@ version: '2'
 
 services:
   can.klantbeheer.facade:
-    image: can.klantbeheer.facade
+    image: candilever/can.klantbeheer.facade
     build:
       context: .
       dockerfile: Dockerfile

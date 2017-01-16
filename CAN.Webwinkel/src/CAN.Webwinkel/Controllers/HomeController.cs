@@ -32,8 +32,11 @@ namespace CAN.Webwinkel.Controllers
         }
 
         [HttpGet]
-        [Route("Registreren")]
         public IActionResult Registreren()
+        {
+            return View();
+        }
+        public IActionResult AlgemeneVoorwaarden()
         {
             return View();
         }

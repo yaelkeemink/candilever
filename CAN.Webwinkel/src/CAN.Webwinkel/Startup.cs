@@ -108,6 +108,7 @@ namespace CAN.Webwinkel
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
             }
             else
@@ -127,6 +128,8 @@ namespace CAN.Webwinkel
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseSwagger();
             app.UseSwaggerUi();

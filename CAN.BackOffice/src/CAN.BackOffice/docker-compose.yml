@@ -1,0 +1,45 @@
+version: '2'
+
+services:
+  can.backoffice:
+    image: can.backoffice
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      dbconnectionstring: Server=can_backoffice_mssql;Database=CAN_Backoffice;User Id=sa;Password=P@55w0rd;
+      eventbus-exchangename: KantileverBus
+      eventbus-queuename: backoffice
+      eventbus-hostname: can-kantilever-eventbus
+      eventbus-username: Kantilever
+      eventbus-password: Kant1lever
+      logpath: /var/log/Kantilever/BackofficeLogging/
+    ports:
+      - 11200:80
+    networks:
+      can_main_network:
+          aliases:
+            - can-backoffice
+      can_backoffice_network:
+    volumes:
+      - "C:/Docker/.BackofficeData/Log:/var/log/Kantilever/BackofficeLogging/"
+
+  can.backoffice.mssql:
+    image: microsoft/mssql-server-linux
+    container_name: can_backoffice_mssql
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: P@55w0rd
+    networks:
+      - can_backoffice_network
+    ports:
+      - 11210:1433
+    volumes:
+      - "C:/Docker/.BackofficeData/db:/var/opt/mssql/"
+
+
+networks:
+  can_main_network: 
+    external:
+      name: can_main_network
+  can_backoffice_network:
