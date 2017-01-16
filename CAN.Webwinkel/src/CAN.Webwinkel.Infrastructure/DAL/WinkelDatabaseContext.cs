@@ -21,9 +21,9 @@ namespace CAN.Webwinkel.Infrastructure.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
+
             modelBuilder.Entity<ArtikelCategorie>().HasKey(x => new { x.ArtikelId, x.CategoryId });
-      
+
 
             modelBuilder.Entity<ArtikelCategorie>()
              .HasOne(a => a.Artikel)
@@ -36,6 +36,13 @@ namespace CAN.Webwinkel.Infrastructure.DAL
                 .HasForeignKey(ac => ac.CategoryId);
 
             modelBuilder.Entity<Categorie>().HasAlternateKey(c => c.Naam).HasName("AlternateKey_CategoryName");
+        }
+
+        internal void PurgeCachedData()
+        {
+            Database.ExecuteSqlCommand("Delete from ArtikelCategory");
+            Database.ExecuteSqlCommand("Delete from Artikels");
+            Database.ExecuteSqlCommand("Delete from Categorieen");
 
         }
     }

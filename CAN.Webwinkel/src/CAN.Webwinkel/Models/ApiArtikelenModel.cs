@@ -1,4 +1,5 @@
 ﻿using CAN.Webwinkel.Domain.Entities;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,11 @@ namespace CAN.Webwinkel.Models
         public string AfbeeldingUrl { get; set; }
         public int Voorraad { get; set; }
 
+        public string GetJSON()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+
         public ApiArtikelenModel()
         {
 
@@ -27,8 +33,8 @@ namespace CAN.Webwinkel.Models
             Naam = artikel.Naam;
             Beschrijving = artikel.Beschrijving;
             Prijs = artikel.Prijs;
-            AfbeeldingUrl = artikel.AfbeeldingUrl;
-            Voorraad = artikel.Voorraad;
+            AfbeeldingUrl = "images/"+artikel.AfbeeldingUrl;
+            Voorraad = artikel.Voorraad >= 8 ? 8 : artikel.Voorraad;
         }
     }
 }
