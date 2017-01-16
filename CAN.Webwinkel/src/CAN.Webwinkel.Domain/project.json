@@ -3,7 +3,7 @@
 
   "dependencies": {
     "CAN.Common": "1.0.3",
-    "NETStandard.Library": "1.6.0",
+    "NETStandard.Library": "1.6.1",
     "Kantilever.Catalogusbeheer.Common": "1.0.0",
     "Kantilever.Magazijnbeheer.Common": "1.0.0",
     "InfoSupport.WSA.InfraStructure": "1.7.0",
