@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -9,9 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using CAN.BackOffice.Data;
 using CAN.BackOffice.Models;
 using CAN.BackOffice.Services;
+using Serilog;
+using CAN.BackOffice.Infrastructure.DAL;
 
 namespace CAN.BackOffice
 {
@@ -35,6 +33,10 @@ namespace CAN.BackOffice
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            Log.Logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(Configuration)
+            .CreateLogger();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -45,13 +47,13 @@ namespace CAN.BackOffice
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            var connectionstring = Environment.GetEnvironmentVariable("dbconnectionstring");
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionstring));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<DatabaseContext>()
                 .AddDefaultTokenProviders();
-
+            
             services.AddMvc();
 
             // Add application services.
@@ -62,8 +64,14 @@ namespace CAN.BackOffice
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddConsole(Configuration.GetSection("Serilog"));
             loggerFactory.AddDebug();
+            loggerFactory.AddSerilog();
+            app.UseApplicationInsightsRequestTelemetry();
+
+            app.UseApplicationInsightsExceptionTelemetry();
+
+            app.UseMvc();
 
             app.UseApplicationInsightsRequestTelemetry();
 
