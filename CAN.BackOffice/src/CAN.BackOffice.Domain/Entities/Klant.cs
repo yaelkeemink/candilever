@@ -8,6 +8,9 @@ namespace CAN.BackOffice.Domain.Entities
 {
     public class Klant
     {
+
+        public Klant() { }
+
         public Klant(KlantCreatedEvent evt) {
 
             Klantnummer = evt.Klantnummer;

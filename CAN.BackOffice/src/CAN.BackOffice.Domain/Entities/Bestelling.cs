@@ -8,8 +8,12 @@ namespace Can.BackOffice.Domain.Entities
 {
     public class Bestelling
     {
+        public Bestelling() { }
+
         public Bestelling(BestellingCreatedEvent evt)
         {
+            Artikelen = new List<Artikel>();
+
             Klantnummer = evt.Klantnummer;
             Bestellingsnummer = evt.Bestellingsnummer;
             BestelDatum = evt.BestelDatum;
@@ -35,6 +39,6 @@ namespace Can.BackOffice.Domain.Entities
 
         public DateTime BestelDatum { get; set; }
 
-        public IList<Artikel> Artikelen { get; internal set; }
+        public IList<Artikel> Artikelen { get; set; }
     }
 }
