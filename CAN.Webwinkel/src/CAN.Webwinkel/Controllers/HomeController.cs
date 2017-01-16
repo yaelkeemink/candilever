@@ -35,5 +35,9 @@ namespace CAN.Webwinkel.Controllers
         {
             return View();
         }
+        public IActionResult AlgemeneVoorwaarden()
+        {
+            return View();
+        }
     }
 }
