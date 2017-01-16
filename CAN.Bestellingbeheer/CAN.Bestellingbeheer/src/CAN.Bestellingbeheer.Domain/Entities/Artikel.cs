@@ -4,11 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace CAN.Bestellingbeheer.Domain.Entities
 {
     public class Artikel
-    {
-        public long Bestellingnummer { get; set; }
-
-        public Bestelling Bestelling { get; set; }
-        
+    {        
         public long Artikelnummer { get; set; }
 
         [Required]
