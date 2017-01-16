@@ -13,7 +13,7 @@
             <img src="@artikel.AfbeeldingUrl" class="img-responsive img-rounded productimg">
             <div class="productprice">
                 <div class="productvoorraad">@Html.DisplayFor(a => artikel.Voorraad)</div>
-                <div class="cartButton"><button onclick="addToCart(@artikel.GetJSON())" class="glyphicon glyphicon-shopping-cart btn btn-info"></button></div>
+                <div class="cartButton"><button onclick="addToCart(@artikel.GetJSON())" class="glyphicon glyphicon-shopping-cart btn btn-info" id="addToCart"></button></div>
                 <div class="pricetext">&euro;@Html.DisplayFor(a => artikel.Prijs)</div>
            </div>
         </div>
