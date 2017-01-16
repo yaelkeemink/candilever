@@ -53,6 +53,10 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
         public void SetExpectedEvents(long events)
         {
             _expectedEvents = events;
+            if (_expectedEvents == 0)
+            {
+                EventReplayLock.Set();
+            }
 
 
         }
