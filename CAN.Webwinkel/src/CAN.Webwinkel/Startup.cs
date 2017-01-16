@@ -139,8 +139,13 @@ namespace CAN.Webwinkel
         {
             var log = new LoggerConfiguration().ReadFrom.Configuration(Configuration).MinimumLevel.Debug().CreateLogger();
             var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
-            var listener = new WinkelEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log);
+            var locker = new EventListenerLock();
+            var listener = new WinkelEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log, "ReplayService", locker);
             listener.Start();
+            /// wachten
+            log.Information("Waiting for release startup lock");
+            locker.StartUpLock.WaitOne();
+            log.Information("Continuing startup");
         }
     }
 }
