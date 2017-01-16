@@ -7,6 +7,7 @@
 /// <reference path="bower_components/promise-polyfill/Promise.js" />
 /// <reference path="bower_components/sinonjs/sinon.js" />
 /// <reference path="bower_components/stacky/browser.js" />
+/// <reference path="bower_components/web-animations-js/web-animations.min.js" />
 /// <reference path="bower_components/webcomponentsjs/webcomponents.js" />
 /// <reference path="bower_components/web-component-tester/browser.js" />
 /// <reference path="js/site.js" />
