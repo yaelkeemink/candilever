@@ -8,11 +8,12 @@ using CAN.BackOffice.Models;
 
 namespace CAN.BackOffice.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class DatabaseContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
