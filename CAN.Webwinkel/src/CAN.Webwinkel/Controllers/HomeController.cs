@@ -21,6 +21,7 @@ namespace CAN.Webwinkel.Controllers
             _service = service;
         }
         
+        [HttpGet]
         public IActionResult Index()
         {
             var artikelen = _service.AlleArtikelen();
@@ -30,7 +31,7 @@ namespace CAN.Webwinkel.Controllers
             return View(lijst);
         }
 
-        [Route("Registreren")]
+        [HttpGet]
         public IActionResult Registreren()
         {
             return View();
