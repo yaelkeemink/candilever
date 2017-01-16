@@ -30,6 +30,7 @@ namespace CAN.Webwinkel.Controllers
 
             return View(lijst);
         }
+
         [Route("Registreren")]
         public IActionResult Registreren()
         {
