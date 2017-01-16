@@ -100,7 +100,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
 
             var replayBusOptions = new BusOptions
             {
-                ExchangeName = $"Kantilever.Voorbeeld.ReplayExchange.{DateTime.Now.Millisecond}",
+                ExchangeName = $"Kantilever.ReplayExchange.{DateTime.Now.Millisecond}",
                 QueueName = "WebwinkelReplayQueue",
                 HostName = _busOptions.HostName,
                 Port = _busOptions.Port,

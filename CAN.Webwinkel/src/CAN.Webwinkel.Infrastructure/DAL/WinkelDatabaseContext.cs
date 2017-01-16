@@ -37,9 +37,6 @@ namespace CAN.Webwinkel.Infrastructure.DAL
 
             modelBuilder.Entity<Categorie>().HasAlternateKey(c => c.Naam).HasName("AlternateKey_CategoryName");
         }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-        }
 
         internal void PurgeCachedData()
         {
