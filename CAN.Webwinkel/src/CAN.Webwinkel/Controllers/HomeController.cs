@@ -10,7 +10,6 @@ using CAN.Webwinkel.Domain.Entities;
 
 namespace CAN.Webwinkel.Controllers
 {
-    [Route("[controller]")]
     public class HomeController : Controller
     {
         private readonly ILogger<ArtikelController> _logger;

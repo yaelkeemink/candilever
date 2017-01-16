@@ -82,6 +82,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
                 catch (Exception e)
                 {
                     _logger.Error($"Error with EventDispatcher {e.Message}");
+                    _logger.Debug(e.StackTrace);
                     Thread.Sleep(5000);
                 }
             }
@@ -123,8 +124,8 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
 
 
                 var replayResult = auditlogproxy.Execute<ReplayResult>(replayCommand);
-                _locker.SetExpectedEvents(replayResult.Count);
                 _logger.Information($"Expected events set {replayResult.Count}");
+                _locker.SetExpectedEvents(replayResult.Count);
 
                 listener.Open();
 
