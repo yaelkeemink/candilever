@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using CAN.BackOffice.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace CAN.BackOffice.Data
+namespace CAN.BackOffice.Infrastructure.DAL
 {
-    public class DatabaseContext : IdentityDbContext<ApplicationUser>
+    public class DatabaseContext : DbContext
     {
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
