@@ -2,7 +2,7 @@ version: '2'
 
 services:
   can.webwinkel:
-    image: can.webwinkel
+    image: candilever/can.webwinkel
     build:
       context: .
       dockerfile: Dockerfile

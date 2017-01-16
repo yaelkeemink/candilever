@@ -2,7 +2,7 @@ version: '2'
 
 services:
   can.bestellingbeheer.facade:
-    image: can.bestellingbeheer.facade
+    image: candilever/can.bestellingbeheer.facade
     build:
       context: .
       dockerfile: Dockerfile
