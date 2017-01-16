@@ -12,6 +12,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CAN.BackOffice", "src\CAN.BackOffice\CAN.BackOffice.xproj", "{DE846C66-299C-4E24-BB2C-71C088708376}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CAN.BackOffice.Domain", "src\Can.BackOffice.Domain\CAN.BackOffice.Domain.xproj", "{39281328-A7BE-49C7-A44D-1F026C4790C0}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CAN.BackOffice.Infrastructure", "src\CAN.BackOffice.Infrastructure\CAN.BackOffice.Infrastructure.xproj", "{80847A63-E4B3-4F98-9282-28D2E9485F74}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -22,11 +26,21 @@ Global
 		{DE846C66-299C-4E24-BB2C-71C088708376}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE846C66-299C-4E24-BB2C-71C088708376}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE846C66-299C-4E24-BB2C-71C088708376}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39281328-A7BE-49C7-A44D-1F026C4790C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39281328-A7BE-49C7-A44D-1F026C4790C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39281328-A7BE-49C7-A44D-1F026C4790C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39281328-A7BE-49C7-A44D-1F026C4790C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80847A63-E4B3-4F98-9282-28D2E9485F74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80847A63-E4B3-4F98-9282-28D2E9485F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80847A63-E4B3-4F98-9282-28D2E9485F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80847A63-E4B3-4F98-9282-28D2E9485F74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{DE846C66-299C-4E24-BB2C-71C088708376} = {61E1F72B-BA25-412C-A20B-3F06ABCF9FE1}
+		{39281328-A7BE-49C7-A44D-1F026C4790C0} = {61E1F72B-BA25-412C-A20B-3F06ABCF9FE1}
+		{80847A63-E4B3-4F98-9282-28D2E9485F74} = {61E1F72B-BA25-412C-A20B-3F06ABCF9FE1}
 	EndGlobalSection
 EndGlobal
