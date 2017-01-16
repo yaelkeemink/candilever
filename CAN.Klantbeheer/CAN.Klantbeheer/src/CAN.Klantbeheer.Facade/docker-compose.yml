@@ -17,8 +17,8 @@ services:
     ports:
       - 11400:80
     networks:
-      - can_klantbeheer_network
-      - can_main_network
+      can_klantbeheer_network:
+      can_main_network:
         aliases:
           - can-klantbeheer
     volumes:

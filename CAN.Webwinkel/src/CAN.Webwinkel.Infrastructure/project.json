@@ -4,9 +4,9 @@
   "dependencies": {
     "CAN.Webwinkel.Domain": "1.0.0-*",
     // Shared Events and Commands
-    "InfoSupport.WSA.Auditlog.Shared": "1.0.0",
+    "InfoSupport.WSA.Auditlog.Shared": "1.0.1",
     // Info Support Eventbus
-    "InfoSupport.WSA.InfraStructure": "1.7.0",
+    "InfoSupport.WSA.InfraStructure": "1.7.1",
     "Kantilever.Catalogusbeheer.Common": "1.0.0",
     "Kantilever.Magazijnbeheer.Common": "1.0.0",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.1.0",

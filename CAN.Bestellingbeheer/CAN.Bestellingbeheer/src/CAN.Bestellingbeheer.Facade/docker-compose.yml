@@ -17,8 +17,8 @@ services:
     ports:
       - 11300:80
     networks:
-      - can_bestellingbeheer_network
-      - can_main_network
+      can_bestellingbeheer_network:
+      can_main_network:
         aliases:
           - can-bestellingbeheer
     volumes:
