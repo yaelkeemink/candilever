@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using CAN.BlackOffice.Domain.Interfaces;
+using CAN.BackOffice.Domain.Interfaces;
 
-namespace CAN.BackOffice.Infrastructure.Repositories
+namespace CAN.BackOffice.Infrastructure.DAL.Repositories
 {
     public abstract class BaseRepository<Entity, Key, Context>
    : IRepository<Entity, Key>,
@@ -19,7 +19,7 @@ namespace CAN.BackOffice.Infrastructure.Repositories
         {
             _context = context;
         }
-        protected abstract DbSet<Entity> GetDbSet();
+        protected abstract IQueryable<Entity> GetDbSet();
         protected abstract Key GetKeyFrom(Entity item);
 
         public virtual IEnumerable<Entity> FindBy(Expression<Func<Entity, bool>> filter)

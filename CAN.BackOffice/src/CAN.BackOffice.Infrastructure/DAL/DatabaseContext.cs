@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CAN.BackOffice.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CAN.BackOffice.Infrastructure.DAL
 {
     public class DatabaseContext : DbContext
     {
+        public DbSet<Bestelling> Bestellingen { get; set; }
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {

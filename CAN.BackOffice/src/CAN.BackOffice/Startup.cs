@@ -10,6 +10,9 @@ using CAN.BackOffice.Models;
 using CAN.BackOffice.Services;
 using Serilog;
 using CAN.BackOffice.Infrastructure.DAL;
+using CAN.BackOffice.Domain.Interfaces;
+using CAN.BackOffice.Infrastructure.DAL.Repositories;
+using CAN.BackOffice.Domain.Entities;
 
 namespace CAN.BackOffice
 {
@@ -59,6 +62,9 @@ namespace CAN.BackOffice
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            services.AddScoped<IRepository<Domain.Entities.Bestelling, long>, BestellingRepository>();
+            services.AddScoped<IMagazijnService, MagazijnService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

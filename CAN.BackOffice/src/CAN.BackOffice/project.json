@@ -48,7 +48,7 @@
     "InfoSupport.WSA.InfraStructure": "1.7.0",
     "CAN.Common": "1.0.4",
     "CAN.BackOffice.Infrastructure": "1.0.0-*",
-    "Can.BackOffice.Domain": "1.0.0-*" 
+    "Microsoft.Rest.ClientRuntime": "2.3.4"
   },
   "tools": {
     "BundlerMinifier.Core": "2.0.238",
