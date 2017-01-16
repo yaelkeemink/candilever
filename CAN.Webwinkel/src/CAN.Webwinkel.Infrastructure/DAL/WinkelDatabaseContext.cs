@@ -40,7 +40,7 @@ namespace CAN.Webwinkel.Infrastructure.DAL
 
         internal void PurgeCachedData()
         {
-            Database.ExecuteSqlCommand("Delete from ArtikelCategory");
+            Database.ExecuteSqlCommand("Delete from ArtikelCategorie");
             Database.ExecuteSqlCommand("Delete from Artikels");
             Database.ExecuteSqlCommand("Delete from Categorieen");
 
