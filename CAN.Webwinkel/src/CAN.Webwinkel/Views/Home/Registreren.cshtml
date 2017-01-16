@@ -70,6 +70,7 @@
                 data: bestelling,
                 success: function (data) {
                     alert(data);
+                    emptyShopCart();
                 },  error: function (err) {
                     console.log(err) ;
                 }
@@ -78,5 +79,9 @@
             alert("De winkelwagen is leeg!");
 
         }
+    }
+
+    function emptyShopCart() {
+        localStorage.setItem("Shopcart", undefined);
     }
 </script>
