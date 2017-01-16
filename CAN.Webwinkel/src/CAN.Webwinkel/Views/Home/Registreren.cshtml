@@ -49,10 +49,8 @@
 <script>
     "use strict";
     function Bestel() {
-        console.log("bestel");
-
         var shopCart = JSON.parse(localStorage.getItem("Shopcart").toLowerCase());
-        console.log(shopCart) ;
+
         var bestelling = {
             "bestellingnummer" : null,
             "klantnummer" : 0,
