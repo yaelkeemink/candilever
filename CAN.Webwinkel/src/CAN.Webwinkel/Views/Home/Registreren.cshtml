@@ -1,27 +1,49 @@
 ﻿@model CAN.Webwinkel.Agents.KlantAgent.Models.Klant
-<form asp-controller="Home" asp-action="Index" method="post">
-    @Html.LabelFor(a => a.Voornaam)
-    @Html.TextBoxFor(a => a.Voornaam)<br />
+<fieldset>
+    <legend class="h2">Uw gegevens</legend>
+    <form asp-controller="Home" asp-action="Index" method="post">
+        @Html.LabelFor(a => a.Voornaam)
+        @Html.TextBoxFor(a => a.Voornaam)<br />
 
-    @Html.LabelFor(a => a.Tussenvoegsels)
-    @Html.TextBoxFor(a => a.Tussenvoegsels)<br />
+        <div class="form-group">
+            <label asp-for="Voornaam"></label>
+            <input type="text" class="form-control" asp-for="Voornaam" placeholder="Voornaam"/>
+        </div>
 
-    @Html.LabelFor(a => a.Achternaam)
-    @Html.TextBoxFor(a => a.Achternaam)<br />
+        <div class="form-group">
+            <label asp-for="Tussenvoegsels"></label>
+            <input type="text" class="form-control" asp-for="Tussenvoegsels" placeholder="Tussenvoegsel"/>
+        </div>
 
-    @Html.LabelFor(a => a.Adres)
-    @Html.TextBoxFor(a => a.Adres)<br />
+        <div class="form-group">
+            <label asp-for="Achternaam"></label>
+            <input type="text" class="form-control" asp-for="Achternaam" placeholder="Achternaam"/>
+        </div>
 
-    @Html.LabelFor(a => a.Huisnummer)
-    @Html.TextBoxFor(a => a.Huisnummer)<br />
+        <div class="form-group">
+            <label asp-for="Adres"></label>
+            <input type="text" class="form-control" asp-for="Adres" placeholder="Adres"/>
+        </div>
 
-    @Html.LabelFor(a => a.Postcode)
-    @Html.TextBoxFor(a => a.Postcode)<br />
+        <div class="form-group">
+            <label asp-for="Huisnummer"></label>
+            <input type="text" class="form-control" asp-for="Huisnummer" placeholder="Huisnummer"/>
+        </div>
 
-    @Html.LabelFor(a => a.Email)
-    @Html.TextBoxFor(a => a.Email)<br />
+        <div class="form-group">
+            <label asp-for="Postcode"></label>
+            <input type="text" class="form-control" asp-for="Postcode" placeholder="Postcode"/>
+        </div>
 
-    @Html.LabelFor(a => a.Telefoonnummer)
-    @Html.TextBoxFor(a => a.Telefoonnummer)<br />
-    <button type="submit">Bestel</button>
-</form>
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input type="email" class="form-control" asp-for="Email" placeholder="Email"/>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Telefoonnummer"></label>
+            <input type="tel" class="form-control" asp-for="Telefoonnummer" placeholder="Telefoonnummer"/>
+        </div>
+        <button type="submit" class="btn btn-default">Bestel</button>
+    </form>
+</fieldset>
