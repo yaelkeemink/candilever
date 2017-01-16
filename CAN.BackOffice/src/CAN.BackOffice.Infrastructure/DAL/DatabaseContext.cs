@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using CAN.BackOffice.Models;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace CAN.BackOffice.Data
+namespace CAN.BackOffice.Infrastructure.DAL
 {
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    public class DatabaseContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
+            Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
