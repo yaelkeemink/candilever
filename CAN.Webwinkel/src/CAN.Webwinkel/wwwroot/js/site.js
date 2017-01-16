@@ -1,5 +1,5 @@
 ﻿// Write your Javascript code.
-"use strict"
+"use strict";
 
 function addToCart(artikel) {
     console.log(artikel);
