@@ -12,11 +12,13 @@ namespace CAN.Bestellingbeheer.Domain.Services {
     {
         private readonly IRepository<Bestelling, long> _repository;
         private readonly IEventPublisher _publisher;
+        private readonly ILogger<BestellingService> _logger;
 
-        public BestellingService(IEventPublisher publisher, IRepository<Bestelling, long> repository)
+        public BestellingService(IEventPublisher publisher, IRepository<Bestelling, long> repository, ILogger<BestellingService> logger)
         {
             _publisher = publisher;
             _repository = repository;
+            _logger = logger;
         }
 
         public Bestelling CreateBestelling(Bestelling bestelling)
@@ -45,12 +47,13 @@ namespace CAN.Bestellingbeheer.Domain.Services {
             return _repository.Update(bestelling);
         }
 
-        public int UpdateStatusBestelling(long id)
+        public int UpdateStatusOpgehaald(long id)
         {
             var bestelling = _repository.Find(id);
-            if (bestelling.Status == BestelStatus.opgehaald)
+            _logger.LogDebug(bestelling.Status.ToString());
+            if (bestelling.Status != BestelStatus.Opgehaald)
             {
-                bestelling.Status++;
+                bestelling.Status = BestelStatus.Opgehaald;
                 return _repository.Update(bestelling);
             }
             throw new InvalidStatusException("Status staat al op opgehaald");

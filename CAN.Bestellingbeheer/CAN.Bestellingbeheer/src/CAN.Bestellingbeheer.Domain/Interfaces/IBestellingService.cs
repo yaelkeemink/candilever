@@ -11,7 +11,7 @@ namespace CAN.Bestellingbeheer.Domain.Interfaces
         :IDisposable
     {
         int UpdateBestelling(Bestelling bestelling);
-        int UpdateStatusBestelling(long id);
+        int UpdateStatusOpgehaald(long id);
         Bestelling CreateBestelling(Bestelling bestelling);
     }
 }

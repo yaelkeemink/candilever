@@ -55,16 +55,16 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
         }
  
         [HttpPut]
-        [SwaggerOperation("UpdateStatus")]
+        [SwaggerOperation("BestellingStatusOpgehaald")]
         [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
-        public IActionResult UpdateStatusBestelling([FromBody]long bestelling)
+        public IActionResult BestellingStatusOpgehaald([FromBody]long bestelling)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    var response = _service.UpdateStatusBestelling(bestelling);
+                    var response = _service.UpdateStatusOpgehaald(bestelling);
                     return Ok(response);
                 }
             }
