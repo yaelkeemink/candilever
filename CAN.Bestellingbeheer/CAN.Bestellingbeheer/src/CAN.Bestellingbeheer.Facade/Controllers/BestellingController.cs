@@ -8,6 +8,7 @@ using CAN.Bestellingbeheer.Domain.Entities;
 using CAN.Bestellingbeheer.Facade.Errors;
 using Microsoft.Extensions.Logging;
 using CAN.Bestellingbeheer.Domain.Interfaces;
+using CAN.Bestellingbeheer.Domain.DTO;
 
 namespace CAN.Bestellingbeheer.Facade.Controllers
 {
@@ -26,20 +27,21 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
         // POST api/values
         [HttpPost]
         [SwaggerOperation("Post")]
-        [ProducesResponseType(typeof(Bestelling), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BestellingDTO), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
-        public IActionResult CreateBestelling([FromBody]Bestelling bestelling)
+        public IActionResult CreateBestelling([FromBody]BestellingDTO bestellingDTO)
         {
             if (!ModelState.IsValid)
             {
                 var error = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
 
-                _logger.LogWarning("Create bestelling failed, Modelstate Invalide", bestelling);
+                _logger.LogWarning("Create bestelling failed, Modelstate Invalide", bestellingDTO);
                 return BadRequest(error);
             }
 
             try
             {
+                Bestelling bestelling = new Bestelling(bestellingDTO);
                 var response = _service.CreateBestelling(bestelling);
 
                 _logger.LogInformation("Create bestelling success", response);
@@ -47,9 +49,9 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
             }
             catch (Exception ex)
             {
-                var error = new ErrorMessage(ErrorTypes.Unknown, $"Onbekende fout in create bestelling: {bestelling},/nException: {ex}");
+                var error = new ErrorMessage(ErrorTypes.Unknown, $"Onbekende fout in create bestelling: {bestellingDTO},/nException: {ex}");
 
-                _logger.LogError("Create bestelling failed, Unknown Error", bestelling, ex);
+                _logger.LogError("Create bestelling failed, Unknown Error", bestellingDTO, ex);
                 return BadRequest(error);
             }
         }

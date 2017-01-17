@@ -11,7 +11,7 @@
     "/api/Bestelling": {
       "put": {
         "tags": [ "Bestelling" ],
-        "operationId": "Update",
+        "operationId": "BestellingStatusOpgehaald",
         "consumes": [ "application/json", "text/json", "application/json-patch+json" ],
         "produces": [ "text/plain", "application/json", "text/json" ],
         "parameters": [
@@ -19,13 +19,19 @@
             "name": "bestelling",
             "in": "body",
             "required": false,
-            "schema": { "$ref": "#/definitions/Bestelling" }
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Success",
-            "schema": { "$ref": "#/definitions/Bestelling" }
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
           },
           "400": {
             "description": "Client Error",
@@ -41,16 +47,16 @@
         "produces": [ "text/plain", "application/json", "text/json" ],
         "parameters": [
           {
-            "name": "bestelling",
+            "name": "bestellingDTO",
             "in": "body",
             "required": false,
-            "schema": { "$ref": "#/definitions/Bestelling" }
+            "schema": { "$ref": "#/definitions/BestellingDTO" }
           }
         ],
         "responses": {
           "200": {
             "description": "Success",
-            "schema": { "$ref": "#/definitions/Bestelling" }
+            "schema": { "$ref": "#/definitions/BestellingDTO" }
           },
           "400": {
             "description": "Client Error",
@@ -62,7 +68,7 @@
     }
   },
   "definitions": {
-    "Bestelling": {
+    "BestellingDTO": {
       "required": [ "klantnummer" ],
       "type": "object",
       "properties": {
@@ -76,7 +82,7 @@
         },
         "artikelen": {
           "type": "array",
-          "items": { "$ref": "#/definitions/Artikel" }
+          "items": { "$ref": "#/definitions/ArtikelDTO" }
         },
         "bestelDatum": {
           "format": "date-time",
@@ -84,29 +90,25 @@
         },
         "status": {
           "format": "int32",
-          "enum": [ 0, 1 ],
+          "enum": [ 0, 100 ],
           "type": "integer"
         }
       }
     },
-    "Artikel": {
+    "ArtikelDTO": {
       "required": [ "naam", "prijs", "aantal" ],
       "type": "object",
       "properties": {
-        "bestellingnummer": {
+        "id": {
           "format": "int64",
           "type": "integer"
         },
-        "bestelling": { "$ref": "#/definitions/Bestelling" },
         "artikelnummer": {
           "format": "int64",
           "type": "integer"
         },
         "naam": { "type": "string" },
-        "prijs": {
-          "format": "double",
-          "type": "number"
-        },
+        "prijs": { "type": "string" },
         "aantal": {
           "format": "int32",
           "type": "integer"

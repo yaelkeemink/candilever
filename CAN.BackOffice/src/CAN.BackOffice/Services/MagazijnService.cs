@@ -29,8 +29,7 @@ namespace CAN.BackOffice.Services
 
         public int UpdateStatusBestelling(long id)
         {
-            _service.Update(id);
-            return _Repo.Update(bestelling);
+            return (int)_service.BestellingStatusOpgehaald(id);
         }
     }
 }

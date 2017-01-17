@@ -3,14 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using RabbitMQ.Client.Events;
 using CAN.BackOffice.Infrastructure.DAL;
-using CAN.Common.Events;
-using CAN.BackOffice.Infrastructure.DAL.Repositories;
-using Can.BackOffice.Domain.Entities;
 using CAN.Webwinkel.Infrastructure.EventListener;
-using CAN.BackOffice.Domain.Entities;
-using System.Text;
-using Newtonsoft.Json;
-using System;
 
 namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
 {

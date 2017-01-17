@@ -22,9 +22,9 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents
             /// </param>
             /// <param name='bestelling'>
             /// </param>
-            public static object Update(this IBestellingBeheerService operations, Bestelling bestelling = default(Bestelling))
+            public static object BestellingStatusOpgehaald(this IBestellingBeheerService operations, long? bestelling = default(long?))
             {
-                return Task.Factory.StartNew(s => ((IBestellingBeheerService)s).UpdateAsync(bestelling), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IBestellingBeheerService)s).BestellingStatusOpgehaaldAsync(bestelling), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -35,9 +35,9 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> UpdateAsync(this IBestellingBeheerService operations, Bestelling bestelling = default(Bestelling), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> BestellingStatusOpgehaaldAsync(this IBestellingBeheerService operations, long? bestelling = default(long?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(bestelling, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BestellingStatusOpgehaaldWithHttpMessagesAsync(bestelling, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -46,24 +46,24 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='bestelling'>
+            /// <param name='bestellingDTO'>
             /// </param>
-            public static object Post(this IBestellingBeheerService operations, Bestelling bestelling = default(Bestelling))
+            public static object Post(this IBestellingBeheerService operations, BestellingDTO bestellingDTO = default(BestellingDTO))
             {
-                return Task.Factory.StartNew(s => ((IBestellingBeheerService)s).PostAsync(bestelling), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IBestellingBeheerService)s).PostAsync(bestellingDTO), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='bestelling'>
+            /// <param name='bestellingDTO'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PostAsync(this IBestellingBeheerService operations, Bestelling bestelling = default(Bestelling), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> PostAsync(this IBestellingBeheerService operations, BestellingDTO bestellingDTO = default(BestellingDTO), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostWithHttpMessagesAsync(bestelling, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PostWithHttpMessagesAsync(bestellingDTO, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

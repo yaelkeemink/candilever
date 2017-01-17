@@ -26,9 +26,9 @@ namespace CAN.BackOffice.Controllers
             return View(viewModel);
         }
         [HttpPut]
-        public IActionResult Bestelling(Bestelling bestelling)
+        public IActionResult Bestelling(long id)
         {
-            _service.UpdateBestelling(bestelling);
+            _service.UpdateStatusBestelling(id);
             var viewModel = _service.GetBestelling();
             return View(viewModel);
         }

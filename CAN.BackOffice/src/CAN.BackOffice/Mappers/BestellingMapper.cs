@@ -8,31 +8,31 @@ namespace CAN.BackOffice.Mappers
 {
     public class BestellingMapper
     {
-        public static Bestelling Map(Domain.Entities.Bestelling besteling)
+        public static BestellingDTO Map(Domain.Entities.Bestelling besteling)
         {
-            var artikelen = new List<Artikel>();
+            var artikelen = new List<ArtikelDTO>();
             foreach(var artikel in besteling.Artikelen)
             {
                 artikelen.Add(MapArtikel(artikel));
             }
-            return new Bestelling()
+            return new BestellingDTO()
             {
                 Artikelen = artikelen,
                 BestelDatum = besteling.BestelDatum,
-                Bestellingnummer = besteling.Bestellingnummer,
+                Bestellingnummer = besteling.Bestellingsnummer,
                 Klantnummer = besteling.Klantnummer,
             };
         }
 
-        private static Artikel MapArtikel(Domain.Entities.Artikel artikel)
+        private static ArtikelDTO MapArtikel(Domain.Entities.Artikel artikel)
         {
-            return new Artikel()
+            return new ArtikelDTO()
             {
+                Id = artikel.Id,
                 Aantal = artikel.Aantal,
                 Artikelnummer = artikel.Artikelnummer,
-                Bestellingnummer = artikel.Bestellingnummer,
-                Naam = artikel.Naam,
-                Prijs = artikel.Prijs,
+                Naam = artikel.Artikelnaam,
+                Prijs = artikel.Prijs.ToString(),
             };
         }
     }

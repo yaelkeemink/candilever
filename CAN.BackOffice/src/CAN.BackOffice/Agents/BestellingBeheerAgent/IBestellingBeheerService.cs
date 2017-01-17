@@ -42,9 +42,9 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> UpdateWithHttpMessagesAsync(Bestelling bestelling = default(Bestelling), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> BestellingStatusOpgehaaldWithHttpMessagesAsync(long? bestelling = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <param name='bestelling'>
+        /// <param name='bestellingDTO'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -52,7 +52,7 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PostWithHttpMessagesAsync(Bestelling bestelling = default(Bestelling), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> PostWithHttpMessagesAsync(BestellingDTO bestellingDTO = default(BestellingDTO), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

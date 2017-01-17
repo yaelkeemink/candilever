@@ -11,20 +11,19 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
 
-    public partial class Artikel
+    public partial class ArtikelDTO
     {
         /// <summary>
-        /// Initializes a new instance of the Artikel class.
+        /// Initializes a new instance of the ArtikelDTO class.
         /// </summary>
-        public Artikel() { }
+        public ArtikelDTO() { }
 
         /// <summary>
-        /// Initializes a new instance of the Artikel class.
+        /// Initializes a new instance of the ArtikelDTO class.
         /// </summary>
-        public Artikel(string naam, double prijs, int aantal, long? bestellingnummer = default(long?), Bestelling bestelling = default(Bestelling), long? artikelnummer = default(long?))
+        public ArtikelDTO(string naam, string prijs, int aantal, long? id = default(long?), long? artikelnummer = default(long?))
         {
-            Bestellingnummer = bestellingnummer;
-            Bestelling = bestelling;
+            Id = id;
             Artikelnummer = artikelnummer;
             Naam = naam;
             Prijs = prijs;
@@ -33,13 +32,8 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "bestellingnummer")]
-        public long? Bestellingnummer { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "bestelling")]
-        public Bestelling Bestelling { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public long? Id { get; set; }
 
         /// <summary>
         /// </summary>
@@ -54,7 +48,7 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "prijs")]
-        public double Prijs { get; set; }
+        public string Prijs { get; set; }
 
         /// <summary>
         /// </summary>
@@ -70,9 +64,9 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Naam");
             }
-            if (this.Bestelling != null)
+            if (Prijs == null)
             {
-                this.Bestelling.Validate();
+                throw new ValidationException(ValidationRules.CannotBeNull, "Prijs");
             }
         }
     }

@@ -35,7 +35,9 @@ namespace CAN.Bestellingbeheer.Domain.Test
             var mockRepository = new Mock<IRepository<Bestelling, long>>();
             mockRepository.Setup(n => n.Insert(bestelling)).Returns(1);
 
-            using (BestellingService service = new BestellingService(mockPublisher.Object, mockRepository.Object))
+            var mockLogger = new Mock<ILogger<BestellingService>>(MockBehavior.Loose);
+
+            using (BestellingService service = new BestellingService(mockPublisher.Object, mockRepository.Object, mockLogger.Object))
             {
                 //act
                 Bestelling response = service.CreateBestelling(bestelling);

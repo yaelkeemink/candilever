@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Can.BackOffice.Domain.Entities
+namespace CAN.BackOffice.Domain.Entities
 {
     public enum BestelStatus
     {

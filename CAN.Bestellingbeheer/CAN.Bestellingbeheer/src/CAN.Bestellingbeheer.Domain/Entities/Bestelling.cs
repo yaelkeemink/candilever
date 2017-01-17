@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CAN.Bestellingbeheer.Domain.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -24,6 +25,18 @@ namespace CAN.Bestellingbeheer.Domain.Entities
         {
             Artikelen = new List<Artikel>();
             BestelDatum = DateTime.Now; 
+        }
+        public Bestelling(BestellingDTO bestelling)
+        {
+            Klantnummer = bestelling.Klantnummer;
+            Bestellingnummer = bestelling.Bestellingnummer;
+            BestelDatum = bestelling.BestelDatum;
+            Status = bestelling.Status;
+            Artikelen = new List<Artikel>();
+            foreach (var artikel in bestelling.Artikelen)
+            {
+                Artikelen.Add(artikel);
+            }
         }
     }
 }

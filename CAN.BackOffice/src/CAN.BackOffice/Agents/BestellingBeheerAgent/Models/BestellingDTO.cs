@@ -11,17 +11,17 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
 
-    public partial class Bestelling
+    public partial class BestellingDTO
     {
         /// <summary>
-        /// Initializes a new instance of the Bestelling class.
+        /// Initializes a new instance of the BestellingDTO class.
         /// </summary>
-        public Bestelling() { }
+        public BestellingDTO() { }
 
         /// <summary>
-        /// Initializes a new instance of the Bestelling class.
+        /// Initializes a new instance of the BestellingDTO class.
         /// </summary>
-        public Bestelling(long klantnummer, long? bestellingnummer = default(long?), IList<Artikel> artikelen = default(IList<Artikel>), DateTime? bestelDatum = default(DateTime?), int? status = default(int?))
+        public BestellingDTO(long klantnummer, long? bestellingnummer = default(long?), IList<ArtikelDTO> artikelen = default(IList<ArtikelDTO>), DateTime? bestelDatum = default(DateTime?), int? status = default(int?))
         {
             Bestellingnummer = bestellingnummer;
             Klantnummer = klantnummer;
@@ -43,7 +43,7 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "artikelen")]
-        public IList<Artikel> Artikelen { get; set; }
+        public IList<ArtikelDTO> Artikelen { get; set; }
 
         /// <summary>
         /// </summary>
