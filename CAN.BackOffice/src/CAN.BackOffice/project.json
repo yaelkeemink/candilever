@@ -45,11 +45,9 @@
     "Serilog.Settings.Configuration": "2.2.0",
     "Serilog.Sinks.Literate": "2.0.0",
     "Serilog.Sinks.RollingFile": "3.3.0",
-    "InfoSupport.WSA.InfraStructure": "1.7.0",
-    "CAN.Common": "1.0.4",
-    "CAN.BackOffice.Infrastructure": "1.0.0-*",
-    "Can.BackOffice.Domain": "1.0.0-*" 
-  },
+    "InfoSupport.WSA.InfraStructure": "1.7.1",
+    "CAN.Common": "1.0.7",
+    "CAN.BackOffice.Infrastructure": "1.0.0-*"  },
   "tools": {
     "BundlerMinifier.Core": "2.0.238",
     "Microsoft.AspNetCore.Razor.Tools": "1.0.0-preview2-final",
