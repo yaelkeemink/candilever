@@ -13,7 +13,7 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
     using Models;
 
     /// <summary>
-    /// Extension methods for BestellingsAgent.
+    /// Extension methods for BestellingsAgentClient.
     /// </summary>
     public static partial class BestellingsAgentExtensions
     {

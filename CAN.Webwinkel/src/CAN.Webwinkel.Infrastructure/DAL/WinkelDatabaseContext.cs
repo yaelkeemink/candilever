@@ -43,7 +43,6 @@ namespace CAN.Webwinkel.Infrastructure.DAL
             Database.ExecuteSqlCommand("Delete from ArtikelCategorie");
             Database.ExecuteSqlCommand("Delete from Artikels");
             Database.ExecuteSqlCommand("Delete from Categorieen");
-
         }
     }
 }
