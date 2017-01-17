@@ -6,47 +6,55 @@
 <div class="container-fluid">
     <fieldset>
         <legend class="h2">Uw gegevens</legend>
-        <form asp-controller="Home" asp-action="Index" method="post">
+        <form>
             <div class="form-group">
                 <label asp-for="Voornaam"></label>
-                <input type="text" class="form-control" asp-for="Voornaam" placeholder="Voornaam">
+                <input type="text" class="form-control" asp-for="Voornaam" placeholder="Voornaam" id="voornaam">
             </div>
 
             <div class="form-group">
                 <label asp-for="Tussenvoegsels"></label>
-                <input type="text" class="form-control" asp-for="Tussenvoegsels" placeholder="Tussenvoegsel">
+                <input type="text" class="form-control" asp-for="Tussenvoegsels" placeholder="Tussenvoegsel" id="tussenvoegsel">
             </div>
 
             <div class="form-group">
                 <label asp-for="Achternaam"></label>
-                <input type="text" class="form-control" asp-for="Achternaam" placeholder="Achternaam">
+                <input type="text" class="form-control" asp-for="Achternaam" placeholder="Achternaam" id="achternaam">
             </div>
 
             <div class="form-group">
                 <label asp-for="Adres"></label>
-                <input type="text" class="form-control" asp-for="Adres" placeholder="Adres">
+                <input type="text" class="form-control" asp-for="Adres" placeholder="Adres" id="straatnaam">
             </div>
 
             <div class="form-group">
                 <label asp-for="Huisnummer"></label>
-                <input type="text" class="form-control" asp-for="Huisnummer" placeholder="Huisnummer">
+                <input type="text" class="form-control" asp-for="Huisnummer" placeholder="Huisnummer" id="huisnummer">
             </div>
 
             <div class="form-group">
                 <label asp-for="Postcode"></label>
-                <input type="text" class="form-control" asp-for="Postcode" placeholder="Postcode">
+                <input type="text" class="form-control" asp-for="Postcode" placeholder="Postcode" id="postcode">
             </div>
 
             <div class="form-group">
                 <label asp-for="Email"></label>
-                <input type="email" class="form-control" asp-for="Email" placeholder="Email">
+                <input type="email" class="form-control" asp-for="Email" placeholder="Email" id="email">
             </div>
 
             <div class="form-group">
                 <label asp-for="Telefoonnummer"></label>
-                <input type="tel" class="form-control" asp-for="Telefoonnummer" placeholder="Telefoonnummer">
+                <input type="tel" class="form-control" asp-for="Telefoonnummer" placeholder="Telefoonnummer" id="telefoonnummer">
             </div>
-            <button type="submit" class="btn btn-default">Bestel</button>
+
+            <div class="form-group">
+                <label asp-for="Land"></label>
+                <select class="form-control dropdown" id="land">
+                    <option value="0">Nederland</option>
+                    <option value="50">België</option>
+                </select>
+            </div>
+            <button onclick="placeOrder()" class="btn btn-default">Bestel</button>
         </form>
     </fieldset>
 </div>

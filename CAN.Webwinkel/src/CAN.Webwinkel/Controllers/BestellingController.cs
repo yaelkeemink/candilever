@@ -26,12 +26,10 @@ namespace CAN.Webwinkel.Controllers
         [SwaggerOperation("BestellingPlaatsen")]
         public IActionResult BestellingGeplaatst([FromBody]Bestelling bestelling)
         {
-            System.Diagnostics.Debug.WriteLine("Bestelling : " + bestelling.Artikelen[0].Naam);
-            System.Diagnostics.Debug.WriteLine("Bestelling : " + bestelling.Artikelen[0].Prijs);
             try
             {
-                _agent.Post(bestelling);
-                return Ok();
+                var response = _agent.Post(bestelling);
+                return Ok(response);
             }
             catch (Exception e)
             {
