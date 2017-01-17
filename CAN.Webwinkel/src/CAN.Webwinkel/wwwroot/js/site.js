@@ -5,38 +5,26 @@ function restoreButton() {
     document.getElementById('addToCart').className = 'glyphicon glyphicon-shopping-cart btn btn-info';
 }
 
-function placeOrder() {
+function placeOrder(klantnummer) {
     console.log("bestel");
 
     var shopCart = JSON.parse(localStorage.getItem("Shopcart").toLowerCase());
     console.log(shopCart);
 
-    var klantnummer = parseKlant();
-
-    var bestelling1 = {
+    var bestelling = {
         "bestellingnummer": 0,
         "klantnummer": klantnummer,
         "artikelen": shopCart,
         "bestelDatum": undefined
     }
 
-    var bestelling = {
-        "bestellingnummer": null,
-        "klantnummer": parseKlant(),
-        "artikelen": shopCart,
-        "bestelDatum": null
-    };
-
-    console.log("bestelling");
-    console.log(JSON.stringify(bestelling));
-
-
     if (shopCart != undefined) {
         $.ajax({
             type: "POST",
             contentType: "application/json",
             url: "/api/Bestelling",
-            data: JSON.stringify(bestelling1),
+            data: JSON.stringify(bestelling),
+            async: false,
             success: function(data) {
                 alert(data);
             }, error: function (err) {
@@ -73,8 +61,9 @@ function parseKlant() {
         contentType: "application/json",
         url: "/api/Klant",
         data: JSON.stringify(klant),
-        success: function(data) {
-            return data;
+        async: false,
+        success: function (data) {
+            placeOrder(data);
         },
         error: function(data) {
             console.log(data);
