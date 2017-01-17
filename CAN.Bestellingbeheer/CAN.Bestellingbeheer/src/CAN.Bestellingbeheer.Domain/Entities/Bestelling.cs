@@ -4,6 +4,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CAN.Bestellingbeheer.Domain.Entities
 {
+    public enum BestelStatus
+    {
+        Goedgekeurd,
+        opgehaald,
+    }
     public class Bestelling
     {
         public long Bestellingnummer { get; set; }
@@ -13,6 +18,7 @@ namespace CAN.Bestellingbeheer.Domain.Entities
 
         public IList<Artikel> Artikelen { get; set; }
         public DateTime BestelDatum { get; set; }
+        public BestelStatus Status { get; set; }
 
         public Bestelling()
         {

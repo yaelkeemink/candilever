@@ -10,9 +10,8 @@ using CAN.BackOffice.Models;
 using CAN.BackOffice.Services;
 using Serilog;
 using CAN.BackOffice.Infrastructure.DAL;
-using CAN.BackOffice.Domain.Interfaces;
 using CAN.BackOffice.Infrastructure.DAL.Repositories;
-using CAN.BackOffice.Domain.Entities;
+using CAN.BackOffice.Domain.Interfaces;
 
 namespace CAN.BackOffice
 {

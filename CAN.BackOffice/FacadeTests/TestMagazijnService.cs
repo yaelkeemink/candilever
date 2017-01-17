@@ -9,6 +9,10 @@ namespace FacadeTests
     [TestClass]
     public class TestMagazijnService
     {
+        [TestMethod]
+        public void TestUpdateBestelling()
+        {
 
+        }
     }
 }

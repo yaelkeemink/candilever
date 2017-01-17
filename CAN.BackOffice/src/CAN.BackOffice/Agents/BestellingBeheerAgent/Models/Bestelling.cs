@@ -21,12 +21,13 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents.Models
         /// <summary>
         /// Initializes a new instance of the Bestelling class.
         /// </summary>
-        public Bestelling(long klantnummer, long? bestellingnummer = default(long?), IList<Artikel> artikelen = default(IList<Artikel>), DateTime? bestelDatum = default(DateTime?))
+        public Bestelling(long klantnummer, long? bestellingnummer = default(long?), IList<Artikel> artikelen = default(IList<Artikel>), DateTime? bestelDatum = default(DateTime?), int? status = default(int?))
         {
             Bestellingnummer = bestellingnummer;
             Klantnummer = klantnummer;
             Artikelen = artikelen;
             BestelDatum = bestelDatum;
+            Status = status;
         }
 
         /// <summary>
@@ -48,6 +49,11 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents.Models
         /// </summary>
         [JsonProperty(PropertyName = "bestelDatum")]
         public DateTime? BestelDatum { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "status")]
+        public int? Status { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

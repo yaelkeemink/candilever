@@ -9,6 +9,6 @@ namespace CAN.BackOffice.Domain.Interfaces
     public interface IMagazijnService
     {
         Bestelling GetBestelling();
-        void UpdateBestelling(Bestelling bestelling);
+        int UpdateStatusBestelling(Bestelling bestelling);
     }
 }

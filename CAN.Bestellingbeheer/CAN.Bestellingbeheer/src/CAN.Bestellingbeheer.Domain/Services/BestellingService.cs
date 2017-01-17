@@ -4,9 +4,11 @@ using CAN.Common.Events;
 using InfoSupport.WSA.Infrastructure;
 using System;
 using Microsoft.Extensions.Logging;
+using CAN.Bestellingbeheer.Domain.Exceptions;
 
 namespace CAN.Bestellingbeheer.Domain.Services {
-    public class BestellingService : IDisposable
+    public class BestellingService 
+        : IBestellingService, IDisposable
     {
         private readonly IRepository<Bestelling, long> _repository;
         private readonly IEventPublisher _publisher;
@@ -42,12 +44,21 @@ namespace CAN.Bestellingbeheer.Domain.Services {
         {
             return _repository.Update(bestelling);
         }
+
+        public int UpdateStatusBestelling(long id)
+        {
+            var bestelling = _repository.Find(id);
+            if (bestelling.Status == BestelStatus.opgehaald)
+            {
+                bestelling.Status++;
+                return _repository.Update(bestelling);
+            }
+            throw new InvalidStatusException("Status staat al op opgehaald");
+        }
         public void Dispose()
         {
             _repository?.Dispose();
             _publisher?.Dispose();
         }
-
-
     }
 }

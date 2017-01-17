@@ -81,6 +81,11 @@
         "bestelDatum": {
           "format": "date-time",
           "type": "string"
+        },
+        "status": {
+          "format": "int32",
+          "enum": [ 0, 1 ],
+          "type": "integer"
         }
       }
     },
