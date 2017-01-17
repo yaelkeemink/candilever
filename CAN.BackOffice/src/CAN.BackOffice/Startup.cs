@@ -17,6 +17,9 @@ namespace CAN.BackOffice
 {
     public class Startup
     {
+
+    
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -43,18 +46,6 @@ namespace CAN.BackOffice
             StartEventListeners();
         }
 
-        private void StartEventListeners()
-        {
-            var log = new LoggerConfiguration().ReadFrom.ConfigurationSection(Configuration.GetSection("Serilog")).MinimumLevel.Debug().CreateLogger();
-            var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
-            var locker = new EventListenerLock();
-            var listener = new BackofficeEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log, "ReplayService", locker);
-            listener.Start();
-            /// wachten
-            log.Information("Waiting for release startup lock");
-            locker.StartUpLock.WaitOne();
-            log.Information("Continuing startup");
-        }
 
         public IConfigurationRoot Configuration { get; }
 
@@ -118,5 +109,24 @@ namespace CAN.BackOffice
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void StartEventListeners()
+        {
+            var log = new LoggerConfiguration().ReadFrom.ConfigurationSection(Configuration.GetSection("Serilog")).MinimumLevel.Debug().CreateLogger();
+            var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
+            var locker = new EventListenerLock();
+            var replayQueue = Environment.GetEnvironmentVariable("ReplayServiceQueue");
+            var listener = new BackofficeEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log, replayQueue, locker);
+            listener.Start();
+            /// wachten
+            log.Information("Waiting for release startup lock");
+            locker.StartUpLock.WaitOne();
+            log.Information("Continuing startup");
+        }
+
     }
 }

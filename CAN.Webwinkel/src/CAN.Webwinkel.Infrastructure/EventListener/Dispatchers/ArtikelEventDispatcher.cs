@@ -21,17 +21,60 @@ namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
         private DbContextOptions<WinkelDatabaseContext> _dbOptions;
         private ILogger _logger;
         private EventListenerLock _locker;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="dbOptions"></param>
+        /// <param name="logger"></param>
         public ArtikelEventDispatcher(BusOptions options, DbContextOptions<WinkelDatabaseContext> dbOptions, ILogger logger) : base(options)
         {
             _logger = logger;
             _dbOptions = dbOptions;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="dbOptions"></param>
+        /// <param name="logger"></param>
+        /// <param name="locker"></param>
         public ArtikelEventDispatcher(BusOptions options, DbContextOptions<WinkelDatabaseContext> dbOptions, ILogger logger, EventListenerLock locker) : base(options)
         {
             _logger = logger;
             _dbOptions = dbOptions;
             _locker = locker;
+        }
+
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected override void EventReceived(object sender, BasicDeliverEventArgs e)
+        {
+            if (_locker != null)
+            {
+                _locker.EventReceived();
+            }
+
+            base.EventReceived(sender, e);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public bool IsConnected()
+        {
+            if (Channel == null)
+            {
+                return false;
+            }
+            return Channel.IsOpen;
         }
 
         /// <summary>
@@ -87,6 +130,11 @@ namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="artikelNummer"></param>
+        /// <param name="nieuweVoorrraad"></param>
         private void UpdateArtikelVoorraad(int artikelNummer, int nieuweVoorrraad)
         {
             using (var context = new WinkelDatabaseContext(_dbOptions))
@@ -98,27 +146,6 @@ namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
             }
         }
 
-        protected override void EventReceived(object sender, BasicDeliverEventArgs e)
-        {
-            if (_locker != null)
-            {
-                _locker.EventReceived();
-            }
-
-            base.EventReceived(sender, e);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public bool IsConnected()
-        {
-            if(Channel == null)
-            {
-                return false;
-            }
-            return Channel.IsOpen;
-        }
+   
     }
 }

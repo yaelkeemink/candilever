@@ -13,6 +13,10 @@ namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
 
     public partial class BackOfficeEventDispatcher
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="evt"></param>
         public void KlantAangemaakt(KlantCreatedEvent evt)
         {
             _logger.Debug($"Klant aangemaakt {evt.Klantnummer}");
