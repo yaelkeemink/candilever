@@ -28,6 +28,11 @@ namespace CAN.Common.Events
 
         public class Artikel
         {
+            internal Artikel()
+            {
+
+            }
+
             internal Artikel(long artikelNummer, string artikelNaam, decimal prijs, int aantal)
             {
                 Artikelnummer = artikelNummer;

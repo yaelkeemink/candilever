@@ -1,21 +1,19 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace CAN.Bestellingbeheer.Domain.Entities
+namespace Can.BackOffice.Domain.Entities
 {
     public class Artikel
     {
         public long Id { get; set; }
-
         public long Artikelnummer { get; set; }
 
-        [Required]
-        public string Naam { get; set; }
+        public string Artikelnaam { get; set; }
 
-        [Required]
         public decimal Prijs { get; set; }
 
-        [Required]
         public int Aantal { get; set; }
     }
 }
