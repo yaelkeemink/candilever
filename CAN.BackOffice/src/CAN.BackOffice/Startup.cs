@@ -5,21 +5,18 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using CAN.BackOffice.Models;
 using CAN.BackOffice.Services;
 using Serilog;
 using CAN.BackOffice.Infrastructure.DAL;
 using CAN.Webwinkel.Infrastructure.EventListener;
 using InfoSupport.WSA.Infrastructure;
+using Microsoft.Extensions.Logging;
 
 namespace CAN.BackOffice
 {
     public class Startup
     {
-
-    
-
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -40,8 +37,8 @@ namespace CAN.BackOffice
             Configuration = builder.Build();
 
             Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(Configuration)
-            .CreateLogger();
+                .ReadFrom.ConfigurationSection(Configuration.GetSection("Serilog"))
+                .CreateLogger();
 
             StartEventListeners();
         }
@@ -116,16 +113,15 @@ namespace CAN.BackOffice
         /// </summary>
         private void StartEventListeners()
         {
-            var log = new LoggerConfiguration().ReadFrom.ConfigurationSection(Configuration.GetSection("Serilog")).MinimumLevel.Debug().CreateLogger();
             var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
             var locker = new EventListenerLock();
             var replayQueue = Environment.GetEnvironmentVariable("ReplayServiceQueue");
             var listener = new BackofficeEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log, replayQueue, locker);
             listener.Start();
             /// wachten
-            log.Information("Waiting for release startup lock");
+            Log.Logger.Information("Waiting for release startup lock");
             locker.StartUpLock.WaitOne();
-            log.Information("Continuing startup");
+            Log.Logger.Information("Continuing startup");
         }
 
     }
