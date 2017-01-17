@@ -374,7 +374,7 @@ namespace CAN.Webwinkel.Agents.KlantAgent
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Klant>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<int?>(_responseContent, this.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

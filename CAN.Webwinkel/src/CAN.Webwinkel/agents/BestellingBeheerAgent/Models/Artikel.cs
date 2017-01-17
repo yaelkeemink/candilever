@@ -21,25 +21,13 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent.Models
         /// <summary>
         /// Initializes a new instance of the Artikel class.
         /// </summary>
-        public Artikel(string naam, double prijs, int aantal, long? bestellingnummer = default(long?), Bestelling bestelling = default(Bestelling), long? artikelnummer = default(long?))
+        public Artikel(string naam, double prijs, int aantal, long? artikelnummer = default(long?))
         {
-            Bestellingnummer = bestellingnummer;
-            Bestelling = bestelling;
             Artikelnummer = artikelnummer;
             Naam = naam;
             Prijs = prijs;
             Aantal = aantal;
         }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "bestellingnummer")]
-        public long? Bestellingnummer { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "bestelling")]
-        public Bestelling Bestelling { get; set; }
 
         /// <summary>
         /// </summary>
@@ -69,10 +57,6 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent.Models
             if (Naam == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Naam");
-            }
-            if (this.Bestelling != null)
-            {
-                this.Bestelling.Validate();
             }
         }
     }

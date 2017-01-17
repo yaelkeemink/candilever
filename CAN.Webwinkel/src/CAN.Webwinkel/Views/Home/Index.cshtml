@@ -43,72 +43,11 @@
             <div class="producttitle">@Html.DisplayFor(a => artikel.Naam)</div>
             <div class="productvoorraad">@Html.DisplayFor(a => artikel.Voorraad)</div>
             <div class="productprice">
-                <div class="pull-right"><a href="#" onclick="addArtikelToCart(@artikel.GetJSON())" class="btn btn-danger btn-sm" role="button">Koop</a></div>
+                <div class="productvoorraad">@Html.DisplayFor(a => artikel.Voorraad)</div>
+                <div class="cartButton"><button onclick="addArtikelToCart(@artikel.GetJSON())" class="glyphicon glyphicon-shopping-cart btn btn-info" id="addToCart"></button></div>
                 <div class="pricetext">&euro;@Html.DisplayFor(a => artikel.Prijs)</div>
            </div>
         </div>
 
     </div>
 }
-<script>
-    "use strict";
-    function addArtikelToCart(artikel){
-        var shopCart = getShopCartFromLocalStorage() ;
-        
-        addToShopCartArtikel(artikel, shopCart) ;
-
-        console.log(shopCart) ;
-        alert(artikel.Naam + " toegevoegd aan winkelwagen") ;
-        
-        saveShopCartInLocalStorage(shopCart) ;
-    }
-    
-    function addToShopCartArtikel(artikel, shopCart){
-        var artikelAlreadyAdded = adjustAantalArtikelenInCart(artikel, shopCart) ;
-        
-        if(!artikelAlreadyAdded){
-            var artikel = createNewArtikel(artikel) ;
-            shopCart.push(artikel) ;
-        }
-    }
-
-    function createNewArtikel(artikel){
-        return {
-            "bestellingnummer" : 0,
-            "bestelling" : { },
-            "artikelnummer": artikel.Artikelnummer,
-            "naam": artikel.Naam,
-            "prijs": artikel.Prijs,
-            "aantal": 1
-            } ;
-    }
-
-    function adjustAantalArtikelenInCart(artikel, shopCart){
-        var artikelAlreadyAdded = false; 
-        
-        for (var i = 0, len = shopCart.length; i < len; i++) {
-           if(shopCart[i].artikelnummer == artikel.Artikelnummer ){               
-                shopCart[i].aantal = shopCart[i].aantal + 1 ;
-                artikelAlreadyAdded = true ;
-           }
-        }
-
-        return artikelAlreadyAdded ;
-    }
-
-    function getShopCartFromLocalStorage(){
-        var shopCart = JSON.parse(localStorage.getItem("Shopcart")) ;
-
-        if(shopCart == undefined){
-            shopCart = new Array() ;     
-        }
-        
-        return shopCart ;
-    }
-
-    function saveShopCartInLocalStorage(shopCart){
-        var newShopCart = JSON.stringify(shopCart) ;
-        localStorage.setItem("Shopcart", newShopCart) ;
-    }
-
-</script>
