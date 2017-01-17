@@ -35,8 +35,8 @@ namespace CAN.Bestellingbeheer.Facade.Facade
             Configuration = builder.Build();
 
             Log.Logger = new LoggerConfiguration()
-              .ReadFrom.Configuration(Configuration)
-              .CreateLogger();
+                .ReadFrom.ConfigurationSection(Configuration.GetSection("Serilog"))
+                .CreateLogger();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -70,7 +70,7 @@ namespace CAN.Bestellingbeheer.Facade.Facade
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddConsole(Configuration.GetSection("Serilog"));
             loggerFactory.AddDebug();
             loggerFactory.AddSerilog();
             app.UseApplicationInsightsRequestTelemetry();

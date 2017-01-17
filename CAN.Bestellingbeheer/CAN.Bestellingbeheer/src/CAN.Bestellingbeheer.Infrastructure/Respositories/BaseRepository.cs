@@ -40,7 +40,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.Repositories
         public virtual int Insert(Entity item)
         {
             _context.Add(item);
-            return _context.SaveChanges ();
+            return _context.SaveChanges();
         }
 
         public virtual int InsertRange(IEnumerable<Entity> items)

@@ -17,6 +17,14 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
         private ILogger _logger;
         private string _replayEndPoint;
         private EventListenerLock _locker;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="busOptions"></param>
+        /// <param name="dbConnectionString"></param>
+        /// <param name="logger"></param>
+        /// <param name="replayEndPoint"></param>
+        /// <param name="locker"></param>
         public BackofficeEventListener(BusOptions busOptions, string dbConnectionString, ILogger logger, string replayEndPoint, EventListenerLock locker)
         {
             _busOptions = busOptions;
@@ -85,6 +93,11 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
             }
         }
 
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbOptions"></param>
         private void ReplayAuditlog(DbContextOptions<DatabaseContext> dbOptions)
         {
             _logger.Information("Purging database");

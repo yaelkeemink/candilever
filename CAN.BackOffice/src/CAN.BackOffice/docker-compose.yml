@@ -14,6 +14,7 @@ services:
       eventbus-username: Kantilever
       eventbus-password: Kant1lever
       logpath: /var/log/Kantilever/BackofficeLogging/
+      ReplayServiceQueue: ReplayService
     ports:
       - 11200:80
     networks:

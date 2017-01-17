@@ -12,6 +12,10 @@ namespace CAN.Webwinkel.Infrastructure.DAL
             Database.EnsureCreated();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
         public WinkelDatabaseContext(DbContextOptions options)
             : base(options)
         {
@@ -19,6 +23,10 @@ namespace CAN.Webwinkel.Infrastructure.DAL
             Database.EnsureCreated();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
@@ -38,6 +46,9 @@ namespace CAN.Webwinkel.Infrastructure.DAL
             modelBuilder.Entity<Categorie>().HasAlternateKey(c => c.Naam).HasName("AlternateKey_CategoryName");
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         internal void PurgeCachedData()
         {
             Database.ExecuteSqlCommand("Delete from ArtikelCategorie");

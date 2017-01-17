@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using CAN.BackOffice.Models;
 using CAN.BackOffice.Services;
 using Serilog;
 using CAN.BackOffice.Infrastructure.DAL;
 using CAN.Webwinkel.Infrastructure.EventListener;
 using InfoSupport.WSA.Infrastructure;
+using Microsoft.Extensions.Logging;
 
 namespace CAN.BackOffice
 {
@@ -37,24 +37,12 @@ namespace CAN.BackOffice
             Configuration = builder.Build();
 
             Log.Logger = new LoggerConfiguration()
-            .ReadFrom.Configuration(Configuration)
-            .CreateLogger();
+                .ReadFrom.ConfigurationSection(Configuration.GetSection("Serilog"))
+                .CreateLogger();
 
             StartEventListeners();
         }
 
-        private void StartEventListeners()
-        {
-            var log = new LoggerConfiguration().ReadFrom.ConfigurationSection(Configuration.GetSection("Serilog")).MinimumLevel.Debug().CreateLogger();
-            var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
-            var locker = new EventListenerLock();
-            var listener = new BackofficeEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log, "ReplayService", locker);
-            listener.Start();
-            /// wachten
-            log.Information("Waiting for release startup lock");
-            locker.StartUpLock.WaitOne();
-            log.Information("Continuing startup");
-        }
 
         public IConfigurationRoot Configuration { get; }
 
@@ -118,5 +106,23 @@ namespace CAN.BackOffice
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void StartEventListeners()
+        {
+            var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
+            var locker = new EventListenerLock();
+            var replayQueue = Environment.GetEnvironmentVariable("ReplayServiceQueue");
+            var listener = new BackofficeEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log, replayQueue, locker);
+            listener.Start();
+            /// wachten
+            Log.Logger.Information("Waiting for release startup lock");
+            locker.StartUpLock.WaitOne();
+            Log.Logger.Information("Continuing startup");
+        }
+
     }
 }
