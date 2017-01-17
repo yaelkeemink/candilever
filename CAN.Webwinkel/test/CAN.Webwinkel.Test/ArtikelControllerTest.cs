@@ -21,7 +21,7 @@ namespace CAN.Webwinkel.Test
         public void ArtikelController_instantie()
         {
             // Arrange
-            var target = new ArtikelController(null, null);
+            ArtikelController target = new ArtikelController(null, null);
 
             // Act
 
@@ -58,7 +58,7 @@ namespace CAN.Webwinkel.Test
 
             serviceMock.Setup(s => s.AlleArtikelen())
                 .Returns(new List<Artikel>());
-            
+
             var target = new ArtikelController(loggerMock.Object, serviceMock.Object);
             
             // Act
