@@ -26,8 +26,6 @@ namespace CAN.Webwinkel.Controllers
         [SwaggerOperation("BestellingPlaatsen")]
         public IActionResult BestellingGeplaatst([FromBody]Bestelling bestelling)
         {
-            System.Diagnostics.Debug.WriteLine("Bestelling : " + bestelling.Artikelen[0].Naam);
-            System.Diagnostics.Debug.WriteLine("Bestelling : " + bestelling.Artikelen[0].Prijs);
             try
             {
                 var response = _agent.Post(bestelling);
