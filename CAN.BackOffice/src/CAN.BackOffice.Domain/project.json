@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "buildOptions": {
     "emitEntryPoint": false
@@ -10,7 +10,7 @@
       "version": "1.0.1"
     },
     "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
-    "CAN.Common": "1.0.4"
+    "CAN.Common": "1.0.7"
   },
 
   "frameworks": {
