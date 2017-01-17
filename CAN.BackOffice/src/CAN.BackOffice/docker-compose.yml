@@ -2,7 +2,7 @@ version: '2'
 
 services:
   can.backoffice:
-    image: can.backoffice
+    image: candilever/can.backoffice
     build:
       context: .
       dockerfile: Dockerfile
