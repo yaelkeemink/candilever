@@ -1,16 +1,16 @@
-{
+﻿{
   "version": "1.0.0-*",
-  "buildOptions": {
-    "emitEntryPoint": true
-  },
+  "testRunner": "mstest",
 
   "dependencies": {
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.1"
     },
-    "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
-    "CAN.Common": "1.0.7"
+    "dotnet-test-mstest": "1.1.1-preview",
+    "MSTest.TestFramework": "1.0.4-preview",
+    "Moq": "4.6.38-alpha",
+    "CAN.Webwinkel": "1.0.0-*"
   },
 
   "frameworks": {
