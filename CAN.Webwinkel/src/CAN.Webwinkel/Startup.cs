@@ -93,7 +93,7 @@ namespace CAN.Webwinkel
             services.AddScoped<ICategorieService, CategorieService>();
             services.AddScoped<IArtikelService, ArtikelService>();
             services.AddScoped<IKlantAgent, KlantAgent>(s => new KlantAgent() { BaseUri = new Uri("http://klantbeheer:80") });
-            services.AddScoped<IBestellingsAgent, BestellingsAgent>(s => new BestellingsAgent() { BaseUri = new Uri("https://can-bestellingbeheer:80") });
+            services.AddScoped<IBestellingsAgent, BestellingsAgent>(s => new BestellingsAgent() { BaseUri = new Uri("http://can-bestellingbeheer:80") });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
