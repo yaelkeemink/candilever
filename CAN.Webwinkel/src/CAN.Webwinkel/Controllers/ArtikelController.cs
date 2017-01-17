@@ -35,6 +35,7 @@ namespace CAN.Webwinkel.Controllers
         [Route("{categorieNaam}")]
         public IActionResult Get(string categorieNaam)
         {
+            _logger.LogInformation($"Alle artikelen opgevraagd bij categorie {categorieNaam}");
             var artikelen = _service.ArtikelenBijCategorie(categorieNaam);
             var lijst = artikelen.Select(a => new ApiArtikelenModel(a));
             return Json(lijst);
