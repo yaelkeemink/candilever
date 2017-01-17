@@ -52,6 +52,7 @@ namespace CAN.Bestellingbeheer.Facade.Facade
 
             services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
             services.AddScoped<IEventPublisher, EventPublisher>(e => new EventPublisher(BusOptions.CreateFromEnvironment()));
+            services.AddScoped<IBestellingService, BestellingService>();
             services.AddScoped<BestellingService, BestellingService>();
             
             services.ConfigureSwaggerGen(options =>
