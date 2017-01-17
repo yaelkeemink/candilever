@@ -14,6 +14,10 @@ namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
     public partial class BackOfficeEventDispatcher
     {
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="evt"></param>
         public void BestellingAangemaakt(BestellingCreatedEvent evt)
         {
             _logger.Information($"Bestelling aangemaakt {evt.Bestellingsnummer} {evt.BestelDatum} {evt.Klantnummer}");

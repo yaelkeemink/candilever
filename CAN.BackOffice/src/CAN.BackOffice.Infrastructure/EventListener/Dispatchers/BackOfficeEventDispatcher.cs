@@ -19,12 +19,26 @@ namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
         private DbContextOptions<DatabaseContext> _dbOptions;
         private ILogger _logger;
         private EventListenerLock _locker;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="dbOptions"></param>
+        /// <param name="logger"></param>
         public BackOfficeEventDispatcher(BusOptions options, DbContextOptions<DatabaseContext> dbOptions, ILogger logger) : base(options)
         {
             _logger = logger;
             _dbOptions = dbOptions;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="options"></param>
+        /// <param name="dbOptions"></param>
+        /// <param name="logger"></param>
+        /// <param name="locker"></param>
         public BackOfficeEventDispatcher(BusOptions options, DbContextOptions<DatabaseContext> dbOptions, ILogger logger, EventListenerLock locker) : base(options)
         {
             _logger = logger;
@@ -32,12 +46,16 @@ namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
             _locker = locker;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected override void EventReceived(object sender, BasicDeliverEventArgs e)
         {
+            _logger.Debug($"Event received");
             if (_locker != null)
             {
-                _logger.Debug($"Event received");
                 _locker.EventReceived();
             }
 
