@@ -3,7 +3,7 @@
 
   "dependencies": {
     "NETStandard.Library": "1.6.0",
-    "CAN.Common": "1.0.4"
+    "CAN.Common": "1.0.5"
   },
 
   "frameworks": {

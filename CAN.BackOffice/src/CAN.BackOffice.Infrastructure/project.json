@@ -7,7 +7,7 @@
     "Serilog.Settings.Configuration": "2.2.0",
     "Serilog.Sinks.Literate": "2.0.0",
     "Serilog.Sinks.RollingFile": "3.3.0",
-    "CAN.Common": "1.0.4",
+    "CAN.Common": "1.0.5",
     "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "1.0.0",
     "NETStandard.Library": "1.6.1",
     "Microsoft.EntityFrameworkCore.SqlServer": "1.0.1",

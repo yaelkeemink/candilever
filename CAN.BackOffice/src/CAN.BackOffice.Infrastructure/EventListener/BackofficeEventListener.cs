@@ -1,6 +1,5 @@
 ﻿using CAN.BackOffice.Infrastructure.DAL;
 using CAN.BackOffice.Infrastructure.EventListener.Dispatchers;
-using CAN.Webwinkel.Infrastructure.EventListener.Dispatchers;
 using InfoSupport.WSA.Infrastructure;
 using InfoSupport.WSA.Logging.Model;
 using Microsoft.EntityFrameworkCore;
@@ -54,8 +53,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
 
                 try
                 {
-                    using (var bestellingDispatcher = new BestellingEventDispatcher(_busOptions, dbOptions, _logger))
-                    using (var klantDispatcher = new KlantEventDispatcher(_busOptions, dbOptions, _logger))
+                    using (var backOfficeDispatcher = new BackOfficeEventDispatcher(_busOptions, dbOptions, _logger))
                     {
                         if (firstConnection)
                         {
@@ -68,10 +66,9 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
                         }
 
                         _logger.Debug("Opening connection with Rabbit mq");
-                        bestellingDispatcher.Open();
-                        klantDispatcher.Open();
+                        backOfficeDispatcher.Open();
                         _logger.Debug("Connection with Rabbit mq is open");
-                        while (bestellingDispatcher.IsConnected() && klantDispatcher.IsConnected())
+                        while (backOfficeDispatcher.IsConnected())
                         {
                             _logger.Information("Connected with Rabbit Mq is stil open");
                             Thread.Sleep(60000);
@@ -82,6 +79,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
                 catch (Exception e)
                 {
                     _logger.Error($"Error with EventDispatcher {e.Message}");
+                    _logger.Debug(e.StackTrace);
                     Thread.Sleep(5000);
                 }
             }
@@ -99,7 +97,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
 
             var replayBusOptions = new BusOptions
             {
-                ExchangeName = $"Kantilever.ReplayExchange.{DateTime.Now.Millisecond}",
+                ExchangeName = $"Kantilever.ReplayExchange.{DateTime.Now.ToFileTimeUtc()}",
                 QueueName = "backofficeReplayQueue",
                 HostName = _busOptions.HostName,
                 Port = _busOptions.Port,
@@ -107,7 +105,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
                 Password = _busOptions.Password
             };
 
-            using (var listener = new BestellingEventDispatcher(replayBusOptions, dbOptions, _logger, _locker))
+            using (var backOfficeDispatcher = new BackOfficeEventDispatcher(replayBusOptions, dbOptions, _logger, _locker))
             using (var auditlogproxy = new MicroserviceProxy(_replayEndPoint, _busOptions))
             {
 
@@ -125,7 +123,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
                 _locker.SetExpectedEvents(replayResult.Count);
                 _logger.Information($"Expected events set {replayResult.Count}");
 
-                listener.Open();
+                backOfficeDispatcher.Open();
 
                 _locker.EventReplayLock.WaitOne();
                 _logger.Information("Done replaying events.");

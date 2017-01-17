@@ -45,7 +45,7 @@ namespace CAN.BackOffice
 
         private void StartEventListeners()
         {
-            var log = new LoggerConfiguration().ReadFrom.Configuration(Configuration).MinimumLevel.Debug().CreateLogger();
+            var log = new LoggerConfiguration().ReadFrom.ConfigurationSection(Configuration.GetSection("Serilog")).MinimumLevel.Debug().CreateLogger();
             var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
             var locker = new EventListenerLock();
             var listener = new BackofficeEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log, "ReplayService", locker);

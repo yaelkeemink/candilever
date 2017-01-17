@@ -6,21 +6,26 @@ using CAN.BackOffice.Infrastructure.DAL;
 using CAN.Common.Events;
 using CAN.BackOffice.Infrastructure.DAL.Repositories;
 using Can.BackOffice.Domain.Entities;
+using CAN.Webwinkel.Infrastructure.EventListener;
+using CAN.BackOffice.Domain.Entities;
+using System.Text;
+using Newtonsoft.Json;
+using System;
 
-namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
+namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
 {
-    public class BestellingEventDispatcher : EventDispatcher
+    public partial class BackOfficeEventDispatcher : EventDispatcher
     {
         private DbContextOptions<DatabaseContext> _dbOptions;
         private ILogger _logger;
         private EventListenerLock _locker;
-        public BestellingEventDispatcher(BusOptions options, DbContextOptions<DatabaseContext> dbOptions, ILogger logger) : base(options)
+        public BackOfficeEventDispatcher(BusOptions options, DbContextOptions<DatabaseContext> dbOptions, ILogger logger) : base(options)
         {
             _logger = logger;
             _dbOptions = dbOptions;
         }
 
-        public BestellingEventDispatcher(BusOptions options, DbContextOptions<DatabaseContext> dbOptions, ILogger logger, EventListenerLock locker) : base(options)
+        public BackOfficeEventDispatcher(BusOptions options, DbContextOptions<DatabaseContext> dbOptions, ILogger logger, EventListenerLock locker) : base(options)
         {
             _logger = logger;
             _dbOptions = dbOptions;
@@ -28,34 +33,25 @@ namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
         }
 
 
-        public void BestellingAangemaakt(BestellingCreatedEvent evt)
-        {
-            _logger.Debug($"Bestelling aangemaakt {evt.Bestellingsnummer} {evt.BestelDatum} {evt.Klantnummer}");
-            using (var context = new DatabaseContext(_dbOptions))
-            using (var repo = new BestellingRepository(context))
-            {
-                var bestelling = new Bestelling(evt);
-                repo.Insert(bestelling);
-            }
-        }
-        
         protected override void EventReceived(object sender, BasicDeliverEventArgs e)
         {
             if (_locker != null)
             {
+                _logger.Debug($"Event received");
                 _locker.EventReceived();
             }
 
             base.EventReceived(sender, e);
         }
 
+        
         /// <summary>
         /// 
         /// </summary>
         /// <returns></returns>
         public bool IsConnected()
         {
-            if(Channel == null)
+            if (Channel == null)
             {
                 return false;
             }

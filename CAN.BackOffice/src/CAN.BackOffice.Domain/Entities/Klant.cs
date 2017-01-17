@@ -8,6 +8,17 @@ namespace CAN.BackOffice.Domain.Entities
 {
     public class Klant
     {
+        public long Id { get; set; }
+        public long Klantnummer { get; set; }
+        public string Voornaam { get; set; }
+        public string Achternaam { get; set; }
+        public string Tussenvoegsels { get; set; }
+        public string Postcode { get; set; }
+        public string Telefoonnummer { get; set; }
+        public string Adres { get; set; }
+        public string Email { get; set; }
+        public string Huisnummer { get; set; }
+        public string Land { get; set; }
 
         public Klant() { }
 
@@ -25,15 +36,5 @@ namespace CAN.BackOffice.Domain.Entities
             Land = evt.Land;
         }
 
-        public long Klantnummer { get; set; }
-        public string Voornaam { get; set; }
-        public string Achternaam { get; set; }
-        public string Tussenvoegsels { get; set; }
-        public string Postcode { get; set; }
-        public string Telefoonnummer { get; set; }
-        public string Adres { get; set; }
-        public string Email { get; set; }
-        public string Huisnummer { get; set; }
-        public string Land { get; set; }
     }
 }

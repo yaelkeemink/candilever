@@ -46,7 +46,7 @@
     "Serilog.Sinks.Literate": "2.0.0",
     "Serilog.Sinks.RollingFile": "3.3.0",
     "InfoSupport.WSA.InfraStructure": "1.7.1",
-    "CAN.Common": "1.0.4",
+    "CAN.Common": "1.0.5",
     "CAN.BackOffice.Infrastructure": "1.0.0-*"  },
   "tools": {
     "BundlerMinifier.Core": "2.0.238",

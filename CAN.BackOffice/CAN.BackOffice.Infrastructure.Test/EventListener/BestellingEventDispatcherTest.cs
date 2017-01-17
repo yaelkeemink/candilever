@@ -6,9 +6,9 @@ using Serilog;
 using CAN.Common.Events;
 using CAN.BackOffice.Infrastructure.DAL.Repositories;
 using CAN.BackOffice.Infrastructure.Test.Provider;
-using CAN.Webwinkel.Infrastructure.EventListener.Dispatchers;
 using Can.BackOffice.Domain.Entities;
 using System;
+using CAN.BackOffice.Infrastructure.EventListener.Dispatchers;
 
 namespace CAN.BackOffice.Infrastructure.Test.EventListener
 {
@@ -31,7 +31,7 @@ namespace CAN.BackOffice.Infrastructure.Test.EventListener
         {
             // No strict because we dont need it for this object
             var loggerMock = new Mock<ILogger>();
-            using (var dispatcher = new BestellingEventDispatcher(null, _options, loggerMock.Object))
+            using (var dispatcher = new BackOfficeEventDispatcher(null, _options, loggerMock.Object))
             {
                 var currentDate = DateTime.Now;
 

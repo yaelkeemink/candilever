@@ -19,7 +19,7 @@ namespace CAN.Common.Events
 
         public DateTime BestelDatum { get; set; }
 
-        public IList<Artikel> Artikelen { get; internal set; }
+        public IList<Artikel> Artikelen { get;  set; }
 
         public void AddArtikel(long artikelNummer, string artikelNaam, decimal prijs, int aantal)
         {
@@ -28,7 +28,11 @@ namespace CAN.Common.Events
 
         public class Artikel
         {
-            internal Artikel(long artikelNummer, string artikelNaam, decimal prijs, int aantal)
+            public Artikel()
+            {
+
+            }
+            public Artikel(long artikelNummer, string artikelNaam, decimal prijs, int aantal)
             {
                 Artikelnummer = artikelNummer;
                 Artikelnaam = artikelNaam;

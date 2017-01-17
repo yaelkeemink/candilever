@@ -19,17 +19,16 @@ namespace CAN.BackOffice.Infrastructure.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Bestelling>().HasKey(e => e.Bestellingsnummer);
-            modelBuilder.Entity<Artikel>().HasKey(e => e.Artikelnummer);
-            modelBuilder.Entity<Klant>().HasKey(e => e.Klantnummer);
+
 
             base.OnModelCreating(modelBuilder);
         }
 
        internal void PurgeCachedData()
        {
-            Database.ExecuteSqlCommand("Delete from Bestelling");
             Database.ExecuteSqlCommand("Delete from Artikel");
+            Database.ExecuteSqlCommand("Delete from Bestellingen");
+            Database.ExecuteSqlCommand("Delete from Klanten");
         }
     }
 }

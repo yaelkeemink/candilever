@@ -8,6 +8,17 @@ namespace Can.BackOffice.Domain.Entities
 {
     public class Bestelling
     {
+
+        public long Id { get; set; }
+
+        public long Klantnummer { get; set; }
+
+        public long Bestellingsnummer { get; set; }
+
+        public DateTime BestelDatum { get; set; }
+
+        public IList<Artikel> Artikelen { get; set; }
+
         public Bestelling() { }
 
         public Bestelling(BestellingCreatedEvent evt)
@@ -26,19 +37,11 @@ namespace Can.BackOffice.Domain.Entities
                         Artikelnummer = artikel.Artikelnummer,
                         Artikelnaam = artikel.Artikelnaam,
                         Aantal = artikel.Aantal,
-                        Prijs = artikel.Prijs,
-                        Bestelling = this
+                        Prijs = artikel.Prijs
                     }
                 );
             }
         }
 
-        public long Klantnummer { get; set; }
-
-        public long Bestellingsnummer { get; set; }
-
-        public DateTime BestelDatum { get; set; }
-
-        public IList<Artikel> Artikelen { get; set; }
     }
 }

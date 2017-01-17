@@ -30,7 +30,7 @@ namespace CAN.BackOffice.Infrastructure.Test.EventListener
         {
             // No strict because we dont need it for this object
             var loggerMock = new Mock<ILogger>();
-            using (var dispatcher = new KlantEventDispatcher(null, _options, loggerMock.Object))
+            using (var dispatcher = new  BackOfficeEventDispatcher(null, _options, loggerMock.Object))
             {
                 var klantEvent = new KlantCreatedEvent("");
 

@@ -7,8 +7,7 @@ namespace Can.BackOffice.Domain.Entities
 {
     public class Artikel
     {
-        public Bestelling Bestelling { get; set; }
-
+        public long Id { get; set; }
         public long Artikelnummer { get; set; }
 
         public string Artikelnaam { get; set; }
