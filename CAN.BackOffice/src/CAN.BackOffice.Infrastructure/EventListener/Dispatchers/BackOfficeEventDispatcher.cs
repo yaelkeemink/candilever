@@ -58,18 +58,6 @@ namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
             base.EventReceived(sender, e);
         }
 
-        public void BestellingGeplaatst(BestellingCreatedEvent evt)
-        {
-            _logger.Debug($"Bestelling geplaatst {evt.Bestellingsnummer}");
-            using (var context = new DatabaseContext(_dbOptions))
-            using (var repo = new BestellingRepository(context))
-            {
-                var artikel = new Bestelling(evt);
-                repo.Insert(artikel);
-
-            }
-        }
-
         /// <summary>
         /// 
         /// </summary>

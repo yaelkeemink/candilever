@@ -39,6 +39,8 @@ namespace CAN.Common.Events
                 Artikelnaam = artikelNaam;
                 Prijs = prijs;
                 Aantal = aantal;
+                Leverancier = leverancier;
+                LeverancierCode = leverancierCode;
             }
 
             public long Artikelnummer { get; set; }
