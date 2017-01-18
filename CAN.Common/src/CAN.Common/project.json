@@ -1,6 +1,6 @@
 ﻿{
   "name": "CAN.Common",
-  "version": "1.0.11-*",
+  "version": "1.0.10-*",
   "description": "Events for publishing and dispatching events",
   "title": "Candeliver Common Package",
 
@@ -20,6 +20,10 @@
   },
 
   "scripts": {
-    "postcompile": "dotnet pack -o C:\\_localNugetFeed --no-build --configuration %compile:Configuration%"
+    "postcompile": [
+      "dotnet pack -o C:\\_localNugetFeed --no-build --configuration %compile:Configuration%",
+      "nuget push -Source https://www.nuget.org/api/v2/package -ApiKey 22653bfe-323a-4731-9f48-36f50c0cc97c C:\\_localNugetFeed\\CAN.Common.1.0.10.nupkg"
+    ]
+    
   }
 }
