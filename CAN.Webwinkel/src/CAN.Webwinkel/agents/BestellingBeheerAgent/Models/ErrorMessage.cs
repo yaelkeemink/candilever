@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace CAN.Webwinkel.Agents.BestellingsAgent.Models
+namespace CAN.BackOffice.Agents.BestellingsAgent.Agents.Models
 {
     using System;
     using System.Linq;
