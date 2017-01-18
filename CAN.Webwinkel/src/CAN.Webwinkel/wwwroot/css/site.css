@@ -48,6 +48,7 @@ textarea {
 .producttitle {
     font-weight: bold;
     padding: 5px 0 5px 0;
+    height: 50px;
 }
 
 .productvoorraad {
@@ -60,7 +61,7 @@ textarea {
 .productprice {
     border-top: 1px solid #dadada;
     padding-top: 5px;
-    width: 360px;
+    width: 100%;
     display: flex;
     justify-content: center;
 }
@@ -99,4 +100,9 @@ textarea {
     -moz-transform:rotate(360deg);
     -o-transform:rotate(360deg);
     .rotate(360deg);
+}
+
+.customImg {
+    height:429px;
+    width: 100%;
 }
