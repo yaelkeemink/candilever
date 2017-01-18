@@ -28,7 +28,7 @@ namespace CAN.BackOffice.Controllers
         [HttpPut]
         public IActionResult Bestelling(long id)
         {
-            _service.UpdateStatusBestelling(id);
+            _service.ZetBestellingOpOpgehaald(id);
             var viewModel = _service.GetBestelling();
             return View(viewModel);
         }

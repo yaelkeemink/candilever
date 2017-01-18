@@ -27,7 +27,7 @@ namespace CAN.BackOffice.Services
                 .FirstOrDefault();
         }
 
-        public int UpdateStatusBestelling(long id)
+        public int ZetBestellingOpOpgehaald(long id)
         {
             return (int)_service.BestellingStatusOpgehaald(id);
         }
