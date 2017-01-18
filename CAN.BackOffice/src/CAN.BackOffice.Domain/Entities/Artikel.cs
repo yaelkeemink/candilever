@@ -15,5 +15,8 @@ namespace CAN.BackOffice.Domain.Entities
         public decimal Prijs { get; set; }
 
         public int Aantal { get; set; }
+
+        public string LeverancierCode { get; set; }
+        public string Leverancier { get; set; }
     }
 }

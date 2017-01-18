@@ -35,7 +35,7 @@ namespace CAN.Bestellingbeheer.Domain.Services {
 
             foreach (var artikel in bestelling.Artikelen)
             {
-                createdEvent.AddArtikel(artikel.Artikelnummer, artikel.Naam, artikel.Prijs, artikel.Aantal);
+                createdEvent.AddArtikel(artikel.Artikelnummer, artikel.Naam, artikel.Prijs, artikel.Aantal, artikel.);
             }
 
             _publisher.Publish(createdEvent);            

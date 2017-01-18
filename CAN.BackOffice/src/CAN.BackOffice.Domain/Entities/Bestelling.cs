@@ -32,7 +32,7 @@ namespace CAN.BackOffice.Domain.Entities
 
             Klantnummer = evt.Klantnummer;
             Bestellingsnummer = evt.Bestellingsnummer;
-            BestelDatum = evt.BestelDatum;
+            BestelDatum = evt.BestelDatum;            
             
             foreach(var artikel in evt.Artikelen)
             {
@@ -42,7 +42,9 @@ namespace CAN.BackOffice.Domain.Entities
                         Artikelnummer = artikel.Artikelnummer,
                         Artikelnaam = artikel.Artikelnaam,
                         Aantal = artikel.Aantal,
-                        Prijs = artikel.Prijs
+                        Prijs = artikel.Prijs,
+                        Leverancier = artikel.Leverancier,
+                        LeverancierCode = artikel.LeverancierCode,
                     }
                 );
             }

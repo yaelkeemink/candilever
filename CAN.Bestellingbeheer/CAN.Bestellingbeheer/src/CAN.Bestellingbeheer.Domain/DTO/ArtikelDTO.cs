@@ -22,6 +22,9 @@ namespace CAN.Bestellingbeheer.Domain.DTO
         [Required]
         public int Aantal { get; set; }
 
+        public string Leverancier{ get; set; }
+        public string LeverancierCode { get; set; }
+
         public static implicit operator Artikel(ArtikelDTO artikel)
         {
             return new Artikel()
@@ -31,6 +34,8 @@ namespace CAN.Bestellingbeheer.Domain.DTO
                     Id = artikel.Id,
                     Naam = artikel.Naam,
                     Prijs = decimal.Parse(artikel.Prijs),
+                    Leverancier = artikel.Leverancier,
+                    LeverancierCode = artikel.LeverancierCode
                 };
         }
         public static implicit operator ArtikelDTO(Artikel artikel)
@@ -42,6 +47,8 @@ namespace CAN.Bestellingbeheer.Domain.DTO
                 Id = artikel.Id,
                 Naam = artikel.Naam,
                 Prijs = artikel.Prijs.ToString(),
+                LeverancierCode = artikel.LeverancierCode,
+                Leverancier = artikel.Leverancier,
             };
         }
 

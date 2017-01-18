@@ -17,5 +17,7 @@ namespace CAN.Bestellingbeheer.Domain.Entities
 
         [Required]
         public int Aantal { get; set; }
+        public string LeverancierCode { get; set; }
+        public string Leverancier { get; set; }
     }
 }
