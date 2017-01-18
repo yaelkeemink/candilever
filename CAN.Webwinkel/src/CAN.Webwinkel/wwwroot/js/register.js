@@ -1,19 +1,27 @@
 window.onload = function () {
     var isSuccess = sessionStorage.getItem("bestellingSucces");
 
-    if (isSuccess !== null && isSuccess !== undefined && isSuccess !== "undefined") {
-        if (isSuccess) {
-            var successMessage = document.getElementById("succes-message");
-            var errorMessage = document.getElementById("error-message");
-
-            if (successMessage !== undefined && successMessage !== null) {
-                document.getElementById("succes-message").style = "display:normal;";
-            }
-            else if (errorMessage !== undefined && errorMessage !== null) {
-                document.getElementById("error-message").style = "display:normal;";
-            }
+    if (isSuccess !== null && isSuccess !== undefined && isSuccess !== "undefined")
+    {
+        if (isSuccess)
+        {
+            showHiddenMessage();
             sessionStorage.setItem("bestellingSucces", undefined);
         }
+    }
+}
+
+function showHiddenMessage() {
+    var successMessage = document.getElementById("succes-message");
+    var errorMessage = document.getElementById("error-message");
+
+    if (successMessage !== undefined && successMessage !== null)
+    {
+        document.getElementById("succes-message").style = "display:normal;";
+    }
+    else if (errorMessage !== undefined && errorMessage !== null)
+    {
+        document.getElementById("error-message").style = "display:normal;";
     }
 }
 
