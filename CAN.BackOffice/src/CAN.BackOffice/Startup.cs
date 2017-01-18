@@ -13,6 +13,7 @@ using CAN.BackOffice.Infrastructure.DAL.Repositories;
 using CAN.BackOffice.Domain.Interfaces;
 using InfoSupport.WSA.Infrastructure;
 using Microsoft.Extensions.Logging;
+using CAN.Webwinkel.Infrastructure.EventListener;
 
 namespace CAN.BackOffice
 {
@@ -117,15 +118,15 @@ namespace CAN.BackOffice
         /// </summary>
         private void StartEventListeners()
         {
+            var log = new LoggerConfiguration().ReadFrom.ConfigurationSection(Configuration.GetSection("Serilog")).MinimumLevel.Debug().CreateLogger();
             var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
             var locker = new EventListenerLock();
-            var replayQueue = Environment.GetEnvironmentVariable("ReplayServiceQueue");
-            var listener = new BackofficeEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log, replayQueue, locker);
+            var listener = new BackofficeEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log, "ReplayService", locker);
             listener.Start();
             /// wachten
-            Log.Logger.Information("Waiting for release startup lock");
+            log.Information("Waiting for release startup lock");
             locker.StartUpLock.WaitOne();
-            Log.Logger.Information("Continuing startup");
+            log.Information("Continuing startup");
         }
 
     }
