@@ -1,6 +1,6 @@
 ﻿{
   "name": "CAN.Common",
-  "version": "1.0.8-*",
+  "version": "1.0.11-*",
   "description": "Events for publishing and dispatching events",
   "title": "Candeliver Common Package",
 
