@@ -66,7 +66,12 @@ function placeOrder() {
     var shopCart = JSON.parse(localStorage.getItem("Shopcart").toLowerCase());
 
     var klant = createKlant();
-    var klantnummer = postKlantData(klant);
+
+    console.log(klant);
+
+    postKlantData(klant);
+
+    var klantnummer = parseInt(localStorage.getItem('klantnummer'))
     var bestelling = createBestelling(shopCart, klantnummer);
 
     if (shopCart !== undefined) {
@@ -108,6 +113,8 @@ function createKlant() {
         "adres": document.getElementById('straatnaam').value,
         "land": value
     }
+
+    
 }
 
 function postBestelling(bestelling) {
@@ -116,10 +123,11 @@ function postBestelling(bestelling) {
         contentType: "application/json",
         url: "/api/Bestelling",
         data: JSON.stringify(bestelling),
+        async: false,
         success: function (data) {
-            localStorage.setItem('Shopcart') = new Array();
+            localStorage.setItem('Shopcart', undefined);
         }, error: function (err) {
-            console.log(err);
+            alert(err);
         }
     });
 }
@@ -130,8 +138,9 @@ function postKlantData(klant) {
         contentType: "application/json",
         url: "/api/Klant",
         data: JSON.stringify(klant),
+        async: false,
         success: function (data) {
-            return data;
+            localStorage.setItem('klantnummer', data);
         },
         error: function (data) {
             console.log(data);
