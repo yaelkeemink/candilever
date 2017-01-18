@@ -1,4 +1,5 @@
-﻿using CAN.Bestellingbeheer.Domain.Entities;
+﻿using CAN.Bestellingbeheer.Domain.DTO;
+using CAN.Bestellingbeheer.Domain.Entities;
 using CAN.Bestellingbeheer.Domain.Interfaces;
 using CAN.Bestellingbeheer.Domain.Services;
 using InfoSupport.WSA.Infrastructure;
@@ -35,10 +36,12 @@ namespace CAN.Bestellingbeheer.Domain.Test
             var mockRepository = new Mock<IRepository<Bestelling, long>>();
             mockRepository.Setup(n => n.Insert(bestelling)).Returns(1);
 
-            using (BestellingService service = new BestellingService(mockPublisher.Object, mockRepository.Object))
+            var mockLogger = new Mock<ILogger<BestellingService>>(MockBehavior.Loose);
+
+            using (BestellingService service = new BestellingService(mockPublisher.Object, mockRepository.Object, mockLogger.Object))
             {
                 //act
-                Bestelling response = service.CreateBestelling(bestelling);
+                BestellingDTO response = service.CreateBestelling(bestelling);
 
                 //assert
                 Assert.IsNotNull(response);
@@ -49,7 +52,7 @@ namespace CAN.Bestellingbeheer.Domain.Test
 
                 Assert.IsNotNull(response.Artikelen.First().Artikelnummer);
                 Assert.AreEqual(bestelling.Artikelen.First().Naam, response.Artikelen.First().Naam);
-                Assert.AreEqual(bestelling.Artikelen.First().Prijs, response.Artikelen.First().Prijs);
+                Assert.AreEqual(bestelling.Artikelen.First().Prijs.ToString(), response.Artikelen.First().Prijs);
                 Assert.AreEqual(bestelling.Artikelen.First().Aantal, response.Artikelen.First().Aantal);
             };
         }

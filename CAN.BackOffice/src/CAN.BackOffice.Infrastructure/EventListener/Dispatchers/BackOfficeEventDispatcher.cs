@@ -3,14 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using RabbitMQ.Client.Events;
 using CAN.BackOffice.Infrastructure.DAL;
+using CAN.Webwinkel.Infrastructure.EventListener;
 using CAN.Common.Events;
 using CAN.BackOffice.Infrastructure.DAL.Repositories;
-using Can.BackOffice.Domain.Entities;
-using CAN.Webwinkel.Infrastructure.EventListener;
 using CAN.BackOffice.Domain.Entities;
-using System.Text;
-using Newtonsoft.Json;
-using System;
 
 namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
 {
@@ -62,7 +58,18 @@ namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
             base.EventReceived(sender, e);
         }
 
-        
+        public void BestellingGeplaatst(BestellingCreatedEvent evt)
+        {
+            _logger.Debug($"Bestelling geplaatst {evt.Bestellingsnummer}");
+            using (var context = new DatabaseContext(_dbOptions))
+            using (var repo = new BestellingRepository(context))
+            {
+                var artikel = new Bestelling(evt);
+                repo.Insert(artikel);
+
+            }
+        }
+
         /// <summary>
         /// 
         /// </summary>

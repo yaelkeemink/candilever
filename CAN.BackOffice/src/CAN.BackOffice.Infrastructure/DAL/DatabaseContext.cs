@@ -1,7 +1,6 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Can.BackOffice.Domain.Entities;
 using CAN.BackOffice.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CAN.BackOffice.Infrastructure.DAL
 {
