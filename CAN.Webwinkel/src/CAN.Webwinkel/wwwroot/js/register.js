@@ -19,6 +19,7 @@ window.onload = function () {
 
 function placeOrder() {
     var shopCart = getShopCartFromLocalStorage();
+
     if (shopCart !== "undefined" && shopCart !== undefined && shopCart !== null) {
         var klant = createKlant();
         var klantnummer = postKlantData(klant);
@@ -27,7 +28,9 @@ function placeOrder() {
         if (shopCart !== undefined) {
             postBestelling(bestelling);
         }
-    } else {
+    }
+    else
+    {
         bestellingFailedMessage();
     }
 }
