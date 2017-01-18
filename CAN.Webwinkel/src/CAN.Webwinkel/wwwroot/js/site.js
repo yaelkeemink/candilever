@@ -106,7 +106,7 @@ function createKlant() {
         "email": document.getElementById('email').value,
         "huisnummer": document.getElementById('huisnummer').value,
         "adres": document.getElementById('straatnaam').value,
-        "land": land
+        "land": value
     }
 }
 
@@ -125,7 +125,6 @@ function postBestelling(bestelling) {
 }
 
 function postKlantData(klant) {
-
     $.ajax({
         type: "POST",
         contentType: "application/json",
