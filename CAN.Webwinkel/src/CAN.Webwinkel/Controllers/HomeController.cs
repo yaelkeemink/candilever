@@ -40,5 +40,10 @@ namespace CAN.Webwinkel.Controllers
         {
             return View();
         }
+
+        public IActionResult WettelijkeTeksten()
+        {
+            return View();
+        }
     }
 }
