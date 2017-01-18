@@ -3,8 +3,20 @@
 @{ 
     ViewData["Title"] = "Registreren";
 }
+<script src="~/js/register.js" asp-append-version="true"></script>
+
 <div class="container-fluid">
     <fieldset>
+        <div id="messages-container">
+            <div id="succes-message" class="alert alert-success fade in" style="display:none;">
+                <a href="#" class="close" data-dismiss="alert">&times;</a>
+                <strong>Success!</strong> De Bestelling is Geplaatst.
+            </div>
+            <div id="error-message" class="alert alert-danger" style="display:none;">
+                <strong>Error!</strong> Er is iets mis gegaan bij het plaatsen van de bestelling. Probeer opnieuw te bestellen of contacteer de systeem administrator.
+            </div>
+        </div>
+
         <legend class="h2">Uw gegevens</legend>
         <form>
             <div class="form-group">
@@ -54,7 +66,7 @@
                     <option value="50">België</option>
                 </select>
             </div>
-            <button onclick="parseKlant()" class="btn btn-default">Bestel</button>
+            <button onclick="placeOrder()" class="btn btn-default">Bestel</button>
         </form>
     </fieldset>
 </div>
