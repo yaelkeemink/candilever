@@ -7,7 +7,6 @@ function addArtikelToCart(artikel) {
 
     addToShopCartArtikel(artikel, shopCart);
 
-    alert(artikel.Naam + " toegevoegd aan winkelwagen");
     saveShopCartInLocalStorage(shopCart);
 
     addToShopCardAnimation();
@@ -72,7 +71,7 @@ function placeOrder() {
     if (shopCart !== undefined) {
         postBestelling(bestelling);
     } else {
-        alert("De winkelwagen is leeg!");
+
     }
 }
 
@@ -125,7 +124,7 @@ function postBestelling(bestelling) {
         url: "/api/Bestelling",
         data: JSON.stringify(bestelling),
         success: function (data) {
-            alert(data);
+
         }, error: function (err) {
             console.log(err);
         }
