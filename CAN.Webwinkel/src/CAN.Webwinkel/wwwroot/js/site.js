@@ -56,17 +56,13 @@ function adjustAantalArtikelenInCart(artikel, shopCart) {
 function addToShopCardAnimation(artikelnummer) {
     var divId = parseInt(artikelnummer);
 
-    console.log(divId);
-
     document.getElementById(divId).className = 'glyphicon glyphicon-ok btn btn-success';
-
-    console.log("element is veranderd");
+);
     window.setTimeout(function () { restoreButton(divId) }, 1000);
 }
 
 function restoreButton(divId) {
     document.getElementById(divId).className = 'glyphicon glyphicon-shopping-cart btn btn-info';
-    console.log("element is terug veranderd");
 }
 
 
@@ -75,8 +71,6 @@ function placeOrder() {
     var shopCart = JSON.parse(localStorage.getItem("Shopcart").toLowerCase());
 
     var klant = createKlant();
-
-    console.log(klant);
 
     postKlantData(klant);
 
@@ -136,7 +130,7 @@ function postBestelling(bestelling) {
         success: function (data) {
             localStorage.setItem('Shopcart', undefined);
         }, error: function (err) {
-            alert(err);
+            console.log(err);
         }
     });
 }

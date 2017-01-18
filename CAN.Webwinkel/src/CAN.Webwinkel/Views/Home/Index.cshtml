@@ -4,7 +4,7 @@
 
 @foreach (var artikel in Model)
 {
-    <div asp-controller="Home" asp-action="Add" method="post" class="form-horizontal">
+    <div class="form-horizontal">
 
         <div class="col-md-4 column productbox">
             <div class="producttitle">@Html.DisplayFor(a => artikel.Naam)</div>
