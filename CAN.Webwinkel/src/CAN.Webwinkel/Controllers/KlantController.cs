@@ -21,14 +21,14 @@ namespace CAN.Webwinkel.Controllers
         }
 
         [HttpPost]
-        [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
         [SwaggerOperation("KlantAanmaken")]
         public IActionResult KlantAanmaken([FromBody]Klant klant)
         {
             try
             {
-                _agent.Post(klant);
-                return Ok();
+                var response = _agent.Post(klant);
+                return Ok(response);
             }
             catch (Exception e)
             {

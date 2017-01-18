@@ -88,6 +88,10 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dbOptions"></param>
         private void ReplayAuditlog(DbContextOptions<WinkelDatabaseContext> dbOptions)
         {
             _logger.Information("Purging database");

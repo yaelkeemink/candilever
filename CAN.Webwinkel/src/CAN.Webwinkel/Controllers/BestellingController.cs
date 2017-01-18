@@ -28,8 +28,8 @@ namespace CAN.Webwinkel.Controllers
         {
             try
             {
-                _agent.Post(bestelling);
-                return Ok();
+                var response = _agent.Post(bestelling);
+                return Ok(response);
             }
             catch (Exception e)
             {

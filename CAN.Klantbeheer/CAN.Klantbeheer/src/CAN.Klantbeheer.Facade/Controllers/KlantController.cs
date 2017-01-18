@@ -26,7 +26,7 @@ namespace CAN.Klantbeheer.Facade.Controllers
         // POST api/values
         [HttpPost]
         [SwaggerOperation("Post")]
-        [ProducesResponseType(typeof(Klant), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
         public IActionResult CreateKlant([FromBody]Klant klant)
         {

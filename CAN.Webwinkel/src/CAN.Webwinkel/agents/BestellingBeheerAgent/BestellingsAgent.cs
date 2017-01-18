@@ -41,7 +41,7 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
         public JsonSerializerSettings DeserializationSettings { get; private set; }        
 
         /// <summary>
-        /// Initializes a new instance of the BestellingsAgent class.
+        /// Initializes a new instance of the BestellingsAgentClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
@@ -52,7 +52,7 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
         }
 
         /// <summary>
-        /// Initializes a new instance of the BestellingsAgent class.
+        /// Initializes a new instance of the BestellingsAgentClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -66,7 +66,7 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
         }
 
         /// <summary>
-        /// Initializes a new instance of the BestellingsAgent class.
+        /// Initializes a new instance of the BestellingsAgentClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -84,7 +84,7 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
         }
 
         /// <summary>
-        /// Initializes a new instance of the BestellingsAgent class.
+        /// Initializes a new instance of the BestellingsAgentClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.

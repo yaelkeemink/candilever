@@ -92,7 +92,7 @@ namespace CAN.Webwinkel
             services.AddScoped<IRepository<Artikel, int>, ArtikelRepository>();
             services.AddScoped<ICategorieService, CategorieService>();
             services.AddScoped<IArtikelService, ArtikelService>();
-            services.AddScoped<IKlantAgent, KlantAgent>(s => new KlantAgent() { BaseUri = new Uri("http://klantbeheer:80") });
+            services.AddScoped<IKlantAgent, KlantAgent>(s => new KlantAgent() { BaseUri = new Uri("http://can-klantbeheer:80") });
             services.AddScoped<IBestellingsAgent, BestellingsAgent>(s => new BestellingsAgent() { BaseUri = new Uri("http://can-bestellingbeheer:80") });
         }
 
@@ -108,7 +108,6 @@ namespace CAN.Webwinkel
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
             }
             else
@@ -144,7 +143,8 @@ namespace CAN.Webwinkel
             var log = new LoggerConfiguration().ReadFrom.Configuration(Configuration).MinimumLevel.Debug().CreateLogger();
             var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
             var locker = new EventListenerLock();
-            var listener = new WinkelEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log, "ReplayService", locker);
+            var replayService = Environment.GetEnvironmentVariable("ReplayServiceQueue");
+            var listener = new WinkelEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log, replayService, locker);
             listener.Start();
             /// wachten
             log.Information("Waiting for release startup lock");
