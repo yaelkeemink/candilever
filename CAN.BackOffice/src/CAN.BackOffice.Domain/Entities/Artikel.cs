@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Can.BackOffice.Domain.Entities
+namespace CAN.BackOffice.Domain.Entities
 {
     public class Artikel
     {
@@ -15,5 +15,8 @@ namespace Can.BackOffice.Domain.Entities
         public decimal Prijs { get; set; }
 
         public int Aantal { get; set; }
+
+        public string LeverancierCode { get; set; }
+        public string Leverancier { get; set; }
     }
 }

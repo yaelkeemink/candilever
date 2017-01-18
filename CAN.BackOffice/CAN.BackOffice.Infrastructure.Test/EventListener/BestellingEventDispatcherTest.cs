@@ -6,9 +6,9 @@ using Serilog;
 using CAN.Common.Events;
 using CAN.BackOffice.Infrastructure.DAL.Repositories;
 using CAN.BackOffice.Infrastructure.Test.Provider;
-using Can.BackOffice.Domain.Entities;
 using System;
 using CAN.BackOffice.Infrastructure.EventListener.Dispatchers;
+using CAN.BackOffice.Domain.Entities;
 
 namespace CAN.BackOffice.Infrastructure.Test.EventListener
 {
@@ -41,10 +41,12 @@ namespace CAN.BackOffice.Infrastructure.Test.EventListener
                 bestellingEvent.BestelDatum = currentDate;
 
                 var artikelNummer = 15;
-                var artikelNaam = "artikel 1";
+                var artikelNaam = "Fiets";
                 var artikelPrijs = 2.50M;
                 var artikelAantal = 5;
-                bestellingEvent.AddArtikel(artikelNummer, artikelNaam, artikelPrijs, artikelAantal); 
+                var leverancier = "Batavus";
+                var leverancierCode = "BTV";
+                bestellingEvent.AddArtikel(artikelNummer, artikelNaam, artikelPrijs, artikelAantal, leverancier, leverancierCode); 
 
                 dispatcher.BestellingAangemaakt(bestellingEvent);
 
@@ -66,6 +68,8 @@ namespace CAN.BackOffice.Infrastructure.Test.EventListener
                     Assert.AreEqual(artikelNaam, artikel.Artikelnaam);
                     Assert.AreEqual(artikelPrijs, artikel.Prijs);
                     Assert.AreEqual(artikelAantal, artikel.Aantal);
+                    Assert.AreEqual(leverancier, artikel.Leverancier);
+                    Assert.AreEqual(leverancierCode, artikel.LeverancierCode);
                 }
             }
         }

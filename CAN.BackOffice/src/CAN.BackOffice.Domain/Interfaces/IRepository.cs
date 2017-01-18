@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 
-namespace CAN.BlackOffice.Domain.Interfaces
+namespace CAN.BackOffice.Domain.Interfaces
 {
     public interface IRepository<TEntity, TKey>
         : IDisposable

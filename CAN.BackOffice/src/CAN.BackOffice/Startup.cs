@@ -9,9 +9,12 @@ using CAN.BackOffice.Models;
 using CAN.BackOffice.Services;
 using Serilog;
 using CAN.BackOffice.Infrastructure.DAL;
-using CAN.Webwinkel.Infrastructure.EventListener;
+using CAN.BackOffice.Infrastructure.DAL.Repositories;
+using CAN.BackOffice.Domain.Interfaces;
 using InfoSupport.WSA.Infrastructure;
 using Microsoft.Extensions.Logging;
+using CAN.Webwinkel.Infrastructure.EventListener;
+using CAN.BackOffice.Domain.Entities;
 
 namespace CAN.BackOffice
 {
@@ -64,6 +67,9 @@ namespace CAN.BackOffice
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
+            services.AddScoped<IMagazijnService, MagazijnService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,9 +122,9 @@ namespace CAN.BackOffice
             var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
             var locker = new EventListenerLock();
             var replayQueue = Environment.GetEnvironmentVariable("ReplayServiceQueue");
-            var listener = new BackofficeEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log, replayQueue, locker);
+            var listener = new BackofficeEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, Log.Logger, replayQueue, locker);
             listener.Start();
-            /// wachten
+            // wachten
             Log.Logger.Information("Waiting for release startup lock");
             locker.StartUpLock.WaitOne();
             Log.Logger.Information("Continuing startup");

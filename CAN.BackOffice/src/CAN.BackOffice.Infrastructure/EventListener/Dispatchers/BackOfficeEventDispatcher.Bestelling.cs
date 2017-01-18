@@ -1,12 +1,7 @@
-﻿using Can.BackOffice.Domain.Entities;
+﻿using CAN.BackOffice.Domain.Entities;
 using CAN.BackOffice.Infrastructure.DAL;
 using CAN.BackOffice.Infrastructure.DAL.Repositories;
 using CAN.Common.Events;
-using InfoSupport.WSA.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 
 namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers

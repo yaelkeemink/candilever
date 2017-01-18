@@ -1,38 +1,30 @@
-﻿using CAN.Bestellingbeheer.Domain.DTO;
+﻿using CAN.Bestellingbeheer.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace CAN.Bestellingbeheer.Domain.Entities
+namespace CAN.Bestellingbeheer.Domain.DTO
 {
-    public enum BestelStatus
-    {
-        Goedgekeurd = 0,
-        Opgehaald = 100,
-    }
-    public class Bestelling
+    public class BestellingDTO
     {
         public long Bestellingnummer { get; set; }
 
         [Required]
         public long Klantnummer { get; set; }
 
-        public IList<Artikel> Artikelen { get; set; }
+        public IList<ArtikelDTO> Artikelen { get; set; }
         public DateTime BestelDatum { get; set; }
         public BestelStatus Status { get; set; }
 
-        public Bestelling()
-        {
-            Artikelen = new List<Artikel>();
-            BestelDatum = DateTime.Now; 
-        }
-        public Bestelling(BestellingDTO bestelling)
+        public BestellingDTO(Bestelling bestelling)
         {
             Klantnummer = bestelling.Klantnummer;
             Bestellingnummer = bestelling.Bestellingnummer;
             BestelDatum = bestelling.BestelDatum;
             Status = bestelling.Status;
-            Artikelen = new List<Artikel>();
+            Artikelen = new List<ArtikelDTO>();
             foreach (var artikel in bestelling.Artikelen)
             {
                 Artikelen.Add(artikel);

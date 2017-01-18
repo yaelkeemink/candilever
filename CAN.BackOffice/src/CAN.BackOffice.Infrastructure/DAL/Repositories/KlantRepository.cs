@@ -1,5 +1,4 @@
 ﻿using CAN.BackOffice.Domain.Entities;
-using CAN.BackOffice.Infrastructure.Repositories;
 using System.Linq;
 
 namespace CAN.BackOffice.Infrastructure.DAL.Repositories
