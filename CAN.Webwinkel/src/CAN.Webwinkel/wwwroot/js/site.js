@@ -5,11 +5,13 @@
 function addArtikelToCart(artikel) {
     var shopCart = getShopCartFromLocalStorage();
 
+    var artikelnummer = artikel.Artikelnummer;
+
     addToShopCartArtikel(artikel, shopCart);
 
     saveShopCartInLocalStorage(shopCart);
 
-    addToShopCardAnimation();
+    addToShopCardAnimation(artikelnummer);
 }
 
 function addToShopCartArtikel(artikel, shopCart) {
@@ -51,13 +53,20 @@ function adjustAantalArtikelenInCart(artikel, shopCart) {
     return artikelAlreadyAdded;
 }
 
-function addToShopCardAnimation() {
-    document.getElementById('addToCart').className = 'glyphicon glyphicon-ok btn btn-success';
-    window.setTimeout(restoreButton, 1000);
+function addToShopCardAnimation(artikelnummer) {
+    var divId = parseInt(artikelnummer);
+
+    console.log(divId);
+
+    document.getElementById(divId).className = 'glyphicon glyphicon-ok btn btn-success';
+
+    console.log("element is veranderd");
+    window.setTimeout(function () { restoreButton(divId) }, 1000);
 }
 
-function restoreButton() {
-    document.getElementById('addToCart').className = 'glyphicon glyphicon-shopping-cart btn btn-info';
+function restoreButton(divId) {
+    document.getElementById(divId).className = 'glyphicon glyphicon-shopping-cart btn btn-info';
+    console.log("element is terug veranderd");
 }
 
 
