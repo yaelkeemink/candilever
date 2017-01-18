@@ -121,7 +121,8 @@ namespace CAN.BackOffice
             var log = new LoggerConfiguration().ReadFrom.ConfigurationSection(Configuration.GetSection("Serilog")).MinimumLevel.Debug().CreateLogger();
             var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
             var locker = new EventListenerLock();
-            var listener = new BackofficeEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, log, "ReplayService", locker);
+            var replayQueue = Environment.GetEnvironmentVariable("ReplayServiceQueue");
+            var listener = new BackofficeEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, Log.Logger, replayQueue, locker);
             listener.Start();
             /// wachten
             log.Information("Waiting for release startup lock");
