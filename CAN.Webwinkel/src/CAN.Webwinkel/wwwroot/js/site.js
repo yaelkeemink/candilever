@@ -65,21 +65,13 @@ function restoreButton() {
 function placeOrder() {
     var shopCart = JSON.parse(localStorage.getItem("Shopcart").toLowerCase());
 
-    var klantnummer = parseKlant();
+    var klant = createKlant();
+    var klantnummer = postKlantData(klant);
     var bestelling = createBestelling(shopCart, klantnummer);
 
     if (shopCart !== undefined) {
         postBestelling(bestelling);
     }
-}
-
-function parseKlant() {
-    var land = document.getElementById('land');
-    var value = land.options[land.selectedIndex].value;
-
-    var klant = createKlant(value);
-
-    postKlantData(klant);
 }
 
 function createBestelling(shopCart, klantnummer) {
@@ -100,7 +92,10 @@ function createNewArtikel(artikel) {
     };
 }
 
-function createKlant(land) {
+function createKlant() {
+    var land = document.getElementById('land');
+    var value = land.options[land.selectedIndex].value;
+
     return {
         "klantnummer": 0,
         "voornaam": document.getElementById('voornaam').value,
