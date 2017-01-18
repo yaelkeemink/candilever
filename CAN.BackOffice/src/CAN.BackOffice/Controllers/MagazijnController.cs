@@ -20,16 +20,16 @@ namespace CAN.BackOffice.Controllers
             return View();
         }
 
-        public IActionResult Bestelling()
+        public IActionResult BestellingOphalen()
         {
-            var viewModel = _service.GetBestelling();
+            var viewModel = _service.GetVolgendeBestelling();
             return View(viewModel);
         }
         [HttpPut]
-        public IActionResult Bestelling(long id)
+        public IActionResult BestellingOphalen(long id)
         {
             _service.ZetBestellingOpOpgehaald(id);
-            var viewModel = _service.GetBestelling();
+            var viewModel = _service.GetVolgendeBestelling();
             return View(viewModel);
         }
     }

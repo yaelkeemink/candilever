@@ -1,4 +1,5 @@
-﻿using CAN.Bestellingbeheer.Domain.Entities;
+﻿using CAN.Bestellingbeheer.Domain.DTO;
+using CAN.Bestellingbeheer.Domain.Entities;
 using InfoSupport.WSA.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace CAN.Bestellingbeheer.Domain.Interfaces
         :IDisposable
     {
         int UpdateBestelling(Bestelling bestelling);
-        int UpdateStatusOpgehaald(long id);
-        Bestelling CreateBestelling(Bestelling bestelling);
+        int StatusNaarOpgehaald(long id);
+        BestellingDTO CreateBestelling(Bestelling bestelling);
     }
 }

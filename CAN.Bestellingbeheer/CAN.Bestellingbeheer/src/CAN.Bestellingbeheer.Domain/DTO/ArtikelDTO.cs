@@ -33,6 +33,17 @@ namespace CAN.Bestellingbeheer.Domain.DTO
                     Prijs = decimal.Parse(artikel.Prijs),
                 };
         }
+        public static implicit operator ArtikelDTO(Artikel artikel)
+        {
+            return new ArtikelDTO()
+            {
+                Aantal = artikel.Aantal,
+                Artikelnummer = artikel.Artikelnummer,
+                Id = artikel.Id,
+                Naam = artikel.Naam,
+                Prijs = artikel.Prijs.ToString(),
+            };
+        }
 
     }
 }

@@ -14,6 +14,7 @@ using CAN.BackOffice.Domain.Interfaces;
 using InfoSupport.WSA.Infrastructure;
 using Microsoft.Extensions.Logging;
 using CAN.Webwinkel.Infrastructure.EventListener;
+using CAN.BackOffice.Domain.Entities;
 
 namespace CAN.BackOffice
 {
@@ -67,7 +68,7 @@ namespace CAN.BackOffice
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
-            services.AddScoped<IRepository<Domain.Entities.Bestelling, long>, BestellingRepository>();
+            services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
             services.AddScoped<IMagazijnService, MagazijnService>();
         }
 
@@ -118,16 +119,15 @@ namespace CAN.BackOffice
         /// </summary>
         private void StartEventListeners()
         {
-            var log = new LoggerConfiguration().ReadFrom.ConfigurationSection(Configuration.GetSection("Serilog")).MinimumLevel.Debug().CreateLogger();
             var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
             var locker = new EventListenerLock();
             var replayQueue = Environment.GetEnvironmentVariable("ReplayServiceQueue");
             var listener = new BackofficeEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, Log.Logger, replayQueue, locker);
             listener.Start();
-            /// wachten
-            log.Information("Waiting for release startup lock");
+            // wachten
+            Log.Logger.Information("Waiting for release startup lock");
             locker.StartUpLock.WaitOne();
-            log.Information("Continuing startup");
+            Log.Logger.Information("Continuing startup");
         }
 
     }

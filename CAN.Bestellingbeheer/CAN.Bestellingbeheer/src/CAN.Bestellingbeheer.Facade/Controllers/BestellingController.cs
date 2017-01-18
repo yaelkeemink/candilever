@@ -66,14 +66,15 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var response = _service.UpdateStatusOpgehaald(bestelling);
+                    var response = _service.StatusNaarOpgehaald(bestelling);
                     return Ok(response);
                 }
             }
             catch (DbUpdateException ex)
             {
-                var error = new ErrorMessage(ErrorTypes.NotFound,
+                var error = new ErrorMessage(ErrorTypes.Unknown,
                         $"Fout met updaten in db: {bestelling}/nException: {ex}");
+                _logger.LogError(error.FoutMelding);
                 return NotFound(error);
             }
             catch (Exception ex)

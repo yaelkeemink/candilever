@@ -5,6 +5,7 @@ using InfoSupport.WSA.Infrastructure;
 using System;
 using Microsoft.Extensions.Logging;
 using CAN.Bestellingbeheer.Domain.Exceptions;
+using CAN.Bestellingbeheer.Domain.DTO;
 
 namespace CAN.Bestellingbeheer.Domain.Services {
     public class BestellingService 
@@ -21,7 +22,7 @@ namespace CAN.Bestellingbeheer.Domain.Services {
             _logger = logger;
         }
 
-        public Bestelling CreateBestelling(Bestelling bestelling)
+        public BestellingDTO CreateBestelling(Bestelling bestelling)
         {
             long bestellingsnummer = _repository.Insert(bestelling);
 
@@ -37,9 +38,8 @@ namespace CAN.Bestellingbeheer.Domain.Services {
                 createdEvent.AddArtikel(artikel.Artikelnummer, artikel.Naam, artikel.Prijs, artikel.Aantal);
             }
 
-            _publisher.Publish(createdEvent);
-
-            return bestelling;
+            _publisher.Publish(createdEvent);            
+            return new BestellingDTO(bestelling);
         }
 
         public int UpdateBestelling(Bestelling bestelling)
@@ -47,10 +47,9 @@ namespace CAN.Bestellingbeheer.Domain.Services {
             return _repository.Update(bestelling);
         }
 
-        public int UpdateStatusOpgehaald(long id)
+        public int StatusNaarOpgehaald(long id)
         {
             var bestelling = _repository.Find(id);
-            _logger.LogDebug(bestelling.Status.ToString());
             if (bestelling.Status != BestelStatus.Opgehaald)
             {
                 bestelling.Status = BestelStatus.Opgehaald;

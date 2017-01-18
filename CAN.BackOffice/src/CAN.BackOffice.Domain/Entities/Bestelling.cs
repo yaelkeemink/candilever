@@ -8,8 +8,8 @@ namespace CAN.BackOffice.Domain.Entities
 {
     public enum BestelStatus
     {
-        Goedgekeurd,
-        opgehaald,
+        Goedgekeurd = 0,
+        Opgehaald = 100,
     }
     public class Bestelling
     {

@@ -20,7 +20,7 @@ namespace CAN.BackOffice.Services
             _Repo = repo;
             _service = service;
         }
-        public Bestelling GetBestelling()
+        public Bestelling GetVolgendeBestelling()
         {
             return _Repo.FindBy(a => a.Status == BestelStatus.Goedgekeurd)
                 .OrderBy(a => a.BestelDatum)
@@ -29,7 +29,12 @@ namespace CAN.BackOffice.Services
 
         public int ZetBestellingOpOpgehaald(long id)
         {
-            return (int)_service.BestellingStatusOpgehaald(id);
+            var response = _service.BestellingStatusOpgehaald(id);
+            if (response.GetType() == typeof(int))
+            {
+                return (int)response;
+            }
+            return 0;
         }
     }
 }
