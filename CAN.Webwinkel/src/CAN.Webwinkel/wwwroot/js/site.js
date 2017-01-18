@@ -122,7 +122,7 @@ function postBestelling(bestelling) {
         url: "/api/Bestelling",
         data: JSON.stringify(bestelling),
         success: function (data) {
-
+            localStorage.setItem('Shopcart') = new Array();
         }, error: function (err) {
             console.log(err);
         }
