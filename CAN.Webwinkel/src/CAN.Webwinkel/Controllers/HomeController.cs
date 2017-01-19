@@ -32,13 +32,12 @@ namespace CAN.Webwinkel.Controllers
         public IActionResult Index(int id)
         {
             var aantalArtikelenPerPagina = 24;
-            var alleArtikelen = _service.AlleArtikelen();
-            var artikelen = alleArtikelen.Skip((id - 1) * aantalArtikelenPerPagina).Take(aantalArtikelenPerPagina);
-            var lijst = artikelen.Select(a => new ApiArtikelenModel(a))
+            var artikelen = _service.AlleArtikelenPerPagina(id, aantalArtikelenPerPagina)
+                .Select(a => new ApiArtikelenModel(a))
                 .ToList();
-            int paginas = (alleArtikelen.Count() + 9) / aantalArtikelenPerPagina;
+            int paginas = _service.AantalPaginas(aantalArtikelenPerPagina);
 
-            return View(new ArtikelOverzichtModel() { Artikelen = lijst, AantalPaginas = paginas } );
+            return View(new ArtikelOverzichtModel() { Artikelen = artikelen, AantalPaginas = paginas } );
         }
 
         [HttpGet]
