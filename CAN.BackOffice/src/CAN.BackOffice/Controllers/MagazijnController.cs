@@ -22,16 +22,6 @@ namespace CAN.BackOffice.Controllers
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-
-        /// <summary>
         /// Haal volgende bestelling op
         /// </summary>
         /// <returns></returns>
