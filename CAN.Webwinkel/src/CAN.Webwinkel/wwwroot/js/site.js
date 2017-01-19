@@ -136,9 +136,10 @@ function postBestelling(bestelling) {
         success: function (data) {
             localStorage.removeItem('Shopcart');
             localStorage.removeItem('klantnummer');
-            alert("Uw bestelling is correct geplaatst");
+            showHiddenMessage(true);
         }, error: function (err) {
             console.log(err);
+            showHiddenMessage(false);
         }
     });
 }
@@ -157,4 +158,20 @@ function postKlantData(klant) {
             console.log(data);
         }
     })
+}
+
+function showHiddenMessage(isSuccess) {
+    var successMessage = document.getElementById("succes-message");
+    var errorMessage = document.getElementById("error-message");
+
+    if (successMessage !== undefined && successMessage !== null) {
+        if (isSuccess) {
+            document.getElementById("succes-message").style = "display:normal;";
+        }
+    }
+    else if (errorMessage !== undefined && errorMessage !== null) {
+        if (!isSuccess) {
+            document.getElementById("error-message").style = "display:normal;";
+        }
+    }
 }
