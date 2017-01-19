@@ -118,7 +118,7 @@ namespace CAN.Klantbeheer.Domain.Test
                 var publisherMock = new Mock<IEventPublisher>();
                 using (var service = new KlantService(repo, publisherMock.Object))
                 {
-                    Klant klant = new Klant
+                    Klant klant_yael = new Klant
                     {
                         Voornaam = "Yael",
                         Achternaam = "Keemink",
@@ -130,7 +130,7 @@ namespace CAN.Klantbeheer.Domain.Test
                         Land = Enums.Land.Nederland,
                     };
 
-                    Klant klant2 = new Klant
+                    Klant klant_rj = new Klant
                     {
                         Voornaam = "Robert-Jan",
                         Achternaam = "Kooijman",
@@ -141,8 +141,8 @@ namespace CAN.Klantbeheer.Domain.Test
                         Huisnummer = "14",
                         Land = Enums.Land.Nederland,
                     };
-                    var returnval1 = service.CreateKlant(klant);
-                    var returnval2 = service.CreateKlant(klant2);
+                    var returnval1 = service.CreateKlant(klant_yael);
+                    var returnval2 = service.CreateKlant(klant_rj);
 
                     Assert.AreEqual(1, returnval1);
                     Assert.AreEqual(2, returnval2);
