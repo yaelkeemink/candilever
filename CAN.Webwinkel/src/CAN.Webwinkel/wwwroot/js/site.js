@@ -26,7 +26,7 @@ function addToShopCartArtikel(artikel, shopCart) {
 function getShopCartFromLocalStorage() {
     var shopCart = localStorage.getItem("Shopcart");
 
-    if (shopCart === undefined || shopCart === null) {
+    if (shopCart === undefined || shopCart === null || shopCart === "undefined") {
         shopCart = new Array();
     } else {
         shopCart = JSON.parse(localStorage.getItem("Shopcart"));
