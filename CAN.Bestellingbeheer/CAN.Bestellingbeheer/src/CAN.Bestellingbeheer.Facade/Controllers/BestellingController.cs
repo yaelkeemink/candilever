@@ -41,11 +41,12 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
 
             try
             {
-                Bestelling bestelling = new Bestelling(bestellingDTO);
-                var response = _service.CreateBestelling(bestelling);
+                //Bestelling bestelling = new Bestelling(bestellingDTO);
+                //var response = _service.CreateBestelling(bestelling);
 
-                _logger.LogInformation("Create bestelling success", response);
-                return Ok(response);
+                //_logger.LogInformation("Create bestelling success", response);
+                //return Ok(response);
+                return Ok();
             }
             catch (Exception ex)
             {

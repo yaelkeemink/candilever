@@ -13,12 +13,10 @@ namespace CAN.Bestellingbeheer.Domain.DTO
 
         [Required]
         public long Klantnummer { get; set; }
-
         public IList<ArtikelDTO> Artikelen { get; set; }
         public DateTime BestelDatum { get; set; }
         public BestelStatus Status { get; set; }
-
-        private BestellingDTO()
+        public BestellingDTO()
         {
             Artikelen = new List<ArtikelDTO>();
         }
