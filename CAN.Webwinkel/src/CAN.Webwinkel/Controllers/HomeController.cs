@@ -41,7 +41,7 @@ namespace CAN.Webwinkel.Controllers
             var artikelen = alleArtikelen.Skip((id - 1) * aantalArtikelenPerPagina).Take(aantalArtikelenPerPagina);
             var lijst = artikelen.Select(a => new ApiArtikelenModel(a))
                 .ToList();
-            int paginas = (alleArtikelen.Count() + 9) / aantalArtikelenPerPagina + 1;
+            int paginas = (alleArtikelen.Count() + 9) / aantalArtikelenPerPagina;
 
             return View(new ArtikelOverzichtModel() { Artikelen = lijst, AantalPaginas = paginas } );
         }
