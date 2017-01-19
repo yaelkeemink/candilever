@@ -16,16 +16,30 @@ namespace CAN.BackOffice.Services
         private BestellingRepository _Repo;
         private IBestellingBeheerService _service;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="repo"></param>
+        /// <param name="service"></param>
         public MagazijnService(BestellingRepository repo, IBestellingBeheerService service)
         {
             _Repo = repo;
             _service = service;
         }
+        /// <summary>
+        /// Returns the next bestelling
+        /// </summary>
+        /// <returns></returns>
         public Bestelling GetVolgendeBestelling()
         {
             return _Repo.FindVolgendeBestelling();
         }
 
+        /// <summary>
+        /// Updates the status of a bestelling
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public int ZetBestellingOpOpgehaald(long id)
         {
             var response = _service.BestellingStatusOpgehaald(id);
