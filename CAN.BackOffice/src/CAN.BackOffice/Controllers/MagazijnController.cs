@@ -15,11 +15,6 @@ namespace CAN.BackOffice.Controllers
         {
             _service = service;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
         public IActionResult BestellingOphalen()
         {
             var viewModel = _service.GetVolgendeBestelling();
