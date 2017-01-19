@@ -37,10 +37,10 @@ namespace CAN.Klantbeheer.Infrastructure.Repositories
             return GetDbSet();
         }
 
-        public virtual int Insert(Entity item)
+        public virtual void Insert(Entity item)
         {
             _context.Add(item);
-            return _context.SaveChanges();
+            _context.SaveChanges();
         }
 
         public virtual int InsertRange(IEnumerable<Entity> items)
