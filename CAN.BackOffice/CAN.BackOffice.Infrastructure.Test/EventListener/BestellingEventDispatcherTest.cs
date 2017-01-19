@@ -46,7 +46,7 @@ namespace CAN.BackOffice.Infrastructure.Test.EventListener
                 var artikelAantal = 5;
                 var leverancier = "Batavus";
                 var leverancierCode = "BTV";
-                bestellingEvent.AddArtikel(artikelNummer, artikelNaam, artikelPrijs, artikelAantal, leverancier, leverancierCode); 
+                bestellingEvent.AddArtikel(artikelNummer, artikelNaam, artikelPrijs, artikelAantal, leverancierCode, leverancier); 
 
                 dispatcher.BestellingAangemaakt(bestellingEvent);
 

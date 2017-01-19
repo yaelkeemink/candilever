@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "testRunner": "mstest",
 
@@ -14,7 +14,8 @@
       "type": "platform",
       "version": "1.0.1"
     },
-    "MSTest.TestFramework": "1.0.4-preview"
+    "MSTest.TestFramework": "1.0.4-preview",
+    "CAN.Klantbeheer.Infrastructure": "1.0.0-*"
   },
 
   "tools": {

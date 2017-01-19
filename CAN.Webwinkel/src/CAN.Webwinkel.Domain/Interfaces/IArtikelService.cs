@@ -10,5 +10,7 @@ namespace CAN.Webwinkel.Domain.Interfaces
     {
         IEnumerable<Artikel> ArtikelenBijCategorie(string categorieNaam);
         IEnumerable<Artikel> AlleArtikelen();
+        IEnumerable<Artikel> AlleArtikelenPerPagina(int paginanummer, int aantalArtikelen);
+        int AantalPaginas(int aantalArtikelenPerPagina);
     }
 }
