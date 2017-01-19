@@ -23,5 +23,13 @@ namespace CAN.BackOffice.Infrastructure.DAL.Repositories
         {
             return item.Bestellingsnummer;
         }
+
+
+        public Bestelling FindVolgendeBestelling()
+        {
+            return GetDbSet().Where(a => a.BestellingStatusCode == "Goedgekeurd")
+                      .OrderBy(a => a.BestelDatum)
+                      .FirstOrDefault();
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using CAN.BackOffice.Domain.Entities;
 
 namespace CAN.BackOffice.Domain.Interfaces
 {
@@ -18,5 +19,6 @@ namespace CAN.BackOffice.Domain.Interfaces
         int Update(TEntity item);
 
         int Delete(TKey item);
+      
     }
 }
