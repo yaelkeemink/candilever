@@ -18,7 +18,7 @@
         </div>
 
         <legend class="h2">Uw gegevens</legend>
-        <form>
+        <form onsubmit="placeOrder(); return false;">
             <div class="form-group">
                 <label asp-for="Voornaam"></label>
                 <input type="text" class="form-control" asp-for="Voornaam" placeholder="Voornaam" id="voornaam">
@@ -66,7 +66,7 @@
                     <option value="50">Belgi&euml;</option>
                 </select>
             </div>
-            <button onclick="placeOrder()" class="btn btn-default">Bestel</button>
+            <button class="btn btn-default">Bestel</button>
         </form>
     </fieldset>
 </div>

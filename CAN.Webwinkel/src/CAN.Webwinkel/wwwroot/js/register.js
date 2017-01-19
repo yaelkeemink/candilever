@@ -1,30 +1,3 @@
-window.onload = function () {
-    var isSuccess = sessionStorage.getItem("bestellingSucces");
-
-    if (isSuccess !== null && isSuccess !== undefined && isSuccess !== "undefined")
-    {
-        if (isSuccess)
-        {
-            showHiddenMessage();
-            sessionStorage.setItem("bestellingSucces", undefined);
-        }
-    }
-}
-
-function showHiddenMessage() {
-    var successMessage = document.getElementById("succes-message");
-    var errorMessage = document.getElementById("error-message");
-
-    if (successMessage !== undefined && successMessage !== null)
-    {
-        document.getElementById("succes-message").style = "display:normal;";
-    }
-    else if (errorMessage !== undefined && errorMessage !== null)
-    {
-        document.getElementById("error-message").style = "display:normal;";
-    }
-}
-
 function placeOrder() {
     var shopCart = getShopCartFromLocalStorage();
 
@@ -90,10 +63,10 @@ function postBestelling(bestelling) {
         data: JSON.stringify(bestelling),
         async: false,
         success: function (data) {
-            localStorage.setItem('Shopcart', undefined);
-            bestellingIsSuccesMessage();
+            showHiddenMessage(true);
         }, error: function (err) {
             console.log(err);
+            showHiddenMessage(false);
         }
     });
 }
@@ -118,10 +91,18 @@ function postKlantData(klant) {
     return klantnr;
 }
 
-function bestellingIsSuccesMessage() {
-    sessionStorage.setItem("bestellingSucces", true);
-}
+function showHiddenMessage(isSuccess) {
+    var successMessage = document.getElementById("succes-message");
+    var errorMessage = document.getElementById("error-message");
 
-function bestellingFailedMessage() {
-    sessionStorage.setItem("bestellingSucces", false);
+    if (successMessage !== undefined && successMessage !== null) {
+        if (isSuccess) {
+            document.getElementById("succes-message").style = "display:normal;";
+        }
+    }
+    else if (errorMessage !== undefined && errorMessage !== null) {
+        if (!isSuccess) {
+            document.getElementById("error-message").style = "display:normal;";
+        }
+    }
 }
