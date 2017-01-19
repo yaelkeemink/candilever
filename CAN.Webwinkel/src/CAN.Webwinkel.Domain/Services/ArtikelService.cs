@@ -33,12 +33,27 @@ namespace CAN.Webwinkel.Domain.Services
 
         public IEnumerable<Artikel> AlleArtikelenPerPagina(int paginanummer, int aantalArtikelen)
         {
-            return _repository.FindAll().Skip((paginanummer - 1) * aantalArtikelen).Take(aantalArtikelen); 
+            if (paginanummer < 0)
+            {
+                paginanummer = 0;
+            }
+            var paginas = AantalPaginas(aantalArtikelen);
+            if (paginanummer > paginas)
+            {
+                paginanummer = paginas;
+            }
+            return _repository.FindAll().Skip((paginanummer - 1) * aantalArtikelen).Take(aantalArtikelen);
         }
 
         public int AantalPaginas(int aantalArtikelenPerPagina)
         {
-            return (_repository.FindAll().Count() + 9) / 10;
+            var aantalArtikelen = _repository.FindAll().Count();
+            var aantalPaginas = aantalArtikelen / aantalArtikelenPerPagina;
+            if (aantalArtikelen % aantalArtikelenPerPagina != 0)
+            {
+                aantalPaginas++;
+            }
+            return aantalPaginas;
         }
     }
 }
