@@ -16,9 +16,9 @@ using System;
 
 namespace CAN.Klantbeheer.Facade
 {
-    public class Startup
+    public class TestStartup
     {
-        public Startup(IHostingEnvironment env)
+        public TestStartup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -48,24 +48,17 @@ namespace CAN.Klantbeheer.Facade
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
-            if (Env.IsEnvironment("Development"))
+
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server =.\\SQLEXPRESS;Database=DATABASENAME;Trusted_Connection=True;"));
+            services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(new BusOptions()
             {
-                services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server =.\\SQLEXPRESS;Database=DATABASENAME;Trusted_Connection=True;"));
-                services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(new BusOptions()
-                {
-                    ExchangeName = "",
-                    QueueName = null,
-                    HostName = "localhost",
-                    Port = 5672,
-                    UserName = "guest",
-                    Password = "guest",
-                }));
-            }
-            else
-            {
-                services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
-                services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(BusOptions.CreateFromEnvironment()));
-            }
+                ExchangeName = "TestExchange",
+                QueueName = null,
+                HostName = "localhost",
+                Port = 5672,
+                UserName = "guest",
+                Password = "guest",
+            }));           
             
             services.AddScoped<IRepository<Klant, long>, KlantRepository>();
             services.AddScoped<IKlantService, KlantService>();

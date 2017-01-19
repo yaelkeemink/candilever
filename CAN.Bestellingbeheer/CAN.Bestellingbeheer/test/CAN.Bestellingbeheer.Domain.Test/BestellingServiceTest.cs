@@ -24,9 +24,12 @@ namespace CAN.Bestellingbeheer.Domain.Test
                 {
                     new Artikel
                     {
-                        Naam = "Mijn artikel",
+                        Naam = "Groene batavus",
                         Prijs = 2.50M,
-                        Aantal = 1
+                        Aantal = 1,
+                        Artikelnummer = 15224,
+                        Leverancier = "Batavus",
+                        LeverancierCode = "BTV"
                     }
                 }
             };
@@ -54,6 +57,8 @@ namespace CAN.Bestellingbeheer.Domain.Test
                 Assert.AreEqual(bestelling.Artikelen.First().Naam, response.Artikelen.First().Naam);
                 Assert.AreEqual(bestelling.Artikelen.First().Prijs.ToString(), response.Artikelen.First().Prijs);
                 Assert.AreEqual(bestelling.Artikelen.First().Aantal, response.Artikelen.First().Aantal);
+                Assert.AreEqual(bestelling.Artikelen.First().Leverancier, response.Artikelen.First().Leverancier);
+                Assert.AreEqual(bestelling.Artikelen.First().LeverancierCode, response.Artikelen.First().LeverancierCode);
             };
         }
     }
