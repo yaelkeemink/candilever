@@ -33,9 +33,9 @@ namespace CAN.Bestellingbeheer.Domain.Test
 
             var mockPublisher = new Mock<IEventPublisher>();
 
-            var mockRepository = new Mock<IRepository<Bestelling, long>>();
+            var mockRepository = new Mock<IRepository<Bestelling, long>>(MockBehavior.Strict);
             mockRepository.Setup(n => n.Insert(bestelling)).Returns(1);
-
+            mockRepository.Setup(n => n.Dispose());
             var mockLogger = new Mock<ILogger<BestellingService>>(MockBehavior.Loose);
 
             using (BestellingService service = new BestellingService(mockPublisher.Object, mockRepository.Object, mockLogger.Object))
@@ -45,7 +45,7 @@ namespace CAN.Bestellingbeheer.Domain.Test
 
                 //assert
                 Assert.IsNotNull(response);
-                Assert.IsInstanceOfType(response, typeof(Bestelling));
+                Assert.IsInstanceOfType(response, typeof(BestellingDTO));
 
                 Assert.IsNotNull(response.Bestellingnummer);
                 Assert.AreEqual(bestelling.BestelDatum, response.BestelDatum);

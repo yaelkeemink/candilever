@@ -15,7 +15,7 @@ namespace CAN.Klantbeheer.Domain.Test
         {
             //Arrange
             var publishMock = new Mock<IEventPublisher>();
-            var repoMock = new Mock<IRepository<Klant, long>>();            
+            var repoMock = new Mock<IRepository<Klant, long>>();
             using (var service = new KlantService(repoMock.Object, publishMock.Object))
             {
                 var klant = new Klant
@@ -28,7 +28,7 @@ namespace CAN.Klantbeheer.Domain.Test
                     Email = "yaelkeemink@gmail.com",
                     Huisnummer = "14",
                     Land = Enums.Land.Nederland,
-                };                
+                };
                 repoMock.Setup(a => a.Insert(klant)).Returns(1);
 
                 //Act
@@ -38,6 +38,7 @@ namespace CAN.Klantbeheer.Domain.Test
                 Assert.AreEqual(1, result);
             }
         }
+        [TestMethod]
         public void TestAddZonderZonderEmail()
         {
             //Arrange
