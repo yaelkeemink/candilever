@@ -25,11 +25,6 @@ namespace CAN.Webwinkel.Controllers
         public IActionResult Index()
         {
             return RedirectToAction("Index", new { id = 1 });
-            //var artikelen = _service.AlleArtikelen();
-            //var lijst = artikelen.Select(a => new ApiArtikelenModel(a))
-            //    .ToList();
-
-            //return View(lijst);
         }
 
         [HttpGet]
