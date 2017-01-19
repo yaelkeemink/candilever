@@ -187,6 +187,9 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
 
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         [TestMethod]
         public void TestVolgendeBestellingMetUpdate()
         {
@@ -261,6 +264,10 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
 
         }
 
+        /// <summary>
+        /// Fake update status event
+        /// </summary>
+        /// <param name="nr"></param>
         private void UpdateBestellingStatus(int nr)
         {
             using (var context = new DatabaseContext(_dbOptions))
