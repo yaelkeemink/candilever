@@ -1,8 +1,8 @@
-@model List<ApiArtikelenModel>
+@model ArtikelOverzichtModel
 
 <h1>Welkom bij de beste fiets specialist in Nederland!</h1>
 
-@foreach (var artikel in Model)
+@foreach (var artikel in Model.Artikelen)
 {
     <div class="form-horizontal">
 
@@ -18,3 +18,10 @@
 
     </div>
 }
+
+<ul class="pagination">
+    @for (int i = 1; i <= Model.AantalPaginas; i++)
+    {
+        <li><a asp-action="Index" asp-route-id="@i">@i</a></li>
+    }
+</ul>
