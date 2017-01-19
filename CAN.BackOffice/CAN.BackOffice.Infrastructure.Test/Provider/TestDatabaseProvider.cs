@@ -28,7 +28,7 @@ namespace CAN.BackOffice.Infrastructure.Test.Provider
         {
             var builder = new DbContextOptionsBuilder<DatabaseContext>();
            
-            builder.UseSqlServer("Server=.\\SQLEXPRESS; Database=Webshop; Trusted_Connection=True;");
+            builder.UseSqlServer("Server=.\\SQLEXPRESS; Database=WebshopTest; Trusted_Connection=True;");
             return builder.Options;
         }
     }

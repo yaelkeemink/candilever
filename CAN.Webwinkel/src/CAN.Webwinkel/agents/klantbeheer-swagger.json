@@ -1,1 +1,134 @@
-{"swagger":"2.0","info":{"version":"v1","title":"Klanten domain service","description":"Domain service","termsOfService":"None"},"basePath":"/","paths":{"/api/Klant":{"put":{"tags":["Klant"],"operationId":"Update","consumes":["application/json","text/json","application/json-patch+json"],"produces":["text/plain","application/json","text/json"],"parameters":[{"name":"klant","in":"body","required":false,"schema":{"$ref":"#/definitions/Klant"}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/Klant"}},"400":{"description":"Client Error","schema":{"$ref":"#/definitions/ErrorMessage"}}},"deprecated":false},"post":{"tags":["Klant"],"operationId":"Post","consumes":["application/json","text/json","application/json-patch+json"],"produces":["text/plain","application/json","text/json"],"parameters":[{"name":"klant","in":"body","required":false,"schema":{"$ref":"#/definitions/Klant"}}],"responses":{"200":{"description":"Success","schema":{"format":"int32","type":"integer"}},"400":{"description":"Client Error","schema":{"$ref":"#/definitions/ErrorMessage"}}},"deprecated":false}}},"definitions":{"Klant":{"required":["voornaam","achternaam","postcode","huisnummer","adres","land"],"type":"object","properties":{"klantnummer":{"format":"int64","type":"integer"},"voornaam":{"type":"string"},"achternaam":{"type":"string"},"tussenvoegsels":{"type":"string"},"postcode":{"type":"string"},"telefoonnummer":{"type":"string"},"email":{"type":"string"},"huisnummer":{"type":"string"},"adres":{"type":"string"},"land":{"format":"int32","enum":[0,50],"type":"integer"}}},"ErrorMessage":{"type":"object","properties":{"foutType":{"format":"int32","enum":[0,10,20,30,40],"type":"integer"},"foutMelding":{"type":"string"},"oplossing":{"type":"string"}}}},"securityDefinitions":{}}
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "Bestellingbeheer Service",
+    "description": "Bestellingbeheer Service voor het bestellen van artikelen",
+    "termsOfService": "None"
+  },
+  "basePath": "/",
+  "paths": {
+    "/api/Bestelling": {
+      "put": {
+        "tags": [ "Bestelling" ],
+        "operationId": "BestellingStatusOpgehaald",
+        "consumes": [ "application/json", "text/json", "application/json-patch+json" ],
+        "produces": [ "text/plain", "application/json", "text/json" ],
+        "parameters": [
+          {
+            "name": "bestelling",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ErrorMessage" }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [ "Bestelling" ],
+        "operationId": "Post",
+        "consumes": [ "application/json", "text/json", "application/json-patch+json" ],
+        "produces": [ "text/plain", "application/json", "text/json" ],
+        "parameters": [
+          {
+            "name": "bestellingDTO",
+            "in": "body",
+            "required": false,
+            "schema": { "$ref": "#/definitions/BestellingDTO" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/BestellingDTO" }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ErrorMessage" }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "BestellingDTO": {
+      "required": [ "klantnummer" ],
+      "type": "object",
+      "properties": {
+        "bestellingnummer": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "klantnummer": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "artikelen": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ArtikelDTO" }
+        },
+        "bestelDatum": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "status": {
+          "format": "int32",
+          "enum": [ 0, 100 ],
+          "type": "integer"
+        }
+      }
+    },
+    "ArtikelDTO": {
+      "required": [ "naam", "prijs", "aantal" ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "artikelnummer": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "naam": { "type": "string" },
+        "prijs": { "type": "string" },
+        "aantal": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "leverancier": { "type": "string" },
+        "leverancierCode": { "type": "string" }
+      }
+    },
+    "ErrorMessage": {
+      "type": "object",
+      "properties": {
+        "foutType": {
+          "format": "int32",
+          "enum": [ 10, 20, 30, 40 ],
+          "type": "integer"
+        },
+        "foutMelding": { "type": "string" },
+        "oplossing": { "type": "string" }
+      }
+    }
+  },
+  "securityDefinitions": {}
+}

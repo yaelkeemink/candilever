@@ -12,7 +12,7 @@ namespace CAN.BackOffice.Domain.Entities
         public long Klantnummer { get; set; }
         public string Voornaam { get; set; }
         public string Achternaam { get; set; }
-        public string Tussenvoegsels { get; set; }
+        public string Tussenvoegsel { get; set; }
         public string Postcode { get; set; }
         public string Telefoonnummer { get; set; }
         public string Adres { get; set; }
@@ -27,7 +27,7 @@ namespace CAN.BackOffice.Domain.Entities
             Klantnummer = evt.Klantnummer;
             Voornaam = evt.Voornaam;
             Achternaam = evt.Achternaam;
-            Tussenvoegsels = evt.Tussenvoegsels;
+            Tussenvoegsel = evt.Tussenvoegsels;
             Postcode = evt.Postcode;
             Telefoonnummer = evt.Telefoonnummer;
             Adres = evt.Adres;

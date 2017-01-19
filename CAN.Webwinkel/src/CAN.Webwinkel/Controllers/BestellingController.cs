@@ -13,9 +13,9 @@ namespace CAN.Webwinkel.Controllers
     [Route("api/[controller]")]
     public class BestellingController : Controller
     {
-        private readonly IBestellingsAgent _agent;
+        private readonly IBestellingsBeheerAgent _agent;
 
-        public BestellingController(IBestellingsAgent agent)
+        public BestellingController(IBestellingsBeheerAgent agent)
         {
             _agent = agent;
         }
@@ -24,12 +24,17 @@ namespace CAN.Webwinkel.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
         [SwaggerOperation("BestellingPlaatsen")]
-        public IActionResult BestellingGeplaatst([FromBody]Bestelling bestelling)
+        public IActionResult BestellingGeplaatst([FromBody]BestellingDTO bestelling)
         {
+            bestelling.Validate();
             try
             {
                 var response = _agent.Post(bestelling);
-                return Ok(response);
+                if (response is ErrorMessage)
+                {
+                    return BadRequest(response as ErrorMessage);
+                }
+                return Ok(response as BestellingDTO);
             }
             catch (Exception e)
             {
