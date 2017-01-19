@@ -29,7 +29,6 @@ namespace CAN.Bestellingbeheer.Domain.Entities
         public Bestelling(BestellingDTO bestelling)
         {
             Klantnummer = bestelling.Klantnummer;
-            Bestellingnummer = bestelling.Bestellingnummer;
             BestelDatum = bestelling.BestelDatum;
             Status = bestelling.Status;
             Artikelen = new List<Artikel>();

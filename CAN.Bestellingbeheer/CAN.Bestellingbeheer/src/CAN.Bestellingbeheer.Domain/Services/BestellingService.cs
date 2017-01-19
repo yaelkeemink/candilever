@@ -37,7 +37,7 @@ namespace CAN.Bestellingbeheer.Domain.Services {
 
             foreach (var artikel in bestelling.Artikelen)
             {
-                createdEvent.AddArtikel(artikel.Artikelnummer, artikel.Naam, artikel.Prijs, artikel.Aantal, artikel.Leverancier, artikel.LeverancierCode);
+                createdEvent.AddArtikel(artikel.Artikelnummer, artikel.Naam, artikel.Prijs, artikel.Aantal, artikel.LeverancierCode, artikel.Leverancier);
             }
 
             _publisher.Publish(createdEvent);            
@@ -55,7 +55,14 @@ namespace CAN.Bestellingbeheer.Domain.Services {
             if (bestelling.Status != BestelStatus.Opgehaald)
             {
                 bestelling.Status = BestelStatus.Opgehaald;
-                return _repository.Update(bestelling);
+                var result = _repository.Update(bestelling);
+                var statusUpdatedEvent = new BestellingStatusUpdatedEvent("can.bestellingbeheer.bestellingStatusUpdated")
+                {
+                    BestellingsNummer = bestelling.Bestellingnummer,
+                    BestellingStatusCode = bestelling.Status.ToString()
+                };
+                _publisher.Publish(statusUpdatedEvent);
+                return result;
             }
             throw new InvalidStatusException("Status staat al op opgehaald");
         }

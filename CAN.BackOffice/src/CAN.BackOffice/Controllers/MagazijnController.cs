@@ -36,13 +36,11 @@ namespace CAN.BackOffice.Controllers
         /// Zet huidige bestlling op opgehaald en returnd de volgende bestelling
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpPut]
-        public IActionResult BestellingOphalen(long id)
+        /// <returns></returns>        
+        public IActionResult VolgendeBestellingOphalen(int id)
         {
             _service.ZetBestellingOpOpgehaald(id);
-            var viewModel = _service.GetVolgendeBestelling();
-            return View(viewModel);
+            return RedirectToAction("BestellingOphalen");
         }
     }
 }

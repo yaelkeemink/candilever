@@ -1,12 +1,10 @@
 ﻿@model Bestelling
 
 <section>
-    <form asp-action="BestellingOphalen" method="put">
         <div class="form-group">
             @Html.LabelFor(a => a.Bestellingsnummer, new { @class= "form-control"})
-            @Html.DisplayFor(a => a.Bestellingsnummer)
+            @Html.DisplayFor(a => a.Bestellingsnummer, new { @class = "form-control" })
         </div>
         @Html.EditorFor(a => a.Artikelen)
-        <input type="submit" value="Volgende" class="btn btn-default"/>
-    </form>
+        <a asp-action="VolgendeBestellingOphalen" asp-route-id="@Model.Bestellingsnummer" value="Volgende" class="btn btn-default">Volgende bestelling</a>
 </section>

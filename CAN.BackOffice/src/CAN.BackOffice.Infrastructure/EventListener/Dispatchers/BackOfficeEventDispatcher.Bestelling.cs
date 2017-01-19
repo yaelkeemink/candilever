@@ -24,6 +24,16 @@ namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
             }
         }
 
-
+        public void BestellingStatusUpdated(BestellingStatusUpdatedEvent evt)
+        {
+            _logger.Information($"Bestelling aangemaakt {evt.BestellingsNummer} {evt.BestellingStatusCode}");
+            using (var context = new DatabaseContext(_dbOptions))
+            using (var repo = new BestellingRepository(context))
+            {
+                var bestelling = repo.Find(evt.BestellingsNummer);
+                bestelling.BestellingStatusCode = evt.BestellingStatusCode;
+                repo.Update(bestelling);
+            }
+        }
     }
 }
