@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using CAN.BackOffice.Domain.Interfaces;
+using CAN.BackOffice.Domain.Entities;
 
 namespace CAN.BackOffice.Infrastructure.DAL.Repositories
 {
@@ -77,5 +78,6 @@ namespace CAN.BackOffice.Infrastructure.DAL.Repositories
         {
             _context.Dispose();
         }
+
     }
 }

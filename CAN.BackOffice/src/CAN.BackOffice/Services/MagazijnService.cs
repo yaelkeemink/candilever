@@ -6,25 +6,24 @@ using System.Threading.Tasks;
 using CAN.BackOffice.Domain.Entities;
 using CAN.BackOffice.Agents.BestellingsAgent.Agents;
 using CAN.BackOffice.Mappers;
+using CAN.BackOffice.Infrastructure.DAL.Repositories;
 
 namespace CAN.BackOffice.Services
 {
     public class MagazijnService
         : IMagazijnService
     {
-        private IRepository<Bestelling, long> _Repo;
+        private BestellingRepository _Repo;
         private IBestellingBeheerService _service;
 
-        public MagazijnService(IRepository<Bestelling, long> repo, IBestellingBeheerService service)
+        public MagazijnService(BestellingRepository repo, IBestellingBeheerService service)
         {
             _Repo = repo;
             _service = service;
         }
         public Bestelling GetVolgendeBestelling()
         {
-            return _Repo.FindBy(a => a.Status == BestelStatus.Goedgekeurd)
-                .OrderBy(a => a.BestelDatum)
-                .FirstOrDefault();
+            return _Repo.FindVolgendeBestelling();
         }
 
         public int ZetBestellingOpOpgehaald(long id)

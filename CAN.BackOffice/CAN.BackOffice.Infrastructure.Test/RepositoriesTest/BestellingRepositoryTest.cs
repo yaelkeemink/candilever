@@ -1,4 +1,5 @@
-﻿using CAN.BackOffice.Infrastructure.Test.Provider;
+﻿using CAN.BackOffice.Domain.Entities;
+using CAN.BackOffice.Infrastructure.Test.Provider;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using CAN.BackOffice.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
-using CAN.BackOffice.Domain.Entities;
 using CAN.BackOffice.Infrastructure.DAL.Repositories;
 
 namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
@@ -14,162 +14,170 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
     [TestClass]
     public class BestellingRepositoryTest
     {
-        private DbContextOptions<DatabaseContext> _dbOtions;
+        private DbContextOptions<DatabaseContext> _dbOptions;
 
         [TestInitialize]
         public void Init()
         {
-            _dbOtions = TestDatabaseProvider.CreateInMemoryDatabaseOptions();
+            _dbOptions = TestDatabaseProvider.CreateInMemoryDatabaseOptions();
+       
         }
-
         [TestMethod]
-        public void AddKlantZonderTussenVoegsel()
+        public void AddBestellingZonderBestaandeKlant()
         {
 
-            //arrage
-            var klant = new Klant()
+            var bestelling = new Bestelling()
             {
-                Achternaam = "Gerritsen",
-                Voornaam = "Henk",
-                Adres = "Van Galenstraat 1",
-                Email = "kantiliver@gmail.com",
-                Huisnummer = "1",
-                Land = "NL",
-                Postcode = "2135AC",
+                BestelDatum = new DateTime(2005, 10, 10),
                 Klantnummer = 4,
-                Telefoonnummer = "-1 12312312"
+                Bestellingsnummer = 3,
+                BestellingStatusCode = "Besteld",
+                BestellingStatusNumber = 1,
+                Artikelen = new List<Artikel>()
+                {
+                    new Artikel() { Aantal = 1, Artikelnaam ="Wiel", Artikelnummer = 9, Leverancier = "Harm", LeverancierCode = "Takker", Prijs = 90.888M }
+                }
             };
 
-            using (var context = new DatabaseContext(_dbOtions))
-            using (var repo = new KlantRepository(context))
+            using (var context = new DatabaseContext(_dbOptions))
+            using (var repo = new BestellingRepository(context))
             {
-                Assert.AreEqual(0, repo.Count());
-
-                //act
-                repo.Insert(klant);
-                Assert.AreEqual(1, repo.Count());
-            }
-            using (var context = new DatabaseContext(_dbOtions))
-            using (var repo = new KlantRepository(context))
-            {
-                //assert
-                var klantFromRepo = repo.FindAll().First();
-                Assert.IsNotNull(klantFromRepo);
-                Assert.AreEqual(klant.Achternaam, klantFromRepo.Achternaam);
-                Assert.AreEqual(klant.Voornaam, klantFromRepo.Voornaam);
-                Assert.AreEqual(klant.Adres, klantFromRepo.Adres);
-                Assert.AreEqual(klant.Email, klantFromRepo.Email);
-                Assert.AreEqual(klant.Huisnummer, klantFromRepo.Huisnummer);
-                Assert.AreEqual(klant.Land, klantFromRepo.Land);
-                Assert.AreEqual(klant.Postcode, klantFromRepo.Postcode);
-                Assert.AreEqual(klant.Klantnummer, klantFromRepo.Klantnummer);
-                Assert.AreEqual(klant.Telefoonnummer, klantFromRepo.Telefoonnummer);
-                Assert.IsNull(klant.Tussenvoegsel);
-
+                repo.Insert(bestelling);
             }
 
         }
 
 
         [TestMethod]
-        public void AddKlantMetTussenVoegsel()
+        public void TestVolgendeBestelling()
         {
-
-            //arrage
-            var klant = new Klant()
+            // arrage
+            var bestelling1 = new Bestelling()
             {
-                Achternaam = "Gerritsen",
-                Voornaam = "Henk",
-                Adres = "Van Galenstraat 1",
-                Email = "kantiliver@gmail.com",
-                Huisnummer = "1",
-                Land = "NL",
-                Postcode = "2135AC",
+                BestelDatum = new DateTime(2005, 10, 10),
                 Klantnummer = 4,
-                Telefoonnummer = "-1 12312312",
-                Tussenvoegsel = "van"
+                Bestellingsnummer = 5,
+                BestellingStatusCode = "Goedgekeurd",
+                BestellingStatusNumber = 0,
+                Artikelen = new List<Artikel>()
+                {
+                    new Artikel() { Aantal = 1, Artikelnaam ="Wiel", Artikelnummer = 9, Leverancier = "Harm", LeverancierCode = "Takker", Prijs = 90.888M }
+                }
             };
 
-            using (var context = new DatabaseContext(_dbOtions))
-            using (var repo = new KlantRepository(context))
+            var bestelling2 = new Bestelling()
             {
-                Assert.AreEqual(0, repo.Count());
+                BestelDatum = new DateTime(2006, 10, 10),
+                Klantnummer = 4,
+                Bestellingsnummer = 9,
+                BestellingStatusCode = "Goedgekeurd",
+                BestellingStatusNumber = 0,
+                Artikelen = new List<Artikel>()
+                {
+                    new Artikel() { Aantal = 1, Artikelnaam ="Wiel", Artikelnummer = 9, Leverancier = "Harm", LeverancierCode = "Takker", Prijs = 90.888M }
+                }
+            };
+            var bestelling3 = new Bestelling()
+            {
+                BestelDatum = new DateTime(2004, 10, 10),
+                Klantnummer = 4,
+                Bestellingsnummer = 11,
+                BestellingStatusCode = "Goedgekeurd",
+                BestellingStatusNumber = 0,
+                Artikelen = new List<Artikel>()
+                {
+                    new Artikel() { Aantal = 1, Artikelnaam ="Wiel", Artikelnummer = 9, Leverancier = "Harm", LeverancierCode = "Takker", Prijs = 90.888M }
+                }
+            };
 
-                //act
-                repo.Insert(klant);
-                Assert.AreEqual(1, repo.Count());
+            using (var context = new DatabaseContext(_dbOptions))
+            using (var repo = new BestellingRepository(context))
+            {
+                repo.Insert(bestelling1);
+                repo.Insert(bestelling2);
+                repo.Insert(bestelling3);
+
             }
-            using (var context = new DatabaseContext(_dbOtions))
-            using (var repo = new KlantRepository(context))
-            {
 
-                //assert
-                var klantFromRepo = repo.FindAll().First();
-                Assert.IsNotNull(klantFromRepo);
-                Assert.AreEqual(klant.Achternaam, klantFromRepo.Achternaam);
-                Assert.AreEqual(klant.Voornaam, klantFromRepo.Voornaam);
-                Assert.AreEqual(klant.Adres, klantFromRepo.Adres);
-                Assert.AreEqual(klant.Email, klantFromRepo.Email);
-                Assert.AreEqual(klant.Huisnummer, klantFromRepo.Huisnummer);
-                Assert.AreEqual(klant.Land, klantFromRepo.Land);
-                Assert.AreEqual(klant.Postcode, klantFromRepo.Postcode);
-                Assert.AreEqual(klant.Klantnummer, klantFromRepo.Klantnummer);
-                Assert.AreEqual(klant.Telefoonnummer, klantFromRepo.Telefoonnummer);
-                Assert.AreEqual(klant.Tussenvoegsel, klantFromRepo.Tussenvoegsel);
+
+           
+            using (var context = new DatabaseContext(_dbOptions))
+            using (var repo = new BestellingRepository(context))
+            {
+                Assert.AreEqual(3, repo.Count());
+                // act
+                var next = repo.FindVolgendeBestelling();
+                // assert
+                Assert.AreEqual(11, next.Bestellingsnummer);
+
             }
 
         }
 
 
-        [TestMethod]
-        public void UpdateKlant()
-        {
 
-            //arrage
-            var klant = new Klant()
+        [TestMethod]
+        public void TestVolgendeBestelling2()
+        {
+            // arrage
+            var bestelling1 = new Bestelling()
             {
-                Achternaam = "Gerritsen",
-                Voornaam = "Henk",
-                Adres = "Van Galenstraat 1",
-                Email = "kantiliver@gmail.com",
-                Huisnummer = "1",
-                Land = "NL",
-                Postcode = "2135AC",
+                BestelDatum = new DateTime(2001, 10, 10),
                 Klantnummer = 4,
-                Telefoonnummer = "-1 12312312",
-                Tussenvoegsel = "van"
+                Bestellingsnummer = 5,
+                BestellingStatusCode = "Goedgekeurd",
+                BestellingStatusNumber = 0,
+                Artikelen = new List<Artikel>()
+                {
+                    new Artikel() { Aantal = 1, Artikelnaam ="Wiel", Artikelnummer = 9, Leverancier = "Harm", LeverancierCode = "Takker", Prijs = 90.888M }
+                }
             };
 
-            using (var context = new DatabaseContext(_dbOtions))
-            using (var repo = new KlantRepository(context))
+            var bestelling2 = new Bestelling()
             {
-                Assert.AreEqual(0, repo.Count());
+                BestelDatum = new DateTime(2006, 10, 10),
+                Klantnummer = 4,
+                Bestellingsnummer = 9,
+                BestellingStatusCode = "Goedgekeurd",
+                BestellingStatusNumber = 0,
+                Artikelen = new List<Artikel>()
+                {
+                    new Artikel() { Aantal = 1, Artikelnaam ="Wiel", Artikelnummer = 9, Leverancier = "Harm", LeverancierCode = "Takker", Prijs = 90.888M }
+                }
+            };
+            var bestelling3 = new Bestelling()
+            {
+                BestelDatum = new DateTime(2004, 10, 10),
+                Klantnummer = 4,
+                Bestellingsnummer = 11,
+                BestellingStatusCode = "Goedgekeurd",
+                BestellingStatusNumber = 0,
+                Artikelen = new List<Artikel>()
+                {
+                    new Artikel() { Aantal = 1, Artikelnaam ="Wiel", Artikelnummer = 9, Leverancier = "Harm", LeverancierCode = "Takker", Prijs = 90.888M }
+                }
+            };
 
-                //act
-                repo.Insert(klant);
-                Assert.AreEqual(1, repo.Count());
-            }
-            using (var context = new DatabaseContext(_dbOtions))
-            using (var repo = new KlantRepository(context))
+            using (var context = new DatabaseContext(_dbOptions))
+            using (var repo = new BestellingRepository(context))
             {
-                klant.Voornaam = "Rob";
-                repo.Update(klant);
+                repo.Insert(bestelling1);
+                repo.Insert(bestelling2);
+                repo.Insert(bestelling3);
+
             }
 
-            using (var context = new DatabaseContext(_dbOtions))
-            using (var repo = new KlantRepository(context))
+
+
+            using (var context = new DatabaseContext(_dbOptions))
+            using (var repo = new BestellingRepository(context))
             {
-                //assert
-                var klantFromRepo = repo.FindAll().First();
-                Assert.IsNotNull(klantFromRepo);
-                Assert.AreEqual(klant.Achternaam, klantFromRepo.Achternaam);
-                Assert.AreEqual(klant.Voornaam, klantFromRepo.Voornaam);
-                Assert.AreEqual(klant.Adres, klantFromRepo.Adres);
-                Assert.AreEqual(klant.Email, klantFromRepo.Email);
-                Assert.AreEqual(klant.Huisnummer, klantFromRepo.Huisnummer);
-                Assert.AreEqual(klant.Land, klantFromRepo.Land);
-                Assert.AreEqual(klant.Postcode, klantFromRepo.Postcode);
-                Assert.AreEqual(klant.Tussenvoegsel, klantFromRepo.Tussenvoegsel);
+                Assert.AreEqual(3, repo.Count());
+                // act
+                var next = repo.FindVolgendeBestelling();
+                // assert
+                Assert.AreEqual(5, next.Bestellingsnummer);
+
             }
 
         }
