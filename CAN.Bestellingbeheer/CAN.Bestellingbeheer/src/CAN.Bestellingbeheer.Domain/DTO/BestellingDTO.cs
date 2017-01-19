@@ -19,6 +19,7 @@ namespace CAN.Bestellingbeheer.Domain.DTO
         public BestellingDTO()
         {
             Artikelen = new List<ArtikelDTO>();
+            BestelDatum = DateTime.Now;
         }
 
         public BestellingDTO(Bestelling bestelling)
