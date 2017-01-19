@@ -20,10 +20,13 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
         public void Init()
         {
             _dbOptions = TestDatabaseProvider.CreateInMemoryDatabaseOptions();
-       
+
         }
+        /// <summary>
+        /// 
+        /// </summary>
         [TestMethod]
-        public void AddBestellingZonderBestaandeKlant()
+        public void AddBestelling()
         {
 
             var bestelling = new Bestelling()
@@ -43,8 +46,76 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
             using (var repo = new BestellingRepository(context))
             {
                 repo.Insert(bestelling);
+                
             }
 
+            using (var context = new DatabaseContext(_dbOptions))
+            using (var repo = new BestellingRepository(context))
+            {
+                Assert.AreEqual(1, repo.Count());
+
+                var result = repo.FindAll().First();
+                Assert.AreEqual(bestelling.BestelDatum, result.BestelDatum);
+                Assert.AreEqual(bestelling.Klantnummer, result.Klantnummer);
+                Assert.AreEqual(bestelling.Bestellingsnummer, result.Bestellingsnummer);
+                Assert.AreEqual(bestelling.BestellingStatusCode, result.BestellingStatusCode);
+                Assert.AreEqual(bestelling.BestellingStatusNumber, result.BestellingStatusNumber);
+
+                Assert.AreEqual(1, result.Artikelen.Count);
+
+                Assert.AreEqual(bestelling.Artikelen.First().Aantal, result.Artikelen.First().Aantal);
+                Assert.AreEqual(bestelling.Artikelen.First().Artikelnaam, result.Artikelen.First().Artikelnaam);
+                Assert.AreEqual(bestelling.Artikelen.First().Artikelnummer, result.Artikelen.First().Artikelnummer);
+                Assert.AreEqual(bestelling.Artikelen.First().Leverancier, result.Artikelen.First().Leverancier);
+                Assert.AreEqual(bestelling.Artikelen.First().LeverancierCode, result.Artikelen.First().LeverancierCode);
+
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [TestMethod]
+        public void AddBestellingMeerdereAtrikellen()
+        {
+
+            var bestelling = new Bestelling()
+            {
+                BestelDatum = new DateTime(2005, 10, 10),
+                Klantnummer = 4,
+                Bestellingsnummer = 3,
+                BestellingStatusCode = "Besteld",
+                BestellingStatusNumber = 1,
+                Artikelen = new List<Artikel>()
+                {
+                    new Artikel() { Aantal = 1, Artikelnaam ="Wiel", Artikelnummer = 9, Leverancier = "Harm", LeverancierCode = "Takker", Prijs = 90.888M },
+                    new Artikel() { Aantal = 2, Artikelnaam ="Wiel", Artikelnummer = 10, Leverancier = "Harm", LeverancierCode = "Takker", Prijs = 90.888M },
+                    new Artikel() { Aantal = 3, Artikelnaam ="Wiel", Artikelnummer = 11, Leverancier = "Harm", LeverancierCode = "Takker", Prijs = 90.888M }
+                }
+            };
+
+            using (var context = new DatabaseContext(_dbOptions))
+            using (var repo = new BestellingRepository(context))
+            {
+                repo.Insert(bestelling);
+
+            }
+
+            using (var context = new DatabaseContext(_dbOptions))
+            using (var repo = new BestellingRepository(context))
+            {
+                Assert.AreEqual(1, repo.Count());
+
+                var result = repo.FindAll().First();
+                Assert.AreEqual(bestelling.BestelDatum, result.BestelDatum);
+                Assert.AreEqual(bestelling.Klantnummer, result.Klantnummer);
+                Assert.AreEqual(bestelling.Bestellingsnummer, result.Bestellingsnummer);
+                Assert.AreEqual(bestelling.BestellingStatusCode, result.BestellingStatusCode);
+                Assert.AreEqual(bestelling.BestellingStatusNumber, result.BestellingStatusNumber);
+
+                Assert.AreEqual(3, result.Artikelen.Count);
+
+            }
         }
 
 
@@ -100,7 +171,7 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
             }
 
 
-           
+
             using (var context = new DatabaseContext(_dbOptions))
             using (var repo = new BestellingRepository(context))
             {
@@ -117,7 +188,7 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
 
 
         [TestMethod]
-        public void TestVolgendeBestelling2()
+        public void TestVolgendeBestellingMetUpdate()
         {
             // arrage
             var bestelling1 = new Bestelling()
@@ -177,10 +248,30 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
                 var next = repo.FindVolgendeBestelling();
                 // assert
                 Assert.AreEqual(5, next.Bestellingsnummer);
+            }
+            UpdateBestellingStatus(5);
+            using (var context = new DatabaseContext(_dbOptions))
+            using (var repo = new BestellingRepository(context))
+            {
+                var next = repo.FindVolgendeBestelling();
+                // assert
+                Assert.AreEqual(11, next.Bestellingsnummer);
 
             }
 
         }
 
+        private void UpdateBestellingStatus(int nr)
+        {
+            using (var context = new DatabaseContext(_dbOptions))
+            using (var repo = new BestellingRepository(context))
+            {
+                var bestelling = repo.Find(nr);
+                bestelling.BestellingStatusCode = "Opgehaald";
+                bestelling.BestellingStatusNumber = 100;
+                repo.Update(bestelling);
+
+            }
+        }
     }
 }
