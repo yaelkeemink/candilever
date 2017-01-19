@@ -27,12 +27,12 @@ namespace CAN.Klantbeheer.Domain.Test
             return builder.Options;
         }
         [TestMethod]
-        public void TestAddZonderZonderTelefoonnummer()
+        public void TestAddZonderTelefoonnummer()
         {
             //Arrange
             var publishMock = new Mock<IEventPublisher>();
-            var repoMock = new Mock<IRepository<Klant, long>>();            
-            using (var service = new KlantService(repoMock.Object, publishMock.Object))
+            var repoMock = new KlantRepository(new DatabaseContext(CreateNewContextOptions()));
+            using (var service = new KlantService(repoMock, publishMock.Object))
             {
                 var klant = new Klant
                 {
@@ -44,8 +44,7 @@ namespace CAN.Klantbeheer.Domain.Test
                     Email = "yaelkeemink@gmail.com",
                     Huisnummer = "14",
                     Land = Enums.Land.Nederland,
-                };                
-                repoMock.Setup(a => a.Insert(klant));
+                };
 
                 //Act
                 var result = service.CreateKlant(klant);
@@ -54,12 +53,12 @@ namespace CAN.Klantbeheer.Domain.Test
                 Assert.AreEqual(1, result);
             }
         }
-        public void TestAddZonderZonderEmail()
+        public void TestAddZonderEmail()
         {
             //Arrange
             var publishMock = new Mock<IEventPublisher>();
-            var repoMock = new Mock<IRepository<Klant, long>>();
-            using (var service = new KlantService(repoMock.Object, publishMock.Object))
+            var repoMock = new KlantRepository(new DatabaseContext(CreateNewContextOptions()));
+            using (var service = new KlantService(repoMock, publishMock.Object))
             {
                 var klant = new Klant
                 {
@@ -72,7 +71,6 @@ namespace CAN.Klantbeheer.Domain.Test
                     Huisnummer = "14",
                     Land = Enums.Land.Nederland,
                 };
-                repoMock.Setup(a => a.Insert(klant));
 
                 //Act
                 var result = service.CreateKlant(klant);
@@ -146,6 +144,8 @@ namespace CAN.Klantbeheer.Domain.Test
                     var returnval1 = service.CreateKlant(klant);
                     var returnval2 = service.CreateKlant(klant2);
 
+                    Assert.AreEqual(1, returnval1);
+                    Assert.AreEqual(2, returnval2);
                     Assert.AreNotEqual(returnval1, returnval2);
                 }
             }

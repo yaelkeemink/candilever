@@ -77,7 +77,7 @@ namespace CAN.Klantbeheer.IntegratieTest
         }
         
         [TestMethod]
-        public async Task TestAddZonderZonderEmailEnTelefoonnummer()
+        public async Task TestAddZonderEmailEnTelefoonnummer()
         {
             // Arrange
             var _server = new TestServer(new WebHostBuilder()
