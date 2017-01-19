@@ -24,7 +24,7 @@ namespace CAN.Klantbeheer.Facade
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
-            Env = env;
+
             if (env.IsEnvironment("Development"))
             {
                 // This will push telemetry data through Application Insights pipeline faster, allowing you to view results immediately.
@@ -41,31 +41,15 @@ namespace CAN.Klantbeheer.Facade
         }
 
         public IConfigurationRoot Configuration { get; }
-        public IHostingEnvironment Env { get; set; }
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
-            if (Env.IsEnvironment("Development"))
-            {
-                services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server =.\\SQLEXPRESS;Database=DATABASENAME;Trusted_Connection=True;"));
-                services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(new BusOptions()
-                {
-                    ExchangeName = "",
-                    QueueName = null,
-                    HostName = "localhost",
-                    Port = 5672,
-                    UserName = "guest",
-                    Password = "guest",
-                }));
-            }
-            else
-            {
-                services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
-                services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(BusOptions.CreateFromEnvironment()));
-            }
+            
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
+            services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(BusOptions.CreateFromEnvironment()));            
             
             services.AddScoped<IRepository<Klant, long>, KlantRepository>();
             services.AddScoped<IKlantService, KlantService>();
