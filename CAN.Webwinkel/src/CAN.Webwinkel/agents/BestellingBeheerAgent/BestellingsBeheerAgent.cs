@@ -19,12 +19,11 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using Models;
-    using BackOffice.Agents.BestellingsAgent.Agents.Models;
 
     /// <summary>
     /// Bestellingbeheer Service voor het bestellen van artikelen
     /// </summary>
-    public partial class BestellingsAgent : ServiceClient<BestellingsAgent>, IBestellingsAgent
+    public partial class BestellingsBeheerAgent : ServiceClient<BestellingsBeheerAgent>, IBestellingsBeheerAgent
     {
         /// <summary>
         /// The base URI of the service.
@@ -42,18 +41,18 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
         public JsonSerializerSettings DeserializationSettings { get; private set; }        
 
         /// <summary>
-        /// Initializes a new instance of the BestellingsAgentClient class.
+        /// Initializes a new instance of the BestellingsBeheerAgent class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public BestellingsAgent(params DelegatingHandler[] handlers) : base(handlers)
+        public BestellingsBeheerAgent(params DelegatingHandler[] handlers) : base(handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the BestellingsAgentClient class.
+        /// Initializes a new instance of the BestellingsBeheerAgent class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -61,13 +60,13 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public BestellingsAgent(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        public BestellingsBeheerAgent(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the BestellingsAgentClient class.
+        /// Initializes a new instance of the BestellingsBeheerAgent class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -75,7 +74,7 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public BestellingsAgent(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        public BestellingsBeheerAgent(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -85,7 +84,7 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
         }
 
         /// <summary>
-        /// Initializes a new instance of the BestellingsAgentClient class.
+        /// Initializes a new instance of the BestellingsBeheerAgent class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -96,7 +95,7 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public BestellingsAgent(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public BestellingsBeheerAgent(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -153,12 +152,8 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> UpdateWithHttpMessagesAsync(Bestelling bestelling = default(Bestelling), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> BestellingStatusOpgehaaldWithHttpMessagesAsync(long? bestelling = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (bestelling != null)
-            {
-                bestelling.Validate();
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -168,7 +163,7 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("bestelling", bestelling);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BestellingStatusOpgehaald", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.BaseUri.AbsoluteUri;
@@ -240,7 +235,7 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Bestelling>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<int?>(_responseContent, this.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -277,7 +272,7 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
             return _result;
         }
 
-        /// <param name='bestelling'>
+        /// <param name='bestellingDTO'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -288,11 +283,11 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> PostWithHttpMessagesAsync(Bestelling bestelling = default(Bestelling), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> PostWithHttpMessagesAsync(BestellingDTO bestellingDTO = default(BestellingDTO), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (bestelling != null)
+            if (bestellingDTO != null)
             {
-                bestelling.Validate();
+                bestellingDTO.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -301,7 +296,7 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("bestelling", bestelling);
+                tracingParameters.Add("bestellingDTO", bestellingDTO);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Post", tracingParameters);
             }
@@ -328,9 +323,9 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
 
             // Serialize Request
             string _requestContent = null;
-            if(bestelling != null)
+            if(bestellingDTO != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(bestelling, this.SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(bestellingDTO, this.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -375,7 +370,7 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Bestelling>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<BestellingDTO>(_responseContent, this.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
