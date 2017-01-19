@@ -8,11 +8,12 @@ function placeOrder() {
 
         if (shopCart !== undefined) {
             postBestelling(bestelling);
+            localStorage.setItem("Shopcart", undefined);
         }
     }
     else
     {
-        bestellingFailedMessage();
+        showHiddenMessage(false);
     }
 }
 
