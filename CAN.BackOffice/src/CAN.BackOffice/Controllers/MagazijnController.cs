@@ -20,6 +20,11 @@ namespace CAN.BackOffice.Controllers
         {
             _service = service;
         }
+
+        /// <summary>
+        /// Haal volgende bestelling op
+        /// </summary>
+        /// <returns></returns>
         public IActionResult BestellingOphalen()
         {
             var viewModel = _service.GetVolgendeBestelling();
