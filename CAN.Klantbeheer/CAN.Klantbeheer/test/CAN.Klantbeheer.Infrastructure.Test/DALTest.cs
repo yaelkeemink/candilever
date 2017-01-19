@@ -249,5 +249,43 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                 Assert.AreEqual(Land.Nederland, result.Land);
             }
         }
+        [TestMethod]
+        public void TestInsert()
+        {
+            using (var repo = new KlantRepository(new DatabaseContext(_options)))
+            {
+                var klant = new Klant()
+                {
+                    Voornaam = "Yael",
+                    Tussenvoegsels = "De",
+                    Achternaam = "Keemink",
+                    Postcode = "2361VJ",
+                    Adres = "van Leydenstraat",
+                    Huisnummer = "14",
+                    Email = "yaelkeemink@gmail.com",
+                    Telefoonnummer = "+31640480381",
+                    Land = Land.Nederland,
+                };
+
+                var klant2 = new Klant()
+                {
+                    Voornaam = "Yael",
+                    Tussenvoegsels = "De",
+                    Achternaam = "Keemink",
+                    Postcode = "2361VJ",
+                    Adres = "van Leydenstraat",
+                    Huisnummer = "14",
+                    Email = "yaelkeemink@gmail.com",
+                    Telefoonnummer = "+31640480381",
+                    Land = Land.Nederland,
+                };
+
+                repo.Insert(klant);
+                repo.Insert(klant2);
+
+                Assert.AreEqual(1, klant.Klantnummer);
+                Assert.AreEqual(2, klant2.Klantnummer);
+            }
+        }
     }
 }

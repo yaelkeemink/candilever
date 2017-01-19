@@ -21,9 +21,9 @@ namespace CAN.Common.Events
 
         public IList<Artikel> Artikelen { get; internal set; }
 
-        public void AddArtikel(long artikelNummer, string artikelNaam, decimal prijs, int aantal)
+        public void AddArtikel(long artikelNummer, string artikelNaam, decimal prijs, int aantal, string leverancierCode, string leverancier)
         {
-            Artikelen.Add(new Artikel(artikelNummer, artikelNaam, prijs, aantal));
+            Artikelen.Add(new Artikel(artikelNummer, artikelNaam, prijs, aantal, leverancierCode, leverancier));
         }
 
         public class Artikel
@@ -33,12 +33,14 @@ namespace CAN.Common.Events
 
             }
 
-            internal Artikel(long artikelNummer, string artikelNaam, decimal prijs, int aantal)
+            internal Artikel(long artikelNummer, string artikelNaam, decimal prijs, int aantal, string leverancierCode, string leverancier)
             {
                 Artikelnummer = artikelNummer;
                 Artikelnaam = artikelNaam;
                 Prijs = prijs;
                 Aantal = aantal;
+                Leverancier = leverancier;
+                LeverancierCode = leverancierCode;
             }
 
             public long Artikelnummer { get; set; }
@@ -48,6 +50,8 @@ namespace CAN.Common.Events
             public decimal Prijs { get; set; }
 
             public int Aantal { get; set; }
+            public string Leverancier { get; set; }
+            public string LeverancierCode { get; set; }
         }
     }
 }

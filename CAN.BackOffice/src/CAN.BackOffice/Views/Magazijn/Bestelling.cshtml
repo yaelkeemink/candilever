@@ -1,0 +1,12 @@
+﻿@model Bestelling
+
+<section>
+    <form asp-action="BestellingOphalen" method="put">
+        <div class="form-group">
+            @Html.LabelFor(a => a.Bestellingsnummer, "form-control")
+            @Html.DisplayFor(a => a.Bestellingsnummer, "form-control")
+        </div>
+        @Html.EditorFor(a => a.Artikelen)
+        <button type="submit" value="Volgende"/>
+    </form>
+</section>

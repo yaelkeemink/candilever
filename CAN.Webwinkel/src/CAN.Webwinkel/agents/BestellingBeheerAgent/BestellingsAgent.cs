@@ -19,6 +19,7 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using Models;
+    using BackOffice.Agents.BestellingsAgent.Agents.Models;
 
     /// <summary>
     /// Bestellingbeheer Service voor het bestellen van artikelen

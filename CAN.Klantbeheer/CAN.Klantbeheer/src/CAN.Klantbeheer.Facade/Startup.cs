@@ -41,16 +41,17 @@ namespace CAN.Klantbeheer.Facade
         }
 
         public IConfigurationRoot Configuration { get; }
-
         // This method gets called by the runtime. Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
+            
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
+            services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(BusOptions.CreateFromEnvironment()));            
+            
             services.AddScoped<IRepository<Klant, long>, KlantRepository>();
-            services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(BusOptions.CreateFromEnvironment()));
             services.AddScoped<IKlantService, KlantService>();
 
             services.ConfigureSwaggerGen(options =>

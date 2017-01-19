@@ -1,14 +1,14 @@
-﻿using Can.BackOffice.Domain.Entities;
-using CAN.BackOffice.Infrastructure.Repositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using CAN.BackOffice.Domain.Entities;
 
 namespace CAN.BackOffice.Infrastructure.DAL.Repositories
 {
-    public class BestellingRepository : BaseRepository<Bestelling, long, DatabaseContext>
+    public class BestellingRepository 
+        : BaseRepository<Bestelling, long, DatabaseContext>
     {
         public BestellingRepository(DatabaseContext context) : base(context)
         {

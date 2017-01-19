@@ -4,8 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Can.BackOffice.Domain.Entities
+namespace CAN.BackOffice.Domain.Entities
 {
+    public enum BestelStatus
+    {
+        Goedgekeurd = 0,
+        Opgehaald = 100,
+    }
     public class Bestelling
     {
 
@@ -18,7 +23,7 @@ namespace Can.BackOffice.Domain.Entities
         public DateTime BestelDatum { get; set; }
 
         public IList<Artikel> Artikelen { get; set; }
-
+        public BestelStatus Status { get; set; }
         public Bestelling() { }
 
         public Bestelling(BestellingCreatedEvent evt)
@@ -27,7 +32,7 @@ namespace Can.BackOffice.Domain.Entities
 
             Klantnummer = evt.Klantnummer;
             Bestellingsnummer = evt.Bestellingsnummer;
-            BestelDatum = evt.BestelDatum;
+            BestelDatum = evt.BestelDatum;            
             
             foreach(var artikel in evt.Artikelen)
             {
@@ -37,7 +42,9 @@ namespace Can.BackOffice.Domain.Entities
                         Artikelnummer = artikel.Artikelnummer,
                         Artikelnaam = artikel.Artikelnaam,
                         Aantal = artikel.Aantal,
-                        Prijs = artikel.Prijs
+                        Prijs = artikel.Prijs,
+                        Leverancier = artikel.Leverancier,
+                        LeverancierCode = artikel.LeverancierCode,
                     }
                 );
             }
