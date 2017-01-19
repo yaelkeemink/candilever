@@ -18,6 +18,11 @@ namespace CAN.Bestellingbeheer.Domain.DTO
         public DateTime BestelDatum { get; set; }
         public BestelStatus Status { get; set; }
 
+        private BestellingDTO()
+        {
+            Artikelen = new List<ArtikelDTO>();
+        }
+
         public BestellingDTO(Bestelling bestelling)
         {
             Klantnummer = bestelling.Klantnummer;
