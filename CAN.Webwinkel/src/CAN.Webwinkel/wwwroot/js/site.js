@@ -71,16 +71,17 @@ function restoreButton(divId) {
 
 
 function placeOrder() {
-    var shopCart = JSON.parse(localStorage.getItem("Shopcart").toLowerCase());
+    var shopCart = localStorage.getItem("Shopcart") ;
 
-    var klant = createKlant();
+    if (shopCart !== undefined && shopCart !== null && shopCart !== "undefined") {
+        shopCart = JSON.parse(shopCart.toLowerCase());
+        var klant = createKlant();
 
-    postKlantData(klant);
+        postKlantData(klant);
 
-    var klantnummer = parseInt(localStorage.getItem('klantnummer'))
-    var bestelling = createBestelling(shopCart, klantnummer);
+        var klantnummer = parseInt(localStorage.getItem('klantnummer'))
+        var bestelling = createBestelling(shopCart, klantnummer);
 
-    if (shopCart !== undefined) {
         postBestelling(bestelling);
     }
 }
