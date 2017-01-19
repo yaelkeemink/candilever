@@ -16,6 +16,8 @@ namespace CAN.Webwinkel.Models
         public decimal Prijs { get; set; }
         public string AfbeeldingUrl { get; set; }
         public int Voorraad { get; set; }
+        public string Leverancier { get; set; }
+        public string LeverancierCode { get; set; }
 
         public string GetJSON()
         {
@@ -35,6 +37,8 @@ namespace CAN.Webwinkel.Models
             Prijs = artikel.Prijs;
             AfbeeldingUrl = "images/"+artikel.AfbeeldingUrl;
             Voorraad = artikel.Voorraad >= 8 ? 8 : artikel.Voorraad;
+            Leverancier = artikel.Leverancier;
+            LeverancierCode = artikel.LeverancierCode;
         }
     }
 }
