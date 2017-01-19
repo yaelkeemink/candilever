@@ -4,7 +4,7 @@ namespace CAN.Klantbeheer.Domain.Interfaces
 {
     public interface IKlantService
     {
-        int CreateKlant(Klant klant);
+        long CreateKlant(Klant klant);
         int UpdateKlant(Klant klant);
 
     }

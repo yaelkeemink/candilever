@@ -17,14 +17,14 @@ namespace CAN.Klantbeheer.Domain.Services {
             _publisher = publisher;
         }
 
-        public int CreateKlant(Klant klant)
+        public long CreateKlant(Klant klant)
         {
-            int toReturn = 0;
+            long toReturn = 0;
             if (!string.IsNullOrEmpty(klant.Telefoonnummer) || !string.IsNullOrEmpty(klant.Email))
             {
-                klant.Email = "";
-                toReturn = _repository.Insert(klant);
+                _repository.Insert(klant);
 
+                toReturn = klant.Klantnummer;
                 _publisher.Publish(new KlantCreatedEvent("can.klantbeheer.klantcreated")
                 {
                     Klantnummer = klant.Klantnummer,
