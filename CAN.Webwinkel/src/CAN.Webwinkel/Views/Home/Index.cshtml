@@ -1,5 +1,9 @@
 @model ArtikelOverzichtModel
 
+@{ 
+    ViewData["Title"] = "Catalogus";
+}
+
 <h1>Welkom bij de beste fiets specialist in Nederland!</h1>
 
 @foreach (var artikel in Model.Artikelen)
