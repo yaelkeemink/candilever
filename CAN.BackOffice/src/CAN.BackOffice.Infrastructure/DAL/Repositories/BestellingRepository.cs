@@ -25,7 +25,7 @@ namespace CAN.BackOffice.Infrastructure.DAL.Repositories
         }
 
 
-        public Bestelling FindVolgendeBestelling()
+        public override Bestelling FindVolgendeBestelling()
         {
             return GetDbSet().Where(a => a.BestellingStatusCode == "Goedgekeurd")
                       .OrderBy(a => a.BestelDatum)

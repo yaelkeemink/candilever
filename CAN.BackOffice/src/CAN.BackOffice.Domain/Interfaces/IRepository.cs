@@ -19,6 +19,8 @@ namespace CAN.BackOffice.Domain.Interfaces
         int Update(TEntity item);
 
         int Delete(TKey item);
-      
+
+        Bestelling FindVolgendeBestelling();
+
     }
 }
