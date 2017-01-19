@@ -30,5 +30,15 @@ namespace CAN.Webwinkel.Domain.Services
         {
             return _repository.FindAll();
         }
+
+        public IEnumerable<Artikel> AlleArtikelenPerPagina(int paginanummer, int aantalArtikelen)
+        {
+            return _repository.FindAll().Skip((paginanummer - 1) * aantalArtikelen).Take(aantalArtikelen); 
+        }
+
+        public int AantalPaginas(int aantalArtikelenPerPagina)
+        {
+            return (_repository.FindAll().Count() + 9) / 10;
+        }
     }
 }

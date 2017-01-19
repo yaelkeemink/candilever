@@ -13,7 +13,7 @@ namespace CAN.Klantbeheer.Domain.Interfaces
 
         TEntity Find(TKey id);
 
-        int Insert(TEntity item);
+        void Insert(TEntity item);
 
         int Update(TEntity item);
 

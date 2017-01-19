@@ -109,6 +109,8 @@ namespace CAN.Webwinkel
             {
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
+                app.UseSwagger();
+                app.UseSwaggerUi();
             }
             else
             {
@@ -129,9 +131,6 @@ namespace CAN.Webwinkel
             });
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
-
-            app.UseSwagger();
-            app.UseSwaggerUi();
         }
 
 

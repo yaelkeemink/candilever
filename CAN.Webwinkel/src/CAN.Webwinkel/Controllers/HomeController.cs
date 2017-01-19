@@ -24,11 +24,20 @@ namespace CAN.Webwinkel.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var artikelen = _service.AlleArtikelen();
-            var lijst = artikelen.Select(a => new ApiArtikelenModel(a))
-                .ToList();
+            return RedirectToAction("Index", new { id = 1 });
+        }
 
-            return View(lijst);
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Index(int id)
+        {
+            var aantalArtikelenPerPagina = 24;
+            var artikelen = _service.AlleArtikelenPerPagina(id, aantalArtikelenPerPagina)
+                .Select(a => new ApiArtikelenModel(a))
+                .ToList();
+            int paginas = _service.AantalPaginas(aantalArtikelenPerPagina);
+
+            return View(new ArtikelOverzichtModel() { Artikelen = artikelen, AantalPaginas = paginas } );
         }
 
         [HttpGet]

@@ -57,7 +57,7 @@ function addToShopCardAnimation(artikelnummer) {
     var divId = parseInt(artikelnummer);
 
     document.getElementById(divId).className = 'glyphicon glyphicon-ok btn btn-success';
-);
+
     window.setTimeout(function () { restoreButton(divId) }, 1000);
 }
 
