@@ -24,13 +24,16 @@ function addToShopCartArtikel(artikel, shopCart) {
 }
 
 function getShopCartFromLocalStorage() {
-    var shopCart = JSON.parse(localStorage.getItem("Shopcart"));
+    var shopCart = localStorage.getItem("Shopcart");
 
     if (shopCart === undefined || shopCart === null) {
         shopCart = new Array();
+    } else {
+        shopCart = JSON.parse(localStorage.getItem("Shopcart"));
     }
 
     return shopCart;
+
 }
 
 function saveShopCartInLocalStorage(shopCart) {
@@ -87,7 +90,8 @@ function createBestelling(shopCart, klantnummer) {
         "bestellingnummer": 0,
         "klantnummer": klantnummer,
         "artikelen": shopCart,
-        "bestelDatum": undefined
+        "bestelDatum": undefined,
+        "status": 0
     }
 }
 
@@ -96,7 +100,9 @@ function createNewArtikel(artikel) {
         "artikelnummer": artikel.Artikelnummer,
         "naam": artikel.Naam,
         "prijs": artikel.Prijs,
-        "aantal": 1
+        "aantal": 1,
+        "leverancier": artikel.Leverancier,
+        "leverancierCode": artikel.LeverancierCode
     };
 }
 
@@ -128,7 +134,9 @@ function postBestelling(bestelling) {
         data: JSON.stringify(bestelling),
         async: false,
         success: function (data) {
-            localStorage.setItem('Shopcart', undefined);
+            localStorage.removeItem('Shopcart');
+            localStorage.removeItem('klantnummer');
+            alert("Uw bestelling is correct geplaatst");
         }, error: function (err) {
             console.log(err);
         }
