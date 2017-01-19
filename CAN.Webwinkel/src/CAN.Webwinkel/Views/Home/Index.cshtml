@@ -4,14 +4,14 @@
     ViewData["Title"] = "Catalogus";
 }
 
-<h1>Welkom bij de beste fietsspecialist in Nederland!</h1>
+<h1>Welkom bij de beste fiets specialist in Nederland!</h1>
 
 @foreach (var artikel in Model.Artikelen)
 {
     <div>
         <div class="col-md-4 column productbox">
-            <img src="@artikel.AfbeeldingUrl" class="img-responsive customImg">
             <div class="producttitle">@Html.DisplayFor(a => artikel.Naam)</div>
+            <img src="@artikel.AfbeeldingUrl" class="img-responsive customImg">
             <div class="productprice">
                 <div class="productvoorraad">@Html.DisplayFor(a => artikel.Voorraad)</div>
                 <div class="cartButton"><button onclick="addArtikelToCart(@artikel.GetJSON())" class="glyphicon glyphicon-shopping-cart btn btn-info" id="@artikel.Artikelnummer"></button></div>
