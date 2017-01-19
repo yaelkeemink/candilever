@@ -13,7 +13,7 @@ namespace CAN.BackOffice.Services
     public class MagazijnService
         : IMagazijnService
     {
-        private BestellingRepository _Repo;
+        private IRepository<Bestelling, long> _Repo;
         private IBestellingBeheerService _service;
 
         /// <summary>
@@ -21,7 +21,7 @@ namespace CAN.BackOffice.Services
         /// </summary>
         /// <param name="repo"></param>
         /// <param name="service"></param>
-        public MagazijnService(BestellingRepository repo, IBestellingBeheerService service)
+        public MagazijnService(IRepository<Bestelling, long> repo, IBestellingBeheerService service)
         {
             _Repo = repo;
             _service = service;
