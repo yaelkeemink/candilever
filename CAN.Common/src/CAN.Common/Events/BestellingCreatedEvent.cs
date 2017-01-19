@@ -19,6 +19,9 @@ namespace CAN.Common.Events
 
         public DateTime BestelDatum { get; set; }
 
+        public int BestellingStatusNumber { get; set; }
+        public string BestellingStatusCode { get; set; }
+
         public IList<Artikel> Artikelen { get; internal set; }
 
         public void AddArtikel(long artikelNummer, string artikelNaam, decimal prijs, int aantal, string leverancierCode, string leverancier)

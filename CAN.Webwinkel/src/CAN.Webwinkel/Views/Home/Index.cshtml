@@ -4,12 +4,11 @@
 
 @foreach (var artikel in Model.Artikelen)
 {
-    <div class="form-horizontal">
-
+    <div>
         <div class="col-md-4 column productbox">
             <div class="producttitle">@Html.DisplayFor(a => artikel.Naam)</div>
             <img src="@artikel.AfbeeldingUrl" class="img-responsive customImg">
-            <div class="productprice col-md-4">
+            <div class="productprice">
                 <div class="productvoorraad">@Html.DisplayFor(a => artikel.Voorraad)</div>
                 <div class="cartButton"><button onclick="addArtikelToCart(@artikel.GetJSON())" class="glyphicon glyphicon-shopping-cart btn btn-info" id="@artikel.Artikelnummer"></button></div>
                 <div class="pricetext">&euro;@Html.DisplayFor(a => artikel.Prijs)</div>

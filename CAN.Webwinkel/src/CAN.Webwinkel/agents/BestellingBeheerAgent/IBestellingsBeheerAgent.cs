@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace CAN.BackOffice.Agents.BestellingsAgent.Agents
+namespace CAN.Webwinkel.Agents.BestellingsAgent
 {
     using System;
     using System.Collections.Generic;
@@ -16,7 +16,7 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents
     /// <summary>
     /// Bestellingbeheer Service voor het bestellen van artikelen
     /// </summary>
-    public partial interface IBestellingBeheerService : IDisposable
+    public partial interface IBestellingsBeheerAgent : IDisposable
     {
         /// <summary>
         /// The base URI of the service.

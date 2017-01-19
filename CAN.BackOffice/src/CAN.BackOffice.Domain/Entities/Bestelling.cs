@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace CAN.BackOffice.Domain.Entities
 {
-    public enum BestelStatus
-    {
-        Goedgekeurd = 0,
-        Opgehaald = 100,
-    }
+
     public class Bestelling
     {
 
@@ -23,7 +19,8 @@ namespace CAN.BackOffice.Domain.Entities
         public DateTime BestelDatum { get; set; }
 
         public IList<Artikel> Artikelen { get; set; }
-        public BestelStatus Status { get; set; }
+        public int BestellingStatusNumber { get; set; }
+        public string BestellingStatusCode { get; set; }
         public Bestelling() { }
 
         public Bestelling(BestellingCreatedEvent evt)
@@ -32,9 +29,11 @@ namespace CAN.BackOffice.Domain.Entities
 
             Klantnummer = evt.Klantnummer;
             Bestellingsnummer = evt.Bestellingsnummer;
-            BestelDatum = evt.BestelDatum;            
-            
-            foreach(var artikel in evt.Artikelen)
+            BestelDatum = evt.BestelDatum;
+            BestellingStatusNumber = evt.BestellingStatusNumber;
+            BestellingStatusCode = evt.BestellingStatusCode;
+
+            foreach (var artikel in evt.Artikelen)
             {
                 Artikelen.Add(
                     new Artikel
