@@ -26,10 +26,15 @@ namespace CAN.Webwinkel.Controllers
         [SwaggerOperation("BestellingPlaatsen")]
         public IActionResult BestellingGeplaatst([FromBody]BestellingDTO bestelling)
         {
+            bestelling.Validate();
             try
             {
                 var response = _agent.Post(bestelling);
-                return Ok(response);
+                if (response is ErrorMessage)
+                {
+                    return BadRequest(response as ErrorMessage);
+                }
+                return Ok(response as BestellingDTO);
             }
             catch (Exception e)
             {
