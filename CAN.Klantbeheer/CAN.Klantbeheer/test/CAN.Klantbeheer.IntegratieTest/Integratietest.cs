@@ -23,7 +23,7 @@ namespace CAN.Klantbeheer.IntegratieTest
         {
             // Arrange
             var _server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>());
+                .UseStartup<TestStartup>());
             var _client = _server.CreateClient();
 
             var klant = new Klant
@@ -52,7 +52,7 @@ namespace CAN.Klantbeheer.IntegratieTest
         {
             // Arrange
             var _server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>());
+                .UseStartup<TestStartup>());
             var _client = _server.CreateClient();
 
             var klant = new Klant
@@ -81,7 +81,7 @@ namespace CAN.Klantbeheer.IntegratieTest
         {
             // Arrange
             var _server = new TestServer(new WebHostBuilder()
-                .UseStartup<Startup>());
+                .UseStartup<TestStartup>());
             var _client = _server.CreateClient();
 
             var klant = new Klant
