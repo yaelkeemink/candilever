@@ -15,6 +15,7 @@ using InfoSupport.WSA.Infrastructure;
 using Microsoft.Extensions.Logging;
 using CAN.Webwinkel.Infrastructure.EventListener;
 using CAN.BackOffice.Domain.Entities;
+using CAN.BackOffice.Agents.BestellingsAgent.Agents;
 
 namespace CAN.BackOffice
 {
@@ -67,6 +68,7 @@ namespace CAN.BackOffice
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddScoped<IBestellingBeheerService, BestellingBeheerService>(b => new BestellingBeheerService() { BaseUri = new Uri("http://can-bestellingbeheer:80") });
 
             services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
             services.AddScoped<IMagazijnService, MagazijnService>();
@@ -109,7 +111,7 @@ namespace CAN.BackOffice
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Magazijn}/{action=BestellingOphalen}/{id?}");
             });
         }
 
