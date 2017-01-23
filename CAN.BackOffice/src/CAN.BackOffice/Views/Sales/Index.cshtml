@@ -1,0 +1,38 @@
+﻿@model IEnumerable<SalesIndexViewModel>
+@{
+    ViewData["Title"] = "Index";
+}
+<h2>Mijn lijsten</h2>
+<p>
+    <a class="btn btn-default" asp-action="Aanmaken">Nieuwe lijst</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().VolledigeNaam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().TotaalPrijs)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VolledigeNaam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotaalPrijs)
+                </td>
+                <td>
+                    <a asp-action="Aanpassen" asp-route-id="@item.Id">Naam wijzigen</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Verwijderen" asp-route-id="@item.Id">Verwijderen</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
