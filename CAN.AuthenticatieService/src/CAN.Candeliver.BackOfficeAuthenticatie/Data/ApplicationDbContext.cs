@@ -17,7 +17,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            Database.Migrate();
+            Database.EnsureCreated();
         }
 
         /// <summary>
