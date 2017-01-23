@@ -15,7 +15,9 @@ namespace CAN.Bestellingbeheer.Domain.Services {
         private readonly IEventPublisher _publisher;
         private readonly ILogger<BestellingService> _logger;
 
-        public BestellingService(IEventPublisher publisher, IRepository<Bestelling, long> repository, ILogger<BestellingService> logger)
+        public BestellingService(IEventPublisher publisher, 
+            IRepository<Bestelling, long> repository, 
+            ILogger<BestellingService> logger)
         {
             _publisher = publisher;
             _repository = repository;
@@ -99,6 +101,24 @@ namespace CAN.Bestellingbeheer.Domain.Services {
                 return bestelling;
             }
             throw new InvalidBestelStatusException("Status staat al op goedgekeurd");
+        }
+
+        public Bestelling StatusNaarAfgekeurd(long id)
+        {
+            var bestelling = _repository.Find(id);
+            if (bestelling.Status != BestelStatus.Afgekeurd)
+            {
+                bestelling.Status = BestelStatus.Afgekeurd;
+                _repository.Update(bestelling);
+                var statusUpdatedEvent = new BestellingStatusUpdatedEvent("can.bestellingbeheer.bestellingStatusUpdated")
+                {
+                    BestellingsNummer = bestelling.Bestellingnummer,
+                    BestellingStatusCode = bestelling.Status.ToString()
+                };
+                _publisher.Publish(statusUpdatedEvent);
+                return bestelling;
+            }
+            throw new InvalidBestelStatusException("Status staat al op afgekeurd");
         }
     }
 }

@@ -27,15 +27,31 @@ namespace CAN.BackOffice.Services
             if(response is BestellingDTO)
             {
                 var bestelling = _repo.Find(id);
-                bestelling.BestellingStatusCode = "Goedgekeurd";
+                bestelling.BestellingStatusCode = (response as BestellingDTO).Status.ToString();
                 _repo.Update(bestelling);
             }
-        }
+        }        
 
         public IEnumerable<Bestelling> FindAllTeControleren()
         {
             return _repo.FindBy(a => a.BestellingStatusCode == "Goedgekeurd")                
                 .ToList();
+        }
+
+        public void Dispose()
+        {
+            _repo?.Dispose();
+        }
+
+        public void BestellingAfkeuren(long id)
+        {
+            var response = _service.BestellingAfkeuren(id);
+            if (response is BestellingDTO)
+            {
+                var bestelling = _repo.Find(id);
+                bestelling.BestellingStatusCode = (response as BestellingDTO).Status.ToString();
+                _repo.Update(bestelling);
+            }
         }
     }
 }

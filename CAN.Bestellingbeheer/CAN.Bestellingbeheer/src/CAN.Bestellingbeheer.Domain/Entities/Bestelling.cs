@@ -9,6 +9,7 @@ namespace CAN.Bestellingbeheer.Domain.Entities
     {
         Goedgekeurd = 0,
         Opgehaald = 100,
+        Afgekeurd = 150,
     }
     public class Bestelling
     {

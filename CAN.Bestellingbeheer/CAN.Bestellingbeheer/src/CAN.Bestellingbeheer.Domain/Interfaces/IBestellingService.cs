@@ -15,5 +15,6 @@ namespace CAN.Bestellingbeheer.Domain.Interfaces
         Bestelling StatusNaarOpgehaald(long id);
         BestellingDTO CreateBestelling(Bestelling bestelling);
         Bestelling StatusNaarGoedgekeurd(long id);
+        Bestelling StatusNaarAfgekeurd(long id);
     }
 }

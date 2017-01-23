@@ -5,18 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CAN.BackOffice.Domain.Interfaces;
 using CAN.BackOffice.Domain.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace CAN.BackOffice.Controllers
 {
-    public class MagazijnController : Controller
+    public class MagazijnController : BaseController
     {
         private IMagazijnService _service;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="service"></param>
-        public MagazijnController(IMagazijnService service)
+        public MagazijnController(ILogger logger,
+            IMagazijnService service) 
+            : base(logger)
         {
             _service = service;
         }
@@ -50,6 +49,12 @@ namespace CAN.BackOffice.Controllers
         {
             _service.ZetBestellingOpOpgehaald(id);
             return RedirectToAction("BestellingOphalen");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _service?.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

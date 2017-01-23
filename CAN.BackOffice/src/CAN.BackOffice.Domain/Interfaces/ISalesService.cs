@@ -7,8 +7,10 @@ using CAN.BackOffice.Domain.Entities;
 namespace CAN.BackOffice.Domain.Interfaces
 {
     public interface ISalesService
+        : IDisposable
     {
         IEnumerable<Bestelling> FindAllTeControleren();
         void BestellingGoedkeuren(long id);
+        void BestellingAfkeuren(long id);
     }
 }

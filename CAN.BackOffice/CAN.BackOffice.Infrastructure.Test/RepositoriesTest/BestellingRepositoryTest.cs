@@ -120,7 +120,7 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
 
 
         [TestMethod]
-        public void TestVolgendeBestelling()
+        public void TestVolgendeBestellingGeeftVroegsteDatumDoor()
         {
             // arrage
             var bestelling1 = new Bestelling()
