@@ -13,6 +13,17 @@ namespace CAN.Bestellingbeheer.Domain.DTO
 
         [Required]
         public long Klantnummer { get; set; }
+        [Required]
+        public string VolledigeNaam { get; set; }
+        [Required]
+        public string Postcode { get; set; }
+        [Required]
+        public string Adres { get; set; }
+        [Required]
+        public string Huisnummer { get; set; }
+        [Required]
+        public string Land { get; set; }
+
         public IList<ArtikelDTO> Artikelen { get; set; }
         public DateTime BestelDatum { get; set; }
         public BestelStatus Status { get; set; }
@@ -28,7 +39,12 @@ namespace CAN.Bestellingbeheer.Domain.DTO
             Bestellingnummer = bestelling.Bestellingnummer;
             BestelDatum = bestelling.BestelDatum;
             Status = bestelling.Status;
-            Artikelen = new List<ArtikelDTO>();
+            VolledigeNaam = bestelling.VolledigeNaam;
+            Postcode = bestelling.Postcode;
+            Adres = bestelling.Adres;
+            Huisnummer = bestelling.Huisnummer;
+            Land = bestelling.Land;
+        Artikelen = new List<ArtikelDTO>();
             foreach (var artikel in bestelling.Artikelen)
             {
                 Artikelen.Add(artikel);

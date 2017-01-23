@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace CAN.Bestellingbeheer.Domain.Exceptions
 {
-    public class InvalidStatusException
+    public class InvalidBestelStatusException
         : Exception
     {
-        public InvalidStatusException(string message)
+        public InvalidBestelStatusException(string message)
         {
             Message = message;
         }
