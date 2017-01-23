@@ -58,7 +58,7 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
  
         [HttpPut]
         [SwaggerOperation("BestellingStatusOpgehaald")]
-        [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BestellingDTO), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
         public IActionResult BestellingStatusOpgehaald([FromBody]long bestelling)
         {

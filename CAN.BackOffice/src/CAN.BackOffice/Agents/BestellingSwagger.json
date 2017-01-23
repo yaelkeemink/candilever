@@ -28,10 +28,7 @@
         "responses": {
           "200": {
             "description": "Success",
-            "schema": {
-              "format": "int32",
-              "type": "integer"
-            }
+            "schema": { "$ref": "#/definitions/BestellingDTO" }
           },
           "400": {
             "description": "Client Error",
@@ -65,11 +62,41 @@
         },
         "deprecated": false
       }
+    },
+    "/api/Sales": {
+      "put": {
+        "tags": [ "Sales" ],
+        "operationId": "BestellingGoedkeuren",
+        "consumes": [ "application/json", "text/json", "application/json-patch+json" ],
+        "produces": [ "text/plain", "application/json", "text/json" ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/BestellingDTO" }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ErrorMessage" }
+          }
+        },
+        "deprecated": false
+      }
     }
   },
   "definitions": {
     "BestellingDTO": {
-      "required": [ "klantnummer" ],
+      "required": [ "klantnummer", "volledigeNaam", "postcode", "adres", "huisnummer", "land" ],
       "type": "object",
       "properties": {
         "bestellingnummer": {
@@ -80,6 +107,11 @@
           "format": "int64",
           "type": "integer"
         },
+        "volledigeNaam": { "type": "string" },
+        "postcode": { "type": "string" },
+        "adres": { "type": "string" },
+        "huisnummer": { "type": "string" },
+        "land": { "type": "string" },
         "artikelen": {
           "type": "array",
           "items": { "$ref": "#/definitions/ArtikelDTO" }

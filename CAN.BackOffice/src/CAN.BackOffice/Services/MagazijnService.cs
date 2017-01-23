@@ -7,6 +7,7 @@ using CAN.BackOffice.Domain.Entities;
 using CAN.BackOffice.Agents.BestellingsAgent.Agents;
 using CAN.BackOffice.Mappers;
 using CAN.BackOffice.Infrastructure.DAL.Repositories;
+using CAN.BackOffice.Agents.BestellingsAgent.Agents.Models;
 
 namespace CAN.BackOffice.Services
 {
@@ -32,7 +33,8 @@ namespace CAN.BackOffice.Services
         /// <returns></returns>
         public Bestelling GetVolgendeBestelling()
         {
-            return _Repo.FindVolgendeBestelling();
+            return _Repo.FindBy(a => a.BestellingStatusCode == "Goedgekeurd")
+                .FirstOrDefault();
         }
 
         /// <summary>
@@ -40,14 +42,15 @@ namespace CAN.BackOffice.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public int ZetBestellingOpOpgehaald(long id)
+        public void ZetBestellingOpOpgehaald(long id)
         {
             var response = _service.BestellingStatusOpgehaald(id);
-            if (response.GetType() == typeof(int))
+            if (response is BestellingDTO)
             {
-                return (int)response;
+                var bestelling = _Repo.Find(id);
+                bestelling.BestellingStatusCode = "Opgehaald";
+                _Repo.Update(bestelling);
             }
-            return 0;
         }
     }
 }

@@ -9,5 +9,6 @@ namespace CAN.BackOffice.Domain.Interfaces
     public interface ISalesService
     {
         IEnumerable<Bestelling> FindAllTeControleren();
+        void BestellingGoedkeuren(long id);
     }
 }

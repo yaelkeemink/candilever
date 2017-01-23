@@ -6,6 +6,6 @@ namespace CAN.BackOffice.Domain.Interfaces
     public interface IMagazijnService
     {
         Bestelling GetVolgendeBestelling();
-        int ZetBestellingOpOpgehaald(long bestelling);
+        void ZetBestellingOpOpgehaald(long bestelling);
     }
 }

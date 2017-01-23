@@ -177,7 +177,8 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
             {
                 Assert.AreEqual(3, repo.Count());
                 // act
-                var next = repo.FindVolgendeBestelling();
+                var next = repo.FindBy(a => a.BestellingStatusCode == "Goedgekeurd")
+                    .FirstOrDefault();
                 // assert
                 Assert.AreEqual(11, next.Bestellingsnummer);
 
@@ -248,7 +249,8 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
             {
                 Assert.AreEqual(3, repo.Count());
                 // act
-                var next = repo.FindVolgendeBestelling();
+                var next = repo.FindBy(a => a.BestellingStatusCode == "Goedgekeurd")
+                    .FirstOrDefault();
                 // assert
                 Assert.AreEqual(5, next.Bestellingsnummer);
             }
@@ -256,7 +258,8 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
             using (var context = new DatabaseContext(_dbOptions))
             using (var repo = new BestellingRepository(context))
             {
-                var next = repo.FindVolgendeBestelling();
+                var next = repo.FindBy(a => a.BestellingStatusCode == "Goedgekeurd")
+                    .FirstOrDefault();
                 // assert
                 Assert.AreEqual(11, next.Bestellingsnummer);
 

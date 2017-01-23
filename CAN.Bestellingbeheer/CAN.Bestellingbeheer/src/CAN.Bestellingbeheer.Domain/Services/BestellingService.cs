@@ -60,20 +60,20 @@ namespace CAN.Bestellingbeheer.Domain.Services {
             return _repository.Update(bestelling);
         }
 
-        public int StatusNaarOpgehaald(long id)
+        public Bestelling StatusNaarOpgehaald(long id)
         {
             var bestelling = _repository.Find(id);
             if (bestelling.Status != BestelStatus.Opgehaald)
             {
                 bestelling.Status = BestelStatus.Opgehaald;
-                var result = _repository.Update(bestelling);
+                _repository.Update(bestelling);
                 var statusUpdatedEvent = new BestellingStatusUpdatedEvent("can.bestellingbeheer.bestellingStatusUpdated")
                 {
                     BestellingsNummer = bestelling.Bestellingnummer,
                     BestellingStatusCode = bestelling.Status.ToString()
                 };
                 _publisher.Publish(statusUpdatedEvent);
-                return result;
+                return bestelling;
             }
             throw new InvalidBestelStatusException("Status staat al op opgehaald");
         }
