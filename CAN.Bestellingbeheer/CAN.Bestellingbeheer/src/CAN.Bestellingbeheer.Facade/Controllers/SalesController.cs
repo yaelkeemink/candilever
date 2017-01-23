@@ -58,5 +58,36 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
             var InvalidModelerror = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
             return BadRequest(InvalidModelerror);
         }
+        [HttpPost]
+        [SwaggerOperation("BestellingAfkeuren")]
+        [ProducesResponseType(typeof(BestellingDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
+        public IActionResult BestellingAfkeuren([FromBody]long id)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    Bestelling response = _service.StatusNaarAfgekeurd(id);
+                    var dto = new BestellingDTO(response);
+                    return Ok(dto);
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                var error = new ErrorMessage(ErrorTypes.Unknown,
+                        $"Fout met updaten in db: {id}/nException: {ex}");
+                _logger.LogError(error.FoutMelding);
+                return NotFound(error);
+            }
+            catch (Exception ex)
+            {
+                var error = new ErrorMessage(ErrorTypes.Unknown,
+                        $"Onbekende fout bij updaten: {id}/nException: {ex}");
+                return BadRequest(error);
+            }
+            var InvalidModelerror = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
+            return BadRequest(InvalidModelerror);
+        }
     }
 }

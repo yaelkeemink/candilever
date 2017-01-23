@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace CAN.BackOffice.Controllers
 {
     
-    public class BaseController 
+    public abstract class BaseController 
         : Controller
     {
         protected readonly ILogger _logger;
@@ -21,6 +21,10 @@ namespace CAN.BackOffice.Controllers
         protected override void Dispose(bool disposing)
         {            
             base.Dispose(disposing);
+        }
+        public IActionResult Error()
+        {
+            return View();
         }
     }
 }

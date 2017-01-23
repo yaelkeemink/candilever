@@ -31,12 +31,20 @@ namespace CAN.BackOffice.Controllers
         /// <returns></returns>
         public IActionResult BestellingOphalen()
         {
-            var viewModel = _service.GetVolgendeBestelling();
-            if(viewModel == null)
+            try
             {
-                return RedirectToAction("GeenBestelling");
+                var viewModel = _service.GetVolgendeBestelling();
+                if (viewModel == null)
+                {
+                    return RedirectToAction("GeenBestelling");
+                }
+                return View(viewModel);
             }
-            return View(viewModel);
+            catch (Exception e)
+            {
+                _logger.LogError($"Er is iets fout gegaan: {e}");
+                return RedirectToAction("Error");
+            }
         }
 
 
@@ -47,8 +55,16 @@ namespace CAN.BackOffice.Controllers
         /// <returns></returns>        
         public IActionResult VolgendeBestellingOphalen(int id)
         {
-            _service.ZetBestellingOpOpgehaald(id);
-            return RedirectToAction("BestellingOphalen");
+            try
+            {
+                _service.ZetBestellingOpOpgehaald(id);
+                return RedirectToAction("BestellingOphalen");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Er is iets fout gegaan: {e}");
+                return RedirectToAction("Error");
+            }
         }
 
         protected override void Dispose(bool disposing)

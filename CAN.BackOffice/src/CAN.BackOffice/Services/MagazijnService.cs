@@ -64,7 +64,7 @@ namespace CAN.BackOffice.Services
             if (response is ErrorMessage)
             {
                 var error = response as ErrorMessage;
-                _logger.LogWarning($"response was een foutmelding: {error.FoutMelding}");
+                _logger.LogError($"response was een foutmelding: {error.FoutMelding}");
             }
         }
 

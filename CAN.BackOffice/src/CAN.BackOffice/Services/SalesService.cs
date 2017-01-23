@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CAN.BackOffice.Domain.Entities;
 using CAN.BackOffice.Agents.BestellingsAgent.Agents;
 using CAN.BackOffice.Agents.BestellingsAgent.Agents.Models;
+using Microsoft.Extensions.Logging;
 
 namespace CAN.BackOffice.Services
 {
@@ -14,34 +15,41 @@ namespace CAN.BackOffice.Services
     {
         private readonly IRepository<Bestelling, long> _repo;
         private readonly IBestellingBeheerService _service;
+        private readonly ILogger _logger;
 
-        public SalesService(IRepository<Bestelling, long> repo, IBestellingBeheerService service)
+        public SalesService(IRepository<Bestelling, long> repo, 
+            IBestellingBeheerService service,
+            ILogger logger)
         {
             _repo = repo;
             _service = service;
+            _logger = logger;
         }
 
         public void BestellingGoedkeuren(long id)
-        {
+        {            
             var response = _service.BestellingGoedkeuren(id);
             if(response is BestellingDTO)
-            {
+            {                
                 var bestelling = _repo.Find(id);
                 bestelling.BestellingStatusCode = (response as BestellingDTO).Status.ToString();
                 _repo.Update(bestelling);
+                _logger.LogInformation($"Bestelling geupdate met status: {bestelling.BestellingStatusCode}");
             }
+            if (response is ErrorMessage)
+            {
+                var error = response as ErrorMessage;
+                _logger.LogError($"response was een foutmelding: {error.FoutMelding}");
+            }
+            _logger.LogError($"Onbekende response: {response}");
         }        
 
         public IEnumerable<Bestelling> FindAllTeControleren()
         {
-            return _repo.FindBy(a => a.BestellingStatusCode == "Goedgekeurd")                
+            _logger.LogInformation("Alle geplaatste bestellingen");
+            return _repo.FindBy(a => a.BestellingStatusCode == "Geplaatst")                
                 .ToList();
-        }
-
-        public void Dispose()
-        {
-            _repo?.Dispose();
-        }
+        }       
 
         public void BestellingAfkeuren(long id)
         {
@@ -51,7 +59,19 @@ namespace CAN.BackOffice.Services
                 var bestelling = _repo.Find(id);
                 bestelling.BestellingStatusCode = (response as BestellingDTO).Status.ToString();
                 _repo.Update(bestelling);
+                _logger.LogInformation($"Bestelling geupdate met status: {bestelling.BestellingStatusCode}");
             }
+            if (response is ErrorMessage)
+            {
+                var error = response as ErrorMessage;
+                _logger.LogError($"response was een foutmelding: {error.FoutMelding}");
+            }
+            _logger.LogError($"Onbekende response: {response}");
+        }
+
+        public void Dispose()
+        {
+            _repo?.Dispose();
         }
     }
 }

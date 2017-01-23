@@ -22,25 +22,49 @@ namespace CAN.BackOffice.Controllers
         }
 
         public IActionResult Index()
-        {            
-            IEnumerable<Bestelling> viewModel = _service.FindAllTeControleren();
-            _logger.LogInformation("Index pagina terugsturen");
-            return View(viewModel);
+        {
+            try
+            {
+                IEnumerable<Bestelling> viewModel = _service.FindAllTeControleren();
+                _logger.LogInformation("Index pagina terugsturen");
+                return View(viewModel);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError($"Er is iets fout gegaan: {e}");
+                return RedirectToAction("Error");
+            }
         }
 
         public IActionResult Goedkeuren(long id)
         {
-            _service.BestellingGoedkeuren(id);
-            _logger.LogInformation("Redirect naar Index");
-            return RedirectToAction("Index");
+            try
+            {
+                _service.BestellingGoedkeuren(id);
+                _logger.LogInformation("Redirect naar Index");
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Er is iets fout gegaan: {e}");
+                return RedirectToAction("Error");
+            }        
         }
 
         public IActionResult Afkeuren(long id)
         {
-            _service.BestellingAfkeuren(id);
-            _logger.LogInformation("Redirect naar Index");
-            return RedirectToAction("Index");
-        }
+            try
+            {
+                _service.BestellingAfkeuren(id);
+                _logger.LogInformation("Redirect naar Index");
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Er is iets fout gegaan: {e}");
+                return RedirectToAction("Error");
+            }
+        }        
 
         protected override void Dispose(bool disposing)
         {
