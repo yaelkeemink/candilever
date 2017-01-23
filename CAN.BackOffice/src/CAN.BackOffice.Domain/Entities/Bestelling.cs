@@ -13,14 +13,18 @@ namespace CAN.BackOffice.Domain.Entities
 
         public long Klantnummer { get; set; }
         public string VolledigeNaam { get; set; }
+        public string Adres { get; set; }
+        public string Huisnummer { get; set; }
+        public string Postcode { get; set; }
+        public string Land { get; set; }
+
 
         public long Bestellingsnummer { get; set; }
-
         public DateTime BestelDatum { get; set; }
 
         public IList<Artikel> Artikelen { get; set; }
         public int BestellingStatusNumber { get; set; }
-        public string BestellingStatusCode { get; set; }
+        public string BestellingStatusCode { get; set; }        
 
         public Bestelling()
         {
@@ -33,8 +37,13 @@ namespace CAN.BackOffice.Domain.Entities
             Klantnummer = evt.Klantnummer;
             Bestellingsnummer = evt.Bestellingsnummer;
             BestelDatum = evt.BestelDatum;
-            BestellingStatusNumber = evt.BestellingStatusNumber;
+            BestellingStatusNumber = evt.BestellingStatusNummer;
             BestellingStatusCode = evt.BestellingStatusCode;
+            VolledigeNaam = evt.VolledigeNaam;
+            Adres = evt.Adres;
+            Huisnummer = evt.Huisnummer;
+            Postcode = evt.Postcode;
+            Land = evt.Land;
 
             foreach (var artikel in evt.Artikelen)
             {
