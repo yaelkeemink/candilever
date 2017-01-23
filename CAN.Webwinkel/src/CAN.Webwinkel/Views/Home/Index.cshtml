@@ -6,6 +6,15 @@
 
 <h1>Welkom bij de beste fiets specialist in Nederland!</h1>
 
+<ul class="pagination">
+    <li><a asp-action="Index" asp-route-id="@Model.VorigePagina">Vorige</a></li>
+    @for (int i = 1; i <= Model.AantalPaginas; i++)
+    {
+        <li><a asp-action="Index" asp-route-id="@i">@i</a></li>
+    }
+    <li><a asp-action="Index" asp-route-id="@Model.VolgendePagina">Volgende</a></li>
+</ul>
+
 @foreach (var artikel in Model.Artikelen)
 {
     <div>
@@ -23,8 +32,10 @@
 }
 
 <ul class="pagination">
+    <li><a asp-action="Index" asp-route-id="@Model.VorigePagina">Vorige</a></li>
     @for (int i = 1; i <= Model.AantalPaginas; i++)
     {
         <li><a asp-action="Index" asp-route-id="@i">@i</a></li>
     }
+    <li><a asp-action="Index" asp-route-id="@Model.VolgendePagina">Volgende</a></li>
 </ul>

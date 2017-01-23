@@ -15,7 +15,7 @@
     "Serilog.Settings.Configuration": "2.2.0",
     "Serilog.Sinks.Literate": "2.0.0",
     "Serilog.Sinks.RollingFile": "3.3.0",
-    "CAN.Common": "1.0.15"
+    "CAN.Common": "1.1.1"
   },
 
   "frameworks": {
