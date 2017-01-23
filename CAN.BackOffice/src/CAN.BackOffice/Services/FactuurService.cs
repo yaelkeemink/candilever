@@ -24,5 +24,10 @@ namespace CAN.BackOffice.Services
         {
             return _repository.Find(bestellingsnummer);
         }
+
+        public void Dispose()
+        {
+            _repository?.Dispose();
+        }
     }
 }

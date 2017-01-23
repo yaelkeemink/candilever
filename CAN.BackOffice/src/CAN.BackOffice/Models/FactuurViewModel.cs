@@ -8,13 +8,13 @@ namespace CAN.BackOffice.Models
 {
     public class FactuurViewModel
     {
-        public string KlantNaam { get; set; }
-        public string KlantAdres { get; set; }
-        public string KlantHuisnummer { get; set; }
-        public string KlantPostcode { get; set; }
-        public string KlantWoonplaats { get; set; }
-        public string KlantLand { get; set; }
-
         public Bestelling Bestelling { get; set; }
+
+        public FactuurViewModel(Bestelling bestelling)
+        {
+            Bestelling = bestelling;
+        }
+
+
     }
 }

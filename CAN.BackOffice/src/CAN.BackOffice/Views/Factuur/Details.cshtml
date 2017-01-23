@@ -1,28 +1,78 @@
-﻿@model FactuurViewModel
-@{
-    Layout = null;
-}
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CAN.BackOffice</title>
 
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.6/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    @Html.ApplicationInsightsJavaScript(TelemetryConfiguration)
+</head>
+<body>
+    @model FactuurViewModel
+    @{
+        Layout = null;
+    }
 
-<section id="klantgegevens">
-    <dl class="col-md-4">
-        <dt>@Html.DisplayNameFor(model => model.KlantNaam)</dt>
-        <dd>@Html.DisplayFor(model => model.KlantNaam)</dd>
-        <dt>@Html.DisplayNameFor(model => model.KlantAdres)</dt>
-        <dd>@Html.DisplayFor(model => model.KlantAdres) @Html.DisplayFor(model => model.KlantHuisnummer)</dd>
-        <dt>@Html.DisplayNameFor(model => model.KlantPostcode)</dt>
-        <dd>@Html.DisplayFor(model => model.KlantPostcode) @Html.DisplayFor(model => model.KlantWoonplaats)</dd>
-        <dt>@Html.DisplayNameFor(model => model.KlantLand)</dt>
-        <dd>@Html.DisplayFor(model => model.KlantLand)</dd>
-    </dl>
-    <img src="~/images/FactuurLogo.gif" class="col-md-offset-4 col-md-4">
-</section>
-<section id="bestellinggegevens">
+    @{ Artikel FirstArtikel = Model.Bestelling.Artikelen.FirstOrDefault(); }
 
-</section>
-<section id="totaalbedrag">
+    <section id="klantgegevens" class="col-md-offset-1">
+        <h2 class="">Klantgegevens</h2>
+        <dl class="dl-horizontal col-md-4">
+            <dt>@Html.DisplayNameFor(model => model.Bestelling.VolledigeNaam)</dt>
+            <dd>@Html.DisplayFor(model => model.Bestelling.VolledigeNaam)</dd>
+            <dt>@Html.DisplayNameFor(model => model.Bestelling.Adres)</dt>
+            <dd>@Html.DisplayFor(model => model.Bestelling.Adres) @Html.DisplayFor(model => model.Bestelling.Huisnummer)</dd>
+            <dt>@Html.DisplayNameFor(model => model.Bestelling.Postcode)</dt>
+            <dd>@Html.DisplayFor(model => model.Bestelling.Postcode) @Html.DisplayFor(model => model.Bestelling.Woonplaats)</dd>
+            <dt>@Html.DisplayNameFor(model => model.Bestelling.Land)</dt>
+            <dd>@Html.DisplayFor(model => model.Bestelling.Land)</dd>
+        </dl>
+        <img src="~/images/FactuurLogo.png" class="col-md-offset-4 col-md-4">
+    </section>
+    <hr />
+    <section id="bestellinggegevens" class="col-md-offset-1 col-md-11">
+        <h2>Artikelen</h2>
+        <table class="table-striped col-md-10">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => FirstArtikel.Artikelnummer)</th>
+                    <th>@Html.DisplayNameFor(model => FirstArtikel.Artikelnaam)</th>
+                    <th>@Html.DisplayNameFor(model => FirstArtikel.Aantal)</th>
+                    <th>@Html.DisplayNameFor(model => FirstArtikel.Prijs)</th>
+                    <th>Totaalprijs</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ var PrijsVanAlleArtikelen = 0.00M;}
+                @foreach (var artikel in Model.Bestelling.Artikelen)
+                {
+                    var Totaalprijs = artikel.Aantal * artikel.Prijs;
+                    PrijsVanAlleArtikelen += Totaalprijs;
+                    <tr>
+                        <td>@Html.DisplayFor(model => artikel.Artikelnummer)</td>
+                        <td>@Html.DisplayFor(model => artikel.Artikelnaam)</td>
+                        <td>@Html.DisplayFor(model => artikel.Aantal)</td>
+                        <td>@Html.DisplayFor(model => artikel.Prijs)</td>
+                        <td>@Html.DisplayFor(model => Totaalprijs)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+    <section id="totaalbedrag" class="col-md-offset-1 col-md-11">
+        <hr />
+    </section>
+    <section id="footer" class="col-md-offset-1 col-md-11">
 
-</section>
-<section id="footer">
-
-</section>
+    </section>
+</body>

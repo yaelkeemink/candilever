@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace CAN.BackOffice.Domain.Entities
 {
@@ -12,6 +13,7 @@ namespace CAN.BackOffice.Domain.Entities
         public long Id { get; set; }
 
         public long Klantnummer { get; set; }
+        [DisplayName("Klant")]
         public string VolledigeNaam { get; set; }
         public string Adres { get; set; }
         public string Huisnummer { get; set; }
@@ -24,7 +26,8 @@ namespace CAN.BackOffice.Domain.Entities
 
         public IList<Artikel> Artikelen { get; set; }
         public int BestellingStatusNumber { get; set; }
-        public string BestellingStatusCode { get; set; }        
+        public string BestellingStatusCode { get; set; }
+        public string Woonplaats { get; set; }
 
         public Bestelling()
         {

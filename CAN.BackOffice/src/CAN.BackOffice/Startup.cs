@@ -72,6 +72,7 @@ namespace CAN.BackOffice
 
             services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
             services.AddScoped<IMagazijnService, MagazijnService>();
+            services.AddScoped<IFactuurService, FactuurService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

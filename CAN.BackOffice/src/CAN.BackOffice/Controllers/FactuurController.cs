@@ -11,7 +11,7 @@ using CAN.BackOffice.Domain.Entities;
 
 namespace CAN.BackOffice.Controllers
 {
-    public class FactuurController : Controller
+    public class FactuurController : Controller, IDisposable
     {
         private readonly ILogger<FactuurController> _logger;
         private readonly IFactuurService _service;
@@ -31,21 +31,41 @@ namespace CAN.BackOffice.Controllers
                 Bestelling bestelling = _service.ZoekBestelling(bestellingsnummer);
                 _logger.LogInformation($"Factuur met bestellingsnummer {bestellingsnummer} is gevonden", bestelling);
 
-                return View(new FactuurViewModel()
-                {
-                    KlantNaam = "Lars Celie",
-                    KlantAdres = "Pythagoraslaan",
-                    KlantHuisnummer = "113E",
-                    KlantLand = "Nederland",
-                    KlantPostcode = "3584BB",
-                    KlantWoonplaats = "Utrecht",
-                    Bestelling = new Bestelling()
-                });
+                return View(new FactuurViewModel(bestelling));
             }
             catch (InvalidOperationException e)
             {
                 _logger.LogError($"Factuur met bestellingsnummer {bestellingsnummer} is niet gevonden", e);
-                return RedirectToAction("FactuurNietGevonden");
+
+                // Test, remove later
+                Bestelling temp = new Bestelling()
+                {
+                    VolledigeNaam = "Lars Celie",
+                    Adres = "Pythagoraslaan",
+                    Huisnummer = "113E",
+                    Woonplaats = "Utrecht",
+                    Land = "Nederland",
+                    Postcode = "3584BB",
+                    BestelDatum = new DateTime(2017, 1, 23),
+                    Bestellingsnummer = 1,
+                    Klantnummer = 1,
+                    Id = 1,
+                    Artikelen = new List<Artikel>()
+                    {
+                        new Artikel() {
+                            Artikelnummer = 1,
+                            Artikelnaam = "Test artikel",
+                            Aantal = 10,
+                            Leverancier = "Unilever",
+                            LeverancierCode = "187acak1",
+                            Prijs = 600M,
+                            Id = 1
+                        }
+                    }
+                };
+
+                return View(new FactuurViewModel(temp));
+                //return RedirectToAction("FactuurNietGevonden");
             }
         }
 
@@ -53,6 +73,12 @@ namespace CAN.BackOffice.Controllers
         public ActionResult FactuurNietGevonden()
         {
             return View();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _service?.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
