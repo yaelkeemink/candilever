@@ -10,6 +10,10 @@ namespace CAN.BackOffice.Domain.Entities
     public class Bestelling
     {
 
+        public Bestelling()
+        {
+            Artikelen = new List<Artikel>();
+        }
         public long Id { get; set; }
 
         public long Klantnummer { get; set; }
@@ -21,7 +25,6 @@ namespace CAN.BackOffice.Domain.Entities
         public IList<Artikel> Artikelen { get; set; }
         public int BestellingStatusNumber { get; set; }
         public string BestellingStatusCode { get; set; }
-        public Bestelling() { }
 
         public Bestelling(BestellingCreatedEvent evt)
         {

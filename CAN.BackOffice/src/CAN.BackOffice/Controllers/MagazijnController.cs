@@ -21,6 +21,11 @@ namespace CAN.BackOffice.Controllers
             _service = service;
         }
 
+        public IActionResult GeenBestelling()
+        {
+            return View();
+        }
+
         /// <summary>
         /// Haal volgende bestelling op
         /// </summary>
@@ -28,6 +33,10 @@ namespace CAN.BackOffice.Controllers
         public IActionResult BestellingOphalen()
         {
             var viewModel = _service.GetVolgendeBestelling();
+            if(viewModel == null)
+            {
+                return RedirectToAction("GeenBestelling");
+            }
             return View(viewModel);
         }
 
