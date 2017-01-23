@@ -13,16 +13,21 @@ namespace CAN.Common.Events
             Artikelen = new List<Artikel>();
         }
 
-        public long Klantnummer { get; set; }
-
         public long Bestellingsnummer { get; set; }
 
         public DateTime BestelDatum { get; set; }
 
-        public int BestellingStatusNumber { get; set; }
+        public int BestellingStatusNummer { get; set; }
         public string BestellingStatusCode { get; set; }
 
         public IList<Artikel> Artikelen { get; internal set; }
+        
+        public long Klantnummer { get; set; }
+        public string VolledigeNaam { get; set; }
+        public string Postcode { get; set; }
+        public string Adres { get; set; }
+        public string Huisnummer { get; set; }
+        public string Land { get; set; }
 
         public void AddArtikel(long artikelNummer, string artikelNaam, decimal prijs, int aantal, string leverancierCode, string leverancier)
         {

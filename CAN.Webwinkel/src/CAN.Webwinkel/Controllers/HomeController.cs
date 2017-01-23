@@ -37,7 +37,7 @@ namespace CAN.Webwinkel.Controllers
                 .ToList();
             int paginas = _service.AantalPaginas(aantalArtikelenPerPagina);
 
-            return View(new ArtikelOverzichtModel() { Artikelen = artikelen, AantalPaginas = paginas } );
+            return View(new ArtikelOverzichtModel() { Artikelen = artikelen, AantalPaginas = paginas, HuidigePaginanummer = id } );
         }
 
         [HttpGet]

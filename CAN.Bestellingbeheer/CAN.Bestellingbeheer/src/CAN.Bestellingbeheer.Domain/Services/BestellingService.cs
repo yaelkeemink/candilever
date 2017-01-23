@@ -31,13 +31,24 @@ namespace CAN.Bestellingbeheer.Domain.Services {
                 Klantnummer = bestelling.Klantnummer,
                 Bestellingsnummer = bestellingsnummer,
                 BestelDatum = bestelling.BestelDatum,
-                BestellingStatusNumber = (int)bestelling.Status,
-                BestellingStatusCode = bestelling.Status.ToString()                
+                BestellingStatusNummer = (int)bestelling.Status,
+                BestellingStatusCode = bestelling.Status.ToString(),
+                VolledigeNaam = bestelling.VolledigeNaam,
+                Adres = bestelling.Adres,
+                Huisnummer = bestelling.Huisnummer,
+                Postcode = bestelling.Postcode,
+                Land = bestelling.Land
             };
 
             foreach (var artikel in bestelling.Artikelen)
             {
-                createdEvent.AddArtikel(artikel.Artikelnummer, artikel.Naam, artikel.Prijs, artikel.Aantal, artikel.Leverancier, artikel.LeverancierCode);
+                createdEvent.AddArtikel(
+                    artikel.Artikelnummer, 
+                    artikel.Naam, 
+                    artikel.Prijs, 
+                    artikel.Aantal, 
+                    artikel.LeverancierCode, 
+                    artikel.Leverancier);
             }
 
             _publisher.Publish(createdEvent);            
@@ -55,9 +66,16 @@ namespace CAN.Bestellingbeheer.Domain.Services {
             if (bestelling.Status != BestelStatus.Opgehaald)
             {
                 bestelling.Status = BestelStatus.Opgehaald;
-                return _repository.Update(bestelling);
+                var result = _repository.Update(bestelling);
+                var statusUpdatedEvent = new BestellingStatusUpdatedEvent("can.bestellingbeheer.bestellingStatusUpdated")
+                {
+                    BestellingsNummer = bestelling.Bestellingnummer,
+                    BestellingStatusCode = bestelling.Status.ToString()
+                };
+                _publisher.Publish(statusUpdatedEvent);
+                return result;
             }
-            throw new InvalidStatusException("Status staat al op opgehaald");
+            throw new InvalidBestelStatusException("Status staat al op opgehaald");
         }
         public void Dispose()
         {
