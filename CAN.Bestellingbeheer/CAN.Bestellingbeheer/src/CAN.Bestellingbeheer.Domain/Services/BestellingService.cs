@@ -37,7 +37,13 @@ namespace CAN.Bestellingbeheer.Domain.Services {
 
             foreach (var artikel in bestelling.Artikelen)
             {
-                createdEvent.AddArtikel(artikel.Artikelnummer, artikel.Naam, artikel.Prijs, artikel.Aantal, artikel.LeverancierCode, artikel.Leverancier);
+                createdEvent.AddArtikel(
+                    artikel.Artikelnummer, 
+                    artikel.Naam, 
+                    artikel.Prijs, 
+                    artikel.Aantal, 
+                    artikel.LeverancierCode, 
+                    artikel.Leverancier);
             }
 
             _publisher.Publish(createdEvent);            
@@ -64,7 +70,7 @@ namespace CAN.Bestellingbeheer.Domain.Services {
                 _publisher.Publish(statusUpdatedEvent);
                 return result;
             }
-            throw new InvalidStatusException("Status staat al op opgehaald");
+            throw new InvalidBestelStatusException("Status staat al op opgehaald");
         }
         public void Dispose()
         {
