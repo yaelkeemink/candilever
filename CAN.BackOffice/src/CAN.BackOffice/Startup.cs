@@ -5,17 +5,20 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using CAN.BackOffice.Models;
 using CAN.BackOffice.Services;
 using Serilog;
 using CAN.BackOffice.Infrastructure.DAL;
-using CAN.BackOffice.Infrastructure.DAL.Repositories;
-using CAN.BackOffice.Domain.Interfaces;
-using InfoSupport.WSA.Infrastructure;
-using Microsoft.Extensions.Logging;
-using CAN.Webwinkel.Infrastructure.EventListener;
-using CAN.BackOffice.Domain.Entities;
 using CAN.BackOffice.Agents.BestellingsAgent.Agents;
+using CAN.BackOffice.Infrastructure.DAL.Repositories;
+using CAN.BackOffice.Domain.Entities;
+using CAN.BackOffice.Domain.Interfaces;
+using Microsoft.Extensions.Logging;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using CAN.Webwinkel.Infrastructure.EventListener;
+using InfoSupport.WSA.Infrastructure;
+using CAN.BackOffice.Swagger;
+using Swashbuckle.Swagger.Model;
 
 namespace CAN.BackOffice
 {
@@ -59,12 +62,8 @@ namespace CAN.BackOffice
             var connectionstring = Environment.GetEnvironmentVariable("dbconnectionstring");
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionstring));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<DatabaseContext>()
-                .AddDefaultTokenProviders();
-            
+                    
             services.AddMvc();
-
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
@@ -72,6 +71,24 @@ namespace CAN.BackOffice
 
             services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
             services.AddScoped<IMagazijnService, MagazijnService>();
+
+
+            
+            services.AddSwaggerGen();
+            services.ConfigureSwaggerGen(options =>
+            {
+                options.SingleApiVersion(new Info
+                {
+                    Version = "v1",
+                    Title = "Backoffice service",
+                    Description = "Backoffice service",
+                    TermsOfService = "None"
+                });
+
+                options.OperationFilter<SwaggerAuthorization>();
+
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -84,12 +101,35 @@ namespace CAN.BackOffice
 
             app.UseApplicationInsightsExceptionTelemetry();
 
+            var secretKey = Configuration.GetValue<string>("SecretKey");
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+                ValidateIssuer = true,
+                ValidIssuer = "http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1",
+                ValidateAudience = true,
+                ValidAudience = "http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1",
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = tokenValidationParameters
+            });
+
             app.UseMvc();
 
             app.UseApplicationInsightsRequestTelemetry();
 
             if (env.IsDevelopment())
             {
+                app.UseSwagger();
+                app.UseSwaggerUi();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
@@ -102,8 +142,8 @@ namespace CAN.BackOffice
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
-
-            app.UseIdentity();
+            
+           
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 

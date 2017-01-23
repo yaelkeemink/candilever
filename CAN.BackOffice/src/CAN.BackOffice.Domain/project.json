@@ -5,17 +5,17 @@
   },
 
   "dependencies": {
+    "CAN.Common": "1.1.3",
+    "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.1"
     },
-    "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
     "Serilog": "2.3.0",
     "Serilog.Extensions.Logging": "1.3.1",
     "Serilog.Settings.Configuration": "2.2.0",
     "Serilog.Sinks.Literate": "2.0.0",
-    "Serilog.Sinks.RollingFile": "3.3.0",
-    "CAN.Common": "1.1.3"
+    "Serilog.Sinks.RollingFile": "3.3.0"
   },
 
   "frameworks": {

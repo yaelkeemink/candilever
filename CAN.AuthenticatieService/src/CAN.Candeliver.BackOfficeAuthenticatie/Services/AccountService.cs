@@ -58,8 +58,9 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
             {
                     new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iat, now.Ticks.ToString(),
-                    ClaimValueTypes.Integer64),
+                    new Claim(JwtRegisteredClaimNames.Iat, now.Ticks.ToString(),ClaimValueTypes.Integer64),
+                    new Claim("role", "Sales" )
+                    
             };
 
             // Create the JWT and write it to a string
