@@ -96,7 +96,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
 
             try
             {
-                var result = await _accountService.Register(model.UserName, model.Email, model.Password, model.Role);
+                var result = await _accountService.Register(model.UserName, model.Password, model.Role);
                 if (result == null)
                 {
                     return BadRequest("User registration failed");

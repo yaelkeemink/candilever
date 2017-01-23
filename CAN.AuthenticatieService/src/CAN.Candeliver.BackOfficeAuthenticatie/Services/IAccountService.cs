@@ -17,7 +17,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         /// <returns></returns>
         string CreateJwtTokenForUser(ApplicationUser user);
         
-        Task<ApplicationUser> Register(string username, string email, string password, string role);
+        Task<ApplicationUser> Register(string username, string password, string role);
         Task<ClaimsIdentity> GetIdentityAsync(string username, string password);
         Task<ApplicationUser> GetUserAsync(ClaimsPrincipal userClaim);
 

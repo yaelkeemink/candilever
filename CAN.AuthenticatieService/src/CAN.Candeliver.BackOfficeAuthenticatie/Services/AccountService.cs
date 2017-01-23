@@ -83,9 +83,9 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         /// <param name="password"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        public async Task<ApplicationUser> Register(string username, string email, string password, string role)
+        public async Task<ApplicationUser> Register(string username, string password, string role)
         {
-            var user = new ApplicationUser { UserName = username, Email = email };
+            var user = new ApplicationUser { UserName = username};
 
             var result = await _userManager.CreateAsync(user, password);
 

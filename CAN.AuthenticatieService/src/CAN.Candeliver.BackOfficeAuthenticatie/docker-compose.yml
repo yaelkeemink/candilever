@@ -14,7 +14,7 @@ services:
       - can_main_network
       - can_backoffice_authenticatie_network
     volumes:
-      - "C:/Docker/.BackofficeData/Log:/var/log/Kantilever/BackofficeLogging/"
+      - "C:/Docker/.BackofficeAuthenticateData/Log:/var/log/Kantilever/BackofficeAuthenticateLogging/"
 
   can.backoffice.authenticatie.mssql:
     image: microsoft/mssql-server-linux
@@ -27,7 +27,7 @@ services:
     ports:
       - 11110:1433
     volumes:
-      - "C:/Docker/.BackofficeData/db:/var/opt/mssql/"
+      - "C:/Docker/.BackofficeAuthenticateData/db:/var/opt/mssql/"
 
 
 networks:

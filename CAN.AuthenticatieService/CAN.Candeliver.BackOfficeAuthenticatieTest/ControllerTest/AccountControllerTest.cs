@@ -33,21 +33,20 @@ namespace CAN.Candeliver.BackOfficeAuthenticatieTest.ControllerTest
             var optionsMock = MockProvider.CreateProviderOptionsMock();
 
 
-            accountServiceMock.Setup(e => e.Register("Rob", "example@test.nl", "tset123", "Sales")).ReturnsAsync(new ApplicationUser());
+            accountServiceMock.Setup(e => e.Register("Rob", "tset123", "Sales")).ReturnsAsync(new ApplicationUser());
 
             var controller = new AccountController(logMock.Object, optionsMock.Object, accountServiceMock.Object);
 
             var registermodel = new RegisterViewModel()
             {
                 ConfirmPassword = "tset123",
-                Email = "example@test.nl",
                 Password = "tset123",
                 Role = "Sales",
                 UserName = "Rob"
             };
             var result = await controller.Register(registermodel);
 
-            accountServiceMock.Verify(e => e.Register("Rob", "example@test.nl", "tset123", "Sales"), Times.Once);
+            accountServiceMock.Verify(e => e.Register("Rob", "tset123", "Sales"), Times.Once);
 
             Assert.IsInstanceOfType(result, typeof(JsonResult));
 
@@ -64,21 +63,20 @@ namespace CAN.Candeliver.BackOfficeAuthenticatieTest.ControllerTest
             var optionsMock = MockProvider.CreateProviderOptionsMock();
 
 
-            accountServiceMock.Setup(e => e.Register("Rob", "example@test.nl", "tset123", "Sales")).ReturnsAsync(null);
+            accountServiceMock.Setup(e => e.Register("Rob", "tset123", "Sales")).ReturnsAsync(null);
 
             var controller = new AccountController(logMock.Object, optionsMock.Object, accountServiceMock.Object);
 
             var registermodel = new RegisterViewModel()
             {
                 ConfirmPassword = "tset123",
-                Email = "example@test.nl",
                 Password = "tset123",
                 Role = "Sales",
                 UserName = "Rob"
             };
             var result = await controller.Register(registermodel);
 
-            accountServiceMock.Verify(e => e.Register("Rob", "example@test.nl", "tset123", "Sales"), Times.Once);
+            accountServiceMock.Verify(e => e.Register("Rob", "tset123", "Sales"), Times.Once);
 
             Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
 
