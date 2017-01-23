@@ -23,7 +23,7 @@ namespace CAN.BackOffice.Infrastructure.DAL.Repositories
         protected abstract IQueryable<Entity> GetDbSet();
         protected abstract Key GetKeyFrom(Entity item);
 
-        public virtual IEnumerable<Entity> FindBy(Expression<Func<Entity, bool>> filter)
+        public virtual IQueryable<Entity> FindBy(Expression<Func<Entity, bool>> filter)
         {
             return GetDbSet().Where(filter);
         }

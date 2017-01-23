@@ -18,8 +18,7 @@ namespace CAN.BackOffice.Services
         }
         public IEnumerable<Bestelling> FindAllTeControlleren()
         {
-            return _repo.FindAll()
-                .Where(a => a.BestellingStatusCode == "Goedgekeurd")
+            return _repo.FindBy(a => a.BestellingStatusCode == "Goedgekeurd")
                 .OrderByDescending(a => a.BestelDatum)
                 .ToList();
         }

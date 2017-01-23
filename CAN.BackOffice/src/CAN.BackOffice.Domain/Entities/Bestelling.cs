@@ -12,7 +12,7 @@ namespace CAN.BackOffice.Domain.Entities
         public long Id { get; set; }
 
         public long Klantnummer { get; set; }
-        public string Klantnaam { get; set; }
+        public string VolledigeNaam { get; set; }
 
         public long Bestellingsnummer { get; set; }
 

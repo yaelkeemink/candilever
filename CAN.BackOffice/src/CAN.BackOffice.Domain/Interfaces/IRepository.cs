@@ -11,7 +11,7 @@ namespace CAN.BackOffice.Domain.Interfaces
     {
         IQueryable<TEntity> FindAll();
 
-        IEnumerable<TEntity> FindBy(Expression<Func<TEntity, bool>> filter);
+        IQueryable<TEntity> FindBy(Expression<Func<TEntity, bool>> filter);
 
         TEntity Find(TKey id);
 
