@@ -8,8 +8,7 @@ namespace CAN.BackOffice.Domain.Entities
 {
 
     public class Bestelling
-    {
-
+    {       
         public long Id { get; set; }
 
         public long Klantnummer { get; set; }
@@ -22,9 +21,11 @@ namespace CAN.BackOffice.Domain.Entities
         public IList<Artikel> Artikelen { get; set; }
         public int BestellingStatusNumber { get; set; }
         public string BestellingStatusCode { get; set; }
-        public Bestelling() { }
 
-        //TODO: Klantgegevens toevoegen aan entity en event
+        public Bestelling()
+        {
+            Artikelen = new List<Artikel>();
+        }
         public Bestelling(BestellingCreatedEvent evt)
         {
             Artikelen = new List<Artikel>();
