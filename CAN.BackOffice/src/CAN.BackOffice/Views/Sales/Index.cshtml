@@ -28,9 +28,9 @@
                     @Html.DisplayFor(modelItem => item.TotaalPrijs)
                 </td>
                 <td>
-                    <a asp-action="Goedkeuren" asp-route-id="@item.Id">Goedkeuren</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Afkeuren" asp-route-id="@item.Id">Afkeuren</a>
+                    <a class="text-success" asp-action="Goedkeuren" asp-route-id="@item.Id">Goedkeuren</a> |
+                    <a class="text-info" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a class="text-danger" asp-action="Afkeuren" asp-route-id="@item.Id">Afkeuren</a>
                 </td>
             </tr>
         }

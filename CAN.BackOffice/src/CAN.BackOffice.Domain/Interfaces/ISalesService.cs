@@ -12,5 +12,7 @@ namespace CAN.BackOffice.Domain.Interfaces
         IEnumerable<Bestelling> FindAllTeControleren();
         void BestellingGoedkeuren(long id);
         void BestellingAfkeuren(long id);
+        Klant FindKlant(long klantnummer);
+        Bestelling FindBestelling(long id);
     }
 }

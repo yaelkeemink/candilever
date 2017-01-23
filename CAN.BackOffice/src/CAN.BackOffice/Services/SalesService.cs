@@ -13,15 +13,18 @@ namespace CAN.BackOffice.Services
     public class SalesService
         : ISalesService
     {
-        private readonly IRepository<Bestelling, long> _repo;
+        private readonly IRepository<Bestelling, long> _bestellingRepository;
         private readonly IBestellingBeheerService _service;
         private readonly ILogger _logger;
+        private readonly IRepository<Klant, long> _klantRepository;
 
-        public SalesService(IRepository<Bestelling, long> repo, 
+        public SalesService(IRepository<Bestelling, long> bestellingRepository,
+            IRepository<Klant, long> klantRepository, 
             IBestellingBeheerService service,
             ILogger logger)
         {
-            _repo = repo;
+            _bestellingRepository = bestellingRepository;
+            _klantRepository = klantRepository;
             _service = service;
             _logger = logger;
         }
@@ -31,9 +34,9 @@ namespace CAN.BackOffice.Services
             var response = _service.BestellingGoedkeuren(id);
             if(response is BestellingDTO)
             {                
-                var bestelling = _repo.Find(id);
+                var bestelling = _bestellingRepository.Find(id);
                 bestelling.BestellingStatusCode = (response as BestellingDTO).Status.ToString();
-                _repo.Update(bestelling);
+                _bestellingRepository.Update(bestelling);
                 _logger.LogInformation($"Bestelling geupdate met status: {bestelling.BestellingStatusCode}");
             }
             if (response is ErrorMessage)
@@ -47,7 +50,7 @@ namespace CAN.BackOffice.Services
         public IEnumerable<Bestelling> FindAllTeControleren()
         {
             _logger.LogInformation("Alle geplaatste bestellingen");
-            return _repo.FindBy(a => a.BestellingStatusCode == "Geplaatst")                
+            return _bestellingRepository.FindBy(a => a.BestellingStatusCode == "Geplaatst")                
                 .ToList();
         }       
 
@@ -56,9 +59,9 @@ namespace CAN.BackOffice.Services
             var response = _service.BestellingAfkeuren(id);
             if (response is BestellingDTO)
             {
-                var bestelling = _repo.Find(id);
+                var bestelling = _bestellingRepository.Find(id);
                 bestelling.BestellingStatusCode = (response as BestellingDTO).Status.ToString();
-                _repo.Update(bestelling);
+                _bestellingRepository.Update(bestelling);
                 _logger.LogInformation($"Bestelling geupdate met status: {bestelling.BestellingStatusCode}");
             }
             if (response is ErrorMessage)
@@ -67,11 +70,22 @@ namespace CAN.BackOffice.Services
                 _logger.LogError($"response was een foutmelding: {error.FoutMelding}");
             }
             _logger.LogError($"Onbekende response: {response}");
+        }        
+
+        public Klant FindKlant(long klantnummer)
+        {
+            return _klantRepository.FindBy(a => a.Klantnummer == klantnummer)
+                .Single();
+        }
+
+        public Bestelling FindBestelling(long id)
+        {
+            return _bestellingRepository.Find(id);
         }
 
         public void Dispose()
         {
-            _repo?.Dispose();
+            _bestellingRepository?.Dispose();
         }
     }
 }
