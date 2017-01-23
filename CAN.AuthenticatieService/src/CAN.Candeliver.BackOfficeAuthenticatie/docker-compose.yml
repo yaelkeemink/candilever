@@ -2,7 +2,7 @@ version: '2'
 
 services:
   can.candeliver.backofficeauthenticatie:
-   image: candilever/can.backoffice
+    image: candilever/can.backoffice
     build:
       context: .
       dockerfile: Dockerfile
