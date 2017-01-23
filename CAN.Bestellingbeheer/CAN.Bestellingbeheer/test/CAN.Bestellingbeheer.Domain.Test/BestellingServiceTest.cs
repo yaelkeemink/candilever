@@ -59,11 +59,11 @@ namespace CAN.Bestellingbeheer.Domain.Test
 
                 Assert.IsNotNull(response.Bestellingnummer);
                 Assert.AreEqual(bestelling.BestelDatum, response.BestelDatum);
-                Assert.AreEqual(bestelling.VolledigeNaam, response.);
-                Assert.AreEqual(bestelling.Postcode, response.BestelDatum);
-                Assert.AreEqual(bestelling.Adres, response.BestelDatum);
-                Assert.AreEqual(bestelling.Huisnummer, response.BestelDatum);
-                Assert.AreEqual(bestelling.Land, response.BestelDatum);
+                Assert.AreEqual(bestelling.VolledigeNaam, response.VolledigeNaam);
+                Assert.AreEqual(bestelling.Postcode, response.Postcode);
+                Assert.AreEqual(bestelling.Adres, response.Adres);
+                Assert.AreEqual(bestelling.Huisnummer, response.Huisnummer);
+                Assert.AreEqual(bestelling.Land, response.Land);
 
                 Assert.IsNotNull(response.Artikelen.First().Artikelnummer);
                 Assert.AreEqual(bestelling.Artikelen.First().Naam, response.Artikelen.First().Naam);
