@@ -1,69 +1,65 @@
 @model CAN.Webwinkel.Agents.KlantAgent.Models.Klant
 
-@{ 
+@{
     ViewData["Title"] = "Registreren";
 }
 <div class="container-fluid">
     <fieldset>
-        <div id="messages-container">
-            <div id="succes-message" class="alert alert-success fade in" style="display:none;">
-                <a href="#" class="close" data-dismiss="alert">&times;</a>
-                <strong>Success!</strong> De Bestelling is Geplaatst.
-            </div>
-            <div id="error-message" class="alert alert-danger" style="display:none;">
-                <strong>Error!</strong> Er is iets mis gegaan bij het plaatsen van de bestelling. Probeer opnieuw te bestellen of contacteer de systeem administrator.
-            </div>
+        <div id="message" class="alert" style="display:none;">
+            <a href="#" class="close" data-dismiss="alert">&times;</a>
+            <strong id="messageheadertext"></strong>
+            <div id="messagetext"></div>
         </div>
 
         <legend class="h2">Uw gegevens</legend>
 
-            <div class="form-group">
-                <label asp-for="Voornaam"></label>
-                <input type="text" class="form-control" asp-for="Voornaam" placeholder="Voornaam" id="voornaam">
-            </div>
+        <div class="form-group">
+            <label asp-for="Voornaam"></label>
+            <input type="text" class="form-control" asp-for="Voornaam" placeholder="Voornaam" id="voornaam">
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Tussenvoegsels"></label>
-                <input type="text" class="form-control" asp-for="Tussenvoegsels" placeholder="Tussenvoegsel" id="tussenvoegsel">
-            </div>
+        <div class="form-group">
+            <label asp-for="Tussenvoegsels"></label>
+            <input type="text" class="form-control" asp-for="Tussenvoegsels" placeholder="Tussenvoegsel" id="tussenvoegsel">
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Achternaam"></label>
-                <input type="text" class="form-control" asp-for="Achternaam" placeholder="Achternaam" id="achternaam">
-            </div>
+        <div class="form-group">
+            <label asp-for="Achternaam"></label>
+            <input type="text" class="form-control" asp-for="Achternaam" placeholder="Achternaam" id="achternaam">
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Adres"></label>
-                <input type="text" class="form-control" asp-for="Adres" placeholder="Adres" id="straatnaam">
-            </div>
+        <div class="form-group">
+            <label asp-for="Adres"></label>
+            <input type="text" class="form-control" asp-for="Adres" placeholder="Adres" id="straatnaam">
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Huisnummer"></label>
-                <input type="text" class="form-control" asp-for="Huisnummer" placeholder="Huisnummer" id="huisnummer">
-            </div>
+        <div class="form-group">
+            <label asp-for="Huisnummer"></label>
+            <input type="text" class="form-control" asp-for="Huisnummer" placeholder="Huisnummer" id="huisnummer">
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Postcode"></label>
-                <input type="text" class="form-control" asp-for="Postcode" placeholder="Postcode" id="postcode">
-            </div>
+        <div class="form-group">
+            <label asp-for="Postcode"></label>
+            <input type="text" class="form-control" asp-for="Postcode" placeholder="Postcode" id="postcode">
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input type="email" class="form-control" asp-for="Email" placeholder="Email" id="email">
-            </div>
+        <div class="form-group">
+            <label asp-for="Email"></label>
+            <input type="email" class="form-control" asp-for="Email" placeholder="Email" id="email">
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Telefoonnummer"></label>
-                <input type="tel" class="form-control" asp-for="Telefoonnummer" placeholder="Telefoonnummer" id="telefoonnummer">
-            </div>
+        <div class="form-group">
+            <label asp-for="Telefoonnummer"></label>
+            <input type="tel" class="form-control" asp-for="Telefoonnummer" placeholder="Telefoonnummer" id="telefoonnummer">
+        </div>
 
-            <div class="form-group">
-                <label asp-for="Land"></label>
-                <select class="form-control dropdown" id="land">
-                    <option value="0">Nederland</option>
-                    <option value="50">Belgi&euml;</option>
-                </select>
-            </div>
-            <button onclick="placeOrder();" class="btn btn-default">Bestel</button>
+        <div class="form-group">
+            <label asp-for="Land"></label>
+            <select class="form-control dropdown" id="land">
+                <option value="0">Nederland</option>
+                <option value="50">Belgi&euml;</option>
+            </select>
+        </div>
+        <button onclick="placeOrder()" class="btn btn-default">Bestel</button>
     </fieldset>
 </div>

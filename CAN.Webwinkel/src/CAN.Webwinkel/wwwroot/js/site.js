@@ -71,7 +71,7 @@ function restoreButton(divId) {
 
 
 function placeOrder() {
-    var shopCart = localStorage.getItem("Shopcart") ;
+    var shopCart = localStorage.getItem("Shopcart");
 
     if (shopCart !== undefined && shopCart !== null) {
         shopCart = JSON.parse(shopCart.toLowerCase());
@@ -81,17 +81,17 @@ function placeOrder() {
 
         var klantnummer = localStorage.getItem('klantnummer');
 
-        if (klantnummer !== null || klantnummer !== undefined)
-        {
+        if (klantnummer !== null || klantnummer !== undefined) {
             var klantnummer = parseInt(klantnummer);
             var bestelling = createBestelling(shopCart, klantnummer);
 
             postBestelling(bestelling);
         }
-        else
-        {
-            showHiddenMessage(false);
+        else {
+            showHiddenMessage("error", "Er is iets misgegaan bij het aanmaken van u klant gegevens.");
         }
+    } else {
+        showHiddenMessage("info", "U heeft geen artikelen in de Winkelwagen!");
     }
 }
 
@@ -132,7 +132,7 @@ function createKlant() {
         "land": value
     }
 
-    
+
 }
 
 function postBestelling(bestelling) {
@@ -141,15 +141,14 @@ function postBestelling(bestelling) {
         contentType: "application/json",
         url: "/api/Bestelling",
         data: JSON.stringify(bestelling),
-        async: false,
         success: function (data) {
             localStorage.removeItem('Shopcart');
             localStorage.removeItem('klantnummer');
 
-            showHiddenMessage(true);
+            showHiddenMessage("success", "De Bestelling is Succesvol geplaatst, u krijgt later een validatie bericht.");
         }, error: function (err) {
             console.log(err);
-            showHiddenMessage(false);
+            showHiddenMessage("error", "Er is iets misgegaan bij het plaatsen van de bestelling.");
         }
     });
 }
@@ -170,18 +169,30 @@ function postKlantData(klant) {
     })
 }
 
-function showHiddenMessage(isSuccess) {
-    var successMessage = document.getElementById("succes-message");
-    var errorMessage = document.getElementById("error-message");
+function showHiddenMessage(type, text) {
+    var message = document.getElementById("message");
 
-    if (successMessage !== undefined && successMessage !== null) {
-        if (isSuccess) {
-            document.getElementById("succes-message").style = "display:normal;";
+    if (message !== undefined && message !== null) {
+        if (type === "success") {
+            document.getElementById("message").classList.add("alert-success");
+            document.getElementById("message").classList.add("fade");
+            document.getElementById("message").classList.add("in");
+
+            document.getElementById("messageheadertext").innerHTML = "Success!"
+            document.getElementById("messagetext").innerHTML = text;
+        } else if (type === "info") {
+            document.getElementById("message").classList.add("alert-info");
+
+            document.getElementById("messageheadertext").innerHTML = "Winkelwagen Leeg!"
+            document.getElementById("messagetext").innerHTML = text;
+        }
+        else if(type === "error") {
+            document.getElementById("message").classList.add("alert-danger");
+
+            document.getElementById("messageheadertext").innerHTML = "Er is een fout opgetreden!"
+            document.getElementById("messagetext").innerHTML = text;
         }
     }
-    else if (errorMessage !== undefined && errorMessage !== null) {
-        if (!isSuccess) {
-            document.getElementById("error-message").style = "display:normal;";
-        }
-    }
+
+    document.getElementById("message").style = "display:normal;";
 }
