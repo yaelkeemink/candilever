@@ -101,8 +101,8 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie
             var secretKey = Configuration.GetValue<string>("SecretKey");
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
 
-            obj.Audience = "ExampleAudience";
-            obj.Issuer = "ExampleIssuer";
+            obj.Audience = "Kantilever";
+            obj.Issuer = "Kantilever";
             obj.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             obj.Expiration = TimeSpan.FromMinutes(30);
 
@@ -144,9 +144,9 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = signingKey,
                 ValidateIssuer = true,
-                ValidIssuer = "ExampleIssuer",
+                ValidIssuer = "Kantilever",
                 ValidateAudience = true,
-                ValidAudience = "ExampleAudience",
+                ValidAudience = "Kantilever",
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             };

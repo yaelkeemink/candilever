@@ -11,7 +11,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Data
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         /// <summary>
-        /// 
+        /// Constructor. Ensures the createing of the database
         /// </summary>
         /// <param name="options"></param>
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
