@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  case3.facade:
+  can.winkelmandjebeheer.facade:
     labels:
       - "com.microsoft.visualstudio.targetoperatingsystem=linux"
     volumes:

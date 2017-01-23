@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CAN.WinkelmandjeBeheer.Domain.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CAN.WinkelmandjeBeheer.Infrastructure.DAL
 {
     public class DatabaseContext : DbContext
     {
-        public virtual DbSet<Player> Players { get; set; }
+        public virtual DbSet<Winkelmandje> Winkelmandjes { get; set; }
 
         public DatabaseContext()
         {
@@ -16,17 +17,9 @@ namespace CAN.WinkelmandjeBeheer.Infrastructure.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Player>().Property(p => p.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Winkelmandje>().Property(p => p.Id).ValueGeneratedOnAdd();
 
             base.OnModelCreating(modelBuilder);
-        }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
-        {
-            if (!optionsBuilder.IsConfigured) 
-            {
-                optionsBuilder.UseSqlServer(@"Server=db;Database=GameServer;UserID=sa,Password=admin");
-            }
         }
     }
 }

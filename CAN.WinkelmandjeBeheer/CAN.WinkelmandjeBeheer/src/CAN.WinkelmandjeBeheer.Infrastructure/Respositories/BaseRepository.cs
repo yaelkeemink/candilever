@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using CAN.WinkelmandjeBeheer.Domain.Domain.Interfaces;
 
 namespace CAN.WinkelmandjeBeheer.Infrastructure.Infrastructure.Repositories
 {

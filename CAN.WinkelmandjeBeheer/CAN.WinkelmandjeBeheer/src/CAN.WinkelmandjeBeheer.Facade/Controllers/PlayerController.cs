@@ -3,16 +3,19 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.SwaggerGen.Annotations;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
-
+using CAN.WinkelmandjeBeheer.Domain.Interfaces;
+using Microsoft.Extensions.Logging;
+using CAN.WinkelmandjeBeheer.Facade.Facade.Errors;
+using CAN.WinkelmandjeBeheer.Domain.Domain.Entities;
 
 namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
 {
     [Route("api/[controller]")]
     public class PlayerController : Controller
     {
-        private readonly PlayerService _service;
+        private readonly IWinkelmandjeService _service;
 
-        public PlayerController(PlayerService service)
+        public PlayerController(IWinkelmandjeService service, ILogger<IWinkelmandjeService> logger)
         {
             _service = service;
         }
@@ -20,9 +23,9 @@ namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
         // POST api/values
         [HttpPost]        
         [SwaggerOperation("Post")]
-        [ProducesResponseType(typeof(Player), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
-        public IActionResult CreatePlayer([FromBody]Player player)
+        public IActionResult CreateWinkelmandje([FromBody]Winkelmandje winkelmandje)
         {
             if (!ModelState.IsValid)
             {
@@ -31,13 +34,13 @@ namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
             }
                 try
                 {
-                    var room = _service.CreatePlayer(player);
+                    var room = _service.CreateWinkelmandje(winkelmandje);
                     return Ok(room);
                 }
                 catch (Exception ex)
                 {
                     var error = new ErrorMessage(ErrorTypes.Unknown,
-                        $"Onbekende fout in create player: {player},/nException: {ex}");
+                        $"Onbekende fout in create winkelmandje: {winkelmandje},/nException: {ex}");
                     return BadRequest(error);
                 }
 
@@ -47,9 +50,9 @@ namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
         // PUT api/values/5
         [HttpPut]
         [SwaggerOperation("Update")]
-        [ProducesResponseType(typeof(Player), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
-        public IActionResult UpdatePlayer([FromBody]Player player)
+        public IActionResult UpdatePlayer([FromBody]Winkelmandje winkelmandje)
         {
             if (ModelState.IsValid)
             {
@@ -58,19 +61,19 @@ namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
             }
             try
             {
-                var room = _service.UpdatePlayer(player);
+                var room = _service.UpdateWinkelmandje(winkelmandje);
                 return Ok(room);
             }
             catch (DbUpdateException ex)
             {
                 var error = new ErrorMessage(ErrorTypes.NotFound,
-                        $"Fout met updaten in db: {player}/nException: {ex}");
+                        $"Fout met updaten in db: {winkelmandje}/nException: {ex}");
                 return NotFound(error);
             }
             catch (Exception ex)
             {
                 var error = new ErrorMessage(ErrorTypes.Unknown,
-                        $"Onbekende fout bij updaten: {player}/nException: {ex}");
+                        $"Onbekende fout bij updaten: {winkelmandje}/nException: {ex}");
                 return BadRequest(error);
             }
         }

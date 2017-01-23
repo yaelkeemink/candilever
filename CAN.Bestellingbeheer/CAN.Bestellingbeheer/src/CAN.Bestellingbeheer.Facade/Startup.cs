@@ -35,7 +35,7 @@ namespace CAN.Bestellingbeheer.Facade.Facade
             Configuration = builder.Build();
 
             Log.Logger = new LoggerConfiguration()
-                .ReadFrom.ConfigurationSection(Configuration.GetSection("Serilog"))
+                .ReadFrom.Configuration(Configuration)
                 .CreateLogger();
         }
 

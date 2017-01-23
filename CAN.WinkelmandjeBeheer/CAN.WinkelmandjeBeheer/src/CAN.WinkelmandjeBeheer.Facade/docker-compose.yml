@@ -1,10 +1,47 @@
 version: '2'
 
 services:
-  case3.facade:
-    image: user/case3.facade${TAG}
+  can.winkelmandjebeheer.facade:
+    image: candilever/can.winkelmandjebeheer.facade
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      dbconnectionstring: Server=db;Database=CAN_WinkelmandjeBeheer;User Id=sa;Password=P@55w0rd;
+      eventbus-exchangename: KantileverBus
+      eventbus-queuename: winkelmandjebeheer
+      eventbus-hostname: can-kantilever-eventbus
+      eventbus-username: Kantilever
+      eventbus-password: Kant1lever
+      logpath: /var/log/Kantilever/WinkelmandjebeheerLogging/
     ports:
-      - "80"
+      - 11300:80
+    networks:
+      can_winkelmandjebeheer_network:
+      can_main_network:
+        aliases:
+          - can-winkelmandjebeheer
+    volumes:
+      - "C:/Docker/.winkelmandjebeheerData/Log:/var/log/Kantilever/WinkelmandjebeheerLogging/"
+    links:
+     - can.winkelmandjebeheer.mssql:db
+
+  can.winkelmandjebeheer.mssql:
+    image: microsoft/mssql-server-linux
+    container_name: can_winkelmandjebeheer_mssql
+    environment:
+      ACCEPT_EULA: Y
+      SA_PASSWORD: P@55w0rd
+    networks:
+      - can_winkelmandjebeheer_network
+    ports:
+      - 11310:1433
+    volumes:
+      - "C:/Docker/.winkelmandjebeheerData/db:/var/opt/mssql/"
+
+
+networks:
+  can_main_network: 
+    external:
+      name: can_main_network
+  can_winkelmandjebeheer_network:

@@ -5,6 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using CAN.WinkelmandjeBeheer.Infrastructure.DAL;
+using CAN.WinkelmandjeBeheer.Infrastructure.Infrastructure.Repositories;
+using CAN.WinkelmandjeBeheer.Domain.Domain.Entities;
+using CAN.WinkelmandjeBeheer.Domain.DTO;
 
 namespace CAN.WinkelmandjeBeheer.Infrastructure.Test.Test
 {
@@ -39,16 +43,13 @@ namespace CAN.WinkelmandjeBeheer.Infrastructure.Test.Test
         public void TestAdd()
         {
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new WinkelmandjeRepository(new DatabaseContext(_options)))
             {
-                repo.Insert(new Player()
-                {
-                    Name = "Naam"
-                });
+                repo.Insert(new Winkelmandje());
             }
 
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new WinkelmandjeRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(1, repo.Count());
             }
@@ -57,35 +58,36 @@ namespace CAN.WinkelmandjeBeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestFind()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            var guid = Guid.NewGuid();
+            using (var repo = new WinkelmandjeRepository(new DatabaseContext(_options)))
             {
-                repo.Insert(new Player()
+                repo.Insert(new Winkelmandje()
                 {
-                    Name = "Name"
+                    WinkelmandjeNummer = guid
                 });
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new WinkelmandjeRepository(new DatabaseContext(_options)))
             {
-                var result = repo.Find(1);
-                Assert.AreEqual(1, result.Id);
-                Assert.AreEqual("Name", result.Name);
+                var result = repo.Find(guid);
+                Assert.AreEqual(guid, result.WinkelmandjeNummer);
             }
         }
         [TestMethod]
         public void TestDelete()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            var guid = Guid.NewGuid();
+            using (var repo = new WinkelmandjeRepository(new DatabaseContext(_options)))
             {
-                var player = new Player()
+                var winkelmandje = new Winkelmandje()
                 {
-                    Name = "Name"
+                    WinkelmandjeNummer = guid
                 };
-                repo.Insert(player);
-                repo.Delete(1);
+                repo.Insert(winkelmandje);
+                repo.Delete(guid);
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new WinkelmandjeRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(0, repo.Count());
             }
@@ -93,21 +95,19 @@ namespace CAN.WinkelmandjeBeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestFindAll()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            var guid = Guid.NewGuid();
+            using (var repo = new WinkelmandjeRepository(new DatabaseContext(_options)))
             {
-                var player = new Player()
+                var winkelmandje = new Winkelmandje()
                 {
-                    Name = "Entity"
+                    WinkelmandjeNummer = guid
                 };
-                repo.Insert(player);
-                player = new Player()
-                {
-                    Name = "Name"
-                };
-                repo.Insert(player);
+                repo.Insert(winkelmandje);
+                winkelmandje = new Winkelmandje();
+                repo.Insert(winkelmandje);
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new WinkelmandjeRepository(new DatabaseContext(_options)))
             {
                 Assert.AreEqual(2, repo.Count());
             }
@@ -115,23 +115,24 @@ namespace CAN.WinkelmandjeBeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestUpdate()
         {
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            var guid = Guid.NewGuid();
+            var updatedGuid = Guid.NewGuid();
+            using (var repo = new WinkelmandjeRepository(new DatabaseContext(_options)))
             {
-                var player = new Player()
+                var winkelmandje = new Winkelmandje()
                 {
-                    Name = "Entity"
+                    WinkelmandjeNummer = guid
                 };
-                repo.Insert(player);
-                player = repo.Find(1);
-                player.Name = "UpdatedName";
-                repo.Update(player);
+                repo.Insert(winkelmandje);
+                winkelmandje = repo.Find(guid);
+                winkelmandje.WinkelmandjeNummer = updatedGuid;
+                repo.Update(winkelmandje);
             }
 
-            using (var repo = new PlayerRepository(new DatabaseContext(_options)))
+            using (var repo = new WinkelmandjeRepository(new DatabaseContext(_options)))
             {
-                var player = repo.Find(1);
-                Assert.AreEqual(1, player.Id);
-                Assert.AreEqual("UpdatedName", player.Name);
+                var winkelmandje = repo.Find(updatedGuid);
+                Assert.AreEqual(updatedGuid, winkelmandje.WinkelmandjeNummer);
             }
         }
     }
