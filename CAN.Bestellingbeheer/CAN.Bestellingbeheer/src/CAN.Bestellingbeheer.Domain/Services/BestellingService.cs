@@ -31,7 +31,7 @@ namespace CAN.Bestellingbeheer.Domain.Services {
                 Klantnummer = bestelling.Klantnummer,
                 Bestellingsnummer = bestellingsnummer,
                 BestelDatum = bestelling.BestelDatum,
-                BestellingStatusNumber = (int)bestelling.Status,
+                BestellingStatusNummer = (int)bestelling.Status,
                 BestellingStatusCode = bestelling.Status.ToString(),
                 VolledigeNaam = bestelling.VolledigeNaam,
                 Adres = bestelling.Adres,
