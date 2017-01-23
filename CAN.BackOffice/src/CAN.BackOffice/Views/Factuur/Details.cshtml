@@ -1,0 +1,28 @@
+﻿@model FactuurViewModel
+@{
+    Layout = null;
+}
+
+
+<section id="klantgegevens">
+    <dl class="col-md-4">
+        <dt>@Html.DisplayNameFor(model => model.KlantNaam)</dt>
+        <dd>@Html.DisplayFor(model => model.KlantNaam)</dd>
+        <dt>@Html.DisplayNameFor(model => model.KlantAdres)</dt>
+        <dd>@Html.DisplayFor(model => model.KlantAdres) @Html.DisplayFor(model => model.KlantHuisnummer)</dd>
+        <dt>@Html.DisplayNameFor(model => model.KlantPostcode)</dt>
+        <dd>@Html.DisplayFor(model => model.KlantPostcode) @Html.DisplayFor(model => model.KlantWoonplaats)</dd>
+        <dt>@Html.DisplayNameFor(model => model.KlantLand)</dt>
+        <dd>@Html.DisplayFor(model => model.KlantLand)</dd>
+    </dl>
+    <img src="~/images/FactuurLogo.gif" class="col-md-offset-4 col-md-4">
+</section>
+<section id="bestellinggegevens">
+
+</section>
+<section id="totaalbedrag">
+
+</section>
+<section id="footer">
+
+</section>
