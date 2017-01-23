@@ -24,7 +24,8 @@ namespace CAN.BackOffice.Domain.Entities
 
         public IList<Artikel> Artikelen { get; set; }
         public int BestellingStatusNumber { get; set; }
-        public string BestellingStatusCode { get; set; }        
+        public string BestellingStatusCode { get; set; }
+        public int Artikelnummer { get; set; }
 
         public Bestelling()
         {

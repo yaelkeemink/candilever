@@ -183,10 +183,7 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
                 Assert.AreEqual(11, next.Bestellingsnummer);
 
             }
-
         }
-
-
 
         /// <summary>
         /// 
