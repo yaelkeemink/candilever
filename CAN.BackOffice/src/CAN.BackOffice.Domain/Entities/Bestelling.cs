@@ -13,6 +13,7 @@ namespace CAN.BackOffice.Domain.Entities
         public long Id { get; set; }
 
         public long Klantnummer { get; set; }
+        public string Klantnaam { get; set; }
 
         public long Bestellingsnummer { get; set; }
 
@@ -23,6 +24,7 @@ namespace CAN.BackOffice.Domain.Entities
         public string BestellingStatusCode { get; set; }
         public Bestelling() { }
 
+        //TODO: Klantgegevens toevoegen aan entity en event
         public Bestelling(BestellingCreatedEvent evt)
         {
             Artikelen = new List<Artikel>();

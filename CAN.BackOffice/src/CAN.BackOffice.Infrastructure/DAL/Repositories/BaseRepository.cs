@@ -33,7 +33,7 @@ namespace CAN.BackOffice.Infrastructure.DAL.Repositories
             return GetDbSet().Single(a => GetKeyFrom(a).Equals(id));
         }
 
-        public virtual IEnumerable<Entity> FindAll()
+        public virtual IQueryable<Entity> FindAll()
         {
             return GetDbSet();
         }
