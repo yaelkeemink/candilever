@@ -26,7 +26,7 @@ function addToShopCartArtikel(artikel, shopCart) {
 function getShopCartFromLocalStorage() {
     var shopCart = localStorage.getItem("Shopcart");
 
-    if (shopCart === undefined || shopCart === null || shopCart === "undefined") {
+    if (shopCart === undefined || shopCart === null) {
         shopCart = new Array();
     } else {
         shopCart = JSON.parse(localStorage.getItem("Shopcart"));
@@ -73,16 +73,25 @@ function restoreButton(divId) {
 function placeOrder() {
     var shopCart = localStorage.getItem("Shopcart") ;
 
-    if (shopCart !== undefined && shopCart !== null && shopCart !== "undefined") {
+    if (shopCart !== undefined && shopCart !== null) {
         shopCart = JSON.parse(shopCart.toLowerCase());
         var klant = createKlant();
 
         postKlantData(klant);
 
-        var klantnummer = parseInt(localStorage.getItem('klantnummer'))
-        var bestelling = createBestelling(shopCart, klantnummer);
+        var klantnummer = localStorage.getItem('klantnummer');
 
-        postBestelling(bestelling);
+        if (klantnummer !== null || klantnummer !== undefined)
+        {
+            var klantnummer = parseInt(klantnummer);
+            var bestelling = createBestelling(shopCart, klantnummer);
+
+            postBestelling(bestelling);
+        }
+        else
+        {
+            showHiddenMessage(false);
+        }
     }
 }
 
@@ -100,7 +109,6 @@ function createNewArtikel(artikel) {
     return {
         "artikelnummer": artikel.Artikelnummer,
         "naam": artikel.Naam,
-        "prijs": artikel.Prijs,
         "aantal": 1,
         "leverancier": artikel.Leverancier,
         "leverancierCode": artikel.LeverancierCode
@@ -137,6 +145,7 @@ function postBestelling(bestelling) {
         success: function (data) {
             localStorage.removeItem('Shopcart');
             localStorage.removeItem('klantnummer');
+
             showHiddenMessage(true);
         }, error: function (err) {
             console.log(err);
