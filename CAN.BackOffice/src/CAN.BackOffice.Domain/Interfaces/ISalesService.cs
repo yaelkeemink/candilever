@@ -8,6 +8,6 @@ namespace CAN.BackOffice.Domain.Interfaces
 {
     public interface ISalesService
     {
-        IEnumerable<Bestelling> FindAllTeControlleren();
+        IEnumerable<Bestelling> FindAllTeControleren();
     }
 }

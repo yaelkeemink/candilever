@@ -18,7 +18,7 @@ namespace CAN.BackOffice.Controllers
         }
         public IActionResult Index()
         {
-            IEnumerable<Bestelling> viewModel = _salesService.FindAllTeControlleren();
+            IEnumerable<Bestelling> viewModel = _salesService.FindAllTeControleren();
             return View(viewModel);
         }
     }

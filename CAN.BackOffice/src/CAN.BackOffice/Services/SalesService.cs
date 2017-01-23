@@ -16,7 +16,7 @@ namespace CAN.BackOffice.Services
         {
             _repo = repo;
         }
-        public IEnumerable<Bestelling> FindAllTeControlleren()
+        public IEnumerable<Bestelling> FindAllTeControleren()
         {
             return _repo.FindBy(a => a.BestellingStatusCode == "Goedgekeurd")
                 .OrderByDescending(a => a.BestelDatum)
