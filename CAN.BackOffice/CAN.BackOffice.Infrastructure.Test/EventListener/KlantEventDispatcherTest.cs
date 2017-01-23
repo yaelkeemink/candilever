@@ -54,14 +54,8 @@ namespace CAN.BackOffice.Infrastructure.Test.EventListener
                     Klant klant = klantRepo.Find(klantEvent.Klantnummer);
                     Assert.IsNotNull(klant);
 
-                    Assert.AreEqual(klantEvent.Voornaam, klant.Voornaam);
-                    Assert.AreEqual(klantEvent.Achternaam, klant.Achternaam);
-                    Assert.AreEqual(klantEvent.Adres, klant.Adres);
-                    Assert.AreEqual(klantEvent.Postcode, klant.Postcode);
                     Assert.AreEqual(klantEvent.Telefoonnummer, klant.Telefoonnummer);
-                    Assert.AreEqual(klantEvent.Huisnummer, klant.Huisnummer);
                     Assert.AreEqual(klantEvent.Email, klant.Email);
-                    Assert.AreEqual(klantEvent.Land, klant.Land);
                 }
             }
         }
