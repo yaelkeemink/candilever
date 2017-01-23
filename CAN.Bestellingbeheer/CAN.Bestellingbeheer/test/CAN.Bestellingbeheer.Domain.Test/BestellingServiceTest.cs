@@ -33,7 +33,12 @@ namespace CAN.Bestellingbeheer.Domain.Test
                         Leverancier = "Batavus",
                         LeverancierCode = "BTV"
                     }
-                }
+                },
+                VolledigeNaam = "Henk de Vries",
+                Postcode = "1233 AA",
+                Adres = "Kalvestraat",
+                Huisnummer = "31",
+                Land = "Nederland"
             };
 
             var mockPublisher = new Mock<IEventPublisher>();
@@ -54,6 +59,11 @@ namespace CAN.Bestellingbeheer.Domain.Test
 
                 Assert.IsNotNull(response.Bestellingnummer);
                 Assert.AreEqual(bestelling.BestelDatum, response.BestelDatum);
+                Assert.AreEqual(bestelling.VolledigeNaam, response.VolledigeNaam);
+                Assert.AreEqual(bestelling.Postcode, response.Postcode);
+                Assert.AreEqual(bestelling.Adres, response.Adres);
+                Assert.AreEqual(bestelling.Huisnummer, response.Huisnummer);
+                Assert.AreEqual(bestelling.Land, response.Land);
 
                 Assert.IsNotNull(response.Artikelen.First().Artikelnummer);
                 Assert.AreEqual(bestelling.Artikelen.First().Naam, response.Artikelen.First().Naam);
