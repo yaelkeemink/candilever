@@ -82,5 +82,23 @@ namespace CAN.Bestellingbeheer.Domain.Services {
             _repository?.Dispose();
             _publisher?.Dispose();
         }
+
+        public Bestelling StatusNaarGoedgekeurd(long id)
+        {
+            var bestelling = _repository.Find(id);
+            if (bestelling.Status != BestelStatus.Goedgekeurd)
+            {
+                bestelling.Status = BestelStatus.Goedgekeurd;
+                _repository.Update(bestelling);
+                var statusUpdatedEvent = new BestellingStatusUpdatedEvent("can.bestellingbeheer.bestellingStatusUpdated")
+                {
+                    BestellingsNummer = bestelling.Bestellingnummer,
+                    BestellingStatusCode = bestelling.Status.ToString()
+                };
+                _publisher.Publish(statusUpdatedEvent);
+                return bestelling;
+            }
+            throw new InvalidBestelStatusException("Status staat al op goedgekeurd");
+        }
     }
 }

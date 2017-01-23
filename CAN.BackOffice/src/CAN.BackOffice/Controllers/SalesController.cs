@@ -11,6 +11,7 @@ namespace CAN.BackOffice.Controllers
     public class SalesController : Controller
     {
         private readonly ISalesService _salesService;
+        private object _service;
 
         public SalesController(ISalesService service)
         {
@@ -20,6 +21,12 @@ namespace CAN.BackOffice.Controllers
         {
             IEnumerable<Bestelling> viewModel = _salesService.FindAllTeControleren();
             return View(viewModel);
+        }
+
+        public IActionResult Goedkeuren(long id)
+        {
+            _service.BestellingGoedkeuren(id);
+            RedirectToAction("Index");
         }
     }
 }

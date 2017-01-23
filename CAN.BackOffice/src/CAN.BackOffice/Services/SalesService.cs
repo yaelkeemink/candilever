@@ -16,6 +16,12 @@ namespace CAN.BackOffice.Services
         {
             _repo = repo;
         }
+
+        public void BestellingGoedkeuren(long id)
+        {
+            
+        }
+
         public IEnumerable<Bestelling> FindAllTeControleren()
         {
             return _repo.FindBy(a => a.BestellingStatusCode == "Goedgekeurd")
