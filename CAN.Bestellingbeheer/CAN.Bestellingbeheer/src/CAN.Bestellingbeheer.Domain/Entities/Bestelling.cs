@@ -14,12 +14,22 @@ namespace CAN.Bestellingbeheer.Domain.Entities
     {
         public long Bestellingnummer { get; set; }
 
-        [Required]
-        public long Klantnummer { get; set; }
-
         public IList<Artikel> Artikelen { get; set; }
         public DateTime BestelDatum { get; set; }
         public BestelStatus Status { get; set; }
+
+        [Required]
+        public long Klantnummer { get; set; }
+        [Required]
+        public string VolledigeNaam { get; set; }
+        [Required]
+        public string Postcode { get; set; }
+        [Required]
+        public string Adres { get; set; }
+        [Required]
+        public string Huisnummer { get; set; }
+        [Required]
+        public string Land { get; set; }
 
         public Bestelling()
         {
