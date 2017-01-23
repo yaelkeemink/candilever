@@ -32,10 +32,10 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
         private readonly IAccountService _accountService;
 
         public AccountController(
-            ILoggerFactory loggerFactory,
+            ILogger<AccountController> logger,
             IOptions<TokenProviderOptions> options, IAccountService accountService)
         {
-            _logger = loggerFactory.CreateLogger<AccountController>();
+            _logger = logger;
             _options = options.Value;
             _accountService = accountService;
         }
@@ -86,7 +86,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
         [SwaggerOperation("BackOfficeRegister")]
         [AllowAnonymous]
         [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(ModelStateDictionary), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Register([FromBody]RegisterViewModel model)
         {
             if (!ModelState.IsValid)

@@ -62,7 +62,6 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
                     ClaimValueTypes.Integer64),
             };
 
-
             // Create the JWT and write it to a string
             var jwt = new JwtSecurityToken(
             issuer: _options.Issuer,
