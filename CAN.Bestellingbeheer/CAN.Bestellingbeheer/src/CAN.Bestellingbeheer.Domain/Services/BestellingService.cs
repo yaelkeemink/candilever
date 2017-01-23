@@ -31,8 +31,13 @@ namespace CAN.Bestellingbeheer.Domain.Services {
                 Klantnummer = bestelling.Klantnummer,
                 Bestellingsnummer = bestellingsnummer,
                 BestelDatum = bestelling.BestelDatum,
-                BestellingStatusNumber = (int)bestelling.Status,
-                BestellingStatusCode = bestelling.Status.ToString()                
+                BestellingStatusNummer = (int)bestelling.Status,
+                BestellingStatusCode = bestelling.Status.ToString(),
+                VolledigeNaam = bestelling.VolledigeNaam,
+                Adres = bestelling.Adres,
+                Huisnummer = bestelling.Huisnummer,
+                Postcode = bestelling.Postcode,
+                Land = bestelling.Land
             };
 
             foreach (var artikel in bestelling.Artikelen)
