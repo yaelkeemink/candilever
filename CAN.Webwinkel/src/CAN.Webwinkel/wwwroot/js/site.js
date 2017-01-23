@@ -88,10 +88,10 @@ function placeOrder() {
             postBestelling(bestelling);
         }
         else {
-            showHiddenMessage("error", "Er is iets misgegaan bij het aanmaken van u klant gegevens.");
+            showMessage("error", "Er is iets misgegaan bij het aanmaken van u klant gegevens.");
         }
     } else {
-        showHiddenMessage("info", "U heeft geen artikelen in de Winkelwagen!");
+        showMessage("info", "U heeft geen artikelen in de Winkelwagen!");
     }
 }
 
@@ -145,10 +145,10 @@ function postBestelling(bestelling) {
             localStorage.removeItem('Shopcart');
             localStorage.removeItem('klantnummer');
 
-            showHiddenMessage("success", "De Bestelling is Succesvol geplaatst, u krijgt later een validatie bericht.");
+            showMessage("success", "De Bestelling is Succesvol geplaatst.");
         }, error: function (err) {
             console.log(err);
-            showHiddenMessage("error", "Er is iets misgegaan bij het plaatsen van de bestelling.");
+            showMessage("error", "Er is iets misgegaan bij het plaatsen van de bestelling.");
         }
     });
 }
@@ -169,7 +169,7 @@ function postKlantData(klant) {
     })
 }
 
-function showHiddenMessage(type, text) {
+function showMessage(type, text) {
     var message = document.getElementById("message");
 
     if (message !== undefined && message !== null) {
