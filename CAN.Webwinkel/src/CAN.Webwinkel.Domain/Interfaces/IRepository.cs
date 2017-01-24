@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using CAN.Webwinkel.Domain.Entities;
 
 namespace CAN.Webwinkel.Domain.Interfaces
 {

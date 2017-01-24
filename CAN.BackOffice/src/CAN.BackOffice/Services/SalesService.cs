@@ -14,7 +14,7 @@ namespace CAN.BackOffice.Services
         : ISalesService
     {
         private readonly IRepository<Bestelling, long> _bestellingRepository;
-        private readonly IBestellingBeheerService _service;
+        private readonly IBestellingBeheerService _agent;
         private readonly ILogger<SalesService> _logger;
         private readonly IRepository<Klant, long> _klantRepository;
 
@@ -25,13 +25,13 @@ namespace CAN.BackOffice.Services
         {
             _bestellingRepository = bestellingRepository;
             _klantRepository = klantRepository;
-            _service = service;
+            _agent = service;
             _logger = logger;
         }
 
         public void BestellingGoedkeuren(long id)
         {            
-            var response = _service.BestellingGoedkeuren(id);
+            var response = _agent.BestellingGoedkeuren(id);
             if(response is string)
             {                
                 var bestelling = _bestellingRepository.Find(id);
@@ -56,7 +56,7 @@ namespace CAN.BackOffice.Services
 
         public void BestellingAfkeuren(long id)
         {
-            var response = _service.BestellingAfkeuren(id);
+            var response = _agent.BestellingAfkeuren(id);
             if (response is string)
             {
                 var bestelling = _bestellingRepository.Find(id);

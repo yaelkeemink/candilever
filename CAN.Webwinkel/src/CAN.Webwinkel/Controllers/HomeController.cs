@@ -13,12 +13,14 @@ namespace CAN.Webwinkel.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<ArtikelController> _logger;
-        private readonly IArtikelService _service;
+        private readonly IArtikelService _artikelService;
+        private readonly IWinkelwagenService _winkelmandjeservice;
 
-        public HomeController(ILogger<ArtikelController> logger, IArtikelService service)
+        public HomeController(ILogger<ArtikelController> logger, IArtikelService artikelService, IWinkelwagenService winkelmandjeService)
         {
             _logger = logger;
-            _service = service;
+            _artikelService = artikelService;
+            _winkelmandjeservice = winkelmandjeService;
         }
         
         [HttpGet]
@@ -32,10 +34,10 @@ namespace CAN.Webwinkel.Controllers
         public IActionResult Index(int id)
         {
             var aantalArtikelenPerPagina = 24;
-            var artikelen = _service.AlleArtikelenPerPagina(id, aantalArtikelenPerPagina)
+            var artikelen = _artikelService.AlleArtikelenPerPagina(id, aantalArtikelenPerPagina)
                 .Select(a => new ApiArtikelenModel(a))
                 .ToList();
-            int paginas = _service.AantalPaginas(aantalArtikelenPerPagina);
+            int paginas = _artikelService.AantalPaginas(aantalArtikelenPerPagina);
 
             return View(new ArtikelOverzichtModel() { Artikelen = artikelen, AantalPaginas = paginas, HuidigePaginanummer = id } );
         }
@@ -53,6 +55,12 @@ namespace CAN.Webwinkel.Controllers
         public IActionResult WettelijkeTeksten()
         {
             return View();
+        }
+        
+        public IActionResult ToonWinkelmandje(string id)
+        {
+            Winkelmandje viewModel = _winkelmandjeservice.FindWinkelmandje(id);
+            return View(viewModel);
         }
     }
 }

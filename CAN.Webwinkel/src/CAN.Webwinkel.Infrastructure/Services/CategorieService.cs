@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CAN.Webwinkel.Domain.Services
+namespace CAN.Webwinkel.Infrastructure.Services
 {
     public class CategorieService : ICategorieService
     {

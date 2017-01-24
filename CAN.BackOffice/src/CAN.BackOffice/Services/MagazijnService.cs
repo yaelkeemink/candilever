@@ -17,7 +17,7 @@ namespace CAN.BackOffice.Services
     {
         private readonly ILogger<MagazijnService> _logger;
         private readonly IRepository<Bestelling, long> _repository;
-        private readonly IBestellingBeheerService _service;
+        private readonly IBestellingBeheerService _agent;
 
         /// <summary>
         /// 
@@ -29,7 +29,7 @@ namespace CAN.BackOffice.Services
             ILogger<MagazijnService> logger)
         {
             _repository = repo;
-            _service = service;
+            _agent = service;
             _logger = logger;
         }       
 
@@ -52,7 +52,7 @@ namespace CAN.BackOffice.Services
         public void ZetBestellingOpOpgehaald(long id)
         {
             _logger.LogInformation("Bestelling op opgehaald laten zetten");
-            var response = _service.BestellingStatusOpgehaald(id);
+            var response = _agent.BestellingStatusOpgehaald(id);
             if (response is string)
             {
                 _logger.LogInformation("Response is een BestellingDTO");

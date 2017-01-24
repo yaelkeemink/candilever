@@ -12,5 +12,6 @@ namespace CAN.Webwinkel.Domain.Interfaces
         IEnumerable<Artikel> AlleArtikelen();
         IEnumerable<Artikel> AlleArtikelenPerPagina(int paginanummer, int aantalArtikelen);
         int AantalPaginas(int aantalArtikelenPerPagina);
+        string FindArtikelByArtikelNummer(long artikelnummer);
     }
 }

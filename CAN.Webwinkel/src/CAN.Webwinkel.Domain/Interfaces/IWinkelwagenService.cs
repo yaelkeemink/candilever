@@ -10,5 +10,6 @@ namespace CAN.Webwinkel.Domain.Interfaces
     {
         void Insert(Winkelmandje mandje);
         void Update(Winkelmandje mandje);
+        Winkelmandje FindWinkelmandje(string guid);
     }
 }

@@ -7,6 +7,7 @@ namespace CAN.Webwinkel.Infrastructure.DAL
     {
         public virtual DbSet<Artikel> Artikels { get; set; }
         public virtual DbSet<Categorie> Categorieen { get; set; }
+        public virtual DbSet<Winkelmandje> Winkelmandjes { get; set; }
         public WinkelDatabaseContext()
         {
             Database.EnsureCreated();
