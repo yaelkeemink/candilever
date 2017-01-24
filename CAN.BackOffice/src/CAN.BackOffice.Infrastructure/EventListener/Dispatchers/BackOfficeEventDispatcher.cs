@@ -10,7 +10,7 @@ using CAN.BackOffice.Domain.Entities;
 
 namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
 {
-    public partial class BackOfficeEventDispatcher : EventDispatcher
+    public class BackOfficeEventDispatcher : EventDispatcher
     {
         private DbContextOptions<DatabaseContext> _dbOptions;
         private ILogger _logger;
@@ -56,6 +56,40 @@ namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
             }
 
             base.EventReceived(sender, e);
+        }
+
+        public void BestellingAangemaakt(BestellingCreatedEvent evt)
+        {
+            _logger.Information($"Bestelling aangemaakt {evt.Bestellingsnummer} {evt.BestelDatum} {evt.Klantnummer}");
+            using (var context = new DatabaseContext(_dbOptions))
+            using (var repo = new BestellingRepository(context))
+            {
+                var bestelling = new Bestelling(evt);
+                repo.Insert(bestelling);
+            }
+        }
+
+        public void BestellingStatusUpdated(BestellingStatusUpdatedEvent evt)
+        {
+            _logger.Information($"Bestelling Geupdated {evt.BestellingsNummer} {evt.BestellingStatusCode}");
+            using (var context = new DatabaseContext(_dbOptions))
+            using (var repo = new BestellingRepository(context))
+            {
+                var bestelling = repo.Find(evt.BestellingsNummer);
+                bestelling.BestellingStatusCode = evt.BestellingStatusCode;
+                repo.Update(bestelling);
+            }
+        }
+
+        public void KlantAangemaakt(KlantCreatedEvent evt)
+        {
+            _logger.Debug($"Klant aangemaakt {evt.Klantnummer}");
+            using (var context = new DatabaseContext(_dbOptions))
+            using (var repo = new KlantRepository(context))
+            {
+                var klant = new Klant(evt);
+                repo.Insert(klant);
+            }
         }
 
         /// <summary>
