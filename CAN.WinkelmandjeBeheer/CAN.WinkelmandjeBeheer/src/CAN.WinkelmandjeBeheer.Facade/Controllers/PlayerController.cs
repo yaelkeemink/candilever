@@ -26,7 +26,7 @@ namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
         // POST api/values
         [HttpPost]
         [SwaggerOperation("Post")]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Winkelmandje), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
         public IActionResult CreateWinkelmandje([FromBody]Winkelmandje winkelmandje)
         {
@@ -37,9 +37,9 @@ namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
             }
             try
             {
-                var winkelmandjeNummer = _service.CreateWinkelmandje(winkelmandje);
-                _logger.LogInformation($"Winkelmandje met {winkelmandjeNummer} is aangemaakt");
-                return Ok(winkelmandjeNummer);
+                var dbWinkelmandje = _service.CreateWinkelmandje(winkelmandje);
+                _logger.LogInformation($"Winkelmandje met {dbWinkelmandje.WinkelmandjeNummer} is aangemaakt");
+                return Ok(dbWinkelmandje);
             }
             catch (Exception ex)
             {
@@ -52,7 +52,7 @@ namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
         // PUT api/values/5
         [HttpPut]
         [SwaggerOperation("Update")]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(Winkelmandje), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
         public IActionResult ArtikelToevoegen([FromBody]Winkelmandje winkelmandje)
         {
@@ -63,9 +63,9 @@ namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
             }
             try
             {
-                var winkelmandjeNummer = _service.UpdateWinkelmandje(winkelmandje);
-                _logger.LogInformation($"{winkelmandje.Artikelen.Count} artikelen zijn toegevoegd aan het winkelmandje met nummer {winkelmandjeNummer}");
-                return Ok(winkelmandjeNummer);
+                var dbWinkelmandje = _service.UpdateWinkelmandje(winkelmandje);
+                _logger.LogInformation($"{winkelmandje.Artikelen.Count} artikelen zijn toegevoegd aan het winkelmandje met nummer {dbWinkelmandje.WinkelmandjeNummer}");
+                return Ok(dbWinkelmandje);
             }
             catch (DbUpdateException ex)
             {
@@ -82,7 +82,7 @@ namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
         }
 
         [HttpPost]
-        [SwaggerOperation("Post")]
+        [SwaggerOperation("Afronden")]
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
         [Route("Finish")]

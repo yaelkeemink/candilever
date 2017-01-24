@@ -2,36 +2,30 @@
   "swagger": "2.0",
   "info": {
     "version": "v1",
-    "title": "Bestellingbeheer Service",
-    "description": "Bestellingbeheer Service voor het bestellen van artikelen",
+    "title": "Winkelmandje Service",
+    "description": "Winkelmandje Service voor het bijhouden van de winkelmandjes",
     "termsOfService": "None"
   },
   "basePath": "/",
   "paths": {
-    "/api/Bestelling": {
+    "/api/Winkelmandje": {
       "put": {
-        "tags": [ "Bestelling" ],
-        "operationId": "BestellingStatusOpgehaald",
+        "tags": [ "Winkelmandje" ],
+        "operationId": "Update",
         "consumes": [ "application/json", "text/json", "application/json-patch+json" ],
         "produces": [ "text/plain", "application/json", "text/json" ],
         "parameters": [
           {
-            "name": "bestelling",
+            "name": "winkelmandje",
             "in": "body",
             "required": false,
-            "schema": {
-              "format": "int64",
-              "type": "integer"
-            }
+            "schema": { "$ref": "#/definitions/Winkelmandje" }
           }
         ],
         "responses": {
           "200": {
             "description": "Success",
-            "schema": {
-              "format": "int32",
-              "type": "integer"
-            }
+            "schema": { "$ref": "#/definitions/Winkelmandje" }
           },
           "400": {
             "description": "Client Error",
@@ -41,23 +35,47 @@
         "deprecated": false
       },
       "post": {
-        "tags": [ "Bestelling" ],
+        "tags": [ "Winkelmandje" ],
         "operationId": "Post",
         "consumes": [ "application/json", "text/json", "application/json-patch+json" ],
         "produces": [ "text/plain", "application/json", "text/json" ],
         "parameters": [
           {
-            "name": "bestellingDTO",
+            "name": "winkelmandje",
             "in": "body",
             "required": false,
-            "schema": { "$ref": "#/definitions/BestellingDTO" }
+            "schema": { "$ref": "#/definitions/Winkelmandje" }
           }
         ],
         "responses": {
           "200": {
             "description": "Success",
-            "schema": { "$ref": "#/definitions/BestellingDTO" }
+            "schema": { "$ref": "#/definitions/Winkelmandje" }
           },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ErrorMessage" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/Winkelmandje/Finish": {
+      "post": {
+        "tags": [ "Winkelmandje" ],
+        "operationId": "Afronden",
+        "consumes": [ "application/json", "text/json", "application/json-patch+json" ],
+        "produces": [ "text/plain", "application/json", "text/json" ],
+        "parameters": [
+          {
+            "name": "bestelling",
+            "in": "body",
+            "required": false,
+            "schema": { "$ref": "#/definitions/Bestelling" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Success" },
           "400": {
             "description": "Client Error",
             "schema": { "$ref": "#/definitions/ErrorMessage" }
@@ -68,30 +86,17 @@
     }
   },
   "definitions": {
-    "BestellingDTO": {
-      "required": [ "klantnummer" ],
+    "Winkelmandje": {
       "type": "object",
       "properties": {
-        "bestellingnummer": {
+        "id": {
           "format": "int64",
           "type": "integer"
         },
-        "klantnummer": {
-          "format": "int64",
-          "type": "integer"
-        },
+        "winkelmandjeNummer": { "type": "string" },
         "artikelen": {
           "type": "array",
           "items": { "$ref": "#/definitions/ArtikelDTO" }
-        },
-        "bestelDatum": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "status": {
-          "format": "int32",
-          "enum": [ 0, 100 ],
-          "type": "integer"
         }
       }
     },
@@ -122,11 +127,36 @@
       "properties": {
         "foutType": {
           "format": "int32",
-          "enum": [ 10, 20, 30, 40 ],
+          "enum": [ 0, 10, 20, 30, 40 ],
           "type": "integer"
         },
         "foutMelding": { "type": "string" },
         "oplossing": { "type": "string" }
+      }
+    },
+    "Bestelling": {
+      "required": [ "klantnummer", "volledigeNaam", "postcode", "adres", "huisnummer", "land", "winkelmandjeNummer" ],
+      "type": "object",
+      "properties": {
+        "klantnummer": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "volledigeNaam": { "type": "string" },
+        "postcode": { "type": "string" },
+        "adres": { "type": "string" },
+        "huisnummer": { "type": "string" },
+        "land": { "type": "string" },
+        "winkelmandjeNummer": { "type": "string" },
+        "bestelDatum": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "status": {
+          "format": "int32",
+          "enum": [ 0, 100 ],
+          "type": "integer"
+        }
       }
     }
   },

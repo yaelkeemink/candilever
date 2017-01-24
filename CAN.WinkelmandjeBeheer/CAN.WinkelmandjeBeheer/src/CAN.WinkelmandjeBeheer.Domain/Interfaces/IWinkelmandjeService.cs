@@ -9,8 +9,8 @@ namespace CAN.WinkelmandjeBeheer.Domain.Interfaces
 {
     public interface IWinkelmandjeService
     {
-        string CreateWinkelmandje(Winkelmandje winkelmandje);
-        string UpdateWinkelmandje(Winkelmandje winkelmandje);
+        Winkelmandje CreateWinkelmandje(Winkelmandje winkelmandje);
+        Winkelmandje UpdateWinkelmandje(Winkelmandje winkelmandje);
         void FinishWinkelmandje(Bestelling bestelling);
         void Dispose();
     }

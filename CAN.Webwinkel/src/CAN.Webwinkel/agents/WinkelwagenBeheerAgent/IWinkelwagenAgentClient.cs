@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace CAN.Webwinkel.Agents.BestellingsAgent
+namespace CAN.Webwinkel.Agents.WinkelwagenAgent
 {
     using System;
     using System.Collections.Generic;
@@ -14,9 +14,9 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
     using Models;
 
     /// <summary>
-    /// Bestellingbeheer Service voor het bestellen van artikelen
+    /// Winkelmandje Service voor het bijhouden van de winkelmandjes
     /// </summary>
-    public partial interface IBestellingsBeheerAgent : IDisposable
+    public partial interface IWinkelwagenAgentClient : IDisposable
     {
         /// <summary>
         /// The base URI of the service.
@@ -34,7 +34,7 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
         JsonSerializerSettings DeserializationSettings { get; }
 
 
-            /// <param name='bestelling'>
+            /// <param name='winkelmandje'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -42,9 +42,9 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> BestellingStatusOpgehaaldWithHttpMessagesAsync(long? bestelling = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> UpdateWithHttpMessagesAsync(Winkelmandje winkelmandje = default(Winkelmandje), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <param name='bestellingDTO'>
+        /// <param name='winkelmandje'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -52,7 +52,17 @@ namespace CAN.Webwinkel.Agents.BestellingsAgent
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PostWithHttpMessagesAsync(BestellingDTO bestellingDTO = default(BestellingDTO), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> PostWithHttpMessagesAsync(Winkelmandje winkelmandje = default(Winkelmandje), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='bestelling'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<ErrorMessage>> AfrondenWithHttpMessagesAsync(Bestelling bestelling = default(Bestelling), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

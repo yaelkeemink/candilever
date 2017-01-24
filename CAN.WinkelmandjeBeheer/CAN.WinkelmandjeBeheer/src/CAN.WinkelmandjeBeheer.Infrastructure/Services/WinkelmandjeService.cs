@@ -4,12 +4,14 @@ using CAN.WinkelmandjeBeheer.Domain.Domain.Interfaces;
 using CAN.WinkelmandjeBeheer.Domain.DTO;
 using CAN.WinkelmandjeBeheer.Domain.Entities;
 using CAN.WinkelmandjeBeheer.Domain.Interfaces;
-using System;
-using System.Linq;
 using InfoSupport.WSA.Infrastructure;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace CAN.WinkelmandjeBeheer.Domain.Domain.Services
+namespace CAN.WinkelmandjeBeheer.Infrastructure.Services
 {
     public class WinkelmandjeService : IWinkelmandjeService, IDisposable
     {
@@ -24,19 +26,19 @@ namespace CAN.WinkelmandjeBeheer.Domain.Domain.Services
             _logger = logger;
         }
 
-        public string CreateWinkelmandje(Winkelmandje winkelmandje)
+        public Winkelmandje CreateWinkelmandje(Winkelmandje winkelmandje)
         {
             _repository.Insert(winkelmandje);
 
-            return winkelmandje.WinkelmandjeNummer;
+            return winkelmandje;
 
         }
-        public string UpdateWinkelmandje(Winkelmandje winkelmandje)
+        public Winkelmandje UpdateWinkelmandje(Winkelmandje winkelmandje)
         {
             var dbWinkelmandje = _repository.Find(winkelmandje.WinkelmandjeNummer);
             var artikelen = dbWinkelmandje.Artikelen;
 
-            
+
             foreach (var artikel in winkelmandje.Artikelen)
             {
                 var dbArtikel = artikelen.FirstOrDefault(db => db.Naam.Equals(artikel.Naam));
@@ -53,7 +55,7 @@ namespace CAN.WinkelmandjeBeheer.Domain.Domain.Services
 
             _repository.Update(dbWinkelmandje);
 
-            return dbWinkelmandje.WinkelmandjeNummer;
+            return dbWinkelmandje;
         }
 
         public void FinishWinkelmandje(Bestelling bestelling)
@@ -82,7 +84,5 @@ namespace CAN.WinkelmandjeBeheer.Domain.Domain.Services
         {
             _repository?.Dispose();
         }
-
-
     }
 }

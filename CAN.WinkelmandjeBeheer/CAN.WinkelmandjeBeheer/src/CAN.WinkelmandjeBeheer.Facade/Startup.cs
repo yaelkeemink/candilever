@@ -11,9 +11,9 @@ using System;
 using CAN.WinkelmandjeBeheer.Domain.Domain.Interfaces;
 using CAN.WinkelmandjeBeheer.Infrastructure.Infrastructure.Repositories;
 using CAN.WinkelmandjeBeheer.Domain.Domain.Entities;
-using CAN.WinkelmandjeBeheer.Domain.Domain.Services;
 using CAN.WinkelmandjeBeheer.Domain.Interfaces;
 using InfoSupport.WSA.Infrastructure;
+using CAN.WinkelmandjeBeheer.Infrastructure.Services;
 
 namespace CAN.WinkelmandjeBeheer.Facade.Facade
 {

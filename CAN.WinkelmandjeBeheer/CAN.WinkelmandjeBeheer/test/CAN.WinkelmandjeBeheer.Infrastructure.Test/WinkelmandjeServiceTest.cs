@@ -1,7 +1,7 @@
 ﻿using CAN.WinkelmandjeBeheer.Domain.Domain.Entities;
 using CAN.WinkelmandjeBeheer.Domain.Domain.Interfaces;
-using CAN.WinkelmandjeBeheer.Domain.Domain.Services;
 using CAN.WinkelmandjeBeheer.Domain.DTO;
+using CAN.WinkelmandjeBeheer.Infrastructure.Services;
 using InfoSupport.WSA.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -51,11 +51,11 @@ namespace CAN.WinkelmandjeBeheer.Infrastructure.Test
 
                 var updateMandje = service.UpdateWinkelmandje(winkelmandje);
 
-                var dbMnadje = mockRepository.Object.Find(updateMandje);
+                var dbMandje = mockRepository.Object.Find(updateMandje.WinkelmandjeNummer);
 
-                Assert.IsNotNull(dbMnadje);
-                Assert.AreEqual(1, dbMnadje.Artikelen.Count);
-                Assert.AreEqual(2, dbMnadje.Artikelen.First().Aantal);
+                Assert.IsNotNull(dbMandje);
+                Assert.AreEqual(1, dbMandje.Artikelen.Count);
+                Assert.AreEqual(2, dbMandje.Artikelen.First().Aantal);
             }
         }
         [TestMethod]
@@ -114,12 +114,12 @@ namespace CAN.WinkelmandjeBeheer.Infrastructure.Test
 
                 var updateMandje = service.UpdateWinkelmandje(newWinkelmandje);
 
-                var dbMnadje = mockRepository.Object.Find(updateMandje);
+                var dbMandje = mockRepository.Object.Find(updateMandje.WinkelmandjeNummer);
 
-                Assert.IsNotNull(dbMnadje);
-                Assert.AreEqual(2, dbMnadje.Artikelen.Count);
-                Assert.IsTrue(dbMnadje.Artikelen.Contains(artikel));
-                Assert.IsTrue(dbMnadje.Artikelen.Contains(newArtikel));
+                Assert.IsNotNull(dbMandje);
+                Assert.AreEqual(2, dbMandje.Artikelen.Count);
+                Assert.IsTrue(dbMandje.Artikelen.Contains(artikel));
+                Assert.IsTrue(dbMandje.Artikelen.Contains(newArtikel));
             }
         }
     }
