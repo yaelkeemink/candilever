@@ -34,12 +34,14 @@ namespace CAN.WinkelmandjeBeheer.Domain.Domain.Services
         public string UpdateWinkelmandje(Winkelmandje winkelmandje)
         {
             var dbWinkelmandje = _repository.Find(winkelmandje.WinkelmandjeNummer);
+            var artikelen = dbWinkelmandje.Artikelen;
 
+            
             foreach (var artikel in winkelmandje.Artikelen)
             {
-                var dbArtikel = dbWinkelmandje.Artikelen.FirstOrDefault(db => db.Naam == artikel.Naam);
+                var dbArtikel = artikelen.FirstOrDefault(db => db.Naam.Equals(artikel.Naam));
 
-                if (dbArtikel != null)
+                if (dbArtikel == null)
                 {
                     dbWinkelmandje.Artikelen.Add(artikel);
                 }
