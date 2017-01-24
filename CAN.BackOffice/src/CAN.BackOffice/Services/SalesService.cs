@@ -74,12 +74,14 @@ namespace CAN.BackOffice.Services
 
         public Klant FindKlant(long klantnummer)
         {
+            _logger.LogInformation("Zoek klant op klantnummer");
             return _klantRepository.FindBy(a => a.Klantnummer == klantnummer)
                 .Single();
         }
 
         public Bestelling FindBestelling(long id)
         {
+            _logger.LogInformation("Zoek alle bestellingen");
             return _bestellingRepository.Find(id);
         }
 
