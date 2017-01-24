@@ -6,6 +6,7 @@ using CAN.Common.Events;
 using CAN.Bestellingbeheer.Infrastructure.Services;
 using CAN.Bestellingbeheer.Infrastructure.Repositories;
 using CAN.Bestellingbeheer.Domain.Entities;
+using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace CAN.Bestellingbeheer.Infrastructure.EventListener.Dispatchers
@@ -13,14 +14,14 @@ namespace CAN.Bestellingbeheer.Infrastructure.EventListener.Dispatchers
     public class WinkelMandjeEventDispatcher : EventDispatcher
     {
         private DbContextOptions<DatabaseContext> _dbOptions;
-        private ILogger _logger;
+        private ILogger<WinkelMandjeEventDispatcher> _logger;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="options"></param>
         /// <param name="dbOptions"></param>
         /// <param name="logger"></param>
-        public WinkelMandjeEventDispatcher(BusOptions options, DbContextOptions<DatabaseContext> dbOptions, ILogger logger) : base(options)
+        public WinkelMandjeEventDispatcher(BusOptions options, DbContextOptions<DatabaseContext> dbOptions, ILogger<WinkelMandjeEventDispatcher> logger) : base(options)
         {
             _logger = logger;
             _dbOptions = dbOptions;
@@ -51,12 +52,16 @@ namespace CAN.Bestellingbeheer.Infrastructure.EventListener.Dispatchers
 
         public void WinkelMandjeAfgerond(WinkelmandjeAfgerondEvent evt)
         {
-            _logger.Debug($"Winkelmandje afgerond {evt.Timestamp} {evt.WinkelmandjeNummer}");
+            _logger.LogDebug($"Winkelmandje afgerond {evt.Timestamp} {evt.WinkelmandjeNummer}");
+
+            var logger = new LoggerFactory()
+                .AddSerilog(Log.Logger)
+                .CreateLogger<BestellingService>();
 
             using (var publisher = new EventPublisher(base.BusOptions))
             using (var context = new DatabaseContext())
             using (var repository = new BestellingRepository(context))
-            using (var service = new BestellingService(publisher, repository, _logger))
+            using (var service = new BestellingService(publisher, repository, logger))
             {
                 Bestelling bestelling = new Bestelling(evt);
                 service.CreateBestelling(bestelling);

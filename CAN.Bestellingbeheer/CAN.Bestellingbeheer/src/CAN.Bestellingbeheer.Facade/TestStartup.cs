@@ -11,15 +11,14 @@ using CAN.Bestellingbeheer.Domain.Entities;
 using CAN.Bestellingbeheer.Infrastructure.Repositories;
 using InfoSupport.WSA.Infrastructure;
 using System;
-using CAN.Bestellingbeheer.Infrastructure.EventListener;
 using CAN.Bestellingbeheer.Infrastructure.Interfaces;
 using CAN.Bestellingbeheer.Infrastructure.Services;
 
 namespace CAN.Bestellingbeheer.Facade
 {
-    public class Startup
+    public class TestStartup
     {
-        public Startup(IHostingEnvironment env)
+        public TestStartup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -38,8 +37,6 @@ namespace CAN.Bestellingbeheer.Facade
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.ConfigurationSection(Configuration.GetSection("Serilog"))
                 .CreateLogger();
-
-            StartEventListeners();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -50,13 +47,22 @@ namespace CAN.Bestellingbeheer.Facade
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
-
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
+            
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server =.\\SQLEXPRESS;Database=DATABASENAME;Trusted_Connection=True;"));
+            services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(new BusOptions()
+            {
+                ExchangeName = "TestExchange",
+                QueueName = null,
+                HostName = "localhost",
+                Port = 5672,
+                UserName = "guest",
+                Password = "guest",
+            }));
 
             services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
             services.AddScoped<IEventPublisher, EventPublisher>(e => new EventPublisher(BusOptions.CreateFromEnvironment()));
             services.AddScoped<IBestellingService, BestellingService>();
-            
+
             services.ConfigureSwaggerGen(options =>
             {
                 options.SingleApiVersion(new Info
@@ -84,21 +90,6 @@ namespace CAN.Bestellingbeheer.Facade
 
             app.UseSwagger();
             app.UseSwaggerUi();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void StartEventListeners()
-        {
-            var logger = new LoggerFactory()
-                .AddSerilog(Log.Logger)
-                .CreateLogger<BestellingbeheerEventListener>();
-       
-            var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
-            var replayQueue = Environment.GetEnvironmentVariable("ReplayServiceQueue");
-            var listener = new BestellingbeheerEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, logger, replayQueue);
-            listener.Start();
         }
     }
 }
