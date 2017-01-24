@@ -15,7 +15,7 @@ namespace CAN.BackOffice.Services
     public class MagazijnService
         : IMagazijnService
     {
-        private readonly ILogger _logger;
+        private readonly ILogger<MagazijnService> _logger;
         private readonly IRepository<Bestelling, long> _repository;
         private readonly IBestellingBeheerService _service;
 
@@ -26,7 +26,7 @@ namespace CAN.BackOffice.Services
         /// <param name="service"></param>
         public MagazijnService(IRepository<Bestelling, long> repo, 
             IBestellingBeheerService service,
-            ILogger logger)
+            ILogger<MagazijnService> logger)
         {
             _repository = repo;
             _service = service;

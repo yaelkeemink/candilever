@@ -13,7 +13,7 @@ namespace CAN.BackOffice.Controllers
     {
         private IMagazijnService _service;
 
-        public MagazijnController(ILogger logger,
+        public MagazijnController(ILogger<MagazijnController> logger,
             IMagazijnService service) 
             : base(logger)
         {

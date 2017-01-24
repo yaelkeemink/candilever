@@ -11,9 +11,9 @@ namespace CAN.BackOffice.Controllers
     public abstract class BaseController 
         : Controller
     {
-        protected readonly ILogger _logger;
+        protected readonly ILogger<BaseController> _logger;
 
-        public BaseController(ILogger logger)
+        public BaseController(ILogger<BaseController> logger)
         {
             _logger = logger;
         }

@@ -3,14 +3,11 @@
     ViewData["Title"] = "Index";
 }
 <h2>Mijn lijsten</h2>
-<p>
-    <a class="btn btn-default" asp-action="Aanmaken">Nieuwe lijst</a>
-</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.FirstOrDefault().VolledigeNaam)
+                Klantnaam
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FirstOrDefault().TotaalPrijs)

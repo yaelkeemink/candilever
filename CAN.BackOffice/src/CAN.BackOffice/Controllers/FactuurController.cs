@@ -11,14 +11,13 @@ using CAN.BackOffice.Domain.Entities;
 
 namespace CAN.BackOffice.Controllers
 {
-    public class FactuurController : Controller, IDisposable
+    public class FactuurController : BaseController, IDisposable
     {
-        private readonly ILogger<FactuurController> _logger;
         private readonly IFactuurService _service;
 
         public FactuurController(ILogger<FactuurController> logger, IFactuurService service)
+            : base (logger)
         {
-            _logger = logger;
             _service = service;
         }
 
