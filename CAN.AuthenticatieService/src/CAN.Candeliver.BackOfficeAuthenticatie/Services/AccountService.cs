@@ -49,7 +49,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public string CreateJwtTokenForUser(ApplicationUser user)
+        public async Task<string> CreateJwtTokenForUserAsync(ApplicationUser user)
         {
             var now = DateTime.UtcNow;
             // Specifically add the jti (random nonce), iat (issued timestamp), and sub  (subject / user) claims.
@@ -59,8 +59,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
                     new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, now.Ticks.ToString(),ClaimValueTypes.Integer64),
-                    new Claim("role", "Sales" )
-                    
+                    new Claim("role", await GetUserRoles(user))                                    
             };
 
             // Create the JWT and write it to a string
@@ -76,6 +75,14 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
 
         }
 
+        private async Task<string> GetUserRoles(ApplicationUser user)
+        {
+
+            var roles = await _userManager.GetRolesAsync(user);
+            
+            return string.Join(",", roles);
+        }
+
         /// <summary>
         /// Creates a user
         /// </summary>
@@ -84,7 +91,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         /// <param name="password"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        public async Task<ApplicationUser> Register(string username, string password, string role)
+        public async Task<ApplicationUser> RegisterAsync(string username, string password, string role)
         {
             var user = new ApplicationUser { UserName = username};
 
@@ -94,7 +101,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
 
-                var addToRoleResult = await AddRole(user, role);
+                var addToRoleResult = await AddRoleAsync(user, role);
                 if (addToRoleResult)
                 {
                     _logger.LogInformation(3, "User created a new account with password.");
@@ -144,7 +151,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         /// <param name="userClaim"></param>
         /// <returns></returns>
         public Task<ApplicationUser> GetUserAsync(ClaimsPrincipal userClaim)
-        {
+        {           
             return _userManager.GetUserAsync(userClaim);
         }
 
@@ -155,7 +162,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         /// <param name="user"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        public async Task<bool> AddRole(ApplicationUser user, string role)
+        public async Task<bool> AddRoleAsync(ApplicationUser user, string role)
         {
             var userRole = await _roleManager.FindByNameAsync(role);
             if (userRole == null)

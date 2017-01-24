@@ -15,12 +15,12 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        string CreateJwtTokenForUser(ApplicationUser user);
+        Task<string> CreateJwtTokenForUserAsync(ApplicationUser user);
         
-        Task<ApplicationUser> Register(string username, string password, string role);
+        Task<ApplicationUser> RegisterAsync(string username, string password, string role);
         Task<ClaimsIdentity> GetIdentityAsync(string username, string password);
         Task<ApplicationUser> GetUserAsync(ClaimsPrincipal userClaim);
 
-        Task<bool> AddRole(ApplicationUser user, string role);
+        Task<bool> AddRoleAsync(ApplicationUser user, string role);
     }
 }

@@ -61,11 +61,11 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
                 {
                     return BadRequest("Invalid username or password.");
                 }
-
+              
                 var user = await _accountService.GetUserAsync(User);
                 var response = new LoginResult()
                 {
-                    Access_Token = _accountService.CreateJwtTokenForUser(user),
+                    Access_Token = await _accountService.CreateJwtTokenForUserAsync(user),
                     Expires_In = (int)_options.Expiration.TotalSeconds
 
                 };
@@ -96,7 +96,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
 
             try
             {
-                var result = await _accountService.Register(model.UserName, model.Password, model.Role);
+                var result = await _accountService.RegisterAsync(model.UserName, model.Password, model.Role);
                 if (result == null)
                 {
                     return BadRequest("User registration failed");
