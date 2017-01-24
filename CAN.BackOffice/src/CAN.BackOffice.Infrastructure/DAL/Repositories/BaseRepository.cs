@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using CAN.BackOffice.Domain.Interfaces;
 using CAN.BackOffice.Domain.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace CAN.BackOffice.Infrastructure.DAL.Repositories
 {
@@ -14,7 +15,7 @@ namespace CAN.BackOffice.Infrastructure.DAL.Repositories
        where Context : DbContext
        where Entity : class
     {
-        protected Context _context;
+        protected readonly Context _context;
 
         public BaseRepository(Context context)
         {
@@ -77,11 +78,6 @@ namespace CAN.BackOffice.Infrastructure.DAL.Repositories
         public virtual void Dispose()
         {
             _context.Dispose();
-        }
-
-        public virtual Bestelling FindVolgendeBestelling()
-        {
-            return null;
-        }
+        }        
     }
 }

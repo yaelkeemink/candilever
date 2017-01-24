@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CAN.BackOffice.Domain.Entities;
+using System.Linq.Expressions;
 
 namespace CAN.BackOffice.Infrastructure.DAL.Repositories
 {
@@ -23,13 +24,12 @@ namespace CAN.BackOffice.Infrastructure.DAL.Repositories
         {
             return item.Bestellingsnummer;
         }
-
-
-        public override Bestelling FindVolgendeBestelling()
+        public override IQueryable<Bestelling> FindBy(Expression<Func<Bestelling, bool>> filter)
         {
-            return GetDbSet().Where(a => a.BestellingStatusCode == "Goedgekeurd")
-                      .OrderBy(a => a.BestelDatum)
-                      .FirstOrDefault();
+            return GetDbSet().Where(filter)
+                      .OrderBy(a => a.BestelDatum);
         }
+
+        
     }
 }

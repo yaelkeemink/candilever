@@ -71,6 +71,8 @@ namespace CAN.BackOffice
             services.AddScoped<IAuthenticatieService, AuthenticatieService>(b => new AuthenticatieService() { BaseUri = new Uri("http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1") });
 
             services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
+            services.AddScoped<IRepository<Klant, long>, KlantRepository>();
+
             services.AddScoped<IMagazijnService, MagazijnService>();
             services.AddScoped<ILoginService, LoginService>();
 

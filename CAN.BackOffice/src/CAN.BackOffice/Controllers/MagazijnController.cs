@@ -5,18 +5,17 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CAN.BackOffice.Domain.Interfaces;
 using CAN.BackOffice.Domain.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace CAN.BackOffice.Controllers
 {
-    public class MagazijnController : Controller
+    public class MagazijnController : BaseController
     {
         private IMagazijnService _service;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="service"></param>
-        public MagazijnController(IMagazijnService service)
+        public MagazijnController(ILogger<MagazijnController> logger,
+            IMagazijnService service) 
+            : base(logger)
         {
             _service = service;
         }
@@ -32,12 +31,20 @@ namespace CAN.BackOffice.Controllers
         /// <returns></returns>
         public IActionResult BestellingOphalen()
         {
-            var viewModel = _service.GetVolgendeBestelling();
-            if(viewModel == null)
+            try
             {
-                return RedirectToAction("GeenBestelling");
+                var viewModel = _service.GetVolgendeBestelling();
+                if (viewModel == null)
+                {
+                    return RedirectToAction("GeenBestelling");
+                }
+                return View(viewModel);
             }
-            return View(viewModel);
+            catch (Exception e)
+            {
+                _logger.LogError($"Er is iets fout gegaan: {e}");
+                return RedirectToAction("Error");
+            }
         }
 
 
@@ -48,8 +55,22 @@ namespace CAN.BackOffice.Controllers
         /// <returns></returns>        
         public IActionResult VolgendeBestellingOphalen(int id)
         {
-            _service.ZetBestellingOpOpgehaald(id);
-            return RedirectToAction("BestellingOphalen");
+            try
+            {
+                _service.ZetBestellingOpOpgehaald(id);
+                return RedirectToAction("BestellingOphalen");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Er is iets fout gegaan: {e}");
+                return RedirectToAction("Error");
+            }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _service?.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

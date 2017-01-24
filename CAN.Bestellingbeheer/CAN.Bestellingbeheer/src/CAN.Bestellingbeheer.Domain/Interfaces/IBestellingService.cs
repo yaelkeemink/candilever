@@ -12,7 +12,9 @@ namespace CAN.Bestellingbeheer.Domain.Interfaces
         :IDisposable
     {
         int UpdateBestelling(Bestelling bestelling);
-        int StatusNaarOpgehaald(long id);
+        Bestelling StatusNaarOpgehaald(long id);
         BestellingDTO CreateBestelling(Bestelling bestelling);
+        Bestelling StatusNaarGoedgekeurd(long id);
+        Bestelling StatusNaarAfgekeurd(long id);
     }
 }
