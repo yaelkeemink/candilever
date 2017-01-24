@@ -60,6 +60,15 @@ namespace CAN.BackOffice.Controllers
                             LeverancierCode = "187acak1",
                             Prijs = 600M,
                             Id = 1
+                        },
+                        new Artikel() {
+                            Artikelnummer = 2,
+                            Artikelnaam = "Test artikel 2",
+                            Aantal = 3,
+                            Leverancier = "InfoSupport",
+                            LeverancierCode = "IS-1823",
+                            Prijs = 38.17M,
+                            Id = 2
                         }
                     }
                 };

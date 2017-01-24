@@ -37,9 +37,8 @@
             <dt>@Html.DisplayNameFor(model => model.Bestelling.Land)</dt>
             <dd>@Html.DisplayFor(model => model.Bestelling.Land)</dd>
         </dl>
-        <img src="~/images/FactuurLogo.png" class="col-md-offset-4 col-md-4">
+        <img src="~/images/FactuurLogo.png" class="factuurimage col-md-offset-4 col-md-4">
     </section>
-    <hr />
     <section id="bestellinggegevens" class="col-md-offset-1 col-md-11">
         <h2>Artikelen</h2>
         <table class="table-striped col-md-10">
@@ -71,6 +70,9 @@
     </section>
     <section id="totaalbedrag" class="col-md-offset-1 col-md-11">
         <hr />
+        @{ decimal TotaalInclusiefBtw = PrijsVanAlleArtikelen * 1.21M;}
+        <p>Totaalbedrag: &euro;@PrijsVanAlleArtikelen</p>
+        <p>Inclusief BTW: &euro;@TotaalInclusiefBtw</p>
     </section>
     <section id="footer" class="col-md-offset-1 col-md-11">
 

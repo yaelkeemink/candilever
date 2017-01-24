@@ -15,6 +15,16 @@ namespace CAN.BackOffice.Models
             Bestelling = bestelling;
         }
 
+        public string MyProperty
+        {
+            get
+            {
+                return "";
+            }
+            set
+            {
 
+            }
+        }
     }
 }
