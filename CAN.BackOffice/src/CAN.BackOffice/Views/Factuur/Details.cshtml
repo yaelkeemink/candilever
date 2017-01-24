@@ -24,11 +24,15 @@
     }
 
     @{ Artikel FirstArtikel = Model.Bestelling.Artikelen.FirstOrDefault(); }
-
-    <section id="klantgegevens" class="col-md-offset-1">
+    <img src="~/images/FactuurLogo.png" class="factuurimage col-xs-offset-1 col-xs-4">
+    <br />
+    <br />
+    <br />
+    <br />
+    <section id="klantgegevens" class="col-xs-offset-1">
         <h2 class="">Klantgegevens</h2>
-        <dl class="dl-horizontal col-md-4">
-            <dt>@Html.DisplayNameFor(model => model.Bestelling.VolledigeNaam)</dt>
+        <dl class="dl-horizontal col-xs-4">
+            <dt>Naam<dt>
             <dd>@Html.DisplayFor(model => model.Bestelling.VolledigeNaam)</dd>
             <dt>@Html.DisplayNameFor(model => model.Bestelling.Adres)</dt>
             <dd>@Html.DisplayFor(model => model.Bestelling.Adres) @Html.DisplayFor(model => model.Bestelling.Huisnummer)</dd>
@@ -37,11 +41,11 @@
             <dt>@Html.DisplayNameFor(model => model.Bestelling.Land)</dt>
             <dd>@Html.DisplayFor(model => model.Bestelling.Land)</dd>
         </dl>
-        <img src="~/images/FactuurLogo.png" class="factuurimage col-md-offset-4 col-md-4">
+        
     </section>
-    <section id="bestellinggegevens" class="col-md-offset-1 col-md-11">
+    <section id="bestellinggegevens" class="col-xs-offset-1 col-xs-11">
         <h2>Artikelen</h2>
-        <table class="table-striped col-md-10">
+        <table class="table-bordered col-xs-10">
             <thead>
                 <tr>
                     <th>@Html.DisplayNameFor(model => FirstArtikel.Artikelnummer)</th>
@@ -52,11 +56,9 @@
                 </tr>
             </thead>
             <tbody>
-                @{ var PrijsVanAlleArtikelen = 0.00M;}
                 @foreach (var artikel in Model.Bestelling.Artikelen)
                 {
                     var Totaalprijs = artikel.Aantal * artikel.Prijs;
-                    PrijsVanAlleArtikelen += Totaalprijs;
                     <tr>
                         <td>@Html.DisplayFor(model => artikel.Artikelnummer)</td>
                         <td>@Html.DisplayFor(model => artikel.Artikelnaam)</td>
@@ -68,13 +70,29 @@
             </tbody>
         </table>
     </section>
-    <section id="totaalbedrag" class="col-md-offset-1 col-md-11">
-        <hr />
-        @{ decimal TotaalInclusiefBtw = PrijsVanAlleArtikelen * 1.21M;}
-        <p>Totaalbedrag: &euro;@PrijsVanAlleArtikelen</p>
-        <p>Inclusief BTW: &euro;@TotaalInclusiefBtw</p>
+    <section id="totaalbedrag" class="col-xs-offset-1 col-xs-11">
+        <dl class="dl-horizontal col-xs-2 col-xs-offset-7">
+            <dt>Totaalbedrag</dt>
+            <dd>&euro;@Model.Totaalprijs</dd>
+            <dt>Inclusief BTW</dt>
+            <dd>&euro;@Model.TotaalPrijsInclusiefBtw</dd>
+        </dl>
     </section>
-    <section id="footer" class="col-md-offset-1 col-md-11">
-
+    <section id="footer" class="col-xs-offset-1 col-xs-11">
+        <h2>Contactgegevens</h2>
+        <dl class="dl-horizontal">
+            <dt>Adres</dt>
+            <dd>Kruisboog 42</dd>
+            <dt>Plaats</dt>
+            <dd>3905 TG Veenendaal</dd>
+            <dt>Tel</dt>
+            <dd>+31 318 552020</dd>
+            <dt>Email</dt>
+            <dd>info@kantilever.nl</dd>
+            <dt>IBAN</dt>
+            <dd>NL44 INGB 00058 54051</dd>
+            <dt>K.v.K.</dt>
+            <dd>3013 5370</dd>
+        </dl>
     </section>
 </body>

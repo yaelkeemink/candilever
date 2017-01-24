@@ -15,15 +15,25 @@ namespace CAN.BackOffice.Models
             Bestelling = bestelling;
         }
 
-        public string MyProperty
+        public decimal Totaalprijs
         {
             get
             {
-                return "";
+
+
+                return Math.Round(Bestelling.Artikelen.Sum(a => a.Prijs), 2);
             }
             set
             {
+                Totaalprijs = value;
+            }
+        }
 
+        public decimal TotaalPrijsInclusiefBtw
+        {
+            get
+            {
+                return Math.Round(Totaalprijs * 1.21M, 2);
             }
         }
     }

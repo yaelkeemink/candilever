@@ -36,45 +36,12 @@ namespace CAN.BackOffice.Controllers
             catch (InvalidOperationException e)
             {
                 _logger.LogError($"Factuur met bestellingsnummer {bestellingsnummer} is niet gevonden", e);
-
-                // Test, remove later
-                Bestelling temp = new Bestelling()
-                {
-                    VolledigeNaam = "Lars Celie",
-                    Adres = "Pythagoraslaan",
-                    Huisnummer = "113E",
-                    Woonplaats = "Utrecht",
-                    Land = "Nederland",
-                    Postcode = "3584BB",
-                    BestelDatum = new DateTime(2017, 1, 23),
-                    Bestellingsnummer = 1,
-                    Klantnummer = 1,
-                    Id = 1,
-                    Artikelen = new List<Artikel>()
-                    {
-                        new Artikel() {
-                            Artikelnummer = 1,
-                            Artikelnaam = "Test artikel",
-                            Aantal = 10,
-                            Leverancier = "Unilever",
-                            LeverancierCode = "187acak1",
-                            Prijs = 600M,
-                            Id = 1
-                        },
-                        new Artikel() {
-                            Artikelnummer = 2,
-                            Artikelnaam = "Test artikel 2",
-                            Aantal = 3,
-                            Leverancier = "InfoSupport",
-                            LeverancierCode = "IS-1823",
-                            Prijs = 38.17M,
-                            Id = 2
-                        }
-                    }
-                };
-
-                return View(new FactuurViewModel(temp));
-                //return RedirectToAction("FactuurNietGevonden");
+                return RedirectToAction("FactuurNietGevonden");
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"Onbekende fout opgetreden bij factuur details met bestellingsnummer {bestellingsnummer}", e);
+                return RedirectToAction("FactuurNietGevonden");
             }
         }
 
