@@ -15,9 +15,9 @@ namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
     public class WinkelmandjeController : Controller
     {
         private readonly IWinkelmandjeService _service;
-        private readonly ILogger<IWinkelmandjeService> _logger;
+        private readonly ILogger<WinkelmandjeController> _logger;
 
-        public WinkelmandjeController(IWinkelmandjeService service, ILogger<IWinkelmandjeService> logger)
+        public WinkelmandjeController(IWinkelmandjeService service, ILogger<WinkelmandjeController> logger)
         {
             _service = service;
             _logger = logger;
