@@ -54,7 +54,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.EventListener.Dispatchers
             _logger.Debug($"Winkelmandje afgerond {evt.Timestamp} {evt.Klantnummer}");
 
             using (var publisher = new EventPublisher(base.BusOptions))
-            using (var context = new DatabaseContext())
+            using (var context = new DatabaseContext(_dbOptions))
             using (var repository = new BestellingRepository(context))
             using (var service = new BestellingService(publisher, repository, _logger))
             {
