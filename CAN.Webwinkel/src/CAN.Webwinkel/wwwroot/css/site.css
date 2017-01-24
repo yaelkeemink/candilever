@@ -1,6 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color:rgb( 170, 178, 228);
 }
 
 /* Wrapping element */
@@ -49,6 +50,7 @@ textarea {
     font-weight: bold;
     padding: 5px 0 5px 0;
     height: 50px;
+    color:rgb(45,57,142);
 }
 
 .productvoorraad {
@@ -56,6 +58,7 @@ textarea {
     padding: 5px 0 5px 0;
     order: 1;
     margin-right: 100px;
+    color:rgb(45,57,142);
 }
 
 .productprice {
@@ -71,6 +74,7 @@ textarea {
     order: 0;
     margin-right: 20px;
     width: 100px;
+    color:rgb(45,57,142);
 }
 
 .productimg {

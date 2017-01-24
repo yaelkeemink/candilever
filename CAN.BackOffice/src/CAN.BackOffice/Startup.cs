@@ -71,7 +71,11 @@ namespace CAN.BackOffice
             services.AddScoped<IBestellingBeheerService, BestellingBeheerService>(b => new BestellingBeheerService() { BaseUri = new Uri("http://can-bestellingbeheer:80") });
 
             services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
+            services.AddScoped<IRepository<Klant, long>, KlantRepository>();
+
             services.AddScoped<IMagazijnService, MagazijnService>();
+            services.AddScoped<IFactuurService, FactuurService>();
+            services.AddScoped<ISalesService, SalesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

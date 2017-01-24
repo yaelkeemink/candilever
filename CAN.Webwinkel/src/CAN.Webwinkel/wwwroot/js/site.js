@@ -71,17 +71,27 @@ function restoreButton(divId) {
 
 
 function placeOrder() {
-    var shopCart = JSON.parse(localStorage.getItem("Shopcart").toLowerCase());
+    var shopCart = localStorage.getItem("Shopcart");
 
-    var klant = createKlant();
+    if (shopCart !== undefined && shopCart !== null) {
+        shopCart = JSON.parse(shopCart.toLowerCase());
+        var klant = createKlant();
 
-    postKlantData(klant);
+        postKlantData(klant);
 
-    var klantnummer = parseInt(localStorage.getItem('klantnummer'))
-    var bestelling = createBestelling(shopCart, klantnummer);
+        var klantnummer = localStorage.getItem('klantnummer');
 
-    if (shopCart !== undefined) {
-        postBestelling(bestelling);
+        if (klantnummer !== null || klantnummer !== undefined) {
+            var klantnummer = parseInt(klantnummer);
+            var bestelling = createBestelling(shopCart, klantnummer);
+
+            postBestelling(bestelling);
+        }
+        else {
+            showMessage("error", "Er is iets misgegaan bij het aanmaken van u klant gegevens.");
+        }
+    } else {
+        showMessage("info", "U heeft geen artikelen in de Winkelwagen!");
     }
 }
 
@@ -99,7 +109,6 @@ function createNewArtikel(artikel) {
     return {
         "artikelnummer": artikel.Artikelnummer,
         "naam": artikel.Naam,
-        "prijs": artikel.Prijs,
         "aantal": 1,
         "leverancier": artikel.Leverancier,
         "leverancierCode": artikel.LeverancierCode
@@ -123,7 +132,7 @@ function createKlant() {
         "land": value
     }
 
-    
+
 }
 
 function postBestelling(bestelling) {
@@ -132,13 +141,14 @@ function postBestelling(bestelling) {
         contentType: "application/json",
         url: "/api/Bestelling",
         data: JSON.stringify(bestelling),
-        async: false,
         success: function (data) {
             localStorage.removeItem('Shopcart');
             localStorage.removeItem('klantnummer');
-            alert("Uw bestelling is correct geplaatst");
+
+            showMessage("success", "De Bestelling is Succesvol geplaatst.");
         }, error: function (err) {
             console.log(err);
+            showMessage("error", "Er is iets misgegaan bij het plaatsen van de bestelling.");
         }
     });
 }
@@ -157,4 +167,32 @@ function postKlantData(klant) {
             console.log(data);
         }
     })
+}
+
+function showMessage(type, text) {
+    var message = document.getElementById("message");
+
+    if (message !== undefined && message !== null) {
+        if (type === "success") {
+            document.getElementById("message").classList.add("alert-success");
+            document.getElementById("message").classList.add("fade");
+            document.getElementById("message").classList.add("in");
+
+            document.getElementById("messageheadertext").innerHTML = "Success!"
+            document.getElementById("messagetext").innerHTML = text;
+        } else if (type === "info") {
+            document.getElementById("message").classList.add("alert-info");
+
+            document.getElementById("messageheadertext").innerHTML = "Winkelwagen Leeg!"
+            document.getElementById("messagetext").innerHTML = text;
+        }
+        else if(type === "error") {
+            document.getElementById("message").classList.add("alert-danger");
+
+            document.getElementById("messageheadertext").innerHTML = "Er is een fout opgetreden!"
+            document.getElementById("messagetext").innerHTML = text;
+        }
+    }
+
+    document.getElementById("message").style = "display:normal;";
 }
