@@ -1,8 +1,5 @@
-﻿using CAN.Bestellingbeheer.Domain.DTO;
-using CAN.Bestellingbeheer.Domain.Entities;
+﻿using CAN.Bestellingbeheer.Domain.Entities;
 using CAN.Bestellingbeheer.Domain.Exceptions;
-using CAN.Bestellingbeheer.Domain.Interfaces;
-using CAN.Bestellingbeheer.Domain.Services;
 using InfoSupport.WSA.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

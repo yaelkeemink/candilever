@@ -5,12 +5,13 @@
   },
 
   "dependencies": {
+    "CAN.Common": "1.1.6",
+    "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
     "Microsoft.NETCore.App": {
       "type": "platform",
       "version": "1.0.1"
-    },
-    "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
-    "CAN.Common": "1.1.3"  },
+    }
+  },
 
   "frameworks": {
     "netcoreapp1.0": {

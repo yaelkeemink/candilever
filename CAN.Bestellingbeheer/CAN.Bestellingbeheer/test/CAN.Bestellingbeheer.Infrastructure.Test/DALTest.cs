@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using CAN.Bestellingbeheer.Infrastructure.DAL;
 using CAN.Bestellingbeheer.Domain.Entities;
 using CAN.Bestellingbeheer.Infrastructure.Repositories;
+using System;
 
 namespace CAN.Bestellingbeheer.Infrastructure.Test
 {
@@ -39,24 +40,39 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
         [TestMethod]
         public void TestAdd()
         {
-
             using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                repo.Insert(new Bestelling()
+                //Arrange
+                var bestelling = new Bestelling()
                 {
+                    VolledigeNaam = "Henk de Vries",
+                    Klantnummer = 5,
+                    Huisnummer = "344",
+                    Adres = "Kalvestraat",
+                    Postcode = "1234 AB",
+                    Land = "Nederland",
+                    BestelDatum = DateTime.Now,
                     Artikelen = new List<Artikel>
                     {
                         new Artikel
                         {
-                            Prijs = 2.50M
+                            Artikelnummer = 5555,
+                            Prijs = 2.50M,
+                            Naam = "Mijn artikel",
+                            Aantal = 5,
+                            Leverancier = "De fietsleverancier",
+                            LeverancierCode = "DFL",
                         }
                     }
-                });
-            }
+                };
 
+                //Act
+                repo.Insert(bestelling);
+            }
 
             using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
+                //Assert
                 Assert.AreEqual(1, repo.Count());
             }
         }
@@ -66,32 +82,64 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
         {
             using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                repo.Insert(new Bestelling()
+                //Arrange
+                var bestelling = new Bestelling()
                 {
+                    VolledigeNaam = "Henk de Vries",
+                    Klantnummer = 5,
+                    Huisnummer = "344",
+                    Adres = "Kalvestraat",
+                    Postcode = "1234 AB",
+                    Land = "Nederland",
+                    BestelDatum = DateTime.Now,
                     Artikelen = new List<Artikel>
                     {
                         new Artikel
                         {
+                            Artikelnummer = 5555,
                             Prijs = 2.50M,
-                            Naam = "Artikel 1",
-                            Aantal = 5
+                            Naam = "Mijn artikel",
+                            Aantal = 5,
+                            Leverancier = "De fietsleverancier",
+                            LeverancierCode = "DFL",
                         }
                     }
-                });
+                };
+                repo.Insert(bestelling);
             }
 
             using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                var result = repo.Find(1);
+                //Act
+                Bestelling result = repo.Find(1);
+
+                //Assert
+                Assert.IsNotNull(result);
                 Assert.AreEqual(1, result.Bestellingnummer);
-                Assert.AreEqual(2.50M, result.Artikelen.First().Prijs);
+                Assert.AreEqual("Henk de Vries", result.VolledigeNaam);
+                Assert.AreEqual(5, result.Klantnummer);
+                Assert.AreEqual("344", result.Huisnummer);
+                Assert.AreEqual("Kalvestraat", result.Adres);
+                Assert.AreEqual("1234 AB", result.Postcode);
+                Assert.AreEqual("Nederland", result.Land);
+
+                Artikel firstArtikel = result.Artikelen.First();
+                Assert.IsNotNull(firstArtikel);
+                Assert.AreEqual(5555, firstArtikel.Artikelnummer);
+                Assert.AreEqual(2.50M, firstArtikel.Prijs);
+                Assert.AreEqual("Mijn artikel", firstArtikel.Naam);
+                Assert.AreEqual(5, firstArtikel.Aantal);
+                Assert.AreEqual("De fietsleverancier", firstArtikel.Leverancier);
+                Assert.AreEqual("DFL", firstArtikel.LeverancierCode);
             }
         }
+
         [TestMethod]
         public void TestDelete()
         {
             using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
+                //Arrange
                 var bestelling = new Bestelling()
                 {
                     Artikelen = new List<Artikel>
@@ -103,19 +151,24 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                     }
                 };
                 repo.Insert(bestelling);
-                repo.Delete(1);
             }
-
+            
             using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
+                //Act
+                repo.Delete(1);
+                //Assert
                 Assert.AreEqual(0, repo.Count());
             }
+            
         }
+
         [TestMethod]
         public void TestFindAll()
         {
             using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
+                //Arrange
                 var bestelling = new Bestelling()
                 {
                     Artikelen = new List<Artikel>
@@ -127,6 +180,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                     }
                 };
                 repo.Insert(bestelling);
+
                 bestelling = new Bestelling()
                 {
                     Artikelen = new List<Artikel>
@@ -139,52 +193,91 @@ namespace CAN.Bestellingbeheer.Infrastructure.Test
                 };
                 repo.Insert(bestelling);
             }
-
             using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
+                //Act
+                IEnumerable<Bestelling> result = repo.FindAll();
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.AreEqual(2, result.Count());
                 Assert.AreEqual(2, repo.Count());
             }
         }
+
         [TestMethod]
         public void TestUpdate()
         {
             using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
+                //Arrange
                 var bestelling = new Bestelling()
                 {
+                    VolledigeNaam = "Jan Willem de Koning",
+                    Klantnummer = 6,
+                    Huisnummer = "112",
+                    Adres = "Herenweg",
+                    Postcode = "1111 AA",
+                    Land = "Belgie",
+                    BestelDatum = DateTime.Now,
                     Artikelen = new List<Artikel>
                     {
                         new Artikel
                         {
-                            Prijs = 2.50M,
-                            Naam = "Artikel 1",
-                            Aantal = 5
+                            Artikelnummer = 66,
+                            Prijs = 10,
+                            Naam = "Blauwe fiets",
+                            Aantal = 1,
+                            Leverancier = "Giant",
+                            LeverancierCode = "GT",
                         }
                     }
                 };
                 repo.Insert(bestelling);
-
-                bestelling = repo.Find(1);
-
-                var artikel = bestelling.Artikelen.First();
-                artikel.Prijs = 3.50M;
-                artikel.Naam = "Artikel 2";
-                artikel.Aantal = 10;
-                
-                repo.Update(bestelling);
             }
-
             using (var repo = new BestellingRepository(new DatabaseContext(_options)))
             {
-                var bestelling = repo.Find(1);
-                Assert.AreEqual(1, bestelling.Bestellingnummer);
+                //Act
+                Bestelling response = repo.Find(1);
 
-                var updatedArtikel = bestelling.Artikelen.First();
-                Assert.AreEqual(3.50M, updatedArtikel.Prijs);
-                Assert.AreEqual("Artikel 2", updatedArtikel.Naam);
-                Assert.AreEqual(10, updatedArtikel.Aantal);
+                response.VolledigeNaam = "Henk de Vries";
+                response.Klantnummer = 5;
+                response.Huisnummer = "344";
+                response.Adres = "Kalvestraat";
+                response.Postcode = "1234 AB";
+                response.Land = "Nederland";
+
+                var artikel = response.Artikelen.First();
+                artikel.Artikelnummer = 5555;
+                artikel.Prijs = 2.50M;
+                artikel.Naam = "Mijn artikel";
+                artikel.Aantal = 5;
+                artikel.Leverancier = "De fietsleverancier";
+                artikel.LeverancierCode = "DFL";
+                
+                repo.Update(response);
+
+                Bestelling result = repo.Find(1);
+
+                //Assert
+                Assert.IsNotNull(result);
+                Assert.AreEqual(1, result.Bestellingnummer);
+                Assert.AreEqual("Henk de Vries", result.VolledigeNaam);
+                Assert.AreEqual(5, result.Klantnummer);
+                Assert.AreEqual("344", result.Huisnummer);
+                Assert.AreEqual("Kalvestraat", result.Adres);
+                Assert.AreEqual("1234 AB", result.Postcode);
+                Assert.AreEqual("Nederland", result.Land);
+
+                Artikel firstArtikel = result.Artikelen.First();
+                Assert.IsNotNull(firstArtikel);
+                Assert.AreEqual(5555, firstArtikel.Artikelnummer);
+                Assert.AreEqual(2.50M, firstArtikel.Prijs);
+                Assert.AreEqual("Mijn artikel", firstArtikel.Naam);
+                Assert.AreEqual(5, firstArtikel.Aantal);
+                Assert.AreEqual("De fietsleverancier", firstArtikel.Leverancier);
+                Assert.AreEqual("DFL", firstArtikel.LeverancierCode);
             }
         }
-
     }
 }
