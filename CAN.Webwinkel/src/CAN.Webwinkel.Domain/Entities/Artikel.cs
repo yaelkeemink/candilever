@@ -10,7 +10,7 @@ namespace CAN.Webwinkel.Domain.Entities
     public class Artikel
     {
         public long Id { get; set; }
-        public int Artikelnummer { get; set; }
+        public long Artikelnummer { get; set; }
         public string Naam { get; set; }
         public string Beschrijving { get; set; }
         public decimal Prijs { get; set; }

@@ -18,6 +18,8 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
     {
         private DbContextOptions<WinkelDatabaseContext> _options;
         private ArtikelService service;
+        private WinkelDatabaseContext _context;
+        private ArtikelRepository _repo;
         /// <summary>
         /// 
         /// </summary>
@@ -26,8 +28,8 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
         {
             _options = TestDatabaseProvider.CreateInMemoryDatabaseOptions();
 
-            var context = new WinkelDatabaseContext(_options);
-            var repo = new ArtikelRepository(context);
+            _context = new WinkelDatabaseContext(_options);
+            _repo = new ArtikelRepository(context);
             ILogger<ArtikelService> logger = null;
             service = new ArtikelService(logger, repo);
         }
@@ -91,7 +93,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
         }
 
         [TestMethod]
-        public void AlleArtikelenPerPaginaTest()
+        public void AlleArtikelenPerPaginaOnevenAantalTest()
         {
             //Arrange
             var demo = new DemoEntities();
@@ -131,6 +133,50 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
                 Assert.AreEqual(customDamesFiets.Id, tweedeArtikelOpPagina.Id);
                 Assert.AreEqual(2, artikelenLength); // Er zijn 5 inserts gedaan er er worden 3 artikelen overgeslagen.
             }
+        }
+
+        [TestMethod]
+        public void AantalPaginasTest()
+        {
+            //Arrange
+            var demo = new DemoEntities();
+            var customHerenFiets = demo.HerenFiets;
+            customHerenFiets.Id = 4;
+
+            var customDamesFiets = demo.DamesFiets;
+            customDamesFiets.Id = 5;
+
+            using (var context = new WinkelDatabaseContext(_options))
+            using (var repo = new ArtikelRepository(context))
+            {
+                //Dubble Inserts Only for testing.
+                repo.Insert(demo.HerenFiets);
+                repo.Insert(demo.DamesFiets);
+                repo.Insert(demo.Fiets);
+
+                repo.Insert(customHerenFiets);
+                repo.Insert(customDamesFiets);
+            }
+
+            using (var context = new WinkelDatabaseContext(_options))
+            using (var repo = new ArtikelRepository(context))
+            {
+                //Act
+                var aantalArtikelenPerPagina = 4;
+                var aantalPaginas = service.AantalPaginas(aantalArtikelenPerPagina);
+               
+                //Assert
+                var expectedAantalPaginas = 2 ;
+
+                Assert.AreEqual(expectedAantalPaginas, aantalPaginas);
+            }
+        }
+
+        [ClassCleanup]
+        public void Dispose()
+        {
+            _context.Dispose();
+            _repo.Dispose();
         }
     }
 }
