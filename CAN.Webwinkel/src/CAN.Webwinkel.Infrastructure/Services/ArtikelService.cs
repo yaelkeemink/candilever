@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using CAN.Webwinkel.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
-namespace CAN.Webwinkel.Domain.Services
+namespace CAN.Webwinkel.Infrastructure.Services
 {
     public class ArtikelService : IArtikelService
     {
@@ -54,6 +54,14 @@ namespace CAN.Webwinkel.Domain.Services
                 aantalPaginas++;
             }
             return aantalPaginas;
+        }
+
+        public string FindArtikelByArtikelNummer(long artikelnummer)
+        {
+            return _repository.FindBy(a => a.Artikelnummer == artikelnummer)
+                .Single()
+                .Prijs
+                .ToString();
         }
     }
 }

@@ -1,14 +1,7 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using CAN.Webwinkel.Infrastructure.DAL.Repositories;
-using CAN.Webwinkel.Domain.Entities;
 using CAN.Webwinkel.Domain.Interfaces;
-using CAN.Webwinkel.Domain.Services;
 using CAN.Webwinkel.Models;
 using Swashbuckle.SwaggerGen.Annotations;
 using System.Net;

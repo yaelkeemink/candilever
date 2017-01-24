@@ -13,15 +13,20 @@ using CAN.Webwinkel.Domain.Interfaces;
 namespace CAN.Webwinkel.Controllers
 {
     [Route("api/[controller]")]
-    public class WinkelwagenController : Controller
+    public class WinkelmandjeController : Controller
     {
         private readonly IWinkelwagenAgentClient _agent;
-        private readonly IWinkelwagenService _service;
+        private readonly IWinkelwagenService _winkelwagenService;
+        private readonly IArtikelService _artikelService;
 
-        public WinkelwagenController(IWinkelwagenAgentClient agent, IWinkelwagenService service)
+
+        public WinkelmandjeController(IWinkelwagenAgentClient agent, 
+            IWinkelwagenService winkelwagenService, 
+            IArtikelService artikelService)
         {
             _agent = agent;
-            _service = service;
+            _winkelwagenService = winkelwagenService;
+            _artikelService = artikelService;
         }
 
         [HttpPost]
@@ -32,13 +37,14 @@ namespace CAN.Webwinkel.Controllers
             if (ModelState.IsValid)
             {
                 try
-                {
+                {                    
+                    winkelmandje.Artikelen.First().Prijs = _artikelService.FindArtikelByArtikelNummer((long)winkelmandje.Artikelen.Single().Artikelnummer);
                     var apiResponse = _agent.Post(winkelmandje);
                     if (apiResponse is Winkelmandje)
                     {
                         var winkelmandjeModel = apiResponse as Winkelmandje;
                         var mapping = Mappers.WinkelmandjeMapper.Map(winkelmandjeModel);
-                        _service.Insert(mapping);
+                        _winkelwagenService.Insert(mapping);
                         return Ok(mapping.WinkelmandjeNummer);
                     }
                     return BadRequest(apiResponse);
@@ -67,7 +73,7 @@ namespace CAN.Webwinkel.Controllers
                     {
                         var winkelmandjeModel = apiResponse as Winkelmandje;
                         var mapping = Mappers.WinkelmandjeMapper.Map(winkelmandjeModel);
-                        _service.Update(mapping);
+                        _winkelwagenService.Update(mapping);
                         return Ok(mapping.WinkelmandjeNummer);
                     }
                     return BadRequest(apiResponse);

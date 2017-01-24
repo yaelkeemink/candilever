@@ -4,17 +4,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
-namespace CAN.Webwinkel.Domain.Services
+namespace CAN.Webwinkel.Infrastructure.Services
 {
-    public class WinkelwagenService : IWinkelwagenService
+    public class WinkelmandjeService : IWinkelwagenService
     {
         private readonly IRepository<Winkelmandje, string> _repository;
 
-        public WinkelwagenService(IRepository<Winkelmandje, string> repository)
+        public WinkelmandjeService(IRepository<Winkelmandje, string> repository)
         {
             _repository = repository;
         }
+
+        public Winkelmandje FindWinkelmandje(string guid)
+        {
+            return _repository.FindBy(a => a.WinkelmandjeNummer == guid)                
+                .Single();
+        }
+
         public void Insert(Winkelmandje mandje)
         {
             _repository.Insert(mandje);

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -15,13 +12,13 @@ using Serilog;
 using CAN.Webwinkel.Infrastructure.EventListener;
 using InfoSupport.WSA.Infrastructure;
 using CAN.Webwinkel.Domain.Interfaces;
-using CAN.Webwinkel.Domain.Services;
 using CAN.Webwinkel.Domain.Entities;
 using CAN.Webwinkel.Infrastructure.DAL.Repositories;
 using CAN.Webwinkel.Infrastructure.DAL;
 using Swashbuckle.Swagger.Model;
 using CAN.Webwinkel.Agents.KlantAgent;
 using CAN.Webwinkel.Agents.WinkelwagenAgent;
+using CAN.Webwinkel.Infrastructure.Services;
 
 namespace CAN.Webwinkel
 {
