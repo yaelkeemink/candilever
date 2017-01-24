@@ -61,7 +61,7 @@ namespace CAN.BackOffice
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<DatabaseContext>()
                 .AddDefaultTokenProviders();
-            
+
             services.AddMvc();
 
             // Add application services.
@@ -124,10 +124,23 @@ namespace CAN.BackOffice
         /// </summary>
         private void StartEventListeners()
         {
-            var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
+            var dbconnectionString = "Server =.\\SQLEXPRESS;Database=DATABASENAME;Trusted_Connection=True;";
             var locker = new EventListenerLock();
-            var replayQueue = Environment.GetEnvironmentVariable("ReplayServiceQueue");
-            var listener = new BackofficeEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, Log.Logger, replayQueue, locker);
+            var replayQueue = "ReplayServiceQueue";
+            var listener = new BackofficeEventListener(new BusOptions()
+            {
+                ExchangeName = "TestExchange",
+                QueueName = null,
+                HostName = "localhost",
+                Port = 5672,
+                UserName = "guest",
+                Password = "guest",
+            },
+                dbconnectionString,
+                Log.Logger,
+                replayQueue,
+                locker
+            );
             listener.Start();
             // wachten
             Log.Logger.Information("Waiting for release startup lock");

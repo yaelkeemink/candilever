@@ -1,22 +1,21 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using CAN.Common.Events;
+using InfoSupport.WSA.Infrastructure;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.TestHost;
-using Newtonsoft.Json;
-using System.Net.Http;
-using System.Text;
 using System.Net;
-using InfoSupport.WSA.Infrastructure;
-using CAN.Common.Events;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace CAN.BackOffice.IntegrationTest
 {
     [TestClass]
-    public class IntegrationTest
+    public class Test
     {
+        private static int test;
         private static TestServer _server;
         private static HttpClient _client;
 
@@ -76,9 +75,8 @@ namespace CAN.BackOffice.IntegrationTest
         }
 
         [TestMethod]
-        public async Task GetFactuurDetails()
+        public async Task TestMethod()
         {
-
             // Arrange
             //var json = JsonConvert.SerializeObject(null);
 
