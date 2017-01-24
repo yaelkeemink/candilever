@@ -40,6 +40,7 @@ namespace CAN.Backoffice.Facade.Test
             var result = target.BestellingOphalen();
 
             // Assert
+            Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(ViewResult));
             var view = result as ViewResult;
 
