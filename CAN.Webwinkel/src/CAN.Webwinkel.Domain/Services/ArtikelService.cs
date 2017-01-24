@@ -42,6 +42,7 @@ namespace CAN.Webwinkel.Domain.Services
             {
                 paginanummer = paginas;
             }
+
             return _repository.FindAll().Skip((paginanummer - 1) * aantalArtikelen).Take(aantalArtikelen);
         }
 
