@@ -1,0 +1,64 @@
+﻿@model SalesDetailsViewModel
+
+<div>
+    <a class="btn btn-default" asp-action="Index" asp-route-id="@Model.Id">Terug</a> |
+    <a class="btn btn-danger" asp-action="Goedkeuren" asp-route-id="@Model.Id">Goedkeuren</a> |
+    <a class="btn btn-succes" asp-action="Afkeuren" asp-route-id="@Model.Id">Afkeuren</a>
+</div>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.DisplayNameFor(model => model.VolledigeNaam)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.VolledigeNaam)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Telefoonnummer)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Telefoonnummer)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Email)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Email)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.TotaalBedrag)
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.TotaalBedrag)
+    </dd>
+    <dt>
+        @Html.DisplayNameFor(model => model.Artikelen)
+    </dt>
+    @foreach (var artikel in Model.Artikelen)
+    {     
+        <dt></dt>   
+        <dd></dd>
+        <dt>
+            @Html.DisplayNameFor(model => artikel.Artikelnaam)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => artikel.Artikelnaam)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => artikel.Prijs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => artikel.Prijs)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => artikel.Aantal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => artikel.Aantal)
+        </dd>
+    }
+</dl>
+<div>
+    <a class="btn btn-default" asp-action="Index" asp-route-id="@Model.Id">Terug</a> |
+    <a class="btn btn-danger" asp-action="Goedkeuren" asp-route-id="@Model.Id">Goedkeuren</a> |
+    <a class="btn btn-succes" asp-action="Afkeuren" asp-route-id="@Model.Id">Afkeuren</a>
+</div>
