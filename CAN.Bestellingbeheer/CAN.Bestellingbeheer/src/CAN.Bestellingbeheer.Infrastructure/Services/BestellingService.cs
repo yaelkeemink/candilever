@@ -58,7 +58,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
             return _repository.Update(bestelling);
         }
 
-        public int StatusNaarOpgehaald(long id)
+        public Bestelling StatusNaarOpgehaald(long id)
         {
             var bestelling = _repository.Find(id);
             if (bestelling.Status != BestelStatus.Opgehaald)
@@ -71,7 +71,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
                     BestellingStatusCode = bestelling.Status.ToString()
                 };
                 _publisher.Publish(statusUpdatedEvent);
-                return result;
+                return bestelling;
             }
             throw new InvalidBestelStatusException("Status staat al op opgehaald");
         }
@@ -79,6 +79,16 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
         {
             _repository?.Dispose();
             _publisher?.Dispose();
+        }
+
+        public Bestelling StatusNaarGoedgekeurd(long id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Bestelling StatusNaarAfgekeurd(long id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

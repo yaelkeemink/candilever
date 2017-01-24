@@ -7,7 +7,9 @@ namespace CAN.Bestellingbeheer.Infrastructure.Interfaces
         :IDisposable
     {
         int UpdateBestelling(Bestelling bestelling);
-        int StatusNaarOpgehaald(long id);
+        Bestelling StatusNaarOpgehaald(long id);
         void CreateBestelling(Bestelling bestelling);
+        Bestelling StatusNaarGoedgekeurd(long id);
+        Bestelling StatusNaarAfgekeurd(long id);
     }
 }
