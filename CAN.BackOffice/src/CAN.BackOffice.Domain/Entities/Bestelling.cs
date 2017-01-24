@@ -23,8 +23,9 @@ namespace CAN.BackOffice.Domain.Entities
         public DateTime BestelDatum { get; set; }
 
         public IList<Artikel> Artikelen { get; set; }
-        public int BestellingStatusNumber { get; set; }
-        public string BestellingStatusCode { get; set; }        
+        public int BestellingStatusNumber { get; set; }// <-- depricated?
+        public string BestellingStatusCode { get; set; }
+        public int Artikelnummer { get; set; }//????????
 
         public Bestelling()
         {

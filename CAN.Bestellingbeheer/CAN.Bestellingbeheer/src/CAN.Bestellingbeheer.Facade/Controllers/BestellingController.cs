@@ -30,22 +30,17 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
         [ProducesResponseType(typeof(BestellingDTO), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
         public IActionResult CreateBestelling([FromBody]BestellingDTO bestellingDTO)
-        {
-            if (!ModelState.IsValid)
-            {
-                var error = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
-
-                _logger.LogWarning("Create bestelling failed, Modelstate Invalide", bestellingDTO);
-                return BadRequest(error);
-            }
-
+        {           
             try
             {
-                Bestelling bestelling = new Bestelling(bestellingDTO);
-                var response = _service.CreateBestelling(bestelling);
+                if (ModelState.IsValid)
+                {
+                    Bestelling bestelling = new Bestelling(bestellingDTO);
+                    var response = _service.CreateBestelling(bestelling);
 
-                _logger.LogInformation("Create bestelling success", response);
-                return Ok(response);
+                    _logger.LogInformation("Create bestelling success", response);
+                    return Ok(response);
+                }                
             }
             catch (Exception ex)
             {
@@ -54,11 +49,15 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
                 _logger.LogError("Create bestelling failed, Unknown Error", bestellingDTO, ex);
                 return BadRequest(error);
             }
+            var modelstateInvalidError = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
+
+            _logger.LogWarning("Create bestelling failed, Modelstate Invalide", bestellingDTO);
+            return BadRequest(modelstateInvalidError);
         }
  
         [HttpPut]
         [SwaggerOperation("BestellingStatusOpgehaald")]
-        [ProducesResponseType(typeof(int), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(BestellingDTO), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
         public IActionResult BestellingStatusOpgehaald([FromBody]long bestelling)
         {
@@ -86,6 +85,7 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
             var InvalidModelerror = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
             return BadRequest(InvalidModelerror);
         }
+        
         protected override void Dispose(bool disposing)
         {
             _service.Dispose();

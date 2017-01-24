@@ -77,11 +77,6 @@ namespace CAN.BackOffice.Infrastructure.DAL.Repositories
         public virtual void Dispose()
         {
             _context.Dispose();
-        }
-
-        public virtual Bestelling FindVolgendeBestelling()
-        {
-            return null;
-        }
+        }        
     }
 }

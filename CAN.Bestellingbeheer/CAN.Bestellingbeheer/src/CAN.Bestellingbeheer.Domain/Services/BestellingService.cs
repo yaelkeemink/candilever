@@ -15,7 +15,9 @@ namespace CAN.Bestellingbeheer.Domain.Services {
         private readonly IEventPublisher _publisher;
         private readonly ILogger<BestellingService> _logger;
 
-        public BestellingService(IEventPublisher publisher, IRepository<Bestelling, long> repository, ILogger<BestellingService> logger)
+        public BestellingService(IEventPublisher publisher, 
+            IRepository<Bestelling, long> repository, 
+            ILogger<BestellingService> logger)
         {
             _publisher = publisher;
             _repository = repository;
@@ -60,20 +62,15 @@ namespace CAN.Bestellingbeheer.Domain.Services {
             return _repository.Update(bestelling);
         }
 
-        public int StatusNaarOpgehaald(long id)
+        public Bestelling StatusNaarOpgehaald(long id)
         {
             var bestelling = _repository.Find(id);
             if (bestelling.Status != BestelStatus.Opgehaald)
             {
                 bestelling.Status = BestelStatus.Opgehaald;
-                var result = _repository.Update(bestelling);
-                var statusUpdatedEvent = new BestellingStatusUpdatedEvent("can.bestellingbeheer.bestellingStatusUpdated")
-                {
-                    BestellingsNummer = bestelling.Bestellingnummer,
-                    BestellingStatusCode = bestelling.Status.ToString()
-                };
-                _publisher.Publish(statusUpdatedEvent);
-                return result;
+                _repository.Update(bestelling);
+                BestellingStatusUpdatedEvent(bestelling);
+                return bestelling;
             }
             throw new InvalidBestelStatusException("Status staat al op opgehaald");
         }
@@ -81,6 +78,42 @@ namespace CAN.Bestellingbeheer.Domain.Services {
         {
             _repository?.Dispose();
             _publisher?.Dispose();
+        }
+
+        public Bestelling StatusNaarGoedgekeurd(long id)
+        {
+            var bestelling = _repository.Find(id);
+            if (bestelling.Status != BestelStatus.Goedgekeurd)
+            {
+                bestelling.Status = BestelStatus.Goedgekeurd;
+                _repository.Update(bestelling);
+                BestellingStatusUpdatedEvent(bestelling);
+                return bestelling;
+            }
+            throw new InvalidBestelStatusException("Status staat al op goedgekeurd");
+        }
+
+        public Bestelling StatusNaarAfgekeurd(long id)
+        {
+            var bestelling = _repository.Find(id);
+            if (bestelling.Status != BestelStatus.Afgekeurd)
+            {
+                bestelling.Status = BestelStatus.Afgekeurd;
+                _repository.Update(bestelling);
+                BestellingStatusUpdatedEvent(bestelling);
+                return bestelling;
+            }
+            throw new InvalidBestelStatusException("Status staat al op afgekeurd");
+        }
+
+        private void BestellingStatusUpdatedEvent(Bestelling bestelling)
+        {
+            var statusUpdatedEvent = new BestellingStatusUpdatedEvent("can.bestellingbeheer.bestellingStatusUpdated")
+            {
+                BestellingsNummer = bestelling.Bestellingnummer,
+                BestellingStatusCode = bestelling.Status.ToString()
+            };
+            _publisher.Publish(statusUpdatedEvent);
         }
     }
 }
