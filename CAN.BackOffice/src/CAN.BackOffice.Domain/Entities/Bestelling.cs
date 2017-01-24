@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel;
 
 namespace CAN.BackOffice.Domain.Entities
 {
@@ -23,8 +24,9 @@ namespace CAN.BackOffice.Domain.Entities
         public DateTime BestelDatum { get; set; }
 
         public IList<Artikel> Artikelen { get; set; }
-        public int BestellingStatusNumber { get; set; }// <-- depricated?
+        public int BestellingStatusNumber { get; set; } // <-- depricated?
         public string BestellingStatusCode { get; set; }
+        public string Woonplaats { get; set; }
 
         public Bestelling()
         {

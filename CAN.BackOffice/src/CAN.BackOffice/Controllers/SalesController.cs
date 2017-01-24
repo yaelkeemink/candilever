@@ -15,7 +15,7 @@ namespace CAN.BackOffice.Controllers
     {
         private readonly ISalesService _service;
 
-        public SalesController(ILogger logger,
+        public SalesController(ILogger<SalesController> logger,
             ISalesService service) 
             : base(logger)
         {
@@ -26,7 +26,13 @@ namespace CAN.BackOffice.Controllers
         {
             try
             {
-                IEnumerable<Bestelling> viewModel = _service.FindAllTeControleren();
+                IEnumerable<Bestelling> bestellingen = _service.FindAllTeControleren();
+                List<SalesIndexViewModel> viewModel = new List<SalesIndexViewModel>();
+                foreach (var bestelling in bestellingen)
+                {
+                    viewModel.Add(bestelling);
+                }
+         
                 _logger.LogInformation("Index pagina terugsturen");
                 return View(viewModel);
             }

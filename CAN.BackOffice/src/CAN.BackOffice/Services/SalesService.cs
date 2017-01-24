@@ -15,13 +15,13 @@ namespace CAN.BackOffice.Services
     {
         private readonly IRepository<Bestelling, long> _bestellingRepository;
         private readonly IBestellingBeheerService _service;
-        private readonly ILogger _logger;
+        private readonly ILogger<SalesService> _logger;
         private readonly IRepository<Klant, long> _klantRepository;
 
         public SalesService(IRepository<Bestelling, long> bestellingRepository,
             IRepository<Klant, long> klantRepository, 
             IBestellingBeheerService service,
-            ILogger logger)
+            ILogger<SalesService> logger)
         {
             _bestellingRepository = bestellingRepository;
             _klantRepository = klantRepository;
