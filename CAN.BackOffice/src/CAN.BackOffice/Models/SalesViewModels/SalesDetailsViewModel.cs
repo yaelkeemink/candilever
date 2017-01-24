@@ -22,7 +22,7 @@ namespace CAN.BackOffice.Models.SalesViewModels
         {
             Id = bestelling.Id;
             Bestellingsnummer = bestelling.Bestellingsnummer;
-            VolledigeNaam = $"{klant.Voornaam} {klant.Tussenvoegsel} {klant.Achternaam}";
+            VolledigeNaam = bestelling.VolledigeNaam;
             Telefoonnummer = klant.Telefoonnummer;
             Email = klant.Email;
             Artikelen = bestelling.Artikelen;
