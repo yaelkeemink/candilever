@@ -44,7 +44,7 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents
         /// </param>
         Task<HttpOperationResponse<object>> BestellingStatusOpgehaaldWithHttpMessagesAsync(long? bestelling = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <param name='bestellingDTO'>
+        /// <param name='id'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -52,7 +52,17 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> PostWithHttpMessagesAsync(BestellingDTO bestellingDTO = default(BestellingDTO), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> BestellingGoedkeurenWithHttpMessagesAsync(long? id = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='id'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> BestellingAfkeurenWithHttpMessagesAsync(long? id = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

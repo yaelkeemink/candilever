@@ -46,24 +46,50 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='bestellingDTO'>
+            /// <param name='id'>
             /// </param>
-            public static object Post(this IBestellingBeheerService operations, BestellingDTO bestellingDTO = default(BestellingDTO))
+            public static object BestellingGoedkeuren(this IBestellingBeheerService operations, long? id = default(long?))
             {
-                return Task.Factory.StartNew(s => ((IBestellingBeheerService)s).PostAsync(bestellingDTO), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IBestellingBeheerService)s).BestellingGoedkeurenAsync(id), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='bestellingDTO'>
+            /// <param name='id'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> PostAsync(this IBestellingBeheerService operations, BestellingDTO bestellingDTO = default(BestellingDTO), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> BestellingGoedkeurenAsync(this IBestellingBeheerService operations, long? id = default(long?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostWithHttpMessagesAsync(bestellingDTO, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BestellingGoedkeurenWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object BestellingAfkeuren(this IBestellingBeheerService operations, long? id = default(long?))
+            {
+                return Task.Factory.StartNew(s => ((IBestellingBeheerService)s).BestellingAfkeurenAsync(id), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> BestellingAfkeurenAsync(this IBestellingBeheerService operations, long? id = default(long?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BestellingAfkeurenWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -21,10 +21,15 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents.Models
         /// <summary>
         /// Initializes a new instance of the BestellingDTO class.
         /// </summary>
-        public BestellingDTO(long klantnummer, long? bestellingnummer = default(long?), IList<ArtikelDTO> artikelen = default(IList<ArtikelDTO>), DateTime? bestelDatum = default(DateTime?), int? status = default(int?))
+        public BestellingDTO(long klantnummer, string volledigeNaam, string postcode, string adres, string huisnummer, string land, long? bestellingnummer = default(long?), IList<ArtikelDTO> artikelen = default(IList<ArtikelDTO>), DateTime? bestelDatum = default(DateTime?), int? status = default(int?))
         {
             Bestellingnummer = bestellingnummer;
             Klantnummer = klantnummer;
+            VolledigeNaam = volledigeNaam;
+            Postcode = postcode;
+            Adres = adres;
+            Huisnummer = huisnummer;
+            Land = land;
             Artikelen = artikelen;
             BestelDatum = bestelDatum;
             Status = status;
@@ -39,6 +44,31 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents.Models
         /// </summary>
         [JsonProperty(PropertyName = "klantnummer")]
         public long Klantnummer { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "volledigeNaam")]
+        public string VolledigeNaam { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "postcode")]
+        public string Postcode { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "adres")]
+        public string Adres { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "huisnummer")]
+        public string Huisnummer { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "land")]
+        public string Land { get; set; }
 
         /// <summary>
         /// </summary>
@@ -60,6 +90,26 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents.Models
         /// </summary>
         public virtual void Validate()
         {
+            if (VolledigeNaam == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "VolledigeNaam");
+            }
+            if (Postcode == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Postcode");
+            }
+            if (Adres == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Adres");
+            }
+            if (Huisnummer == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Huisnummer");
+            }
+            if (Land == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Land");
+            }
             if (this.Artikelen != null)
             {
                 foreach (var element in this.Artikelen)

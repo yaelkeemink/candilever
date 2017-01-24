@@ -58,7 +58,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
             return _repository.Update(bestelling);
         }
 
-        public int StatusNaarOpgehaald(long id)
+        public Bestelling StatusNaarOpgehaald(long id)
         {
             var bestelling = _repository.Find(id);
             if (bestelling.Status != BestelStatus.Opgehaald)
@@ -71,7 +71,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
                     BestellingStatusCode = bestelling.Status.ToString()
                 };
                 _publisher.Publish(statusUpdatedEvent);
-                return result;
+                return bestelling;
             }
             throw new InvalidBestelStatusException("Status staat al op opgehaald");
         }
@@ -79,6 +79,42 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
         {
             _repository?.Dispose();
             _publisher?.Dispose();
+        }
+
+        public Bestelling StatusNaarGoedgekeurd(long id)
+        {
+            var bestelling = _repository.Find(id);
+            if (bestelling.Status != BestelStatus.Goedgekeurd)
+            {
+                bestelling.Status = BestelStatus.Goedgekeurd;
+                _repository.Update(bestelling);
+                BestellingStatusUpdatedEvent(bestelling);
+                return bestelling;
+            }
+            throw new InvalidBestelStatusException("Status staat al op goedgekeurd");
+        }
+
+        public Bestelling StatusNaarAfgekeurd(long id)
+        {
+            var bestelling = _repository.Find(id);
+            if (bestelling.Status != BestelStatus.Afgekeurd)
+            {
+                bestelling.Status = BestelStatus.Afgekeurd;
+                _repository.Update(bestelling);
+                BestellingStatusUpdatedEvent(bestelling);
+                return bestelling;
+            }
+            throw new InvalidBestelStatusException("Status staat al op afgekeurd");
+        }
+
+        private void BestellingStatusUpdatedEvent(Bestelling bestelling)
+        {
+            var statusUpdatedEvent = new BestellingStatusUpdatedEvent("can.bestellingbeheer.bestellingStatusUpdated")
+            {
+                BestellingsNummer = bestelling.Bestellingnummer,
+                BestellingStatusCode = bestelling.Status.ToString()
+            };
+            _publisher.Publish(statusUpdatedEvent);
         }
     }
 }

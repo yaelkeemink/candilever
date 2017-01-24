@@ -28,10 +28,37 @@
         "responses": {
           "200": {
             "description": "Success",
+            "schema": { "type": "string" }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ErrorMessage" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/Sales": {
+      "put": {
+        "tags": [ "Sales" ],
+        "operationId": "BestellingGoedkeuren",
+        "consumes": [ "application/json", "text/json", "application/json-patch+json" ],
+        "produces": [ "text/plain", "application/json", "text/json" ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "body",
+            "required": false,
             "schema": {
-              "format": "int32",
+              "format": "int64",
               "type": "integer"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "type": "string" }
           },
           "400": {
             "description": "Client Error",
@@ -41,22 +68,25 @@
         "deprecated": false
       },
       "post": {
-        "tags": [ "Bestelling" ],
-        "operationId": "Post",
+        "tags": [ "Sales" ],
+        "operationId": "BestellingAfkeuren",
         "consumes": [ "application/json", "text/json", "application/json-patch+json" ],
         "produces": [ "text/plain", "application/json", "text/json" ],
         "parameters": [
           {
-            "name": "bestellingDTO",
+            "name": "id",
             "in": "body",
             "required": false,
-            "schema": { "$ref": "#/definitions/BestellingDTO" }
+            "schema": {
+              "format": "int64",
+              "type": "integer"
+            }
           }
         ],
         "responses": {
           "200": {
             "description": "Success",
-            "schema": { "$ref": "#/definitions/BestellingDTO" }
+            "schema": { "type": "string" }
           },
           "400": {
             "description": "Client Error",
@@ -68,55 +98,6 @@
     }
   },
   "definitions": {
-    "BestellingDTO": {
-      "required": [ "klantnummer" ],
-      "type": "object",
-      "properties": {
-        "bestellingnummer": {
-          "format": "int64",
-          "type": "integer"
-        },
-        "klantnummer": {
-          "format": "int64",
-          "type": "integer"
-        },
-        "artikelen": {
-          "type": "array",
-          "items": { "$ref": "#/definitions/ArtikelDTO" }
-        },
-        "bestelDatum": {
-          "format": "date-time",
-          "type": "string"
-        },
-        "status": {
-          "format": "int32",
-          "enum": [ 0, 100 ],
-          "type": "integer"
-        }
-      }
-    },
-    "ArtikelDTO": {
-      "required": [ "naam", "prijs", "aantal" ],
-      "type": "object",
-      "properties": {
-        "id": {
-          "format": "int64",
-          "type": "integer"
-        },
-        "artikelnummer": {
-          "format": "int64",
-          "type": "integer"
-        },
-        "naam": { "type": "string" },
-        "prijs": { "type": "string" },
-        "aantal": {
-          "format": "int32",
-          "type": "integer"
-        },
-        "leverancier": { "type": "string" },
-        "leverancierCode": { "type": "string" }
-      }
-    },
     "ErrorMessage": {
       "type": "object",
       "properties": {

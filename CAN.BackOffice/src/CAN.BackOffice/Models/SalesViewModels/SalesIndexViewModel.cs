@@ -1,6 +1,7 @@
 ﻿using CAN.BackOffice.Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,7 +11,6 @@ namespace CAN.BackOffice.Models.SalesViewModels
     {
         public decimal TotaalPrijs { get; set; }
         public long Id { get; set; }
-
         public string VolledigeNaam { get; set; }
 
         public DateTime BestelDatum { get; set; }

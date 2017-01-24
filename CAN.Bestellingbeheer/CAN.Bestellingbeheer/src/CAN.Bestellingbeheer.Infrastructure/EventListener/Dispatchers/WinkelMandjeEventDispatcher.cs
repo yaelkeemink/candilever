@@ -51,7 +51,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.EventListener.Dispatchers
 
         public void WinkelMandjeAfgerond(WinkelmandjeAfgerondEvent evt)
         {
-            _logger.Debug($"Winkelmandje afgerond {evt.Timestamp} {evt.Klantnummer}");
+            _logger.Debug($"Winkelmandje afgerond {evt.Timestamp} {evt.WinkelmandjeNummer}");
 
             using (var publisher = new EventPublisher(base.BusOptions))
             using (var context = new DatabaseContext(_dbOptions))
