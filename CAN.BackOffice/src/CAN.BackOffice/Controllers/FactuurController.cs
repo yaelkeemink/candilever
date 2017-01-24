@@ -39,7 +39,7 @@ namespace CAN.BackOffice.Controllers
             catch (Exception e)
             {
                 _logger.LogError($"Onbekende fout opgetreden bij factuur details met bestellingsnummer {bestellingsnummer}", e);
-                return RedirectToAction("FactuurNietGevonden");
+                return RedirectToAction("Error");
             }
         }
 
