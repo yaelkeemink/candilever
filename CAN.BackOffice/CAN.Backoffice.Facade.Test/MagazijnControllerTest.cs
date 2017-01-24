@@ -28,7 +28,7 @@ namespace CAN.Backoffice.Facade.Test
                 Bestellingsnummer = 1,
                 Land = "Nederland",
             };
-            var loggerLock = new Mock<ILogger>(MockBehavior.Loose);
+            var loggerLock = new Mock<ILogger<MagazijnController>>(MockBehavior.Loose);
             var serviceMock = new Mock<IMagazijnService>(MockBehavior.Strict);
             serviceMock.Setup(s => s.GetVolgendeBestelling())
                 .Returns(bestelling);            
