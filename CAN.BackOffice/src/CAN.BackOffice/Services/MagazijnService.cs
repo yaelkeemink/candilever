@@ -53,11 +53,11 @@ namespace CAN.BackOffice.Services
         {
             _logger.LogInformation("Bestelling op opgehaald laten zetten");
             var response = _service.BestellingStatusOpgehaald(id);
-            if (response is BestellingDTO)
+            if (response is string)
             {
                 _logger.LogInformation("Response is een BestellingDTO");
                 var bestelling = _repository.Find(id);
-                bestelling.BestellingStatusCode = (response as BestellingDTO).Status.ToString();
+                bestelling.BestellingStatusCode = (response as string);
                 _repository.Update(bestelling);
                 _logger.LogInformation($"Bestelling {bestelling.Id} heeft status {bestelling.BestellingStatusCode} gekregen");
             }

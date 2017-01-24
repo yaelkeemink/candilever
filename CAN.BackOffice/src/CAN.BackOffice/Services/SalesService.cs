@@ -32,10 +32,10 @@ namespace CAN.BackOffice.Services
         public void BestellingGoedkeuren(long id)
         {            
             var response = _service.BestellingGoedkeuren(id);
-            if(response is BestellingDTO)
+            if(response is string)
             {                
                 var bestelling = _bestellingRepository.Find(id);
-                bestelling.BestellingStatusCode = (response as BestellingDTO).Status.ToString();
+                bestelling.BestellingStatusCode = (response as string);
                 _bestellingRepository.Update(bestelling);
                 _logger.LogInformation($"Bestelling geupdate met status: {bestelling.BestellingStatusCode}");
             }
@@ -57,10 +57,10 @@ namespace CAN.BackOffice.Services
         public void BestellingAfkeuren(long id)
         {
             var response = _service.BestellingAfkeuren(id);
-            if (response is BestellingDTO)
+            if (response is string)
             {
                 var bestelling = _bestellingRepository.Find(id);
-                bestelling.BestellingStatusCode = (response as BestellingDTO).Status.ToString();
+                bestelling.BestellingStatusCode = (response as string);
                 _bestellingRepository.Update(bestelling);
                 _logger.LogInformation($"Bestelling geupdate met status: {bestelling.BestellingStatusCode}");
             }

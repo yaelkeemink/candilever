@@ -33,8 +33,8 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Bestelling response = _service.StatusNaarGoedgekeurd(id);
-                    return Ok(response.Status.ToString());
+                    var response = _service.StatusNaarGoedgekeurd(id).Status.ToString();
+                    return Ok(response);
                 }
             }
             catch (DbUpdateException ex)
@@ -63,8 +63,8 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Bestelling response = _service.StatusNaarAfgekeurd(id);
-                    return Ok(response.Status.ToString());
+                    var response = _service.StatusNaarAfgekeurd(id).Status.ToString();
+                    return Ok(response);
                 }
             }
             catch (DbUpdateException ex)

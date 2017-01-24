@@ -31,8 +31,8 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var response = _service.StatusNaarOpgehaald(bestelling);
-                    return Ok(response.Status.ToString());
+                    var response = _service.StatusNaarOpgehaald(bestelling).Status.ToString();
+                    return Ok(response);
                 }
             }
             catch (DbUpdateException ex)
