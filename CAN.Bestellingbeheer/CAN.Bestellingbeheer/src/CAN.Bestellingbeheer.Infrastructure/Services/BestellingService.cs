@@ -83,12 +83,38 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
 
         public Bestelling StatusNaarGoedgekeurd(long id)
         {
-            throw new NotImplementedException();
+            var bestelling = _repository.Find(id);
+            if (bestelling.Status != BestelStatus.Goedgekeurd)
+            {
+                bestelling.Status = BestelStatus.Goedgekeurd;
+                _repository.Update(bestelling);
+                BestellingStatusUpdatedEvent(bestelling);
+                return bestelling;
+            }
+            throw new InvalidBestelStatusException("Status staat al op goedgekeurd");
         }
 
         public Bestelling StatusNaarAfgekeurd(long id)
         {
-            throw new NotImplementedException();
+            var bestelling = _repository.Find(id);
+            if (bestelling.Status != BestelStatus.Afgekeurd)
+            {
+                bestelling.Status = BestelStatus.Afgekeurd;
+                _repository.Update(bestelling);
+                BestellingStatusUpdatedEvent(bestelling);
+                return bestelling;
+            }
+            throw new InvalidBestelStatusException("Status staat al op afgekeurd");
+        }
+
+        private void BestellingStatusUpdatedEvent(Bestelling bestelling)
+        {
+            var statusUpdatedEvent = new BestellingStatusUpdatedEvent("can.bestellingbeheer.bestellingStatusUpdated")
+            {
+                BestellingsNummer = bestelling.Bestellingnummer,
+                BestellingStatusCode = bestelling.Status.ToString()
+            };
+            _publisher.Publish(statusUpdatedEvent);
         }
     }
 }
