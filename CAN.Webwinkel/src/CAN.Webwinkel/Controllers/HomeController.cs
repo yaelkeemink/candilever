@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using CAN.Webwinkel.Domain.Interfaces;
 using CAN.Webwinkel.Models;
 using CAN.Webwinkel.Domain.Entities;
+using CAN.Webwinkel.Models.HomeViewModels;
 
 namespace CAN.Webwinkel.Controllers
 {
@@ -59,7 +60,7 @@ namespace CAN.Webwinkel.Controllers
         
         public IActionResult ToonWinkelmandje(string id)
         {
-            Winkelmandje viewModel = _winkelmandjeservice.FindWinkelmandje(id);
+            WinkelmandjeViewModel viewModel = new WinkelmandjeViewModel(_winkelmandjeservice.FindWinkelmandje(id));
             return View(viewModel);
         }
     }

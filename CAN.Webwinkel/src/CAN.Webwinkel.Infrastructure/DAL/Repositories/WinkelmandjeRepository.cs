@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 
 namespace CAN.Webwinkel.Infrastructure.DAL.Repositories
 {
@@ -27,7 +28,7 @@ namespace CAN.Webwinkel.Infrastructure.DAL.Repositories
 
         public override IEnumerable<Winkelmandje> FindBy(Expression<Func<Winkelmandje, bool>> filter)
         {
-            return GetDbSet()
+            return GetDbSet().Include(a => a.Artikelen)
                 .Where(filter);
         }
     }
