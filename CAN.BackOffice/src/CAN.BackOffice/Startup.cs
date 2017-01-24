@@ -75,7 +75,7 @@ namespace CAN.BackOffice
 
             services.AddScoped<IMagazijnService, MagazijnService>();
             services.AddScoped<ILoginService, LoginService>();
-
+            services.AddScoped<ISalesService, SalesService>();
 
 
             services.AddSwaggerGen();
@@ -121,12 +121,15 @@ namespace CAN.BackOffice
 
             app.UseJwtBearerAuthentication(new JwtBearerOptions
             {
+               
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
                 TokenValidationParameters = tokenValidationParameters
             });
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
+                LoginPath = "/Login/LoginAction",
+                AccessDeniedPath = "/Login/AccesDenied",
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
                 AuthenticationScheme = "Cookie",
@@ -162,7 +165,7 @@ namespace CAN.BackOffice
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Login}/{action=Login}");
+                    template: "{controller=Login}/{action=LoginAction}");
             });
         }
 

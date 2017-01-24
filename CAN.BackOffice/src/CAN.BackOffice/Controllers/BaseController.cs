@@ -26,5 +26,10 @@ namespace CAN.BackOffice.Controllers
         {
             return View();
         }
+
+        public IActionResult AccesDenied(string ReturnUrl)
+        {
+            return Redirect("/Login/LoginAction");
+        }
     }
 }

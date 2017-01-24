@@ -16,15 +16,13 @@ namespace CAN.BackOffice.Controllers
 {
 
 
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
-        private readonly ILogger _logger;
         private readonly ILoginService _loginService;
 
-        public LoginController(ILoginService loginService, ILogger<LoginController> logger)
+        public LoginController(ILoginService loginService, ILogger<LoginController> logger) : base(logger)
         {
             _loginService = loginService;
-            _logger = logger;
         }
 
         [AllowAnonymous]
@@ -38,7 +36,7 @@ namespace CAN.BackOffice.Controllers
 
                 if (User.IsInRole("Sales"))
                 {
-                    return Redirect("/Sales");
+                    return Redirect("/Sales/Index");
                 }
                 else if (User.IsInRole("Magazijn"))
                 {

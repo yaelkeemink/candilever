@@ -257,7 +257,7 @@ namespace CAN.BackOffice.Agents.AuthenticatieAgents.Agents
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<string>(_responseContent, this.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<ErrorResult>(_responseContent, this.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

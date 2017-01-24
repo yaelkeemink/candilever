@@ -52,12 +52,12 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
         [SwaggerOperation("BackOfficeLogin")]
         [AllowAnonymous]
         [ProducesResponseType(typeof(LoginResult), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResult), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Login([FromBody]LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest("Bad credentials");
+                return BadRequest(new ErrorResult() { ErrorMessage = "Onvolledige input" });
             }
             try
             {
@@ -65,7 +65,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
                 if (identity == null)
                 {
                     _logger.LogInformation($"Login user failed");
-                    return BadRequest("Invalid username or password.");
+                    return BadRequest(new ErrorResult() { ErrorMessage = "Verkeerde combinatie gebruikersnaam en wachtwoord" });
                 }
               
                 var user = _accountService.GetUserAsync(model.UserName);
@@ -82,7 +82,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
             {
                 _logger.LogError($"Login user failed: {e.Message}");
                 _logger.LogDebug($"Login user failed: {e.StackTrace}");
-                return BadRequest("User login exception");
+                return BadRequest(new ErrorResult() { ErrorMessage = "Login service niet bereikbaar" });
             }
 
 
