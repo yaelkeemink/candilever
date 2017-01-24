@@ -1,28 +1,27 @@
 ﻿using CAN.Bestellingbeheer.Domain.Entities;
-using CAN.Bestellingbeheer.Domain.Interfaces;
 using CAN.Common.Events;
 using InfoSupport.WSA.Infrastructure;
 using System;
-using Microsoft.Extensions.Logging;
 using CAN.Bestellingbeheer.Domain.Exceptions;
-using CAN.Bestellingbeheer.Domain.DTO;
+using CAN.Bestellingbeheer.Infrastructure.Interfaces;
+using Serilog;
 
-namespace CAN.Bestellingbeheer.Domain.Services {
+namespace CAN.Bestellingbeheer.Infrastructure.Services {
     public class BestellingService 
         : IBestellingService, IDisposable
     {
         private readonly IRepository<Bestelling, long> _repository;
         private readonly IEventPublisher _publisher;
-        private readonly ILogger<BestellingService> _logger;
+        private readonly ILogger _logger;
 
-        public BestellingService(IEventPublisher publisher, IRepository<Bestelling, long> repository, ILogger<BestellingService> logger)
+        public BestellingService(IEventPublisher publisher, IRepository<Bestelling, long> repository, ILogger logger)
         {
             _publisher = publisher;
             _repository = repository;
             _logger = logger;
         }
 
-        public BestellingDTO CreateBestelling(Bestelling bestelling)
+        public void CreateBestelling(Bestelling bestelling)
         {
             long bestellingsnummer = _repository.Insert(bestelling);
 
@@ -51,8 +50,7 @@ namespace CAN.Bestellingbeheer.Domain.Services {
                     artikel.Leverancier);
             }
 
-            _publisher.Publish(createdEvent);            
-            return new BestellingDTO(bestelling);
+            _publisher.Publish(createdEvent);
         }
 
         public int UpdateBestelling(Bestelling bestelling)

@@ -29,13 +29,7 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
             //arrage
             var klant = new Klant()
             {
-                Achternaam = "Gerritsen",
-                Voornaam = "Henk",
-                Adres = "Van Galenstraat 1",
                 Email = "kantiliver@gmail.com",
-                Huisnummer = "1",
-                Land = "NL",
-                Postcode = "2135AC",
                 Klantnummer = 4,
                 Telefoonnummer = "-1 12312312"
             };
@@ -55,16 +49,9 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
                 //assert
                 var klantFromRepo = repo.Find(klant.Klantnummer);
                 Assert.IsNotNull(klantFromRepo);
-                Assert.AreEqual(klant.Achternaam, klantFromRepo.Achternaam);
-                Assert.AreEqual(klant.Voornaam, klantFromRepo.Voornaam);
-                Assert.AreEqual(klant.Adres, klantFromRepo.Adres);
                 Assert.AreEqual(klant.Email, klantFromRepo.Email);
-                Assert.AreEqual(klant.Huisnummer, klantFromRepo.Huisnummer);
-                Assert.AreEqual(klant.Land, klantFromRepo.Land);
-                Assert.AreEqual(klant.Postcode, klantFromRepo.Postcode);
                 Assert.AreEqual(klant.Klantnummer, klantFromRepo.Klantnummer);
                 Assert.AreEqual(klant.Telefoonnummer, klantFromRepo.Telefoonnummer);
-                Assert.IsNull(klant.Tussenvoegsel);
 
             }
 
@@ -78,16 +65,9 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
             //arrage
             var klant = new Klant()
             {
-                Achternaam = "Gerritsen",
-                Voornaam = "Henk",
-                Adres = "Van Galenstraat 1",
                 Email = "kantiliver@gmail.com",
-                Huisnummer = "1",
-                Land = "NL",
-                Postcode = "2135AC",
                 Klantnummer = 4,
-                Telefoonnummer = "-1 12312312",
-                Tussenvoegsel = "van"
+                Telefoonnummer = "-1 12312312"
             };
 
             using (var context = new DatabaseContext(_dbOtions))
@@ -106,16 +86,9 @@ namespace CAN.BackOffice.Infrastructure.Test.RepositoriesTest
                 //assert
                 var klantFromRepo = repo.Find(klant.Klantnummer);
                 Assert.IsNotNull(klantFromRepo);
-                Assert.AreEqual(klant.Achternaam, klantFromRepo.Achternaam);
-                Assert.AreEqual(klant.Voornaam, klantFromRepo.Voornaam);
-                Assert.AreEqual(klant.Adres, klantFromRepo.Adres);
                 Assert.AreEqual(klant.Email, klantFromRepo.Email);
-                Assert.AreEqual(klant.Huisnummer, klantFromRepo.Huisnummer);
-                Assert.AreEqual(klant.Land, klantFromRepo.Land);
-                Assert.AreEqual(klant.Postcode, klantFromRepo.Postcode);
                 Assert.AreEqual(klant.Klantnummer, klantFromRepo.Klantnummer);
                 Assert.AreEqual(klant.Telefoonnummer, klantFromRepo.Telefoonnummer);
-                Assert.AreEqual(klant.Tussenvoegsel, klantFromRepo.Tussenvoegsel);
             }
 
         }

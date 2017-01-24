@@ -23,7 +23,6 @@
     "Serilog.Settings.Configuration": "2.2.0",
     "Serilog.Sinks.Literate": "2.0.0",
     "Serilog.Sinks.RollingFile": "3.3.0",
-    "InfoSupport.WSA.InfraStructure": "1.7.0",
     "CAN.Bestellingbeheer.Infrastructure": "1.0.0-*"
   },
   "tools": {

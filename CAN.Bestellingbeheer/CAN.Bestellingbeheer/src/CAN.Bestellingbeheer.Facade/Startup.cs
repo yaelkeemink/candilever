@@ -7,12 +7,13 @@ using Swashbuckle.Swagger.Model;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using CAN.Bestellingbeheer.Infrastructure.DAL;
-using CAN.Bestellingbeheer.Domain.Interfaces;
 using CAN.Bestellingbeheer.Domain.Entities;
 using CAN.Bestellingbeheer.Infrastructure.Repositories;
 using InfoSupport.WSA.Infrastructure;
-using CAN.Bestellingbeheer.Domain.Services;
 using System;
+using CAN.Bestellingbeheer.Infrastructure.EventListener;
+using CAN.Bestellingbeheer.Infrastructure.Interfaces;
+using CAN.Bestellingbeheer.Infrastructure.Services;
 
 namespace CAN.Bestellingbeheer.Facade.Facade
 {
@@ -37,6 +38,8 @@ namespace CAN.Bestellingbeheer.Facade.Facade
             Log.Logger = new LoggerConfiguration()
                 .ReadFrom.Configuration(Configuration)
                 .CreateLogger();
+
+            StartEventListeners();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -81,6 +84,17 @@ namespace CAN.Bestellingbeheer.Facade.Facade
 
             app.UseSwagger();
             app.UseSwaggerUi();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void StartEventListeners()
+        {
+            var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
+            var replayQueue = Environment.GetEnvironmentVariable("ReplayServiceQueue");
+            var listener = new BestellingbeheerEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, Log.Logger, replayQueue);
+            listener.Start();
         }
     }
 }
