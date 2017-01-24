@@ -20,7 +20,7 @@ namespace CAN.BackOffice.Services
         }
 
 
-        public Bestelling ZoekBestelling(int bestellingsnummer)
+        public Bestelling ZoekBestelling(long bestellingsnummer)
         {
             return _repository.Find(bestellingsnummer);
         }

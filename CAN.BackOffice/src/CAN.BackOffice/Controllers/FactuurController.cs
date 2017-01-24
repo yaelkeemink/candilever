@@ -24,7 +24,6 @@ namespace CAN.BackOffice.Controllers
         // GET: Factuur/Details/5
         public ActionResult Details(int bestellingsnummer)
         {
-            _logger.LogInformation($"Factuur met bestellingsnummer {bestellingsnummer} wordt opgezocht");
             try
             {
                 Bestelling bestelling = _service.ZoekBestelling(bestellingsnummer);

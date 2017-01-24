@@ -17,24 +17,13 @@ namespace CAN.BackOffice.Models
 
         public decimal Totaalprijs
         {
-            get
-            {
-
-
-                return Math.Round(Bestelling.Artikelen.Sum(a => a.Prijs), 2);
-            }
-            set
-            {
-                Totaalprijs = value;
-            }
+            get { return Math.Round(Bestelling.Artikelen.Sum(a => a.Prijs), 2); }
+            set { Totaalprijs = value; }
         }
 
         public decimal TotaalPrijsInclusiefBtw
         {
-            get
-            {
-                return Math.Round(Totaalprijs * 1.21M, 2);
-            }
+            get { return Math.Round(Totaalprijs * 1.21M, 2); }
         }
     }
 }

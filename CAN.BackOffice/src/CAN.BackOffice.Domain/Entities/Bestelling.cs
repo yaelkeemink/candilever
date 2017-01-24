@@ -13,7 +13,6 @@ namespace CAN.BackOffice.Domain.Entities
         public long Id { get; set; }
 
         public long Klantnummer { get; set; }
-        [DisplayName("Klant")]
         public string VolledigeNaam { get; set; }
         public string Adres { get; set; }
         public string Huisnummer { get; set; }

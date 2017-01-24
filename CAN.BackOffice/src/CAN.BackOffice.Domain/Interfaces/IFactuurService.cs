@@ -5,6 +5,6 @@ namespace CAN.BackOffice.Domain.Interfaces
 {
     public interface IFactuurService : IDisposable
     {
-        Bestelling ZoekBestelling(int bestellingsnummer);
+        Bestelling ZoekBestelling(long bestellingsnummer);
     }
 }
