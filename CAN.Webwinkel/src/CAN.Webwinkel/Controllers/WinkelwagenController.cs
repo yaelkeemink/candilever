@@ -85,6 +85,7 @@ namespace CAN.Webwinkel.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
         [SwaggerOperation("WinkelwagenAfronden")]
+        [Route("Finish")]
         public IActionResult WinkelwagenAfronden([FromBody]Bestelling bestelling)
         {
             if (ModelState.IsValid)
