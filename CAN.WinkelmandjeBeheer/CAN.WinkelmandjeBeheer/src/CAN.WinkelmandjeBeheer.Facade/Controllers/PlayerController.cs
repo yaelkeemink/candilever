@@ -7,6 +7,7 @@ using CAN.WinkelmandjeBeheer.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 using CAN.WinkelmandjeBeheer.Facade.Facade.Errors;
 using CAN.WinkelmandjeBeheer.Domain.Domain.Entities;
+using CAN.WinkelmandjeBeheer.Domain.Entities;
 
 namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
 {
@@ -85,29 +86,29 @@ namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
         [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
         [Route("Finish")]
-        public IActionResult WinkelmandjeAfronden([FromBody]Winkelmandje winkelmandje)
+        public IActionResult WinkelmandjeAfronden([FromBody]Bestelling bestelling)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 var error = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
                 return BadRequest(error);
             }
             try
             {
-                var winkelmandjeNummer = _service.UpdateWinkelmandje(winkelmandje);
-                _logger.LogInformation($"Het winkelmandje met {winkelmandjeNummer} is verzonden naar de eventbus en de bestellingbeheernummer");
+                _service.FinishWinkelmandje(bestelling);
+                _logger.LogInformation($"Het winkelmandje met {bestelling.WinkelmandjeNummer} is verzonden naar de eventbus en de bestellingbeheernummer");
                 return Ok();
             }
             catch (DbUpdateException ex)
             {
                 var error = new ErrorMessage(ErrorTypes.NotFound,
-                        $"Fout met updaten in db: {winkelmandje}/nException: {ex}");
+                        $"Fout met afronden in db: {bestelling}/nException: {ex}");
                 return NotFound(error);
             }
             catch (Exception ex)
             {
                 var error = new ErrorMessage(ErrorTypes.Unknown,
-                        $"Onbekende fout bij updaten: {winkelmandje}/nException: {ex}");
+                        $"Onbekende fout bij afronden: {bestelling}/nException: {ex}");
                 return BadRequest(error);
             }
         }
