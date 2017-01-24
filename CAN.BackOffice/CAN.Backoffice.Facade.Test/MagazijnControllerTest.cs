@@ -2,6 +2,7 @@
 using CAN.BackOffice.Domain.Entities;
 using CAN.BackOffice.Domain.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -27,11 +28,12 @@ namespace CAN.Backoffice.Facade.Test
                 Bestellingsnummer = 1,
                 Land = "Nederland",
             };
-                var serviceMock = new Mock<IMagazijnService>(MockBehavior.Strict);
+            var loggerLock = new Mock<ILogger>(MockBehavior.Loose);
+            var serviceMock = new Mock<IMagazijnService>(MockBehavior.Strict);
             serviceMock.Setup(s => s.GetVolgendeBestelling())
                 .Returns(bestelling);            
 
-            var target = new MagazijnController(serviceMock.Object);
+            var target = new MagazijnController(loggerLock.Object, serviceMock.Object);
 
             // Act
 

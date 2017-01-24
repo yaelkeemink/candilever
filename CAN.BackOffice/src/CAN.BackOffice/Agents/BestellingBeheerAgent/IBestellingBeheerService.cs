@@ -64,5 +64,15 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents
         /// </param>
         Task<HttpOperationResponse<object>> BestellingGoedkeurenWithHttpMessagesAsync(long? id = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='id'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> BestellingAfkeurenWithHttpMessagesAsync(long? id = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
     }
 }

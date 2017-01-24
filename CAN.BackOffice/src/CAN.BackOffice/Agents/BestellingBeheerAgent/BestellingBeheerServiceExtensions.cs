@@ -95,5 +95,31 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents
                 }
             }
 
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            public static object BestellingAfkeuren(this IBestellingBeheerService operations, long? id = default(long?))
+            {
+                return Task.Factory.StartNew(s => ((IBestellingBeheerService)s).BestellingAfkeurenAsync(id), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> BestellingAfkeurenAsync(this IBestellingBeheerService operations, long? id = default(long?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BestellingAfkeurenWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }
