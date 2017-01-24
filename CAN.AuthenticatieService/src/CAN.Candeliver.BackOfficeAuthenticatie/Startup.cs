@@ -19,6 +19,7 @@ using Newtonsoft.Json.Serialization;
 using CAN.Candeliver.BackOfficeAuthenticatie.Services;
 using CAN.Candeliver.BackOfficeAuthenticatie.Swagger;
 using System.IdentityModel.Tokens.Jwt;
+using CAN.Candeliver.BackOfficeAuthenticatie.Data.Repository;
 
 namespace CAN.Candeliver.BackOfficeAuthenticatie
 {
@@ -70,7 +71,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie
                   .AddDefaultTokenProviders();
 
             services.Configure<TokenProviderOptions>(CreateTokenOptions);
-
+            services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
             services.AddMvc();
             services.AddAuthorization();
 

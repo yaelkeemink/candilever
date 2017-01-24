@@ -19,6 +19,8 @@ using CAN.Webwinkel.Infrastructure.EventListener;
 using InfoSupport.WSA.Infrastructure;
 using CAN.BackOffice.Swagger;
 using Swashbuckle.Swagger.Model;
+using CAN.BackOffice.Security;
+using CAN.BackOffice.Agents.AuthenticatieAgents.Agents;
 
 namespace CAN.BackOffice
 {
@@ -62,18 +64,18 @@ namespace CAN.BackOffice
             var connectionstring = Environment.GetEnvironmentVariable("dbconnectionstring");
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionstring));
 
-                    
+
             services.AddMvc();
-            // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
-            services.AddScoped<IBestellingBeheerService, BestellingBeheerService>(b => new BestellingBeheerService() { BaseUri = new Uri("http://can-bestellingbeheer:80") });
+
+            services.AddScoped<IBestellingBeheerService, BestellingBeheerService>(b => new BestellingBeheerService() { BaseUri = new Uri("http://can-bestellingbeheer") });
+            services.AddScoped<IAuthenticatieService, AuthenticatieService>(b => new AuthenticatieService() { BaseUri = new Uri("http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1") });
 
             services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
             services.AddScoped<IMagazijnService, MagazijnService>();
+            services.AddScoped<ILoginService, LoginService>();
 
 
-            
+
             services.AddSwaggerGen();
             services.ConfigureSwaggerGen(options =>
             {
@@ -85,7 +87,7 @@ namespace CAN.BackOffice
                     TermsOfService = "None"
                 });
 
-                options.OperationFilter<SwaggerAuthorization>();
+                //      options.OperationFilter<SwaggerAuthorization>();
 
             });
 
@@ -121,8 +123,15 @@ namespace CAN.BackOffice
                 AutomaticChallenge = true,
                 TokenValidationParameters = tokenValidationParameters
             });
-
-            app.UseMvc();
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                AuthenticationScheme = "Cookie",
+                CookieName = "access_token",
+                TicketDataFormat = new JwtCookie(SecurityAlgorithms.HmacSha256, tokenValidationParameters)
+            });
+            
 
             app.UseApplicationInsightsRequestTelemetry();
 
@@ -142,8 +151,8 @@ namespace CAN.BackOffice
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
-            
-           
+
+
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
@@ -151,7 +160,7 @@ namespace CAN.BackOffice
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Magazijn}/{action=BestellingOphalen}/{id?}");
+                    template: "{controller=Login}/{action=Login}");
             });
         }
 

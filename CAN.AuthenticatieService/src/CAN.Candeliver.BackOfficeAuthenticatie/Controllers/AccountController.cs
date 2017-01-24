@@ -41,7 +41,12 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
         }
 
 
-        // POST: /Account/Login
+
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Login")]
         [SwaggerOperation("BackOfficeLogin")]
@@ -59,16 +64,18 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
                 var identity = await _accountService.GetIdentityAsync(model.UserName, model.Password);
                 if (identity == null)
                 {
+                    _logger.LogInformation($"Login user failed");
                     return BadRequest("Invalid username or password.");
                 }
               
-                var user = await _accountService.GetUserAsync(User);
+                var user = _accountService.GetUserAsync(model.UserName);
                 var response = new LoginResult()
                 {
                     Access_Token = await _accountService.CreateJwtTokenForUserAsync(user),
                     Expires_In = (int)_options.Expiration.TotalSeconds
 
                 };
+                _logger.LogInformation($"Login user succces");
                 return Json(response);
             }
             catch (Exception e)
@@ -80,6 +87,12 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
 
 
         }
+
+        /// <summary>
+        /// Register a new user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         // POST: /Account/Register
         [HttpPost]
         [Route("Register")]

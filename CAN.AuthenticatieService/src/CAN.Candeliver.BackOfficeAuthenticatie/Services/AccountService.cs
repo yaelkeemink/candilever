@@ -12,6 +12,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using CAN.Candeliver.BackOfficeAuthenticatie.Data.Repository;
 
 namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
 {
@@ -22,6 +23,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IApplicationUserRepository _userRepo;
 
         /// <summary>
         /// Constructor
@@ -34,13 +36,14 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILoggerFactory loggerFactory,
-            IOptions<TokenProviderOptions> options, RoleManager<IdentityRole> roleManager)
+            IOptions<TokenProviderOptions> options, RoleManager<IdentityRole> roleManager, IApplicationUserRepository userRepo)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<AccountController>();
             _options = options.Value;
             _roleManager = roleManager;
+            _userRepo = userRepo;
         }
 
         /// <summary>
@@ -124,9 +127,12 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         /// <returns></returns>
         public async Task<ClaimsIdentity> GetIdentityAsync(string username, string password)
         {
+
+            
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, set lockoutOnFailure: true
             var result = await _signInManager.PasswordSignInAsync(username, password, false, lockoutOnFailure: false);
+            
             if (result.Succeeded)
             {
                 _logger.LogInformation(1, "User logged in.");
@@ -148,11 +154,11 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         /// <summary>
         /// Get a user. 
         /// </summary>
-        /// <param name="userClaim"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
-        public Task<ApplicationUser> GetUserAsync(ClaimsPrincipal userClaim)
-        {           
-            return _userManager.GetUserAsync(userClaim);
+        public ApplicationUser GetUserAsync(string userName)
+        {
+            return _userRepo.FindByUserName(userName);
         }
 
 
