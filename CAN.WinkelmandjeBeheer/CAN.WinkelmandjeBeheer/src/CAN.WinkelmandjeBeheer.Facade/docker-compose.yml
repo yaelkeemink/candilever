@@ -15,14 +15,14 @@ services:
       eventbus-password: Kant1lever
       logpath: /var/log/Kantilever/WinkelmandjebeheerLogging/
     ports:
-      - 11300:80
+      - 11600:80
     networks:
       can_winkelmandjebeheer_network:
       can_main_network:
         aliases:
           - can-winkelmandjebeheer
     volumes:
-      - "C:/Docker/.winkelmandjebeheerData/Log:/var/log/Kantilever/WinkelmandjebeheerLogging/"
+      - "C:/Docker/.WinkelmandjebeheerData/Log:/var/log/Kantilever/WinkelmandjebeheerLogging/"
     links:
      - can.winkelmandjebeheer.mssql:db
 
@@ -35,9 +35,9 @@ services:
     networks:
       - can_winkelmandjebeheer_network
     ports:
-      - 11310:1433
+      - 11610:1433
     volumes:
-      - "C:/Docker/.winkelmandjebeheerData/db:/var/opt/mssql/"
+      - "C:/Docker/.WinkelmandjebeheerData/db:/var/opt/mssql/"
 
 
 networks:

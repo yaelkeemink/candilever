@@ -2,11 +2,13 @@
 using CAN.WinkelmandjeBeheer.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace CAN.WinkelmandjeBeheer.Infrastructure.Infrastructure.Repositories
 {
     public class WinkelmandjeRepository
-        : BaseRepository<Winkelmandje, Guid, DatabaseContext>
+        : BaseRepository<Winkelmandje, string, DatabaseContext>
     {
         public WinkelmandjeRepository(DatabaseContext context) 
             : base(context)
@@ -18,9 +20,14 @@ namespace CAN.WinkelmandjeBeheer.Infrastructure.Infrastructure.Repositories
             return _context.Winkelmandjes;
         }
 
-        protected override Guid GetKeyFrom(Winkelmandje item)
+        protected override string GetKeyFrom(Winkelmandje item)
         {
             return item.WinkelmandjeNummer;
+        }
+
+        public override Winkelmandje Find(string id)
+        {
+            return _context.Winkelmandjes.Include(x => x.Artikelen).FirstOrDefault(w => w.WinkelmandjeNummer == id);
         }
     }
 }

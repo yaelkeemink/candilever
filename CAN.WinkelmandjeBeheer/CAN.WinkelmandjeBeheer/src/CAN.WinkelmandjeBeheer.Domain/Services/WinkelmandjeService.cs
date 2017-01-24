@@ -13,25 +13,25 @@ namespace CAN.WinkelmandjeBeheer.Domain.Domain.Services
 {
     public class WinkelmandjeService : IWinkelmandjeService, IDisposable
     {
-        private readonly IRepository<Winkelmandje, Guid> _repository;
+        private readonly IRepository<Winkelmandje, string> _repository;
         private readonly IEventPublisher _publisher;
         private readonly ILogger<WinkelmandjeService> _logger;
 
-        public WinkelmandjeService(IRepository<Winkelmandje, Guid> repository, IEventPublisher publisher, ILogger<WinkelmandjeService> logger)
+        public WinkelmandjeService(IRepository<Winkelmandje, string> repository, IEventPublisher publisher, ILogger<WinkelmandjeService> logger)
         {
             _repository = repository;
             _publisher = publisher;
             _logger = logger;
         }
 
-        public Guid CreateWinkelmandje(Winkelmandje winkelmandje)
+        public string CreateWinkelmandje(Winkelmandje winkelmandje)
         {
             _repository.Insert(winkelmandje);
 
             return winkelmandje.WinkelmandjeNummer;
 
         }
-        public Guid UpdateWinkelmandje(Winkelmandje winkelmandje)
+        public string UpdateWinkelmandje(Winkelmandje winkelmandje)
         {
             var dbWinkelmandje = _repository.Find(winkelmandje.WinkelmandjeNummer);
 
@@ -65,6 +65,7 @@ namespace CAN.WinkelmandjeBeheer.Domain.Domain.Services
                 Land = bestelling.Land,
                 Postcode = bestelling.Postcode,
                 VolledigeNaam = bestelling.VolledigeNaam,
+                WinkelmandjeNummer = winkelmandje.WinkelmandjeNummer
             };
 
             foreach (ArtikelDTO dto in winkelmandje.Artikelen)

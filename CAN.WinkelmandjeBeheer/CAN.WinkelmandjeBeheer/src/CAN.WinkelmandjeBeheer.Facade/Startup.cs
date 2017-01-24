@@ -49,7 +49,7 @@ namespace CAN.WinkelmandjeBeheer.Facade.Facade
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
-            services.AddScoped<IRepository<Winkelmandje, Guid>, WinkelmandjeRepository>();
+            services.AddScoped<IRepository<Winkelmandje, string>, WinkelmandjeRepository>();
             services.AddScoped<IEventPublisher, EventPublisher>(e => new EventPublisher(BusOptions.CreateFromEnvironment()));
             services.AddScoped<IWinkelmandjeService, WinkelmandjeService>();
 

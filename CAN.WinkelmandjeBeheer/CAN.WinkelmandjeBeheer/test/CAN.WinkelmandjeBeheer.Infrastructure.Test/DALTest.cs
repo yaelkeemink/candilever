@@ -58,7 +58,7 @@ namespace CAN.WinkelmandjeBeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestFind()
         {
-            var guid = Guid.NewGuid();
+            var guid = Guid.NewGuid().ToString();
             using (var repo = new WinkelmandjeRepository(new DatabaseContext(_options)))
             {
                 repo.Insert(new Winkelmandje()
@@ -76,7 +76,7 @@ namespace CAN.WinkelmandjeBeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestDelete()
         {
-            var guid = Guid.NewGuid();
+            var guid = Guid.NewGuid().ToString();
             using (var repo = new WinkelmandjeRepository(new DatabaseContext(_options)))
             {
                 var winkelmandje = new Winkelmandje()
@@ -95,7 +95,7 @@ namespace CAN.WinkelmandjeBeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestFindAll()
         {
-            var guid = Guid.NewGuid();
+            var guid = Guid.NewGuid().ToString();
             using (var repo = new WinkelmandjeRepository(new DatabaseContext(_options)))
             {
                 var winkelmandje = new Winkelmandje()
@@ -115,8 +115,8 @@ namespace CAN.WinkelmandjeBeheer.Infrastructure.Test.Test
         [TestMethod]
         public void TestUpdate()
         {
-            var guid = Guid.NewGuid();
-            var updatedGuid = Guid.NewGuid();
+            var guid = Guid.NewGuid().ToString();
+            var updatedGuid = Guid.NewGuid().ToString();
             using (var repo = new WinkelmandjeRepository(new DatabaseContext(_options)))
             {
                 var winkelmandje = new Winkelmandje()

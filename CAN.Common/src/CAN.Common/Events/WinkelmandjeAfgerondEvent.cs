@@ -12,6 +12,7 @@ namespace CAN.Common.Events
         {
             Artikelen = new List<Artikel>();
         }
+        public string WinkelmandjeNummer { get; set; }
         public IList<Artikel> Artikelen { get; internal set; }
         public long Klantnummer { get; set; }
         public string VolledigeNaam { get; set; }

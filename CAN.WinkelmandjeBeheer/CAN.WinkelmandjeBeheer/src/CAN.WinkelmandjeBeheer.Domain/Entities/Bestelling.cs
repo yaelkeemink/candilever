@@ -26,7 +26,7 @@ namespace CAN.WinkelmandjeBeheer.Domain.Entities
         [Required]
         public string Land { get; set; }
         [Required]
-        public Guid WinkelmandjeNummer { get; set; }
+        public string WinkelmandjeNummer { get; set; }
         public DateTime BestelDatum { get; set; }
         public BestelStatus Status { get; set; }
     }

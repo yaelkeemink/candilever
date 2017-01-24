@@ -11,19 +11,21 @@ using CAN.WinkelmandjeBeheer.Domain.Domain.Entities;
 namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
 {
     [Route("api/[controller]")]
-    public class PlayerController : Controller
+    public class WinkelmandjeController : Controller
     {
         private readonly IWinkelmandjeService _service;
+        private readonly ILogger<IWinkelmandjeService> _logger;
 
-        public PlayerController(IWinkelmandjeService service, ILogger<IWinkelmandjeService> logger)
+        public WinkelmandjeController(IWinkelmandjeService service, ILogger<IWinkelmandjeService> logger)
         {
             _service = service;
+            _logger = logger;
         }
 
         // POST api/values
-        [HttpPost]        
+        [HttpPost]
         [SwaggerOperation("Post")]
-        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
         public IActionResult CreateWinkelmandje([FromBody]Winkelmandje winkelmandje)
         {
@@ -32,27 +34,58 @@ namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
                 var error = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
                 return BadRequest(error);
             }
-                try
-                {
-                    var room = _service.CreateWinkelmandje(winkelmandje);
-                    return Ok(room);
-                }
-                catch (Exception ex)
-                {
-                    var error = new ErrorMessage(ErrorTypes.Unknown,
-                        $"Onbekende fout in create winkelmandje: {winkelmandje},/nException: {ex}");
-                    return BadRequest(error);
-                }
-
-
+            try
+            {
+                var winkelmandjeNummer = _service.CreateWinkelmandje(winkelmandje);
+                _logger.LogInformation($"Winkelmandje met {winkelmandjeNummer} is aangemaakt");
+                return Ok(winkelmandjeNummer);
+            }
+            catch (Exception ex)
+            {
+                var error = new ErrorMessage(ErrorTypes.Unknown,
+                    $"Onbekende fout in create winkelmandje: {winkelmandje},/nException: {ex}");
+                return BadRequest(error);
+            }
         }
 
         // PUT api/values/5
         [HttpPut]
         [SwaggerOperation("Update")]
-        [ProducesResponseType(typeof(Guid), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
-        public IActionResult UpdatePlayer([FromBody]Winkelmandje winkelmandje)
+        public IActionResult ArtikelToevoegen([FromBody]Winkelmandje winkelmandje)
+        {
+            if (!ModelState.IsValid)
+            {
+                var error = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
+                return BadRequest(error);
+            }
+            try
+            {
+                var winkelmandjeNummer = _service.UpdateWinkelmandje(winkelmandje);
+                _logger.LogInformation($"{winkelmandje.Artikelen.Count} artikelen zijn toegevoegd aan het winkelmandje met nummer {winkelmandjeNummer}");
+                return Ok(winkelmandjeNummer);
+            }
+            catch (DbUpdateException ex)
+            {
+                var error = new ErrorMessage(ErrorTypes.NotFound,
+                        $"Fout met updaten in db: {winkelmandje}/nException: {ex}");
+                return NotFound(error);
+            }
+            catch (Exception ex)
+            {
+                var error = new ErrorMessage(ErrorTypes.Unknown,
+                        $"Onbekende fout bij updaten: {winkelmandje}/nException: {ex}");
+                return BadRequest(error);
+            }
+        }
+
+        [HttpPost]
+        [SwaggerOperation("Post")]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
+        [Route("Finish")]
+        public IActionResult WinkelmandjeAfronden([FromBody]Winkelmandje winkelmandje)
         {
             if (ModelState.IsValid)
             {
@@ -61,8 +94,9 @@ namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
             }
             try
             {
-                var room = _service.UpdateWinkelmandje(winkelmandje);
-                return Ok(room);
+                var winkelmandjeNummer = _service.UpdateWinkelmandje(winkelmandje);
+                _logger.LogInformation($"Het winkelmandje met {winkelmandjeNummer} is verzonden naar de eventbus en de bestellingbeheernummer");
+                return Ok();
             }
             catch (DbUpdateException ex)
             {
