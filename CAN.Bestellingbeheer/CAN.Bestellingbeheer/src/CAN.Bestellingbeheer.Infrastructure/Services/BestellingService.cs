@@ -28,7 +28,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
             var createdEvent = new BestellingCreatedEvent("can.bestellingbeheer.bestellingcreated")
             {
                 Klantnummer = bestelling.Klantnummer,
-                Bestellingsnummer = bestellingsnummer,
+                Bestellingsnummer = bestelling.Bestellingnummer,
                 BestelDatum = bestelling.BestelDatum,
                 BestellingStatusNummer = (int)bestelling.Status,
                 BestellingStatusCode = bestelling.Status.ToString(),
