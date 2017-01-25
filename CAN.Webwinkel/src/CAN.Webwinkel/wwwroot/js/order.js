@@ -5,7 +5,7 @@
         showMessage("error", "Er is geen winkelwagen bekend bij uw sessie.");
     } else {
         var klant = createKlant();
-        postKlantData(klant);
+        postKlant(klant);
         var klantnummer = localStorage.getItem('klantnummer');
 
         if (klantnummer !== null || klantnummer !== undefined) {
@@ -71,7 +71,7 @@ function postBestelling(bestelling) {
     });
 }
 
-function postKlantData(klant) {
+function postKlant(klant) {
     $.ajax({
         type: "POST",
         contentType: "application/json",

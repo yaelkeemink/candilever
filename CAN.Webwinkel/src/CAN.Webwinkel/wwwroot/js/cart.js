@@ -1,6 +1,13 @@
 ﻿// Write your Javascript code.
 "use strict";
 
+function toonWinkelwagen() {
+    var cartGuid = localStorage.getItem('cartGuid');
+
+    if (cartGuid !== null || cartGuid !== undefined) {
+        window.location = '/Home/ToonWinkelmandje/' + cartGuid;
+    }
+}
 
 function addArtikelToCart(artikel) {
     var artikelnummer = artikel.Artikelnummer;
