@@ -10,9 +10,9 @@ namespace CAN.Webwinkel.Infrastructure.Services
 {
     public class WinkelmandjeService : IWinkelwagenService
     {
-        private readonly IRepository<Winkelmandje, string> _repository;
+        private readonly IRepository<Winkelmandje, long> _repository;
 
-        public WinkelmandjeService(IRepository<Winkelmandje, string> repository)
+        public WinkelmandjeService(IRepository<Winkelmandje, long> repository)
         {
             _repository = repository;
         }
@@ -30,7 +30,7 @@ namespace CAN.Webwinkel.Infrastructure.Services
 
         public void Update(Winkelmandje mandje)
         {
-            var dbWinkelMandje = _repository.Find(mandje.WinkelmandjeNummer);
+            var dbWinkelMandje = FindWinkelmandje(mandje.WinkelmandjeNummer);
 
             dbWinkelMandje = mandje;
 
