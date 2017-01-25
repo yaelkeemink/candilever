@@ -47,16 +47,16 @@ namespace CAN.BackOffice.Services
         /// <summary>
         /// Updates the status of a bestelling
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="bestellingsnummer"></param>
         /// <returns></returns>
-        public void ZetBestellingOpOpgehaald(long id)
+        public void ZetBestellingOpOpgehaald(long bestellingsnummer)
         {
             _logger.LogInformation("Bestelling op opgehaald laten zetten");
-            var response = _agent.BestellingStatusOpgehaald(id);
+            var response = _agent.BestellingStatusOpgehaald(bestellingsnummer);
             if (response is string)
             {
                 _logger.LogInformation("Response is een BestellingDTO");
-                var bestelling = _repository.Find(id);
+                var bestelling = _repository.FindBy(p => p.Bestellingsnummer == bestellingsnummer).Single();
                 bestelling.BestellingStatusCode = (response as string);
                 _repository.Update(bestelling);
                 _logger.LogInformation($"Bestelling {bestelling.Id} heeft status {bestelling.BestellingStatusCode} gekregen");

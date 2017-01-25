@@ -22,23 +22,23 @@ namespace CAN.BackOffice.Controllers
         }
 
         // GET: Factuur/Details/5
-        public ActionResult Details(int bestellingsnummer)
+        public ActionResult Details(int id)
         {
             try
             {
-                Bestelling bestelling = _service.ZoekBestelling(bestellingsnummer);
-                _logger.LogInformation($"Factuur met bestellingsnummer {bestellingsnummer} is gevonden", bestelling);
+                Bestelling bestelling = _service.ZoekBestelling(id);
+                _logger.LogInformation($"Factuur met bestellingsnummer {id} is gevonden", bestelling);
 
                 return View(new FactuurViewModel(bestelling));
             }
             catch (InvalidOperationException e)
             {
-                _logger.LogError($"Factuur met bestellingsnummer {bestellingsnummer} is niet gevonden", e);
+                _logger.LogError($"Factuur met bestellingsnummer {id} is niet gevonden", e);
                 return RedirectToAction("FactuurNietGevonden");
             }
             catch (Exception e)
             {
-                _logger.LogError($"Onbekende fout opgetreden bij factuur details met bestellingsnummer {bestellingsnummer}", e);
+                _logger.LogError($"Onbekende fout opgetreden bij factuur details met bestellingsnummer {id}", e);
                 return RedirectToAction("Error");
             }
         }

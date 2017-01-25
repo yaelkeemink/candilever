@@ -26,7 +26,7 @@ namespace CAN.BackOffice.Models.SalesViewModels
             {
                 TotaalPrijs = totaalprijs,
                 BestelDatum = model.BestelDatum,
-                Id = model.Id,
+                Id = model.Bestellingsnummer,
                 VolledigeNaam = model.VolledigeNaam,
             };
         }

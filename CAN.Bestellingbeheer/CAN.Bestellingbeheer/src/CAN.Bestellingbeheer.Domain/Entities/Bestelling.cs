@@ -72,7 +72,7 @@ namespace CAN.Bestellingbeheer.Domain.Entities
         
         private void AutomatischGoedkeurenTotaalBedragBinnenLimiet()
         {
-            if (500 <= Artikelen.Sum(n => n.Prijs))
+            if (Artikelen.Sum(n => n.Prijs) <= 500)
                 Status = BestelStatus.Goedgekeurd;
         }
     }
