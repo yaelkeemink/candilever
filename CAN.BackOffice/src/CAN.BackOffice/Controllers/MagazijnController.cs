@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using CAN.BackOffice.Domain.Interfaces;
 using CAN.BackOffice.Domain.Entities;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CAN.BackOffice.Controllers
 {
@@ -20,6 +21,11 @@ namespace CAN.BackOffice.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [Authorize(Roles = "Sales,Magazijn")]
         public IActionResult GeenBestelling()
         {
             return View();
@@ -29,6 +35,7 @@ namespace CAN.BackOffice.Controllers
         /// Haal volgende bestelling op
         /// </summary>
         /// <returns></returns>
+        [Authorize(Roles = "Sales,Magazijn")]
         public IActionResult BestellingOphalen()
         {
             try
@@ -53,6 +60,7 @@ namespace CAN.BackOffice.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>        
+        [Authorize(Roles = "Sales,Magazijn")]
         public IActionResult VolgendeBestellingOphalen(int id)
         {
             try

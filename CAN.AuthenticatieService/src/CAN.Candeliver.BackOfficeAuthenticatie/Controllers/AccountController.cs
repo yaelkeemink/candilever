@@ -41,45 +41,58 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
         }
 
 
-        // POST: /Account/Login
+
+        /// <summary>
+        /// Login
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         [Route("Login")]
         [SwaggerOperation("BackOfficeLogin")]
         [AllowAnonymous]
         [ProducesResponseType(typeof(LoginResult), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(string), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResult), (int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Login([FromBody]LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest("Bad credentials");
+                return BadRequest(new ErrorResult() { ErrorMessage = "Onvolledige input" });
             }
             try
             {
                 var identity = await _accountService.GetIdentityAsync(model.UserName, model.Password);
                 if (identity == null)
                 {
-                    return BadRequest("Invalid username or password.");
+                    _logger.LogInformation($"Login user failed");
+                    return BadRequest(new ErrorResult() { ErrorMessage = "Verkeerde combinatie gebruikersnaam en wachtwoord" });
                 }
 
-                var user = await _accountService.GetUserAsync(User);
+                var user = _accountService.GetUserAsync(model.UserName);
                 var response = new LoginResult()
                 {
-                    Access_Token = _accountService.CreateJwtTokenForUser(user),
+                    Access_Token = await _accountService.CreateJwtTokenForUserAsync(user),
                     Expires_In = (int)_options.Expiration.TotalSeconds
 
                 };
+                _logger.LogInformation($"Login user succces");
                 return Json(response);
             }
             catch (Exception e)
             {
                 _logger.LogError($"Login user failed: {e.Message}");
                 _logger.LogDebug($"Login user failed: {e.StackTrace}");
-                return BadRequest("User login exception");
+                return BadRequest(new ErrorResult() { ErrorMessage = "Login service niet bereikbaar" });
             }
 
 
         }
+
+        /// <summary>
+        /// Register a new user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         // POST: /Account/Register
         [HttpPost]
         [Route("Register")]
@@ -96,7 +109,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
 
             try
             {
-                var result = await _accountService.Register(model.UserName, model.Password, model.Role);
+                var result = await _accountService.RegisterAsync(model.UserName, model.Password, model.Role);
                 if (result == null)
                 {
                     return BadRequest("User registration failed");
@@ -110,7 +123,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
                 _logger.LogDebug($"Creating user failed: {e.StackTrace}");
                 return BadRequest("User registration exception");
             }
-        }      
-        
+        }
+
     }
 }
