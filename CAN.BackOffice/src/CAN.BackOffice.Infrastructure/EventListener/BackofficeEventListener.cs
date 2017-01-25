@@ -18,6 +18,8 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
         private string _replayEndPoint;
         private EventListenerLock _locker;
         private bool _replayAuditService;
+
+        private bool run = true;
         /// <summary>
         /// 
         /// </summary>
@@ -47,6 +49,11 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
             thread.Start();
         }
 
+        public void Stop()
+        {
+            run = false;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -58,7 +65,6 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
             var firstConnection = true;
 
 
-            bool run = true;
             while (run)
             {
 
@@ -79,7 +85,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
                         _logger.Debug("Opening connection with Rabbit mq");
                         backOfficeDispatcher.Open();
                         _logger.Debug("Connection with Rabbit mq is open");
-                        while (backOfficeDispatcher.IsConnected())
+                        while (backOfficeDispatcher.IsConnected() && run)
                         {
                             _logger.Information("Connected with Rabbit Mq is stil open");
                             Thread.Sleep(60000);
@@ -92,7 +98,6 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
                     _logger.Error($"Error with EventDispatcher {e.Message}");
                     _logger.Debug(e.StackTrace);
                     Thread.Sleep(5000);
-                    run = false;
                 }
             }
         }

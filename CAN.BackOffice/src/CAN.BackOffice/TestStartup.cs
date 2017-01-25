@@ -21,6 +21,9 @@ namespace CAN.BackOffice
 {
     public class TestStartup
     {
+
+        private BackofficeEventListener listener;
+
         public TestStartup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -83,6 +86,10 @@ namespace CAN.BackOffice
             loggerFactory.AddConsole(Configuration.GetSection("Serilog"));
             loggerFactory.AddDebug();
             loggerFactory.AddSerilog();
+
+            var applicationLifetime = app.ApplicationServices.GetRequiredService<IApplicationLifetime>();
+            applicationLifetime.ApplicationStopping.Register(OnShutdown);
+
             app.UseApplicationInsightsRequestTelemetry();
 
             app.UseApplicationInsightsExceptionTelemetry();
@@ -118,6 +125,11 @@ namespace CAN.BackOffice
             });
         }
 
+        private void OnShutdown()
+        {
+            listener.Stop();
+        }
+
 
         /// <summary>
         /// 
@@ -127,7 +139,7 @@ namespace CAN.BackOffice
             var dbconnectionString = "Server=.\\SQLEXPRESS;Database=BackOfficeIntegration;Trusted_Connection=True;";
             var locker = new EventListenerLock();
             var replayQueue = "ReplayServiceQueue";
-            var listener = new BackofficeEventListener(
+            listener = new BackofficeEventListener(
                 busOptions: new BusOptions()
                 {
                     ExchangeName = "TestExchange",

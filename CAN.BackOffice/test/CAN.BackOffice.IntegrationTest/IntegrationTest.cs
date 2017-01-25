@@ -11,6 +11,8 @@ using System.Text;
 using System.Net;
 using InfoSupport.WSA.Infrastructure;
 using CAN.Common.Events;
+using System.Threading;
+using System.Diagnostics;
 
 namespace CAN.BackOffice.IntegrationTest
 {
@@ -76,7 +78,7 @@ namespace CAN.BackOffice.IntegrationTest
         }
 
         [TestMethod]
-        public async Task GetFactuurDetails()
+        public async Task GetFactuurDetailsShowsPage()
         {
 
             // Arrange
@@ -92,9 +94,13 @@ namespace CAN.BackOffice.IntegrationTest
         }
 
         [TestMethod]
-        public void MyTestMethod()
+        public async Task GetFactuurDetailsRedirectsToErrorPage()
         {
+            var response = await _client.GetAsync("Factuur/Details/999");
 
+            // Assert
+            Assert.AreEqual(HttpStatusCode.Redirect, response.StatusCode);
+            Assert.AreEqual(@"/Factuur/FactuurNietGevonden", response.Headers.Location);
         }
 
         [ClassCleanup]

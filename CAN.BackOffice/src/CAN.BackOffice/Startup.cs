@@ -21,6 +21,8 @@ namespace CAN.BackOffice
 {
     public class Startup
     {
+        private BackofficeEventListener listener;
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
@@ -90,6 +92,9 @@ namespace CAN.BackOffice
 
             app.UseMvc();
 
+            var applicationLifetime = app.ApplicationServices.GetRequiredService<IApplicationLifetime>();
+            applicationLifetime.ApplicationStopping.Register(OnShutdown);
+
             app.UseApplicationInsightsRequestTelemetry();
 
             if (env.IsDevelopment())
@@ -119,6 +124,11 @@ namespace CAN.BackOffice
             });
         }
 
+        private void OnShutdown()
+        {
+            listener.Stop();
+        }
+
 
         /// <summary>
         /// 
@@ -128,7 +138,7 @@ namespace CAN.BackOffice
             var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
             var locker = new EventListenerLock();
             var replayQueue = Environment.GetEnvironmentVariable("ReplayServiceQueue");
-            var listener = new BackofficeEventListener(
+           listener = new BackofficeEventListener(
                 busOptions: BusOptions.CreateFromEnvironment(),
                 dbConnectionString: dbconnectionString,
                 logger: Log.Logger,
