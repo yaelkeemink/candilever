@@ -1,37 +1,24 @@
 ﻿function placeOrder() {
-    var shopCart = getShopCart();
+    var cartGuid = localStorage.getItem('cartGuid');
 
-    if (shopCart !== undefined && shopCart !== null) {
+    if (cartGuid === undefined || cartGuid === null) {
+        showMessage("error", "Er is geen winkelwagen bekend bij uw sessie.");
+    } else {
         var klant = createKlant();
-
         postKlantData(klant);
-
         var klantnummer = localStorage.getItem('klantnummer');
 
         if (klantnummer !== null || klantnummer !== undefined) {
             klantnummer = parseInt(klantnummer);
-            var bestelling = createBestelling(shopCart, klantnummer);
+
+            var bestelling = createBestelling(cartGuid, klant, klantnummer);
+            console.log(bestelling);
 
             postBestelling(bestelling);
-        }
-        else {
+        } else {
             showMessage("error", "Er is iets misgegaan bij het aanmaken van u klant gegevens.");
         }
     }
-
-    else {
-        showMessage("info", "U heeft geen artikelen in de Winkelwagen!");
-    }
-}
-
-function getShopcart() {
-    var shopCart = localStorage.getItem("Shopcart");
-
-    if (shopCart !== undefined || shopCart !== null) {
-        shopCart = JSON.parse(shopCart);
-    }
-
-    return shopCart;
 }
 
 function createKlant() {
@@ -53,12 +40,15 @@ function createKlant() {
 }
 
 
-function createBestelling(shopCart, klantnummer) {
+function createBestelling(cartGuid, klant, klantnummer) {
     return {
-        "bestellingnummer": 0,
         "klantnummer": klantnummer,
-        "artikelen": shopCart.artikelen,
-        "bestelDatum": undefined,
+        "volledigeNaam": klant.voornaam + " " + klant.tussenvoegsels + " " + klant.achternaam,
+        "postcode": klant.postcode,
+        "adres": klant.adres,
+        "huisnummer": klant.huisnummer,
+        "land": klant.land,
+        "winkelmandjeNummer": cartGuid,
         "status": 0
     }
 }
