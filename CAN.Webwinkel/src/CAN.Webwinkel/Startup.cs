@@ -79,7 +79,7 @@ namespace CAN.Webwinkel
             services.AddDbContext<WinkelDatabaseContext>(options => 
                 options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
 
-            services.AddScoped<IRepository<Artikel, int>, ArtikelRepository>();
+            services.AddScoped<IRepository<Artikel, long>, ArtikelRepository>();
             services.AddScoped<IRepository<Winkelmandje, long>, WinkelmandjeRepository>();
 
             services.AddScoped<IKlantAgent, KlantAgent>(s => new KlantAgent() { BaseUri = new Uri("http://can-klantbeheer:80") });
@@ -88,12 +88,9 @@ namespace CAN.Webwinkel
             services.AddScoped<IArtikelService, ArtikelService>();          
             services.AddScoped<IWinkelwagenService, WinkelmandjeService>();
             services.AddDbContext<WinkelDatabaseContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
-            services.AddScoped<IRepository<Categorie, int>, CategorieRepository>();
-            services.AddScoped<IRepository<Artikel, long>, ArtikelRepository>();
-            services.AddScoped<ICategorieService, CategorieService>();
+
             services.AddScoped<IArtikelService, ArtikelService>();
             services.AddScoped<IKlantAgent, KlantAgent>(s => new KlantAgent() { BaseUri = new Uri("http://can-klantbeheer:80") });
-            services.AddScoped<IBestellingsBeheerAgent, BestellingsBeheerAgent>(s => new BestellingsBeheerAgent() { BaseUri = new Uri("http://can-bestellingbeheer:80") });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
