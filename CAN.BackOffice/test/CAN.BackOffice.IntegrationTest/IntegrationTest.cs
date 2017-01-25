@@ -33,15 +33,18 @@ namespace CAN.BackOffice.IntegrationTest
         public static void ClassInitialize(TestContext context)
         {
             ClearTestDatabase();
+            StartTestServer();
+            CreateDataInDatabase();
+        }
 
+        private static void StartTestServer()
+        {
             var directory = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName + "\\src\\CAN.BackOffice";
             _server = new TestServer(new WebHostBuilder()
                    .UseStartup<TestStartup>()
                    .UseContentRoot(directory)
                    );
             _client = _server.CreateClient();
-
-            CreateDataInDatabase();
         }
 
         private static void ClearTestDatabase()

@@ -12,7 +12,7 @@ using System.Threading;
 
 namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
 {
-    public class BackOfficeEventDispatcher : EventDispatcher, IDisposable
+    public class BackOfficeEventDispatcher : EventDispatcher
     {
         private DbContextOptions<DatabaseContext> _dbOptions;
         private ILogger _logger;
