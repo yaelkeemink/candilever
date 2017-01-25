@@ -13,6 +13,9 @@ using InfoSupport.WSA.Infrastructure;
 using CAN.Common.Events;
 using System.Threading;
 using System.Diagnostics;
+using CAN.BackOffice.Infrastructure.DAL;
+using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace CAN.BackOffice.IntegrationTest
 {
@@ -25,8 +28,22 @@ namespace CAN.BackOffice.IntegrationTest
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
+            var dbconnectionString = "Server=.\\SQLEXPRESS;Database=BackOfficeIntegration;Trusted_Connection=True;";
+            var builder = new DbContextOptionsBuilder<DatabaseContext>();
+            builder.UseSqlServer(dbconnectionString);
+            var dbOptions = builder.Options;
+            using (var ctx = new DatabaseContext(dbOptions))
+            {
+                ctx.Database.ExecuteSqlCommand("Delete from Artikel");
+                ctx.Database.ExecuteSqlCommand("Delete from Bestellingen");
+                ctx.Database.ExecuteSqlCommand("Delete from Klanten");
+            }
+
+            var directory = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName + "\\src\\CAN.BackOffice";
             _server = new TestServer(new WebHostBuilder()
-                    .UseStartup<TestStartup>());
+                   .UseStartup<TestStartup>()
+                   .UseContentRoot(directory)
+                   );
             _client = _server.CreateClient();
 
             using (var publisher = new EventPublisher(new BusOptions()
@@ -100,7 +117,7 @@ namespace CAN.BackOffice.IntegrationTest
 
             // Assert
             Assert.AreEqual(HttpStatusCode.Redirect, response.StatusCode);
-            Assert.AreEqual(@"/Factuur/FactuurNietGevonden", response.Headers.Location);
+            Assert.AreEqual(@"/Factuur/FactuurNietGevonden", response.Headers.Location.ToString());
         }
 
         [ClassCleanup]

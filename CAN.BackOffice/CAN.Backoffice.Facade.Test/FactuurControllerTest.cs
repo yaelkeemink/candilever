@@ -25,7 +25,7 @@ namespace CAN.Backoffice.Facade.Test
             var loggerMock = new Mock<ILogger<FactuurController>>(MockBehavior.Loose);
 
             var serviceMock = new Mock<IFactuurService>(MockBehavior.Strict);
-            serviceMock.Setup(s => s.ZoekBestelling(It.IsAny<long>()))
+            serviceMock.Setup(s => s.ZoekBestelling(1))
                 .Returns(new Bestelling()
                 {
                     Klantnummer = 12,
@@ -43,10 +43,10 @@ namespace CAN.Backoffice.Facade.Test
             FactuurController target = new FactuurController(loggerMock.Object, serviceMock.Object);
 
             // Act 
-            var response = target.Details(5);
+            var response = target.Details(1);
 
             // Assert
-            serviceMock.Verify(s => s.ZoekBestelling(5), Times.Once);
+            serviceMock.Verify(s => s.ZoekBestelling(1), Times.Once);
 
             Assert.IsInstanceOfType(response, typeof(ViewResult));
             var view = response as ViewResult;
