@@ -8,6 +8,7 @@ using CAN.BackOffice.Models;
 using Microsoft.Extensions.Logging;
 using CAN.BackOffice.Domain.Interfaces;
 using CAN.BackOffice.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CAN.BackOffice.Controllers
 {
@@ -20,7 +21,7 @@ namespace CAN.BackOffice.Controllers
         {
             _service = service;
         }
-
+        [Authorize(Roles ="Sales")]
         // GET: Factuur/Details/5
         public ActionResult Details(int bestellingsnummer)
         {
@@ -43,6 +44,7 @@ namespace CAN.BackOffice.Controllers
             }
         }
 
+        [Authorize(Roles = "Sales")]
         // GET: Factuur/FactuurNietGevonden
         public ActionResult FactuurNietGevonden()
         {
