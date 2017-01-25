@@ -21,10 +21,10 @@ namespace CAN.BackOffice.Controllers
         {
             _service = service;
         }
-        [Authorize(Roles ="Sales")]
-        // GET: Factuur/Details/5
 
+        // GET: Factuur/Details/5
         [HttpGet]
+        [Authorize(Roles = "Magazijn")]
         public ActionResult Details(int id)
         {
             try
@@ -46,7 +46,8 @@ namespace CAN.BackOffice.Controllers
             }
         }
 
-        [Authorize(Roles = "Sales")]
+        [HttpGet]
+        [Authorize(Roles = "Magazijn")]
         // GET: Factuur/FactuurNietGevonden
         public ActionResult FactuurNietGevonden()
         {

@@ -61,15 +61,9 @@ namespace CAN.BackOffice
 
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server =.\\SQLEXPRESS;Database=BackOfficeIntegration;Trusted_Connection=True;"));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<DatabaseContext>()
-                .AddDefaultTokenProviders();
-
             services.AddMvc();
 
             // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddScoped<IBestellingBeheerService, BestellingBeheerService>(b => new BestellingBeheerService() { BaseUri = new Uri("http://can-bestellingbeheer:80") });
 
             services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
@@ -112,8 +106,6 @@ namespace CAN.BackOffice
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
-
-            app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 

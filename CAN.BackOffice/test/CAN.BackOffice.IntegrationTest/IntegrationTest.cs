@@ -37,6 +37,7 @@ namespace CAN.BackOffice.IntegrationTest
                 ctx.Database.ExecuteSqlCommand("Delete from Artikel");
                 ctx.Database.ExecuteSqlCommand("Delete from Bestellingen");
                 ctx.Database.ExecuteSqlCommand("Delete from Klanten");
+                ctx.SaveChanges();
             }
 
             var directory = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName + "\\src\\CAN.BackOffice";
