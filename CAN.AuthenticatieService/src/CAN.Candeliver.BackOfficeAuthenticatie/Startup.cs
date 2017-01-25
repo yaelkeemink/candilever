@@ -18,6 +18,8 @@ using CAN.Candeliver.BackOfficeAuthenticatie.Security;
 using Newtonsoft.Json.Serialization;
 using CAN.Candeliver.BackOfficeAuthenticatie.Services;
 using CAN.Candeliver.BackOfficeAuthenticatie.Swagger;
+using System.IdentityModel.Tokens.Jwt;
+using CAN.Candeliver.BackOfficeAuthenticatie.Data.Repository;
 
 namespace CAN.Candeliver.BackOfficeAuthenticatie
 {
@@ -69,7 +71,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie
                   .AddDefaultTokenProviders();
 
             services.Configure<TokenProviderOptions>(CreateTokenOptions);
-
+            services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
             services.AddMvc();
             services.AddAuthorization();
 
@@ -101,8 +103,8 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie
             var secretKey = Configuration.GetValue<string>("SecretKey");
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
 
-            obj.Audience = "Kantilever";
-            obj.Issuer = "Kantilever";
+            obj.Audience = "http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1";
+            obj.Issuer = "http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1";
             obj.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             obj.Expiration = TimeSpan.FromMinutes(30);
 
@@ -135,6 +137,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie
             app.UseStaticFiles();
 
             app.UseIdentity();
+           
 
 
             var secretKey = Configuration.GetValue<string>("SecretKey");
@@ -144,9 +147,9 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = signingKey,
                 ValidateIssuer = true,
-                ValidIssuer = "Kantilever",
+                ValidIssuer = "http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1",
                 ValidateAudience = true,
-                ValidAudience = "Kantilever",
+                ValidAudience = "http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1",
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             };
@@ -157,7 +160,6 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie
                 AutomaticChallenge = true,
                 TokenValidationParameters = tokenValidationParameters
             });
-
             app.UseSwagger();
             app.UseSwaggerUi();
             app.UseMvc();

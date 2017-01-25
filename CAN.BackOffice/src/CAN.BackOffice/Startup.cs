@@ -5,17 +5,22 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using CAN.BackOffice.Models;
 using CAN.BackOffice.Services;
 using Serilog;
 using CAN.BackOffice.Infrastructure.DAL;
-using CAN.BackOffice.Infrastructure.DAL.Repositories;
-using CAN.BackOffice.Domain.Interfaces;
-using InfoSupport.WSA.Infrastructure;
-using Microsoft.Extensions.Logging;
-using CAN.Webwinkel.Infrastructure.EventListener;
-using CAN.BackOffice.Domain.Entities;
 using CAN.BackOffice.Agents.BestellingsAgent.Agents;
+using CAN.BackOffice.Infrastructure.DAL.Repositories;
+using CAN.BackOffice.Domain.Entities;
+using CAN.BackOffice.Domain.Interfaces;
+using Microsoft.Extensions.Logging;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using CAN.Webwinkel.Infrastructure.EventListener;
+using InfoSupport.WSA.Infrastructure;
+using CAN.BackOffice.Swagger;
+using Swashbuckle.Swagger.Model;
+using CAN.BackOffice.Security;
+using CAN.BackOffice.Agents.AuthenticatieAgents.Agents;
 
 namespace CAN.BackOffice
 {
@@ -59,23 +64,35 @@ namespace CAN.BackOffice
             var connectionstring = Environment.GetEnvironmentVariable("dbconnectionstring");
             services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionstring));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<DatabaseContext>()
-                .AddDefaultTokenProviders();
-            
+
             services.AddMvc();
 
-            // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
-            services.AddScoped<IBestellingBeheerService, BestellingBeheerService>(b => new BestellingBeheerService() { BaseUri = new Uri("http://can-bestellingbeheer:80") });
+            services.AddScoped<IBestellingBeheerService, BestellingBeheerService>(b => new BestellingBeheerService() { BaseUri = new Uri("http://can-bestellingbeheer") });
+            services.AddScoped<IAuthenticatieService, AuthenticatieService>(b => new AuthenticatieService() { BaseUri = new Uri("http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1") });
 
             services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
             services.AddScoped<IRepository<Klant, long>, KlantRepository>();
 
             services.AddScoped<IMagazijnService, MagazijnService>();
-            services.AddScoped<IFactuurService, FactuurService>();
+            services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<ISalesService, SalesService>();
+
+
+            services.AddSwaggerGen();
+            services.ConfigureSwaggerGen(options =>
+            {
+                options.SingleApiVersion(new Info
+                {
+                    Version = "v1",
+                    Title = "Backoffice service",
+                    Description = "Backoffice service",
+                    TermsOfService = "None"
+                });
+
+                //      options.OperationFilter<SwaggerAuthorization>();
+
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -88,12 +105,45 @@ namespace CAN.BackOffice
 
             app.UseApplicationInsightsExceptionTelemetry();
 
-            app.UseMvc();
+            var secretKey = Configuration.GetValue<string>("SecretKey");
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+                ValidateIssuer = true,
+                ValidIssuer = "http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1",
+                ValidateAudience = true,
+                ValidAudience = "http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1",
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+               
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = tokenValidationParameters
+            });
+            app.UseCookieAuthentication(new CookieAuthenticationOptions
+            {
+                LoginPath = "/Login/LoginAction",
+                AccessDeniedPath = "/Login/AccesDenied",
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                AuthenticationScheme = "Cookie",
+                CookieName = "access_token",
+                TicketDataFormat = new JwtCookie(SecurityAlgorithms.HmacSha256, tokenValidationParameters)
+            });
+            
 
             app.UseApplicationInsightsRequestTelemetry();
 
             if (env.IsDevelopment())
             {
+                app.UseSwagger();
+                app.UseSwaggerUi();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
@@ -107,7 +157,7 @@ namespace CAN.BackOffice
 
             app.UseStaticFiles();
 
-            app.UseIdentity();
+
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
@@ -115,7 +165,7 @@ namespace CAN.BackOffice
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Magazijn}/{action=BestellingOphalen}/{id?}");
+                    template: "{controller=Login}/{action=LoginAction}");
             });
         }
 
@@ -133,7 +183,7 @@ namespace CAN.BackOffice
             // wachten
             Log.Logger.Information("Waiting for release startup lock");
             locker.StartUpLock.WaitOne();
-            Log.Logger.Information("Continuing startup");
+            Log.Logger.Information("Continue startup");
         }
 
     }
