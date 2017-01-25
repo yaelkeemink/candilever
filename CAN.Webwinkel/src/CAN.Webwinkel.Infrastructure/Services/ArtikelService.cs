@@ -57,5 +57,10 @@ namespace CAN.Webwinkel.Infrastructure.Services
                 .Prijs
                 .ToString();
         }
+
+        public void Dispose()
+        {
+            _repository?.Dispose();
+        }
     }
 }

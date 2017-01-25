@@ -65,5 +65,11 @@ namespace CAN.Webwinkel.Controllers
             var viewModel = new WinkelmandjeViewModel(_winkelmandjeservice.FindWinkelmandje(id));
             return View(viewModel);
         }
+        protected override void Dispose(bool disposing)
+        {
+            _artikelService?.Dispose();
+            _winkelmandjeservice?.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

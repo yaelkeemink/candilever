@@ -4,7 +4,8 @@ using CAN.Klantbeheer.Domain.Interfaces;
 using InfoSupport.WSA.Infrastructure;
 using System;
 
-namespace CAN.Klantbeheer.Domain.Services {
+namespace CAN.Klantbeheer.Infrastructure.Services
+{
     public class KlantService 
         : IDisposable, IKlantService
     {
