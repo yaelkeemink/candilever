@@ -5,6 +5,7 @@ using System;
 using CAN.Bestellingbeheer.Domain.Exceptions;
 using CAN.Bestellingbeheer.Infrastructure.Interfaces;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace CAN.Bestellingbeheer.Infrastructure.Services {
     public class BestellingService 
@@ -60,7 +61,8 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
 
         public Bestelling StatusNaarOpgehaald(long id)
         {
-            var bestelling = _repository.Find(id);
+            var bestelling = _repository.FindBy(a => a.Bestellingnummer == id)
+                                    .Single();
             if (bestelling.Status != BestelStatus.Opgehaald)
             {
                 bestelling.Status = BestelStatus.Opgehaald;
