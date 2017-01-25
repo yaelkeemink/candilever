@@ -18,13 +18,7 @@ namespace CAN.Webwinkel.Infrastructure.Services
         {
             _logger = logger;
             _repository = repository;
-        }
-        public IEnumerable<Artikel> ArtikelenBijCategorie(string categorieNaam)
-        {
-            return _repository.FindBy(
-                    c => c.ArtikelCategorie.Any(ac => ac.Categorie.Naam == categorieNaam))
-                .ToList();
-        }
+        }       
 
         public IEnumerable<Artikel> AlleArtikelen()
         {

@@ -1,13 +1,10 @@
 ﻿using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using CAN.Webwinkel.Data;
-using CAN.Webwinkel.Models;
 using Serilog;
 using CAN.Webwinkel.Infrastructure.EventListener;
 using InfoSupport.WSA.Infrastructure;
@@ -53,19 +50,10 @@ namespace CAN.Webwinkel
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
-
+            
             services.ConfigureSwaggerGen(options =>
             {
                 options.SingleApiVersion(new Info
@@ -78,19 +66,17 @@ namespace CAN.Webwinkel
             });
             services.AddMvc();
 
-            // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
-
             //o => new OnderhoudsServiceAgent() { BaseUri = new Uri("http://lapiwe-onderhoudservice:80") }
-            services.AddDbContext<WinkelDatabaseContext>(options => options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
-            services.AddScoped<IRepository<Categorie, int>, CategorieRepository>();
+            services.AddDbContext<WinkelDatabaseContext>(options => 
+                options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
+
             services.AddScoped<IRepository<Artikel, int>, ArtikelRepository>();
-            services.AddScoped<ICategorieService, CategorieService>();
-            services.AddScoped<IArtikelService, ArtikelService>();
+            services.AddScoped<IRepository<Winkelmandje, long>, WinkelmandjeRepository>();
+
             services.AddScoped<IKlantAgent, KlantAgent>(s => new KlantAgent() { BaseUri = new Uri("http://can-klantbeheer:80") });
             services.AddScoped<IWinkelwagenAgentClient, WinkelwagenAgentClient>(s => new WinkelwagenAgentClient() { BaseUri = new Uri("http://can-winkelmandjebeheer:80") });
-            services.AddScoped<IRepository<Winkelmandje, long>, WinkelmandjeRepository>();
+
+            services.AddScoped<IArtikelService, ArtikelService>();          
             services.AddScoped<IWinkelwagenService, WinkelmandjeService>();
         }
 
@@ -118,8 +104,6 @@ namespace CAN.Webwinkel
             app.UseApplicationInsightsExceptionTelemetry();
 
             app.UseStaticFiles();
-
-            app.UseIdentity();
 
             app.UseMvc(routes =>
             {

@@ -5,9 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CAN.Webwinkel.Models
+namespace CAN.Webwinkel.ViewModels.HomeViewModels
 {
-    public class ApiArtikelenModel
+    public class ApiArtikelenViewModel
     {
         
         public int Artikelnummer { get; set; }
@@ -24,17 +24,17 @@ namespace CAN.Webwinkel.Models
             return JsonConvert.SerializeObject(this);
         }
 
-        public ApiArtikelenModel()
+        public ApiArtikelenViewModel()
         {
 
         }
 
-        public ApiArtikelenModel(Artikel artikel)
+        public ApiArtikelenViewModel(Artikel artikel)
         {
             Artikelnummer = artikel.Artikelnummer;
             Naam = artikel.Naam;
             Beschrijving = artikel.Beschrijving;
-            Prijs = artikel.Prijs;
+            Prijs = Math.Round(artikel.Prijs * 1.21M, 2);
             AfbeeldingUrl = "images/"+artikel.AfbeeldingUrl;
             Voorraad = artikel.Voorraad >= 8 ? 8 : artikel.Voorraad;
             Leverancier = artikel.Leverancier;
