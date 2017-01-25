@@ -91,6 +91,12 @@ namespace CAN.BackOffice.IntegrationTest
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
+        [TestMethod]
+        public void MyTestMethod()
+        {
+
+        }
+
         [ClassCleanup]
         public static void ClassCleanup()
         {

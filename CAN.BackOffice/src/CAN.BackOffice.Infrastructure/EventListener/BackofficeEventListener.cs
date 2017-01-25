@@ -17,6 +17,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
         private ILogger _logger;
         private string _replayEndPoint;
         private EventListenerLock _locker;
+        private bool _replayAuditService;
         /// <summary>
         /// 
         /// </summary>
@@ -25,13 +26,14 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
         /// <param name="logger"></param>
         /// <param name="replayEndPoint"></param>
         /// <param name="locker"></param>
-        public BackofficeEventListener(BusOptions busOptions, string dbConnectionString, ILogger logger, string replayEndPoint, EventListenerLock locker)
+        public BackofficeEventListener(BusOptions busOptions, string dbConnectionString, ILogger logger, string replayEndPoint, EventListenerLock locker, bool replayAuditService = true)
         {
             _busOptions = busOptions;
             _dbConnectionString = dbConnectionString;
             _logger = logger;
             _replayEndPoint = replayEndPoint;
             _locker = locker;
+            _replayAuditService = replayAuditService;
         }
 
 
@@ -56,22 +58,23 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
             var firstConnection = true;
 
 
-            while (true)
+            bool run = true;
+            while (run)
             {
 
                 try
                 {
                     using (var backOfficeDispatcher = new BackOfficeEventDispatcher(_busOptions, dbOptions, _logger))
                     {
-                        if (firstConnection)
+                        if (firstConnection && _replayAuditService)
                         {
                             _logger.Information("Start rebuilding cache");
                             ReplayAuditlog(dbOptions);
                             firstConnection = false;
-                            _logger.Information("Releasing Startup lock");
-                            _locker.StartUpLock.Set();
                             _logger.Information("Done rebuilding cache");
                         }
+                        _logger.Information("Releasing Startup lock");
+                        _locker.StartUpLock.Set();
 
                         _logger.Debug("Opening connection with Rabbit mq");
                         backOfficeDispatcher.Open();
@@ -89,6 +92,7 @@ namespace CAN.Webwinkel.Infrastructure.EventListener
                     _logger.Error($"Error with EventDispatcher {e.Message}");
                     _logger.Debug(e.StackTrace);
                     Thread.Sleep(5000);
+                    run = false;
                 }
             }
         }

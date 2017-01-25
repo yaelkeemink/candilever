@@ -7,10 +7,12 @@ using CAN.Webwinkel.Infrastructure.EventListener;
 using CAN.Common.Events;
 using CAN.BackOffice.Infrastructure.DAL.Repositories;
 using CAN.BackOffice.Domain.Entities;
+using System;
+using System.Threading;
 
 namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
 {
-    public class BackOfficeEventDispatcher : EventDispatcher
+    public class BackOfficeEventDispatcher : EventDispatcher, IDisposable
     {
         private DbContextOptions<DatabaseContext> _dbOptions;
         private ILogger _logger;

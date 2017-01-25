@@ -128,7 +128,14 @@ namespace CAN.BackOffice
             var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
             var locker = new EventListenerLock();
             var replayQueue = Environment.GetEnvironmentVariable("ReplayServiceQueue");
-            var listener = new BackofficeEventListener(BusOptions.CreateFromEnvironment(), dbconnectionString, Log.Logger, replayQueue, locker);
+            var listener = new BackofficeEventListener(
+                busOptions: BusOptions.CreateFromEnvironment(),
+                dbConnectionString: dbconnectionString,
+                logger: Log.Logger,
+                replayEndPoint: replayQueue,
+                locker: locker,
+                replayAuditService: true
+                );
             listener.Start();
             // wachten
             Log.Logger.Information("Waiting for release startup lock");

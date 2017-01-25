@@ -56,7 +56,7 @@ namespace CAN.BackOffice
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server =.\\SQLEXPRESS;Database=DATABASENAME;Trusted_Connection=True;"));
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server =.\\SQLEXPRESS;Database=BackOfficeIntegration;Trusted_Connection=True;"));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<DatabaseContext>()
@@ -124,22 +124,24 @@ namespace CAN.BackOffice
         /// </summary>
         private void StartEventListeners()
         {
-            var dbconnectionString = "Server =.\\SQLEXPRESS;Database=DATABASENAME;Trusted_Connection=True;";
+            var dbconnectionString = "Server=.\\SQLEXPRESS;Database=BackOfficeIntegration;Trusted_Connection=True;";
             var locker = new EventListenerLock();
             var replayQueue = "ReplayServiceQueue";
-            var listener = new BackofficeEventListener(new BusOptions()
-            {
-                ExchangeName = "TestExchange",
-                QueueName = null,
-                HostName = "localhost",
-                Port = 5672,
-                UserName = "guest",
-                Password = "guest",
-            },
-                dbconnectionString,
-                Log.Logger,
-                replayQueue,
-                locker
+            var listener = new BackofficeEventListener(
+                busOptions: new BusOptions()
+                {
+                    ExchangeName = "TestExchange",
+                    QueueName = null,
+                    HostName = "localhost",
+                    Port = 5672,
+                    UserName = "guest",
+                    Password = "guest",
+                },
+                dbConnectionString: dbconnectionString,
+                logger: Log.Logger,
+                replayEndPoint: replayQueue,
+                locker: locker,
+                replayAuditService: false
             );
             listener.Start();
             // wachten
