@@ -14,7 +14,7 @@ namespace CAN.BackOffice.Services
         : ISalesService
     {
         private readonly IRepository<Bestelling, long> _bestellingRepository;
-        private readonly IBestellingBeheerService _service;
+        private readonly IBestellingBeheerService _agent;
         private readonly ILogger<SalesService> _logger;
         private readonly IRepository<Klant, long> _klantRepository;
 
@@ -25,17 +25,17 @@ namespace CAN.BackOffice.Services
         {
             _bestellingRepository = bestellingRepository;
             _klantRepository = klantRepository;
-            _service = service;
+            _agent = service;
             _logger = logger;
         }
 
         public void BestellingGoedkeuren(long id)
         {            
-            var response = _service.BestellingGoedkeuren(id);
-            if(response is BestellingDTO)
+            var response = _agent.BestellingGoedkeuren(id);
+            if(response is string)
             {                
                 var bestelling = _bestellingRepository.Find(id);
-                bestelling.BestellingStatusCode = (response as BestellingDTO).Status.ToString();
+                bestelling.BestellingStatusCode = (response as string);
                 _bestellingRepository.Update(bestelling);
                 _logger.LogInformation($"Bestelling geupdate met status: {bestelling.BestellingStatusCode}");
             }
@@ -56,11 +56,11 @@ namespace CAN.BackOffice.Services
 
         public void BestellingAfkeuren(long id)
         {
-            var response = _service.BestellingAfkeuren(id);
-            if (response is BestellingDTO)
+            var response = _agent.BestellingAfkeuren(id);
+            if (response is string)
             {
                 var bestelling = _bestellingRepository.Find(id);
-                bestelling.BestellingStatusCode = (response as BestellingDTO).Status.ToString();
+                bestelling.BestellingStatusCode = (response as string);
                 _bestellingRepository.Update(bestelling);
                 _logger.LogInformation($"Bestelling geupdate met status: {bestelling.BestellingStatusCode}");
             }

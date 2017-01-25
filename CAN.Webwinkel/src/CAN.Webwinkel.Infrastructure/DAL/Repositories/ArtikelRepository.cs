@@ -15,31 +15,12 @@ namespace CAN.Webwinkel.Infrastructure.DAL.Repositories
 
         protected override IQueryable<Artikel> GetDbSet()
         {
-            return _context.Artikels.Include(ar => ar.ArtikelCategorie)
-                .ThenInclude(ac => ac.Categorie);
+            return _context.Artikels;
         }
 
         protected override long GetKeyFrom(Artikel item)
         {
             return item.Artikelnummer;
-        }
-
-        public override int Insert(Artikel item)
-        {
-            var artikelCategories = item.ArtikelCategorie;
-
-            foreach(var ac in artikelCategories)
-            {
-                var catNam = ac.Categorie.Naam;
-                Categorie realCat =_context.Categorieen.FirstOrDefault(c => c.Naam == catNam);
-                if(realCat != null)
-                {
-                    ac.Categorie = realCat;
-                }
-            }
-
-
-            return base.Insert(item);
         }
     }
 }

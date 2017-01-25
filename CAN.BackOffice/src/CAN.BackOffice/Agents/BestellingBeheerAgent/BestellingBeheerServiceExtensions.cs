@@ -46,32 +46,6 @@ namespace CAN.BackOffice.Agents.BestellingsAgent.Agents
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='bestellingDTO'>
-            /// </param>
-            public static object Post(this IBestellingBeheerService operations, BestellingDTO bestellingDTO = default(BestellingDTO))
-            {
-                return Task.Factory.StartNew(s => ((IBestellingBeheerService)s).PostAsync(bestellingDTO), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='bestellingDTO'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> PostAsync(this IBestellingBeheerService operations, BestellingDTO bestellingDTO = default(BestellingDTO), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.PostWithHttpMessagesAsync(bestellingDTO, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='id'>
             /// </param>
             public static object BestellingGoedkeuren(this IBestellingBeheerService operations, long? id = default(long?))

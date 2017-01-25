@@ -1,0 +1,164 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "Winkelmandje Service",
+    "description": "Winkelmandje Service voor het bijhouden van de winkelmandjes",
+    "termsOfService": "None"
+  },
+  "basePath": "/",
+  "paths": {
+    "/api/Winkelmandje": {
+      "put": {
+        "tags": [ "Winkelmandje" ],
+        "operationId": "Update",
+        "consumes": [ "application/json", "text/json", "application/json-patch+json" ],
+        "produces": [ "text/plain", "application/json", "text/json" ],
+        "parameters": [
+          {
+            "name": "winkelmandje",
+            "in": "body",
+            "required": false,
+            "schema": { "$ref": "#/definitions/Winkelmandje" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/Winkelmandje" }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ErrorMessage" }
+          }
+        },
+        "deprecated": false
+      },
+      "post": {
+        "tags": [ "Winkelmandje" ],
+        "operationId": "Post",
+        "consumes": [ "application/json", "text/json", "application/json-patch+json" ],
+        "produces": [ "text/plain", "application/json", "text/json" ],
+        "parameters": [
+          {
+            "name": "winkelmandje",
+            "in": "body",
+            "required": false,
+            "schema": { "$ref": "#/definitions/Winkelmandje" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/Winkelmandje" }
+          },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ErrorMessage" }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/api/Winkelmandje/Finish": {
+      "post": {
+        "tags": [ "Winkelmandje" ],
+        "operationId": "Afronden",
+        "consumes": [ "application/json", "text/json", "application/json-patch+json" ],
+        "produces": [ "text/plain", "application/json", "text/json" ],
+        "parameters": [
+          {
+            "name": "bestelling",
+            "in": "body",
+            "required": false,
+            "schema": { "$ref": "#/definitions/Bestelling" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Success" },
+          "400": {
+            "description": "Client Error",
+            "schema": { "$ref": "#/definitions/ErrorMessage" }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "definitions": {
+    "Winkelmandje": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "winkelmandjeNummer": { "type": "string" },
+        "artikelen": {
+          "type": "array",
+          "items": { "$ref": "#/definitions/ArtikelDTO" }
+        }
+      }
+    },
+    "ArtikelDTO": {
+      "required": [ "naam", "prijs", "aantal" ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "artikelnummer": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "naam": { "type": "string" },
+        "prijs": { "type": "string" },
+        "aantal": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "leverancier": { "type": "string" },
+        "leverancierCode": { "type": "string" }
+      }
+    },
+    "ErrorMessage": {
+      "type": "object",
+      "properties": {
+        "foutType": {
+          "format": "int32",
+          "enum": [ 0, 10, 20, 30, 40 ],
+          "type": "integer"
+        },
+        "foutMelding": { "type": "string" },
+        "oplossing": { "type": "string" }
+      }
+    },
+    "Bestelling": {
+      "required": [ "klantnummer", "volledigeNaam", "postcode", "adres", "huisnummer", "land", "winkelmandjeNummer" ],
+      "type": "object",
+      "properties": {
+        "klantnummer": {
+          "format": "int64",
+          "type": "integer"
+        },
+        "volledigeNaam": { "type": "string" },
+        "postcode": { "type": "string" },
+        "adres": { "type": "string" },
+        "huisnummer": { "type": "string" },
+        "land": { "type": "string" },
+        "winkelmandjeNummer": { "type": "string" },
+        "bestelDatum": {
+          "format": "date-time",
+          "type": "string"
+        },
+        "status": {
+          "format": "int32",
+          "enum": [ 0, 100 ],
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {}
+}

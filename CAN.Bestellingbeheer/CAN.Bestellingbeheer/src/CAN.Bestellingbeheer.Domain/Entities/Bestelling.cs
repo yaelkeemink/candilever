@@ -1,7 +1,8 @@
-﻿using CAN.Bestellingbeheer.Domain.DTO;
+﻿using CAN.Common.Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace CAN.Bestellingbeheer.Domain.Entities
 {
@@ -38,16 +39,41 @@ namespace CAN.Bestellingbeheer.Domain.Entities
             Artikelen = new List<Artikel>();
             BestelDatum = DateTime.Now; 
         }
-        public Bestelling(BestellingDTO bestelling)
+
+        public Bestelling(WinkelmandjeAfgerondEvent evt)
         {
-            Klantnummer = bestelling.Klantnummer;
-            BestelDatum = bestelling.BestelDatum;
-            Status = bestelling.Status;
             Artikelen = new List<Artikel>();
-            foreach (var artikel in bestelling.Artikelen)
+            BestelDatum = DateTime.Now;
+
+            Klantnummer = evt.Klantnummer;
+            VolledigeNaam = evt.VolledigeNaam;
+            Postcode = evt.Postcode;
+            Adres = evt.Adres;
+            Huisnummer = evt.Huisnummer;
+            Land = evt.Land;
+
+            foreach (var artikel in evt.Artikelen)
             {
-                Artikelen.Add(artikel);
+                Artikelen.Add(
+                    new Artikel
+                    {
+                        Artikelnummer = artikel.Artikelnummer,
+                        Naam = artikel.Artikelnaam,
+                        Prijs = artikel.Prijs,
+                        Aantal = artikel.Aantal,
+                        Leverancier = artikel.Leverancier,
+                        LeverancierCode = artikel.LeverancierCode
+                    }
+                );
             }
+
+            AutomatischGoedkeurenTotaalBedragBinnenLimiet();
+        }
+        
+        private void AutomatischGoedkeurenTotaalBedragBinnenLimiet()
+        {
+            if (500 <= Artikelen.Sum(n => n.Prijs))
+                Status = BestelStatus.Goedgekeurd;
         }
     }
 }
