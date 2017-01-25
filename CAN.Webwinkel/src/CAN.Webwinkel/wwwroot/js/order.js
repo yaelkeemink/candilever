@@ -5,19 +5,8 @@
         showMessage("error", "Er is geen winkelwagen bekend bij uw sessie.");
     } else {
         var klant = createKlant();
-        postKlant(klant);
-        var klantnummer = localStorage.getItem('klantnummer');
 
-        if (klantnummer !== null || klantnummer !== undefined) {
-            klantnummer = parseInt(klantnummer);
-
-            var bestelling = createBestelling(cartGuid, klant, klantnummer);
-            console.log(bestelling);
-
-            postBestelling(bestelling);
-        } else {
-            showMessage("error", "Er is iets misgegaan bij het aanmaken van u klant gegevens.");
-        }
+        postKlant(klant, cartGuid);
     }
 }
 
@@ -57,12 +46,11 @@ function postBestelling(bestelling) {
     $.ajax({
         type: "POST",
         contentType: "application/json",
-        url: "/api/Bestelling",
+        url: "/api/Winkelmandje/Finish",
         data: JSON.stringify(bestelling),
         success: function (data) {
-            localStorage.removeItem('Shopcart');
+            localStorage.removeItem('cartGuid');
             localStorage.removeItem('klantnummer');
-
             showMessage("success", "De Bestelling is Succesvol geplaatst.");
         }, error: function (err) {
             console.log(err);
@@ -71,15 +59,22 @@ function postBestelling(bestelling) {
     });
 }
 
-function postKlant(klant) {
+function postKlant(klant, cartGuid) {
     $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "/api/Klant",
         data: JSON.stringify(klant),
-        async: false,
         success: function (data) {
             localStorage.setItem('klantnummer', data);
+            if (data !== null || data !== undefined) {
+                var klantnummer = parseInt(data);
+
+                var bestelling = createBestelling(cartGuid, klant, klantnummer);
+                console.log(bestelling);
+
+                postBestelling(bestelling);
+            }
         },
         error: function (data) {
             console.log(data);
