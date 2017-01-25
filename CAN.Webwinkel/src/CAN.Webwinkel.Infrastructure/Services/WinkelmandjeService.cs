@@ -32,7 +32,7 @@ namespace CAN.Webwinkel.Infrastructure.Services
         {
             var dbWinkelMandje = FindWinkelmandje(mandje.WinkelmandjeNummer);
 
-            dbWinkelMandje = mandje;
+            dbWinkelMandje.Artikelen = mandje.Artikelen;
 
             _repository.Update(dbWinkelMandje);
         }

@@ -3,12 +3,11 @@ using CAN.Bestellingbeheer.Domain.Exceptions;
 using CAN.Bestellingbeheer.Infrastructure.Interfaces;
 using CAN.Bestellingbeheer.Infrastructure.Services;
 using InfoSupport.WSA.Infrastructure;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
-using Serilog;
-
 namespace CAN.Bestellingbeheer.Domain.Test
 {
     [TestClass]
@@ -38,7 +37,7 @@ namespace CAN.Bestellingbeheer.Domain.Test
             var mockRepository = new Mock<IRepository<Bestelling, long>>(MockBehavior.Strict);
             mockRepository.Setup(n => n.Find(It.IsAny<long>())).Returns(bestelling);
             mockRepository.Setup(n => n.Dispose());
-            var mockLogger = new Mock<ILogger>(MockBehavior.Loose);
+            var mockLogger = new Mock<ILogger<BestellingService>>(MockBehavior.Loose);
              
             using (BestellingService service = new BestellingService(mockPublisher.Object, mockRepository.Object, mockLogger.Object))
             {
