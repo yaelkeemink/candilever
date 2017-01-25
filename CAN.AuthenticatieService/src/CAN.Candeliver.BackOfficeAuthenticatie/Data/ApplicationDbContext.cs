@@ -34,21 +34,22 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Data
                       
         }
 
-        internal static void SeedDb(IApplicationBuilder app)
+        internal static async void SeedDb(IApplicationBuilder app)
         {
             using (var context = app.ApplicationServices.GetRequiredService<ApplicationDbContext>())
             using (var repo = app.ApplicationServices.GetRequiredService<IApplicationUserRepository>())
             using (var accountService = app.ApplicationServices.GetRequiredService<IAccountService>())
             {
+                await context.Database.EnsureCreatedAsync();
                 if (repo.FindByUserName("Marco") == null)
                 {
 
-                   accountService.RegisterAsync("Kees", "DeKoning", "Sales").Wait();
+                  await accountService.RegisterAsync("Kees", "DeKoning", "Sales");
                 }
 
                 if (repo.FindByUserName("Dennis") == null)
                 {
-                    accountService.RegisterAsync("Dennis", "Inpakker", "Magazijn").Wait() ;
+                  await  accountService.RegisterAsync("Dennis", "Inpakker", "Magazijn");
                 }
             }
         }
