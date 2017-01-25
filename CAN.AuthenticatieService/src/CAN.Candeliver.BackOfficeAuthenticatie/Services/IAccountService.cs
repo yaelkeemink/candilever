@@ -19,8 +19,6 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         
         Task<ApplicationUser> RegisterAsync(string username, string password, string role);
         Task<ClaimsIdentity> GetIdentityAsync(string username, string password);
-      //  Task<ApplicationUser> GetUserAsync(ClaimsPrincipal userClaim);
-
         Task<bool> AddRoleAsync(ApplicationUser user, string role);
         ApplicationUser GetUserAsync(string username);
     }

@@ -29,11 +29,9 @@ namespace CAN.BackOffice.Controllers
         [Authorize]
         public IActionResult LoginAction()
         {
-            _logger.LogInformation($"cookie " + Request.Cookies["access_token"]);
             string cookie = Request.Cookies["access_token"];
             if (!string.IsNullOrWhiteSpace(cookie))
             {
-
                 if (User.IsInRole("Sales"))
                 {
                     return Redirect("/Sales/Index");
@@ -45,7 +43,7 @@ namespace CAN.BackOffice.Controllers
 
             }
 
-            
+
             return View(new LoginModelDTO());
 
         }
@@ -58,14 +56,18 @@ namespace CAN.BackOffice.Controllers
         /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult LoginAction(LoginModelDTO model)
+        public async Task<IActionResult> LoginAction(LoginModelDTO model)
         {
-            var x = 0;
-            var loginResult = _loginService.LoginAsync(new LoginViewModel() { UserName = model.UserName, Password = model.Password}).Result;
+            var loginResult = await _loginService.LoginAsync(
+                new LoginViewModel()
+                {
+                    UserName = model.UserName,
+                    Password = model.Password
+                });
 
             if (loginResult == null)
             {
-                ModelState.AddModelError("LoginResult", "Combinatie van gebruikersnaam en wachtwoord is incorrect");
+                ModelState.AddModelError("LoginResult", "Combinatie van gebruikersnaam en wachtwoord is onjuist");
                 return View(model);
             }
 
