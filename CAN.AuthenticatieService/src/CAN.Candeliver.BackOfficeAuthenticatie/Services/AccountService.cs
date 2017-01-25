@@ -107,11 +107,11 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
                 var addToRoleResult = await AddRoleAsync(user, role);
                 if (addToRoleResult)
                 {
-                    _logger.LogInformation(3, "User created a new account with password.");
+                    _logger.LogInformation($"New acount created: {username}");
                     return user;
                 } else
                 {
-                    _logger.LogInformation(3, "User created failed. deleting user");
+                    _logger.LogCritical($"User created failed. deleting user {username}");
                     await _userManager.DeleteAsync(user);
                 }
             }
@@ -135,17 +135,17 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
             
             if (result.Succeeded)
             {
-                _logger.LogInformation(1, "User logged in.");
+                _logger.LogInformation($"User {username} logged in.");
                 return new ClaimsIdentity(new GenericIdentity(username, "Token"), new Claim[] { });
             }
             if (result.IsLockedOut)
             {
-                _logger.LogWarning(2, $"User {username} locked out.");
+                _logger.LogWarning($"User {username} locked out.");
                 return null;
             }
             else
             {
-                _logger.LogWarning(2, $"Invalid user login for {username}");
+                _logger.LogWarning($"Invalid user login for {username}");
                 return null;
             }
         }

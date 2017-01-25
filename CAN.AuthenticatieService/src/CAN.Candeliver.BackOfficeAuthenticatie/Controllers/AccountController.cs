@@ -67,7 +67,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
                     _logger.LogInformation($"Login user failed");
                     return BadRequest(new ErrorResult() { ErrorMessage = "Verkeerde combinatie gebruikersnaam en wachtwoord" });
                 }
-              
+
                 var user = _accountService.GetUserAsync(model.UserName);
                 var response = new LoginResult()
                 {
@@ -123,7 +123,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Controllers
                 _logger.LogDebug($"Creating user failed: {e.StackTrace}");
                 return BadRequest("User registration exception");
             }
-        }      
-        
+        }
+
     }
 }
