@@ -7,7 +7,7 @@ function addArtikelToCart(artikel) {
 
     if (guid === undefined || guid === null) {
         var parsedArtikel = createNewArtikel(artikel);
-        var cart = parseNewShoppingCart(artikel);
+        var cart = parseNewShoppingCart(parsedArtikel);
         postNewShoppingCart(cart);
     } else {
         var parsedArtikel = createNewArtikel(artikel);
@@ -82,7 +82,7 @@ function addArtikelToShopcart(cart) {
     $.ajax({
         type: "PUT",
         contentType: "application/json",
-        url: "/api/Winkelwagen",
+        url: "/api/Winkelmandje",
         data: JSON.stringify(cart),
         success: function (data) {
             localStorage.setItem('cartGuid', data);

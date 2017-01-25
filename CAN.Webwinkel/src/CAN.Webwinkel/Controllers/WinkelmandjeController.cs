@@ -68,7 +68,8 @@ namespace CAN.Webwinkel.Controllers
             {
                 try
                 {
-                    var apiResponse = _agent.Post(winkelmandje);
+                    winkelmandje.Artikelen.First().Prijs = _artikelService.FindArtikelByArtikelNummer((long)winkelmandje.Artikelen.Single().Artikelnummer);
+                    var apiResponse = _agent.Update(winkelmandje);
                     if (apiResponse is Winkelmandje)
                     {
                         var winkelmandjeModel = apiResponse as Winkelmandje;

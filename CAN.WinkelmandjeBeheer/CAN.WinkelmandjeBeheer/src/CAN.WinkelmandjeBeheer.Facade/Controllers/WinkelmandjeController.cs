@@ -30,6 +30,7 @@ namespace CAN.WinkelmandjeBeheer.Facade.Facade.Controllers
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
         public IActionResult CreateWinkelmandje([FromBody]Winkelmandje winkelmandje)
         {
+            winkelmandje.Validate();
             if (!ModelState.IsValid)
             {
                 var error = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
