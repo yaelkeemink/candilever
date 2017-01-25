@@ -53,39 +53,9 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
                 Assert.AreEqual(herenFiets.LeverancierCode, fiets.LeverancierCode);
                 Assert.AreEqual(herenFiets.Prijs, fiets.Prijs);
                 Assert.AreEqual(herenFiets.Naam, fiets.Naam);
-
-                Assert.IsNotNull(fiets.ArtikelCategorie[0].Categorie);
-                Assert.IsNotNull(fiets.ArtikelCategorie[0].Categorie.Naam);
-                Assert.AreEqual(herenFiets.ArtikelCategorie[0].Categorie.Naam, fiets.ArtikelCategorie[0].Categorie.Naam);
-
             }
         }
 
-
-        [TestMethod]
-        public void SaveArtikelCheckCategory()
-        {
-            var demo = new DemoEntities();
-
-            using (var context = new WinkelDatabaseContext(_options))
-            using (var repo = new ArtikelRepository(context))
-            {
-                repo.Insert(demo.HerenFiets);
-                repo.Insert(demo.Fiets);
-                repo.Insert(demo.DamesFiets);
-            }
-
-            using (var context = new WinkelDatabaseContext(_options))
-            using (var repo = new ArtikelRepository(context))
-            {
-                Assert.AreEqual(3, repo.Count());
-
-                var fiets = repo.Find(demo.Fiets.Artikelnummer);
-                var herenFiets = repo.Find(demo.HerenFiets.Artikelnummer);
-
-                Assert.AreEqual(fiets.ArtikelCategorie[0].CategoryId, herenFiets.ArtikelCategorie[0].CategoryId);
-            }
-        }
 
         [TestMethod]
         public void UpdateArtikelTest()

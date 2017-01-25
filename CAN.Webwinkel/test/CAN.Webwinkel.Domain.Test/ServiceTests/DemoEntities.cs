@@ -24,17 +24,8 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
                     LeverbaarTot = new DateTime(2017, 8, 1),
                     LeverbaarVanaf = new DateTime(2017, 1, 1),
                     Naam = "Fiets",
-                    Prijs = 159.67M,
-                    ArtikelCategorie = new List<ArtikelCategorie>()
+                    Prijs = 159.67M
                 };
-
-                ArtikelCategorie arCat = new ArtikelCategorie() {
-                    Artikel = ar,
-                    Categorie = new Categorie() {
-                        Naam = "Heren fiets"
-                    }
-                };
-                ar.ArtikelCategorie.Add(arCat);
 
                 return ar;
             }
@@ -55,19 +46,10 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
                     LeverbaarTot = new DateTime(2017, 8, 1),
                     LeverbaarVanaf = new DateTime(2017, 1, 1),
                     Naam = "Heren fiets",
-                    Prijs = 259.67M,
-                    ArtikelCategorie = new List<ArtikelCategorie>()
+                    Prijs = 259.67M
                 };
 
-                ArtikelCategorie arCat = new ArtikelCategorie()
-                {
-                    Artikel = ar,
-                    Categorie = new Categorie()
-                    {
-                        Naam = "Heren fiets"
-                    }
-                };
-                ar.ArtikelCategorie.Add(arCat);
+
 
                 return ar;
             }
@@ -88,74 +70,10 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
                     LeverbaarTot = new DateTime(2017, 8, 1),
                     LeverbaarVanaf = new DateTime(2017, 1, 1),
                     Naam = "dames fiets",
-                    Prijs = 59.67M,
-                    ArtikelCategorie = new List<ArtikelCategorie>() 
-                };
+                    Prijs = 59.67M         };
 
-                ArtikelCategorie arCat = new ArtikelCategorie()
-                {
-                    Artikel = ar,
-                    Categorie = new Categorie()
-                    {
-                        Naam = "Dames fiets"
-                    }
-                };
-                ar.ArtikelCategorie.Add(arCat);
                 return ar;
             }
-        }
-
-        public Categorie Categorie()
-        {
-            Categorie categorie = new Categorie
-            {
-                Id = 1,
-                Naam = "Fiets Frames"
-            };
-
-            ArtikelCategorie artikelCategorie = new ArtikelCategorie
-            {
-                ArtikelId = 1,
-                Artikel = new Artikel(),
-                CategoryId = 1,
-                Categorie = categorie
-            };
-
-            categorie.ArtikelCategorie.Add(artikelCategorie);
-            return categorie;
-        }
-
-        public Categorie Categorie_2()
-        {
-            Categorie categorie_2 = new Categorie
-            {
-                Id = 2,
-                Naam = "Fiets Onderdelen"
-            };
-
-            ArtikelCategorie artikelCategorie_2 = new ArtikelCategorie
-            {
-                ArtikelId = 2,
-                Artikel = new Artikel(),
-                CategoryId = 2,
-                Categorie = categorie_2
-            };
-
-            categorie_2.ArtikelCategorie.Add(artikelCategorie_2);
-            
-
-            ArtikelCategorie artikelCategorie_3 = new ArtikelCategorie
-            {
-                ArtikelId = 2,
-                Artikel = new Artikel(),
-                CategoryId = 2,
-                Categorie = categorie_2
-            };
-
-            categorie_2.ArtikelCategorie.Add(artikelCategorie_3);
-
-
-            return categorie_2;
         }
     }
 }

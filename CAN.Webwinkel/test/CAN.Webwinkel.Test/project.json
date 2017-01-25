@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "testRunner": "mstest",
 
@@ -10,7 +10,8 @@
     "dotnet-test-mstest": "1.1.1-preview",
     "MSTest.TestFramework": "1.0.4-preview",
     "Moq": "4.6.38-alpha",
-    "CAN.Webwinkel": "1.0.0-*"
+    "CAN.Webwinkel": "1.0.0-*",
+    "Microsoft.EntityFrameworkCore.InMemory": "1.1.0"
   },
 
   "frameworks": {

@@ -1,8 +1,8 @@
 ﻿
 
-using CAN.Webwinkel.Domain.Services;
 using CAN.Webwinkel.Infrastructure.DAL;
 using CAN.Webwinkel.Infrastructure.DAL.Repositories;
+using CAN.Webwinkel.Infrastructure.Services;
 using CAN.Webwinkel.Infrastructure.Test.Provider;
 using CAN.Webwinkel.Infrastructure.Test.RepositoriesTest;
 using Microsoft.EntityFrameworkCore;
@@ -19,9 +19,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
         private static ArtikelService service;
         private WinkelDatabaseContext _context;
         private static ArtikelRepository _repo;
-        /// <summary>
-        /// 
-        /// </summary>
+
         [TestInitialize]
         public void Init()
         {
@@ -31,31 +29,6 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
             _repo = new ArtikelRepository(_context);
             ILogger<ArtikelService> logger = null;
             service = new ArtikelService(logger, _repo);
-        }
-
-        [TestMethod]
-        public static void ArtikelenBijCategorieTest()
-        {
-            //Arrange
-            var demo = new DemoEntities();
-            var herenFiets = demo.HerenFiets;
-
-
-            _repo.Insert(demo.HerenFiets);
-            _repo.Insert(demo.DamesFiets);
-            _repo.Insert(demo.Fiets);
-
-
-            //Act
-            var artikelen = service.ArtikelenBijCategorie("Heren fiets").ToArray();
-
-            //Assert
-            var herenfiets = artikelen[0];
-            var fiets = artikelen[1];
-
-            Assert.AreEqual(demo.HerenFiets.Id, herenfiets.Id);
-            Assert.AreEqual(demo.Fiets.Id, fiets.Id);
-
         }
 
         [TestMethod]
@@ -148,7 +121,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
             Assert.AreEqual(expectedAantalPaginas, aantalPaginas);
         }
 
-        [ClassCleanup]
+        [TestCleanup]
         public void Dispose()
         {
             _context.Dispose();

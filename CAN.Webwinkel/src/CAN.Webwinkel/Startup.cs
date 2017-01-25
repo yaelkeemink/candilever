@@ -16,6 +16,7 @@ using Swashbuckle.Swagger.Model;
 using CAN.Webwinkel.Agents.KlantAgent;
 using CAN.Webwinkel.Agents.WinkelwagenAgent;
 using CAN.Webwinkel.Infrastructure.Services;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CAN.Webwinkel
 {
@@ -55,13 +56,6 @@ namespace CAN.Webwinkel
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
-
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
 
             services.ConfigureSwaggerGen(options =>
             {
