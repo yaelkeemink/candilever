@@ -12,7 +12,8 @@
     "Microsoft.EntityFrameworkCore.InMemory": "1.1.0",
     "Serilog": "2.3.0",
     "Serilog.Extensions.Logging": "1.3.1",
-    "CAN.Webwinkel": "1.0.0-*"
+    "CAN.Webwinkel": "1.0.0-*",
+    "Microsoft.CodeCoverage": "1.0.2"
   },
 
   "frameworks": {

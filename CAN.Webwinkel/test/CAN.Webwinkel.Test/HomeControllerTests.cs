@@ -21,31 +21,6 @@ namespace CAN.Webwinkel.Test
     [TestClass]
     public class HomeControllerTests
     {
-        private HomeController homeControl;
-        private DbContextOptions<WinkelDatabaseContext> _options;
-        private WinkelDatabaseContext _context;
-        private static ArtikelService aService;
-        private static ArtikelRepository _repo;
-
-
-        //public void Init()
-        //{
-        //    ILogger<HomeController> _logger = null;
-
-        //    ILogger<ArtikelService> artikel_logger = null;
-
-        //    _options = TestDatabaseProvider.CreateInMemoryDatabaseOptions();
-        //    _context = new WinkelDatabaseContext(_options);
-
-        //    ArtikelRepository aRepo = new ArtikelRepository(_context);
-        //    aService = new ArtikelService(artikel_logger, aRepo);
-
-
-        //    WinkelmandjeRepository cartRepo = new WinkelmandjeRepository(_context);
-
-        //    WinkelmandjeService winkelmandjeservice = new WinkelmandjeService(cartRepo);
-        //    homeControl = new HomeController(_logger, aService, winkelmandjeservice);
-        //}
 
         [TestMethod]
         public void IndexRedirectTest()
