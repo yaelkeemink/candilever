@@ -24,7 +24,7 @@ namespace CAN.BackOffice.Controllers
 
         // GET: Factuur/Details/5
         [HttpGet]
-        [Authorize(Roles = "Magazijn")]
+        [Authorize(Roles = "Magazijn,Sales")]
         public ActionResult Details(int id)
         {
             try
@@ -47,7 +47,7 @@ namespace CAN.BackOffice.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Magazijn")]
+        [Authorize(Roles = "Magazijn,Sales")]
         // GET: Factuur/FactuurNietGevonden
         public ActionResult FactuurNietGevonden()
         {

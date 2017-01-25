@@ -16,6 +16,10 @@ using System.Diagnostics;
 using CAN.BackOffice.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
 using System.IO;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Net.Http.Headers;
 
 namespace CAN.BackOffice.IntegrationTest
 {
@@ -28,6 +32,20 @@ namespace CAN.BackOffice.IntegrationTest
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
         {
+            ClearTestDatabase();
+
+            var directory = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName + "\\src\\CAN.BackOffice";
+            _server = new TestServer(new WebHostBuilder()
+                   .UseStartup<TestStartup>()
+                   .UseContentRoot(directory)
+                   );
+            _client = _server.CreateClient();
+
+            CreateDataInDatabase();
+        }
+
+        private static void ClearTestDatabase()
+        {
             var dbconnectionString = "Server=.\\SQLEXPRESS;Database=BackOfficeIntegration;Trusted_Connection=True;";
             var builder = new DbContextOptionsBuilder<DatabaseContext>();
             builder.UseSqlServer(dbconnectionString);
@@ -39,14 +57,10 @@ namespace CAN.BackOffice.IntegrationTest
                 ctx.Database.ExecuteSqlCommand("Delete from Klanten");
                 ctx.SaveChanges();
             }
+        }
 
-            var directory = Directory.GetParent(Directory.GetParent(Directory.GetCurrentDirectory()).FullName).FullName + "\\src\\CAN.BackOffice";
-            _server = new TestServer(new WebHostBuilder()
-                   .UseStartup<TestStartup>()
-                   .UseContentRoot(directory)
-                   );
-            _client = _server.CreateClient();
-
+        private static void CreateDataInDatabase()
+        {
             using (var publisher = new EventPublisher(new BusOptions()
             {
                 ExchangeName = "TestExchange",
@@ -95,15 +109,43 @@ namespace CAN.BackOffice.IntegrationTest
             }
         }
 
+        private string AuthorizeAs(string role)
+        {
+            var now = DateTime.UtcNow;
+            // Specifically add the jti (random nonce), iat (issued timestamp), and sub  (subject / user) claims.
+            // You can add other claims here, if you want:
+            var claims = new List<Claim>()
+           {
+                   new Claim(JwtRegisteredClaimNames.Sub, "IntegrationTester"),
+                   new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                   new Claim(JwtRegisteredClaimNames.Iat, now.Ticks.ToString(),ClaimValueTypes.Integer64),
+                   new Claim("role", role)
+           };
+
+            var secretKey = "secretkeyisverysecureyoucannotguessthis!";
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            var credentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+            // Create the JWT and write it to a string
+            var jwt = new JwtSecurityToken(
+            issuer: "http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1",
+            audience: "http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1",
+            claims: claims,
+            notBefore: now,
+            expires: now.Add(TimeSpan.FromMinutes(60)),
+            signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(jwt);
+        }
+
         [TestMethod]
         public async Task GetFactuurDetailsShowsPage()
         {
 
             // Arrange
-            //var json = JsonConvert.SerializeObject(null);
+            var authorizationToken = AuthorizeAs("Sales");
 
             // Act
-            //var response = await _client.PostAsync("api/klant", new StringContent(json, Encoding.UTF8, "application/json"));
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authorizationToken);
             var response = await _client.GetAsync("Factuur/Details/1");
 
 
@@ -114,11 +156,30 @@ namespace CAN.BackOffice.IntegrationTest
         [TestMethod]
         public async Task GetFactuurDetailsRedirectsToErrorPage()
         {
+            // Arrange
+            var authorizationToken = AuthorizeAs("Sales");
+
+            // Act
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authorizationToken);
             var response = await _client.GetAsync("Factuur/Details/999");
 
             // Assert
             Assert.AreEqual(HttpStatusCode.Redirect, response.StatusCode);
             Assert.AreEqual(@"/Factuur/FactuurNietGevonden", response.Headers.Location.ToString());
+        }
+
+        [TestMethod]
+        public async Task FactuurCanShowFactuurNietGevondenPage()
+        {
+            // Arrange
+            var authorizationToken = AuthorizeAs("Sales");
+
+            // Act
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authorizationToken);
+            var response = await _client.GetAsync("Factuur/FactuurNietGevonden");
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
         [ClassCleanup]

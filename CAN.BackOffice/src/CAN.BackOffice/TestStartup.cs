@@ -16,12 +16,14 @@ using Microsoft.Extensions.Logging;
 using CAN.Webwinkel.Infrastructure.EventListener;
 using CAN.BackOffice.Domain.Entities;
 using CAN.BackOffice.Agents.BestellingsAgent.Agents;
+using Microsoft.IdentityModel.Tokens;
+using CAN.BackOffice.Security;
+using System.Text;
 
 namespace CAN.BackOffice
 {
     public class TestStartup
     {
-
         private BackofficeEventListener listener;
 
         public TestStartup(IHostingEnvironment env)
@@ -87,6 +89,29 @@ namespace CAN.BackOffice
             app.UseApplicationInsightsRequestTelemetry();
 
             app.UseApplicationInsightsExceptionTelemetry();
+
+            var secretKey = "secretkeyisverysecureyoucannotguessthis!";
+            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
+            var tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+                ValidateIssuer = true,
+                ValidIssuer = "http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1",
+                ValidateAudience = true,
+                ValidAudience = "http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1",
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            app.UseJwtBearerAuthentication(new JwtBearerOptions
+            {
+                
+                AutomaticAuthenticate = true,
+                AutomaticChallenge = true,
+                TokenValidationParameters = tokenValidationParameters
+            });
+          
 
             app.UseMvc();
 
