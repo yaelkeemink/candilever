@@ -5,6 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using CAN.Candeliver.BackOfficeAuthenticatie.Models;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
+using CAN.Candeliver.BackOfficeAuthenticatie.Data.Repository;
+using CAN.Candeliver.BackOfficeAuthenticatie.Services;
 
 namespace CAN.Candeliver.BackOfficeAuthenticatie.Data
 {
@@ -28,6 +32,25 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Data
         {
             base.OnModelCreating(builder);
                       
+        }
+
+        internal static void SeedDb(IApplicationBuilder app)
+        {
+            using (var context = app.ApplicationServices.GetRequiredService<ApplicationDbContext>())
+            using (var repo = app.ApplicationServices.GetRequiredService<IApplicationUserRepository>())
+            using (var accountService = app.ApplicationServices.GetRequiredService<IAccountService>())
+            {
+                if (repo.FindByUserName("Marco") == null)
+                {
+
+                   accountService.RegisterAsync("Kees", "DeKoning", "Sales").Wait();
+                }
+
+                if (repo.FindByUserName("Dennis") == null)
+                {
+                    accountService.RegisterAsync("Dennis", "Inpakker", "Magazijn").Wait() ;
+                }
+            }
         }
     }
 }
