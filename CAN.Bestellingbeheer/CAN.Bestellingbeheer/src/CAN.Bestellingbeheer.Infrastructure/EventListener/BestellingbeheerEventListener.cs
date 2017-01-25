@@ -2,9 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading;
-using Serilog;
 using CAN.Bestellingbeheer.Infrastructure.DAL;
 using CAN.Bestellingbeheer.Infrastructure.EventListener.Dispatchers;
+using Microsoft.Extensions.Logging;
+using Serilog;
 
 namespace CAN.Bestellingbeheer.Infrastructure.EventListener
 {
@@ -13,9 +14,9 @@ namespace CAN.Bestellingbeheer.Infrastructure.EventListener
 
         private BusOptions _busOptions;
         private string _dbConnectionString;
-        private ILogger _logger;
+        private ILogger<BestellingbeheerEventListener> _logger;
         private string _replayEndPoint;
-        public BestellingbeheerEventListener(BusOptions busOptions, string dbConnectionString, ILogger logger, string replayEndPoint)
+        public BestellingbeheerEventListener(BusOptions busOptions, string dbConnectionString, ILogger<BestellingbeheerEventListener> logger, string replayEndPoint)
         {
             _busOptions = busOptions;
             _dbConnectionString = dbConnectionString;
@@ -47,25 +48,29 @@ namespace CAN.Bestellingbeheer.Infrastructure.EventListener
             {
                 try
                 {
-                    using (var dispatcher = new WinkelMandjeEventDispatcher(_busOptions, dbOptions, _logger))
+                    var logger = new LoggerFactory()
+                        .AddSerilog(Log.Logger)
+                        .CreateLogger<WinkelMandjeEventDispatcher>();
+
+                    using (var dispatcher = new WinkelMandjeEventDispatcher(_busOptions, dbOptions, logger))
                     {
-                        _logger.Debug("Opening connection with Rabbit mq");
+                        _logger.LogDebug("Opening connection with Rabbit mq");
                         dispatcher.Open();
 
-                        _logger.Debug("Connection with Rabbit mq is open");
+                        _logger.LogDebug("Connection with Rabbit mq is open");
 
                         while (dispatcher.IsConnected())
                         {
-                            _logger.Information("Connected with Rabbit Mq is stil open");
+                            _logger.LogInformation("Connected with Rabbit Mq is stil open");
                             Thread.Sleep(60000);
                         }
-                        _logger.Information("Connection with Rabbit Mq lost");
+                        _logger.LogInformation("Connection with Rabbit Mq lost");
                     }
                 }
                 catch (Exception e)
                 {
-                    _logger.Error($"Error with EventDispatcher {e.Message}");
-                    _logger.Debug(e.StackTrace);
+                    _logger.LogError($"Error with EventDispatcher {e.Message}");
+                    _logger.LogDebug(e.StackTrace);
                     Thread.Sleep(5000);
                 }
             }
