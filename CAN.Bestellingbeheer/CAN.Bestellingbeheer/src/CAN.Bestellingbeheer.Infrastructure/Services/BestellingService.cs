@@ -4,7 +4,7 @@ using InfoSupport.WSA.Infrastructure;
 using System;
 using CAN.Bestellingbeheer.Domain.Exceptions;
 using CAN.Bestellingbeheer.Infrastructure.Interfaces;
-using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace CAN.Bestellingbeheer.Infrastructure.Services {
     public class BestellingService 
@@ -12,9 +12,9 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
     {
         private readonly IRepository<Bestelling, long> _repository;
         private readonly IEventPublisher _publisher;
-        private readonly ILogger _logger;
-
-        public BestellingService(IEventPublisher publisher, IRepository<Bestelling, long> repository, ILogger logger)
+        private readonly ILogger<BestellingService> _logger;
+       
+        public BestellingService(IEventPublisher publisher, IRepository<Bestelling, long> repository, ILogger<BestellingService> logger)
         {
             _publisher = publisher;
             _repository = repository;

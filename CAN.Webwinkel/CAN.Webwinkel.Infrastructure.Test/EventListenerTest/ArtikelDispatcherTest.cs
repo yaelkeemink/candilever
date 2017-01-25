@@ -56,11 +56,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.EventListenerTest
                     Assert.AreEqual(artikelEvent.LeverancierCode, fiets.LeverancierCode);
                     Assert.AreEqual(artikelEvent.Prijs, fiets.Prijs);
                     Assert.AreEqual(artikelEvent.Naam, fiets.Naam);
-                    Assert.AreEqual(0, fiets.Voorraad);
-
-                    Assert.IsNotNull(fiets.ArtikelCategorie[0].Categorie);
-                    Assert.IsNotNull(fiets.ArtikelCategorie[0].Categorie.Naam);
-                    Assert.AreEqual(artikelEvent.Categorieen[0], fiets.ArtikelCategorie[0].Categorie.Naam);
+                    Assert.AreEqual(0, fiets.Voorraad);                   
                 }
             }
         }
@@ -84,7 +80,6 @@ namespace CAN.Webwinkel.Infrastructure.Test.EventListenerTest
                     dispatcher.ArtikelUitCatalogusVerwijderd(eventProvider.VerwijderFietsEvent);
 
                     Assert.AreEqual(1, artikelRepo.Count());
-                    Assert.AreEqual(2, context.Categorieen.Count());
                     Assert.ThrowsException<InvalidOperationException>(() => artikelRepo.Find(eventProvider.VerwijderFietsEvent.Artikelnummer));
                 }
             }

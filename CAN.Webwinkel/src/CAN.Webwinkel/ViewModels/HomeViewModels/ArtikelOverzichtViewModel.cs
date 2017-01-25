@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CAN.Webwinkel.Models
+namespace CAN.Webwinkel.ViewModels.HomeViewModels
 {
-    public class ArtikelOverzichtModel
+    public class ArtikelOverzichtViewModel
     {
 
-        public List<ApiArtikelenModel> Artikelen { get; set; }
+        public List<ApiArtikelenViewModel> Artikelen { get; set; }
         public int AantalPaginas { get; set; }
 
         public int HuidigePaginanummer { get; set; }

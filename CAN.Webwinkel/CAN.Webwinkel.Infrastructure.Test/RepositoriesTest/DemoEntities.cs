@@ -24,16 +24,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
                     LeverbaarVanaf = new DateTime(2017, 1, 1),
                     Naam = "Fiets",
                     Prijs = 159.67M,
-                    ArtikelCategorie = new List<ArtikelCategorie>()
-                };
-
-                ArtikelCategorie arCat = new ArtikelCategorie() {
-                    Artikel = ar,
-                    Categorie = new Categorie() {
-                        Naam = "Heren fiets"
-                    }
-                };
-                ar.ArtikelCategorie.Add(arCat);
+                };                
 
                 return ar;
             }
@@ -54,18 +45,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
                     LeverbaarVanaf = new DateTime(2017, 1, 1),
                     Naam = "Heren fiets",
                     Prijs = 259.67M,
-                    ArtikelCategorie = new List<ArtikelCategorie>()
-                };
-
-                ArtikelCategorie arCat = new ArtikelCategorie()
-                {
-                    Artikel = ar,
-                    Categorie = new Categorie()
-                    {
-                        Naam = "Heren fiets"
-                    }
-                };
-                ar.ArtikelCategorie.Add(arCat);
+                };                
 
                 return ar;
             }
@@ -86,18 +66,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
                     LeverbaarVanaf = new DateTime(2017, 1, 1),
                     Naam = "dames fiets",
                     Prijs = 59.67M,
-                    ArtikelCategorie = new List<ArtikelCategorie>() 
-                };
-
-                ArtikelCategorie arCat = new ArtikelCategorie()
-                {
-                    Artikel = ar,
-                    Categorie = new Categorie()
-                    {
-                        Naam = "Dames fiets"
-                    }
-                };
-                ar.ArtikelCategorie.Add(arCat);
+                };               
                 return ar;
             }
         }
