@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace CAN.Webwinkel.Domain.Interfaces
 {
     public interface IWinkelwagenService
+        : IDisposable
     {
         void Insert(Winkelmandje mandje);
         void Update(Winkelmandje mandje);

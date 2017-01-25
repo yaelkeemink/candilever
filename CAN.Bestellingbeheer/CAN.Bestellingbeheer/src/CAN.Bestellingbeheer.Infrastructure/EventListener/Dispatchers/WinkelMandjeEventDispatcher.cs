@@ -2,12 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using RabbitMQ.Client.Events;
 using CAN.Bestellingbeheer.Infrastructure.DAL;
-using CAN.Common.Events;
 using CAN.Bestellingbeheer.Infrastructure.Services;
 using CAN.Bestellingbeheer.Infrastructure.Repositories;
 using CAN.Bestellingbeheer.Domain.Entities;
 using Microsoft.Extensions.Logging;
 using Serilog;
+using CAN.Common.Events;
 
 namespace CAN.Bestellingbeheer.Infrastructure.EventListener.Dispatchers
 {
