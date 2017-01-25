@@ -1,0 +1,33 @@
+@model WinkelmandjeViewModel
+
+<dl class="dl-horizontal">   
+    @foreach (var artikel in Model.winkelmandje.Artikelen)
+    {       
+        <dt>
+            @Html.DisplayNameFor(model => artikel.Naam)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => artikel.Naam)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => artikel.Prijs)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => artikel.Prijs)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => artikel.Aantal)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => artikel.Aantal)
+        </dd>
+    }   
+    <dt>
+        @Html.DisplayNameFor(a => a.Totaalprijs)
+    </dt> 
+    <dd>
+        @Html.DisplayFor(a => a.Totaalprijs)
+    </dd>
+</dl>
+
+<a asp-action="Registreren" class="btn btn-default">verder</a>
