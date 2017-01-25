@@ -30,7 +30,7 @@ namespace CAN.Webwinkel.Infrastructure.Services
 
         public void Update(Winkelmandje mandje)
         {
-            var dbWinkelMandje =FindWinkelmandje(mandje.WinkelmandjeNummer);
+            var dbWinkelMandje = FindWinkelmandje(mandje.WinkelmandjeNummer);
 
             dbWinkelMandje = mandje;
 

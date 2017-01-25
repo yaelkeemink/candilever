@@ -23,9 +23,9 @@ function addArtikelToCart(artikel) {
 function parseShoppingCart(artikel, guid) {
     var cart = {
         "winkelmandjeNummer": guid,
-        "artikelen": [{
+        "artikelen": [
             artikel
-        }]
+        ]
     }
 
     return cart;
@@ -33,9 +33,9 @@ function parseShoppingCart(artikel, guid) {
 
 function parseNewShoppingCart(artikel) {
     var cart = {
-        "artikelen": [{
+        "artikelen": [
             artikel
-        }]
+        ]
     }
 
     return cart;
