@@ -36,5 +36,9 @@ namespace CAN.Webwinkel.Infrastructure.Services
 
             _repository.Update(dbWinkelMandje);
         }
+        public void Dispose()
+        {
+            _repository?.Dispose();
+        }
     }
 }

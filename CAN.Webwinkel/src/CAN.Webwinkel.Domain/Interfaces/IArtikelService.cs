@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace CAN.Webwinkel.Domain.Interfaces
 {
     public interface IArtikelService
+        :IDisposable
     {
         IEnumerable<Artikel> AlleArtikelen();
         IEnumerable<Artikel> AlleArtikelenPerPagina(int paginanummer, int aantalArtikelen);
