@@ -183,7 +183,7 @@ namespace CAN.BackOffice
             // wachten
             Log.Logger.Information("Waiting for release startup lock");
             locker.StartUpLock.WaitOne();
-            Log.Logger.Information("Continuing startup");
+            Log.Logger.Information("Continue startup");
         }
 
     }
