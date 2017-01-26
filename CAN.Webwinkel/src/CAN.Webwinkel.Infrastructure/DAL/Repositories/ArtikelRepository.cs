@@ -7,7 +7,7 @@ using CAN.Webwinkel.Domain.Entities;
 
 namespace CAN.Webwinkel.Infrastructure.DAL.Repositories
 {
-    public class ArtikelRepository : BaseRepository<Artikel, long, WinkelDatabaseContext>
+    public class ArtikelRepository : BaseRepository<Artikel, int, WinkelDatabaseContext>
     {
         public ArtikelRepository(WinkelDatabaseContext context) : base(context)
         {
@@ -18,7 +18,7 @@ namespace CAN.Webwinkel.Infrastructure.DAL.Repositories
             return _context.Artikels;
         }
 
-        protected override long GetKeyFrom(Artikel item)
+        protected override int GetKeyFrom(Artikel item)
         {
             return item.Artikelnummer;
         }
