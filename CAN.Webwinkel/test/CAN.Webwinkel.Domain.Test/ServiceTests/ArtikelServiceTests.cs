@@ -16,7 +16,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
     public class ArtikelServiceTests
     {
         private DbContextOptions<WinkelDatabaseContext> _options;
-        private static ArtikelService service;
+        private static ArtikelService _service;
         private WinkelDatabaseContext _context;
         private static ArtikelRepository _repo;
 
@@ -27,12 +27,14 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
 
             _context = new WinkelDatabaseContext(_options);
             _repo = new ArtikelRepository(_context);
+
             ILogger<ArtikelService> logger = null;
-            service = new ArtikelService(logger, _repo);
+
+            _service = new ArtikelService(logger, _repo);
         }
 
         [TestMethod]
-        public static void AlleArtikelenTest()
+        public void AlleArtikelenTest()
         {
             //Arrange
             var demo = new DemoEntities();
@@ -44,7 +46,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
 
 
             //Act
-            var alleArtikelen = service.AlleArtikelen();
+            var alleArtikelen = _service.AlleArtikelen();
 
             //Assert
             var artikelenLength = alleArtikelen.Count();
@@ -54,16 +56,13 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
         }
 
         [TestMethod]
-        public static void AlleArtikelenPerPaginaOnevenAantalTest()
+        public void AlleArtikelenPerPaginaOnevenAantalTest()
         {
             //Arrange
             var demo = new DemoEntities();
             var customHerenFiets = demo.HerenFiets;
-            customHerenFiets.Id = 4;
 
             var customDamesFiets = demo.DamesFiets;
-            customDamesFiets.Id = 5;
-
 
             //Dubble Inserts Only for testing.
             _repo.Insert(demo.HerenFiets);
@@ -77,7 +76,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
             //Act
             var paginaNummer = 2;
             var aantalArtikelen = 3;
-            var alleArtikelenOpPagina = service.AlleArtikelenPerPagina(paginaNummer, aantalArtikelen).ToArray();
+            var alleArtikelenOpPagina = _service.AlleArtikelenPerPagina(paginaNummer, aantalArtikelen).ToArray();
 
             //Assert
             var eersteArtikelOpPagina = alleArtikelenOpPagina[0];
@@ -85,22 +84,20 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
 
             var artikelenLength = alleArtikelenOpPagina.Count();
 
-            Assert.AreEqual(customHerenFiets.Id, eersteArtikelOpPagina.Id);
-            Assert.AreEqual(customDamesFiets.Id, tweedeArtikelOpPagina.Id);
+            Assert.AreEqual(customHerenFiets.Artikelnummer, eersteArtikelOpPagina.Artikelnummer);
+            Assert.AreEqual(customDamesFiets.Artikelnummer, tweedeArtikelOpPagina.Artikelnummer);
             Assert.AreEqual(2, artikelenLength); // Er zijn 5 inserts gedaan er er worden 3 artikelen overgeslagen.
 
         }
 
         [TestMethod]
-        public static void AantalPaginasTest()
+        public void AantalPaginasTest()
         {
             //Arrange
             var demo = new DemoEntities();
             var customHerenFiets = demo.HerenFiets;
-            customHerenFiets.Id = 4;
 
             var customDamesFiets = demo.DamesFiets;
-            customDamesFiets.Id = 5;
 
             //Dubble Inserts Only for testing.
             _repo.Insert(demo.HerenFiets);
@@ -113,7 +110,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
 
             //Act
             var aantalArtikelenPerPagina = 4;
-            var aantalPaginas = service.AantalPaginas(aantalArtikelenPerPagina);
+            var aantalPaginas = _service.AantalPaginas(aantalArtikelenPerPagina);
 
             //Assert
             var expectedAantalPaginas = 2;
@@ -126,6 +123,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
         {
             _context.Dispose();
             _repo.Dispose();
+            _service.Dispose();
         }
     }
 }

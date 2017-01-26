@@ -81,7 +81,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
 
                     //Assert
                     var fiets = repo.FindBy(a => a.Artikelnummer == herenfiets.Artikelnummer).Single();
-                    
+
                     Assert.AreNotEqual(fiets.Prijs, demo.HerenFiets);
                 }
             }
@@ -102,17 +102,12 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
             }
 
             using (var context = new WinkelDatabaseContext(_options))
+            using (var repo = new ArtikelRepository(context))
             {
-                using (var repo = new ArtikelRepository(context))
-                {
-                    //Act
-                    var success = repo.Delete((int)herenfiets.Id);
+                //Act
+                var success = repo.Delete(herenfiets.Artikelnummer);
 
-                    //Assert
-                    var fiets = repo.FindBy(a => a.Artikelnummer == herenfiets.Artikelnummer).SingleOrDefault();
-
-                    Assert.AreEqual(null, fiets);
-                }
+                Assert.AreEqual(1, success);
             }
         }
     }

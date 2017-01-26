@@ -15,7 +15,6 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
             {
                 var ar = new Artikel()
                 {
-                    Id = 1,
                     Artikelnummer = 1,
                     Beschrijving = "Hele mooie fiets",
                     AfbeeldingUrl = @"http://www.scribblelive.com/wp-content/uploads/2014/06/IMG_6424-1300x866.jpg",
@@ -37,7 +36,6 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
             {
                 var ar = new Artikel()
                 {
-                    Id = 2,
                     Artikelnummer = 2,
                     Beschrijving = "Hele mooie heren fiets",
                     AfbeeldingUrl = @"http://www.scribblelive.com/wp-content/uploads/2014/06/IMG_6424-1300x866.jpg",
@@ -61,7 +59,6 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
             {
                 var ar = new Artikel()
                 {
-                    Id = 3,
                     Artikelnummer = 3,
                     Beschrijving = "Hele mooie dames fiets",
                     AfbeeldingUrl = @"http://www.scribblelive.com/wp-content/uploads/2014/06/IMG_6424-1300x866.jpg",
