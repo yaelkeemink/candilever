@@ -49,7 +49,7 @@ namespace CAN.Klantbeheer.Facade
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
 
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server =.\\SQLEXPRESS;Database=DATABASENAME;Trusted_Connection=True;"));
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server =.\\SQLEXPRESS;Database=KlantTestDatabase;Trusted_Connection=True;"));
             services.AddScoped<IEventPublisher, EventPublisher>(config => new EventPublisher(new BusOptions()
             {
                 ExchangeName = "TestExchange",

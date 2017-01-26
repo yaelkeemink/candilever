@@ -171,7 +171,7 @@ namespace CAN.BackOffice
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Login}/{action=LoginAction}");
+                    template: "Intranet/{controller=Login}/{action=LoginAction}");
             });
         }
 

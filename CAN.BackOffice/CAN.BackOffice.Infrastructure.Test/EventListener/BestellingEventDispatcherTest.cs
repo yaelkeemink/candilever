@@ -58,7 +58,7 @@ namespace CAN.BackOffice.Infrastructure.Test.EventListener
                     Bestelling bestelling = bestellingRepo.Find(bestellingEvent.Bestellingsnummer);
 
                     Assert.IsNotNull(bestelling);
-                    Assert.AreEqual(currentDate, bestelling.BestelDatum);
+                    Assert.AreEqual(currentDate.ToString("dd-MM-yyyy"), bestelling.BestelDatum.ToString("dd-MM-yyyy"));
                     Assert.IsNotNull(bestelling.Artikelen);
                     Assert.AreEqual(1, bestelling.Artikelen.Count);
                     var artikel = bestelling.Artikelen[0];
