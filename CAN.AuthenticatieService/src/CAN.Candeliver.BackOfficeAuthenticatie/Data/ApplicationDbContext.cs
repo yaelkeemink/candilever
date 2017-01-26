@@ -41,7 +41,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Data
             using (var accountService = app.ApplicationServices.GetRequiredService<IAccountService>())
             {
                 await context.Database.EnsureCreatedAsync();
-                if (repo.FindByUserName("Marco") == null)
+                if (repo.FindByUserName("Kees") == null)
                 {
 
                   await accountService.RegisterAsync("Kees", "DeKoning", "Sales");

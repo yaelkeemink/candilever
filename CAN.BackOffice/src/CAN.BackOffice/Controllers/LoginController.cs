@@ -87,7 +87,7 @@ namespace CAN.BackOffice.Controllers
             }
             catch (Exception loginException)
             {
-                _logger.LogCritical(loginException.Message);
+                _logger.LogCritical("Er ging iets fout bij het inloggen: " + loginException.Message);
                 return Redirect("Login/error");
             }
 
