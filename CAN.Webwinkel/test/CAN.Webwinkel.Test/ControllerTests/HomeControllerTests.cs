@@ -35,7 +35,7 @@ namespace CAN.Webwinkel.Test
             //Act
             var result = homeControl.Index() ;
 
-            Assert.IsInstanceOfType(result, typeof(ActionResult));
+            Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
 
             var redirectToResult = result as RedirectToActionResult;
 
@@ -64,8 +64,7 @@ namespace CAN.Webwinkel.Test
             //Act
             var result = homeControl.Index(2);
 
-            Assert.IsInstanceOfType(result, typeof(ActionResult));
-
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
 
             var viewResult = result as ViewResult;
 
@@ -100,11 +99,11 @@ namespace CAN.Webwinkel.Test
             //Act
             var result = homeControl.ToonWinkelmandje("123456");
 
-            Assert.IsInstanceOfType(result, typeof(ActionResult));
+            Assert.IsInstanceOfType(result, typeof(ViewResult));
 
             var viewResult = result as ViewResult;
 
-            Assert.IsInstanceOfType(viewResult, typeof(ViewResult));
+            Assert.IsInstanceOfType(viewResult.Model, typeof(WinkelmandjeViewModel));
 
             var winkelmandjeView = viewResult.Model as WinkelmandjeViewModel;
 
@@ -115,10 +114,10 @@ namespace CAN.Webwinkel.Test
             Assert.AreEqual(1, winkelmandjeView.Winkelmandje.Id);
             Assert.AreEqual("123456", winkelmandjeView.Winkelmandje.WinkelmandjeNummer);
 
-            Assert.AreEqual(demoDTOWinkelMand.Count(), winkelmandjeViewArtikelen.Count());
+            Assert.AreEqual(3, winkelmandjeViewArtikelen.Count());
             Assert.IsFalse(winkelmandjeViewArtikelen.Contains(demo.HerenFietsDTO));
-            Assert.AreNotEqual(demo.HerenFietsDTO.Prijs, winkelmandjeViewArtikelen[0].Prijs);
-            Assert.AreEqual(damesFietsPrijsBTW, winkelmandjeViewArtikelen[0].Prijs);
+            Assert.AreNotEqual(259.67, winkelmandjeViewArtikelen[0].Prijs);
+            Assert.AreEqual(144.4M, winkelmandjeViewArtikelen[0].Prijs);
         }
     }
 }

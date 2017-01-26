@@ -84,8 +84,8 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
 
             var artikelenLength = alleArtikelenOpPagina.Count();
 
-            Assert.AreEqual(customHerenFiets.Artikelnummer, eersteArtikelOpPagina.Artikelnummer);
-            Assert.AreEqual(customDamesFiets.Artikelnummer, tweedeArtikelOpPagina.Artikelnummer);
+            Assert.AreEqual(2, eersteArtikelOpPagina.Artikelnummer);
+            Assert.AreEqual(3, tweedeArtikelOpPagina.Artikelnummer);
             Assert.AreEqual(2, artikelenLength); // Er zijn 5 inserts gedaan er er worden 3 artikelen overgeslagen.
 
         }
@@ -113,9 +113,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.ServiceTests
             var aantalPaginas = _service.AantalPaginas(aantalArtikelenPerPagina);
 
             //Assert
-            var expectedAantalPaginas = 2;
-
-            Assert.AreEqual(expectedAantalPaginas, aantalPaginas);
+            Assert.AreEqual(2, aantalPaginas);
         }
 
         [TestCleanup]
