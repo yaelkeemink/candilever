@@ -66,7 +66,6 @@ namespace CAN.Webwinkel
             });
             services.AddMvc();
 
-            //o => new OnderhoudsServiceAgent() { BaseUri = new Uri("http://lapiwe-onderhoudservice:80") }
             services.AddDbContext<WinkelDatabaseContext>(options => 
                 options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
 

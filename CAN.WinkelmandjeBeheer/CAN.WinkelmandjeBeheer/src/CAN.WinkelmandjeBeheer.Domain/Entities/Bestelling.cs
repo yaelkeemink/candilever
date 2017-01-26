@@ -8,8 +8,10 @@ namespace CAN.WinkelmandjeBeheer.Domain.Entities
 {
     public enum BestelStatus
     {
-        Goedgekeurd = 0,
+        Geplaatst = 0,
+        Goedgekeurd = 50,
         Opgehaald = 100,
+        Afgekeurd = 150,
     }
     public class Bestelling
     {

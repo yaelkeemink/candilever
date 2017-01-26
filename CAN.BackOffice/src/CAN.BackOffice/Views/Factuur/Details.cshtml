@@ -39,7 +39,7 @@
             <dt>@Html.DisplayNameFor(model => model.Bestelling.Postcode)</dt>
             <dd>@Html.DisplayFor(model => model.Bestelling.Postcode) @Html.DisplayFor(model => model.Bestelling.Woonplaats)</dd>
             <dt>@Html.DisplayNameFor(model => model.Bestelling.Land)</dt>
-            <dd>@Model.Bestelling.Land</dd>
+            <dd>@Html.DisplayFor(model => model.Bestelling.Land)</dd>
         </dl>
         
     </section>
@@ -75,7 +75,7 @@
             <dt>Totaalbedrag</dt>
             <dd>&euro;@Model.TotaalPrijsInclusiefBtw</dd>
             <dt>Exclusief BTW</dt>
-            <dd>&euro;@Model.Totaalprijs</dd>
+            <dd>&euro;@Model.TotaalPrijsExclusiefBtw</dd>
         </dl>
     </section>
     <section id="footer" class="col-xs-offset-1 col-xs-11">

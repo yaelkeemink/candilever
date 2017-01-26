@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CAN.WinkelmandjeBeheer.Domain.Interfaces
 {
-    public interface IWinkelmandjeService
+    public interface IWinkelmandjeService : IDisposable
     {
         Winkelmandje CreateWinkelmandje(Winkelmandje winkelmandje);
         Winkelmandje UpdateWinkelmandje(Winkelmandje winkelmandje);
