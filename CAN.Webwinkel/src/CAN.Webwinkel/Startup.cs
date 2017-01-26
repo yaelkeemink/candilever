@@ -51,8 +51,6 @@ namespace CAN.Webwinkel
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
@@ -80,9 +78,6 @@ namespace CAN.Webwinkel
 
             services.AddScoped<IArtikelService, ArtikelService>();          
             services.AddScoped<IWinkelwagenService, WinkelmandjeService>();
-  
-            services.AddScoped<IArtikelService, ArtikelService>();
-            services.AddScoped<IKlantAgent, KlantAgent>(s => new KlantAgent() { BaseUri = new Uri("http://can-klantbeheer:80") });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
