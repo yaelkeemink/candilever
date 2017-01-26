@@ -35,7 +35,7 @@ function createBestelling(cartGuid, klant, klantnummer) {
         "klantnummer": klantnummer,
         "volledigeNaam": klant.voornaam + " " + klant.tussenvoegsels + " " + klant.achternaam,
         "postcode": klant.postcode,
-        "adres": klant.adres,
+        "adres": klant.straatnaam,
         "huisnummer": klant.huisnummer,
         "land": klant.land,
         "winkelmandjeNummer": cartGuid,
