@@ -17,12 +17,14 @@ namespace CAN.BackOffice.Controllers
         private readonly IFactuurService _service;
 
         public FactuurController(ILogger<FactuurController> logger, IFactuurService service)
-            : base (logger)
+            : base(logger)
         {
             _service = service;
         }
-        [Authorize(Roles ="Sales")]
+
         // GET: Factuur/Details/5
+        [HttpGet]
+        [Authorize(Roles = "Magazijn,Sales")]
         public ActionResult Details(int id)
         {
             try
@@ -44,7 +46,8 @@ namespace CAN.BackOffice.Controllers
             }
         }
 
-        [Authorize(Roles = "Sales")]
+        [HttpGet]
+        [Authorize(Roles = "Magazijn,Sales")]
         // GET: Factuur/FactuurNietGevonden
         public ActionResult FactuurNietGevonden()
         {

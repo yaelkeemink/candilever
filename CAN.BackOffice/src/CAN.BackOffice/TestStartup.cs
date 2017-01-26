@@ -5,30 +5,28 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using CAN.BackOffice.Models;
 using CAN.BackOffice.Services;
 using Serilog;
 using CAN.BackOffice.Infrastructure.DAL;
-using CAN.BackOffice.Agents.BestellingsAgent.Agents;
 using CAN.BackOffice.Infrastructure.DAL.Repositories;
-using CAN.BackOffice.Domain.Entities;
 using CAN.BackOffice.Domain.Interfaces;
-using Microsoft.Extensions.Logging;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using CAN.Webwinkel.Infrastructure.EventListener;
 using InfoSupport.WSA.Infrastructure;
-using CAN.BackOffice.Swagger;
-using Swashbuckle.Swagger.Model;
+using Microsoft.Extensions.Logging;
+using CAN.Webwinkel.Infrastructure.EventListener;
+using CAN.BackOffice.Domain.Entities;
+using CAN.BackOffice.Agents.BestellingsAgent.Agents;
+using Microsoft.IdentityModel.Tokens;
 using CAN.BackOffice.Security;
-using CAN.BackOffice.Agents.AuthenticatieAgents.Agents;
+using System.Text;
 
 namespace CAN.BackOffice
 {
-    public class Startup
+    public class TestStartup
     {
         private BackofficeEventListener listener;
 
-        public Startup(IHostingEnvironment env)
+        public TestStartup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
@@ -63,38 +61,19 @@ namespace CAN.BackOffice
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
 
-            var connectionstring = Environment.GetEnvironmentVariable("dbconnectionstring");
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionstring));
-
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer("Server =.\\SQLEXPRESS;Database=BackOfficeIntegration;Trusted_Connection=True;"));
 
             services.AddMvc();
 
-            services.AddScoped<IBestellingBeheerService, BestellingBeheerService>(b => new BestellingBeheerService() { BaseUri = new Uri("http://can-bestellingbeheer") });
-            services.AddScoped<IAuthenticatieService, AuthenticatieService>(b => new AuthenticatieService() { BaseUri = new Uri("http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1") });
+            // Add application services.
+            services.AddScoped<IBestellingBeheerService, BestellingBeheerService>(b => new BestellingBeheerService() { BaseUri = new Uri("http://can-bestellingbeheer:80") });
 
             services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
             services.AddScoped<IRepository<Klant, long>, KlantRepository>();
 
             services.AddScoped<IMagazijnService, MagazijnService>();
-            services.AddScoped<ILoginService, LoginService>();
+            services.AddScoped<IFactuurService, FactuurService>();
             services.AddScoped<ISalesService, SalesService>();
-
-
-            services.AddSwaggerGen();
-            services.ConfigureSwaggerGen(options =>
-            {
-                options.SingleApiVersion(new Info
-                {
-                    Version = "v1",
-                    Title = "Backoffice service",
-                    Description = "Backoffice service",
-                    TermsOfService = "None"
-                });
-
-                //      options.OperationFilter<SwaggerAuthorization>();
-
-            });
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -103,11 +82,15 @@ namespace CAN.BackOffice
             loggerFactory.AddConsole(Configuration.GetSection("Serilog"));
             loggerFactory.AddDebug();
             loggerFactory.AddSerilog();
+
+            var applicationLifetime = app.ApplicationServices.GetRequiredService<IApplicationLifetime>();
+            applicationLifetime.ApplicationStopping.Register(OnShutdown);
+
             app.UseApplicationInsightsRequestTelemetry();
 
             app.UseApplicationInsightsExceptionTelemetry();
 
-            var secretKey = Configuration.GetValue<string>("SecretKey");
+            var secretKey = "secretkeyisverysecureyoucannotguessthis!";
             var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
             var tokenValidationParameters = new TokenValidationParameters
             {
@@ -123,32 +106,19 @@ namespace CAN.BackOffice
 
             app.UseJwtBearerAuthentication(new JwtBearerOptions
             {
-               
+                
                 AutomaticAuthenticate = true,
                 AutomaticChallenge = true,
                 TokenValidationParameters = tokenValidationParameters
             });
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                LoginPath = "/Login/LoginAction",
-                AccessDeniedPath = "/Login/AccesDenied",
-                AutomaticAuthenticate = true,
-                AutomaticChallenge = true,
-                AuthenticationScheme = "Cookie",
-                CookieName = "access_token",
-                TicketDataFormat = new JwtCookie(SecurityAlgorithms.HmacSha256, tokenValidationParameters)
-            });
-            
+          
 
-            var applicationLifetime = app.ApplicationServices.GetRequiredService<IApplicationLifetime>();
-            applicationLifetime.ApplicationStopping.Register(OnShutdown);
+            app.UseMvc();
 
             app.UseApplicationInsightsRequestTelemetry();
 
             if (env.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUi();
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
@@ -162,15 +132,13 @@ namespace CAN.BackOffice
 
             app.UseStaticFiles();
 
-
-
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Login}/{action=LoginAction}");
+                    template: "{controller=Magazijn}/{action=BestellingOphalen}/{id?}");
             });
         }
 
@@ -185,22 +153,30 @@ namespace CAN.BackOffice
         /// </summary>
         private void StartEventListeners()
         {
-            var dbconnectionString = Environment.GetEnvironmentVariable("dbconnectionstring");
+            var dbconnectionString = "Server=.\\SQLEXPRESS;Database=BackOfficeIntegration;Trusted_Connection=True;";
             var locker = new EventListenerLock();
-            var replayQueue = Environment.GetEnvironmentVariable("ReplayServiceQueue");
-           listener = new BackofficeEventListener(
-                busOptions: BusOptions.CreateFromEnvironment(),
+            var replayQueue = "ReplayServiceQueue";
+            listener = new BackofficeEventListener(
+                busOptions: new BusOptions()
+                {
+                    ExchangeName = "TestExchange",
+                    QueueName = null,
+                    HostName = "localhost",
+                    Port = 5672,
+                    UserName = "guest",
+                    Password = "guest",
+                },
                 dbConnectionString: dbconnectionString,
                 logger: Log.Logger,
                 replayEndPoint: replayQueue,
                 locker: locker,
-                replayAuditService: true
-                );
+                replayAuditService: false
+            );
             listener.Start();
             // wachten
             Log.Logger.Information("Waiting for release startup lock");
             locker.StartUpLock.WaitOne();
-            Log.Logger.Information("Continue startup");
+            Log.Logger.Information("Continuing startup");
         }
 
     }
