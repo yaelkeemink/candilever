@@ -34,11 +34,11 @@ namespace CAN.BackOffice.Controllers
             {
                 if (User.IsInRole("Sales"))
                 {
-                    return Redirect("/Sales/Index");
+                    return Redirect("/Intranet/Sales/Index");
                 }
                 else if (User.IsInRole("Magazijn"))
                 {
-                    return Redirect("/Magazijn/BestellingOphalen");
+                    return Redirect("/Intranet/Magazijn/BestellingOphalen");
                 }
 
             }

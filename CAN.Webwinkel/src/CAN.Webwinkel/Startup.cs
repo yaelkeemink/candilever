@@ -108,7 +108,7 @@ namespace CAN.Webwinkel
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "Kantilever/{controller=Home}/{action=Index}/{id?}");
             });
 
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715

@@ -5,7 +5,7 @@ function toonWinkelwagen() {
     var cartGuid = localStorage.getItem('cartGuid');
 
     if (cartGuid !== null || cartGuid !== undefined) {
-        window.location = '/Home/ToonWinkelmandje/' + cartGuid;
+        window.location = '/Kantilever/Home/ToonWinkelmandje/' + cartGuid;
     }
 }
 
