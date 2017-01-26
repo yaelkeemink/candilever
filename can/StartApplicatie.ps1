@@ -73,7 +73,7 @@ cd CAN.WinkelmandjeBeheer\CAN.WinkelmandjeBeheer\src\CAN.WinkelmandjeBeheer.Faca
 start  docker-compose up -d
 
 if ($removeContainers -eq 'y') {
-	timeout /t 120 /nobreak
+	timeout /t 300 /nobreak
 } else {
 	timeout /t 15 /nobreak
 }
@@ -83,8 +83,8 @@ echo 'Webwinkel beschikbaar op http://localhost:11500'
 echo 'Backoffice beschikbaar op http://localhost:11200'
 echo ' ';
 
-Start-Process "chrome.exe" "http://localhost:11500"
-Start-Process "chrome.exe" "http://localhost:11200"
+start microsoft-edge:http://localhost:11500
+start microsoft-edge:http://localhost:11200
 
 $end = @"
  -------- __@      __@       __@       __@      __~@
