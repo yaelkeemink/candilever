@@ -58,30 +58,39 @@ namespace CAN.BackOffice.Controllers
         [HttpPost]
         public async Task<IActionResult> LoginAction(LoginModelDTO model)
         {
-            var loginResult = await _loginService.LoginAsync(
-                new LoginViewModel()
-                {
-                    UserName = model.UserName,
-                    Password = model.Password
-                });
-
-            if (loginResult == null)
+            try
             {
-                ModelState.AddModelError("LoginResult", "Combinatie van gebruikersnaam en wachtwoord is onjuist");
-                return View(model);
+                var loginResult = await _loginService.LoginAsync(
+                                        new LoginViewModel()
+                                        {
+                                            UserName = model.UserName,
+                                            Password = model.Password
+                                        });
+
+                if (loginResult == null)
+                {
+                    ModelState.AddModelError("LoginResult", "Combinatie van gebruikersnaam en wachtwoord is onjuist");
+                    return View(model);
+                }
+
+                Response.Cookies.Append(
+                  "access_token",
+                  loginResult.AccessToken,
+                  new CookieOptions()
+                  {
+                      Path = "/",
+                      HttpOnly = false,
+                      Secure = false,
+                      Expires = new DateTimeOffset(DateTime.Now.AddSeconds(loginResult.ExpiresIn.Value))
+                  });
+                return Redirect("/Login/LoginAction");
+            }
+            catch (Exception loginException)
+            {
+                _logger.LogCritical("Er ging iets fout bij het inloggen: " + loginException.Message);
+                return Redirect("Login/error");
             }
 
-            Response.Cookies.Append(
-              "access_token",
-              loginResult.AccessToken,
-              new CookieOptions()
-              {
-                  Path = "/",
-                  HttpOnly = false,
-                  Secure = false,
-                  Expires = new DateTimeOffset(DateTime.Now.AddSeconds(loginResult.ExpiresIn.Value))
-              });
-            return Redirect("/Login");
         }
 
 

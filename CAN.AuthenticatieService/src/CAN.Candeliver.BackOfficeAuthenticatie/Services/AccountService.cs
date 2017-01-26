@@ -62,7 +62,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
                     new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                     new Claim(JwtRegisteredClaimNames.Iat, now.Ticks.ToString(),ClaimValueTypes.Integer64),
-                    new Claim("role", await GetUserRoles(user))                                    
+                    new Claim("role", await GetUserRoles(user))
             };
 
             // Create the JWT and write it to a string
@@ -82,7 +82,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         {
 
             var roles = await _userManager.GetRolesAsync(user);
-            
+
             return string.Join(",", roles);
         }
 
@@ -96,20 +96,19 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         /// <returns></returns>
         public async Task<ApplicationUser> RegisterAsync(string username, string password, string role)
         {
-            var user = new ApplicationUser { UserName = username};
+            var user = new ApplicationUser { UserName = username };
 
             var result = await _userManager.CreateAsync(user, password);
 
             if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-
+            {             
                 var addToRoleResult = await AddRoleAsync(user, role);
                 if (addToRoleResult)
                 {
                     _logger.LogInformation($"New acount created: {username}");
                     return user;
-                } else
+                }
+                else
                 {
                     _logger.LogCritical($"User created failed. deleting user {username}");
                     await _userManager.DeleteAsync(user);
@@ -128,11 +127,11 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         public async Task<ClaimsIdentity> GetIdentityAsync(string username, string password)
         {
 
-            
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, set lockoutOnFailure: true
             var result = await _signInManager.PasswordSignInAsync(username, password, false, lockoutOnFailure: false);
-            
+
             if (result.Succeeded)
             {
                 _logger.LogInformation($"User {username} logged in.");
@@ -186,6 +185,12 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
             return true;
         }
 
-      
+        public void Dispose()
+        {
+            _userManager.Dispose();
+            _roleManager.Dispose();
+            _userRepo.Dispose();
+        }
+
     }
 }

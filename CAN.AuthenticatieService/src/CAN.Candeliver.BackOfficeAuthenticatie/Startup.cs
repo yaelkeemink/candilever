@@ -20,6 +20,7 @@ using CAN.Candeliver.BackOfficeAuthenticatie.Services;
 using CAN.Candeliver.BackOfficeAuthenticatie.Swagger;
 using System.IdentityModel.Tokens.Jwt;
 using CAN.Candeliver.BackOfficeAuthenticatie.Data.Repository;
+using Serilog;
 
 namespace CAN.Candeliver.BackOfficeAuthenticatie
 {
@@ -114,10 +115,10 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-
-
-            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddConsole(Configuration.GetSection("Serilog"));
             loggerFactory.AddDebug();
+            loggerFactory.AddSerilog();
+
 
             app.UseApplicationInsightsRequestTelemetry();
 
@@ -164,6 +165,9 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie
             app.UseSwaggerUi();
             app.UseMvc();
             // Add external authentication middleware below. To configure them please see http://go.microsoft.com/fwlink/?LinkID=532715
+
+            ApplicationDbContext.SeedDb(app);
+
 
         }
 
