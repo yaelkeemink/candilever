@@ -23,6 +23,8 @@ services:
           - can-bestellingbeheer
     volumes:
       - "C:/Docker/.BestellingbeheerData/Log:/var/log/Kantilever/BestellingbeheerLogging/"
+    depends_on:
+      - can.bestellingbeheer.mssql
     links:
      - can.bestellingbeheer.mssql:db
 

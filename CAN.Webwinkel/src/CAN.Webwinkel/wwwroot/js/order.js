@@ -92,12 +92,12 @@ function showMessage(type, text) {
             document.getElementById("message").classList.add("fade");
             document.getElementById("message").classList.add("in");
 
-            document.getElementById("messageheadertext").innerHTML = "Success!"
+            document.getElementById("messageheadertext").innerHTML = "Gelukt!"
             document.getElementById("messagetext").innerHTML = text;
         } else if (type === "info") {
             document.getElementById("message").classList.add("alert-info");
 
-            document.getElementById("messageheadertext").innerHTML = "Winkelwagen Leeg!"
+            document.getElementById("messageheadertext").innerHTML = "Winkelwagen leeg!"
             document.getElementById("messagetext").innerHTML = text;
         }
         else if (type === "error") {

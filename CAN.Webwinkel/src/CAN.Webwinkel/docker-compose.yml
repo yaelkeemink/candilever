@@ -22,6 +22,8 @@ services:
       - can_main_network
     volumes:
       - "C:/Docker/.WebWinkelData/Log:/var/log/Kantilever/WebWinkelLog/"
+    depends_on:
+      - can.webwinkel.mssql
     links:
       - can.webwinkel.mssql:db
 

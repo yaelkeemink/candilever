@@ -35,7 +35,7 @@ namespace CAN.Klantbeheer.IntegratieTest
                 Straatnaam = "2361VJ",
                 Email = "yaelkeemink@gmail.com",
                 Huisnummer = "14",
-                Land = Land.Nederland,
+                Land = "Nederland",
             };
             var json = JsonConvert.SerializeObject(klant);
 
@@ -64,7 +64,7 @@ namespace CAN.Klantbeheer.IntegratieTest
                 Straatnaam = "2361VJ",
                 Email = "yaelkeemink@gmail.com",
                 Huisnummer = "14",
-                Land = Land.Nederland,
+                Land = "Nederland",
             };
             var json = JsonConvert.SerializeObject(klant);
 
@@ -92,7 +92,7 @@ namespace CAN.Klantbeheer.IntegratieTest
                 Postcode = "2361VJ",
                 Straatnaam = "2361VJ",
                 Huisnummer = "14",
-                Land = Land.Nederland,
+                Land = "Nederland",
             };
             var json = JsonConvert.SerializeObject(klant);
 
