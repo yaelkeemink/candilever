@@ -51,8 +51,8 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Tussenvoegsels = "De",
                     Achternaam = "Keemink", 
                     Telefoonnummer = "0640480381",                   
-                    Postcode = "2361VJ", 
-                    Adres = "van Leydenstraat",
+                    Postcode = "2361VJ",
+                    Straatnaam = "van Leydenstraat",
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Land = Land.Nederland,
@@ -77,7 +77,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Achternaam = "Keemink",
                     Telefoonnummer = "+31640480381",
                     Postcode = "2361VJ",
-                    Adres = "van Leydenstraat",
+                    Straatnaam = "van Leydenstraat",
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Land = Land.Nederland,
@@ -102,7 +102,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Achternaam = "Keemink",
                     Telefoonnummer = "+31640480381",
                     Postcode = "2361VJ",
-                    Adres = "van Leydenstraat",
+                    Straatnaam = "van Leydenstraat",
                     Huisnummer = "14 A",
                     Email = "yaelkeemink@gmail.com",
                     Land = Land.Nederland,
@@ -125,7 +125,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Tussenvoegsels = "De",
                     Achternaam = "Keemink",                    
                     Postcode = "2361VJ",
-                    Adres = "van Leydenstraat",
+                    Straatnaam = "van Leydenstraat",
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Telefoonnummer = "+31640480381",
@@ -141,7 +141,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                 Assert.AreEqual("Yael", result.Voornaam);                
                 Assert.AreEqual("Keemink", result.Achternaam);
                 Assert.AreEqual("2361VJ", result.Postcode);
-                Assert.AreEqual("van Leydenstraat", result.Adres);
+                Assert.AreEqual("van Leydenstraat", result.Straatnaam);
                 Assert.AreEqual("14", result.Huisnummer);
                 Assert.AreEqual("yaelkeemink@gmail.com", result.Email);
                 Assert.AreEqual("+31640480381", result.Telefoonnummer);
@@ -159,7 +159,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Tussenvoegsels = "De",
                     Achternaam = "Keemink",
                     Postcode = "2361VJ",
-                    Adres = "van Leydenstraat",
+                    Straatnaam = "van Leydenstraat",
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Telefoonnummer = "+31640480381",
@@ -185,7 +185,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Tussenvoegsels = "De",
                     Achternaam = "Keemink",
                     Postcode = "2361VJ",
-                    Adres = "van Leydenstraat",
+                    Straatnaam = "van Leydenstraat",
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Telefoonnummer = "+31640480381",
@@ -197,7 +197,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Voornaam = "Rob",
                     Achternaam = "Gerritsen",
                     Postcode = "1265DS",
-                    Adres = "van Leydenstraat",
+                    Straatnaam = "van Leydenstraat",
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Telefoonnummer = "+31640480381",
@@ -222,7 +222,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Tussenvoegsels = "De",
                     Achternaam = "Keemink",
                     Postcode = "2361VJ",
-                    Adres = "van Leydenstraat",
+                    Straatnaam = "van Leydenstraat",
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Telefoonnummer = "+31640480381",
@@ -242,7 +242,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                 Assert.AreEqual("De", result.Tussenvoegsels);
                 Assert.AreEqual("Keemink", result.Achternaam);
                 Assert.AreEqual("2361VJ", result.Postcode);
-                Assert.AreEqual("van Leydenstraat", result.Adres);
+                Assert.AreEqual("van Leydenstraat", result.Straatnaam);
                 Assert.AreEqual("14", result.Huisnummer);
                 Assert.AreEqual("yaelkeemink@gmail.com", result.Email);
                 Assert.AreEqual("+31640480381", result.Telefoonnummer);
@@ -260,7 +260,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Tussenvoegsels = "De",
                     Achternaam = "Keemink",
                     Postcode = "2361VJ",
-                    Adres = "van Leydenstraat",
+                    Straatnaam = "van Leydenstraat",
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Telefoonnummer = "+31640480381",
@@ -273,7 +273,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Tussenvoegsels = "De",
                     Achternaam = "Keemink",
                     Postcode = "2361VJ",
-                    Adres = "van Leydenstraat",
+                    Straatnaam = "van Leydenstraat",
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Telefoonnummer = "+31640480381",

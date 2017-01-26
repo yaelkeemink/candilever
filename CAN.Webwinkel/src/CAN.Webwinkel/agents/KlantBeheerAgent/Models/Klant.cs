@@ -21,17 +21,18 @@ namespace CAN.Webwinkel.Agents.KlantAgent.Models
         /// <summary>
         /// Initializes a new instance of the Klant class.
         /// </summary>
-        public Klant(string voornaam, string achternaam, string postcode, string huisnummer, string adres, int land, long? klantnummer = default(long?), string tussenvoegsels = default(string), string telefoonnummer = default(string), string email = default(string))
+        public Klant(string voornaam, string achternaam, string postcode, string woonplaats, string huisnummer, string straatnaam, string land, long? klantnummer = default(long?), string tussenvoegsels = default(string), string telefoonnummer = default(string), string email = default(string))
         {
-            Klantnummer = klantnummer;
+            Klantnummer = 0;
             Voornaam = voornaam;
             Achternaam = achternaam;
             Tussenvoegsels = tussenvoegsels;
             Postcode = postcode;
             Telefoonnummer = telefoonnummer;
             Email = email;
+            Woonplaats = woonplaats;
             Huisnummer = huisnummer;
-            Adres = adres;
+            Straatnaam = straatnaam;
             Land = land;
         }
 
@@ -72,18 +73,23 @@ namespace CAN.Webwinkel.Agents.KlantAgent.Models
 
         /// <summary>
         /// </summary>
+        [JsonProperty(PropertyName = "woonplaats")]
+        public string Woonplaats { get; set; }
+
+        /// <summary>
+        /// </summary>
         [JsonProperty(PropertyName = "huisnummer")]
         public string Huisnummer { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "adres")]
-        public string Adres { get; set; }
+        [JsonProperty(PropertyName = "straatnaam")]
+        public string Straatnaam { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "land")]
-        public int Land { get; set; }
+        public string Land { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
@@ -102,13 +108,21 @@ namespace CAN.Webwinkel.Agents.KlantAgent.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Postcode");
             }
+            if (Woonplaats == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Woonplaats");
+            }
             if (Huisnummer == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Huisnummer");
             }
-            if (Adres == null)
+            if (Straatnaam == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Adres");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Straatnaam");
+            }
+            if (Land == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Land");
             }
         }
     }

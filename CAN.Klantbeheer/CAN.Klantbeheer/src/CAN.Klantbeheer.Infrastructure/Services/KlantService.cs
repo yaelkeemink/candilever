@@ -34,7 +34,7 @@ namespace CAN.Klantbeheer.Infrastructure.Services
                     Achternaam = klant.Achternaam,
                     Postcode = klant.Postcode,
                     Telefoonnummer = klant.Telefoonnummer,
-                    Adres = klant.Adres,
+                    Adres = klant.Straatnaam,
                     Email = klant.Email,
                     Huisnummer = klant.Huisnummer,
                     Land = klant.Land.ToString(),
