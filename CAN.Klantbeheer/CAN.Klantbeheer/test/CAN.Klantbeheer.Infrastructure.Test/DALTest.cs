@@ -55,7 +55,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Straatnaam = "van Leydenstraat",
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
-                    Land = Land.Nederland,
+                    Land = "Nederland",
                 });
             }
             using (var repo = new KlantRepository(new DatabaseContext(_options)))
@@ -80,7 +80,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Straatnaam = "van Leydenstraat",
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
-                    Land = Land.Nederland,
+                    Land = "Nederland",
                 });
             }
             using (var repo = new KlantRepository(new DatabaseContext(_options)))
@@ -105,7 +105,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Straatnaam = "van Leydenstraat",
                     Huisnummer = "14 A",
                     Email = "yaelkeemink@gmail.com",
-                    Land = Land.Nederland,
+                    Land = "Nederland",
                 });
             }
             using (var repo = new KlantRepository(new DatabaseContext(_options)))
@@ -129,7 +129,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Telefoonnummer = "+31640480381",
-                    Land = Land.Nederland,
+                    Land = "Nederland",
                 });
             }
 
@@ -145,7 +145,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                 Assert.AreEqual("14", result.Huisnummer);
                 Assert.AreEqual("yaelkeemink@gmail.com", result.Email);
                 Assert.AreEqual("+31640480381", result.Telefoonnummer);
-                Assert.AreEqual(Land.Nederland, result.Land);
+                Assert.AreEqual("Nederland", result.Land);
             }
         }
         [TestMethod]
@@ -163,7 +163,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Telefoonnummer = "+31640480381",
-                    Land = Land.Nederland,
+                    Land = "Nederland",
                 };
                 repo.Insert(klant);
                 repo.Delete(1);
@@ -189,7 +189,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Telefoonnummer = "+31640480381",
-                    Land = Land.Nederland,
+                    Land = "Nederland",
                 };
                 repo.Insert(klant);
                 klant = new Klant()
@@ -201,7 +201,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Telefoonnummer = "+31640480381",
-                    Land = Land.Nederland,
+                    Land = "Nederland",
                 };
                 repo.Insert(klant);
             }
@@ -226,7 +226,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Telefoonnummer = "+31640480381",
-                    Land = Land.Nederland,
+                    Land = "Nederland",
                 };
                 repo.Insert(klant);
                 klant = repo.Find(1);
@@ -246,7 +246,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                 Assert.AreEqual("14", result.Huisnummer);
                 Assert.AreEqual("yaelkeemink@gmail.com", result.Email);
                 Assert.AreEqual("+31640480381", result.Telefoonnummer);
-                Assert.AreEqual(Land.Nederland, result.Land);
+                Assert.AreEqual("Nederland", result.Land);
             }
         }
         [TestMethod]
@@ -264,7 +264,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Telefoonnummer = "+31640480381",
-                    Land = Land.Nederland,
+                    Land = "Nederland",
                 };
 
                 var klant2 = new Klant()
@@ -277,7 +277,7 @@ namespace CAN.Klantbeheer.Infrastructure.Test.Test
                     Huisnummer = "14",
                     Email = "yaelkeemink@gmail.com",
                     Telefoonnummer = "+31640480381",
-                    Land = Land.Nederland,
+                    Land = "Nederland",
                 };
 
                 repo.Insert(klant);

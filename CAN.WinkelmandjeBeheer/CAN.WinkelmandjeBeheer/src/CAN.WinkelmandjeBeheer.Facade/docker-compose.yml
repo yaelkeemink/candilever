@@ -23,6 +23,8 @@ services:
           - can-winkelmandjebeheer
     volumes:
       - "C:/Docker/.WinkelmandjebeheerData/Log:/var/log/Kantilever/WinkelmandjebeheerLogging/"
+    depends_on:
+      - can.winkelmandjebeheer.mssql
     links:
      - can.winkelmandjebeheer.mssql:db
 
