@@ -72,7 +72,7 @@ namespace CAN.Webwinkel
             services.AddDbContext<WinkelDatabaseContext>(options => 
                 options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
 
-            services.AddScoped<IRepository<Artikel, long>, ArtikelRepository>();
+            services.AddScoped<IRepository<Artikel, int>, ArtikelRepository>();
             services.AddScoped<IRepository<Winkelmandje, long>, WinkelmandjeRepository>();
 
             services.AddScoped<IKlantAgent, KlantAgent>(s => new KlantAgent() { BaseUri = new Uri("http://can-klantbeheer:80") });
