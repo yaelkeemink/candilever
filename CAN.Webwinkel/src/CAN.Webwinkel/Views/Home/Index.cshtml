@@ -6,19 +6,22 @@
 
 <h1>Welkom bij de beste fiets specialist in Nederland!</h1>
 
-<ul class="pagination">
-    <li><a asp-action="Index" asp-route-id="@Model.VorigePagina">Vorige</a></li>
-    @for (int i = 1; i <= Model.AantalPaginas; i++)
-    {
-        <li><a asp-action="Index" asp-route-id="@i">@i</a></li>
-    }
-    <li><a asp-action="Index" asp-route-id="@Model.VolgendePagina">Volgende</a></li>
-</ul>
+<div class="custom-header col-md-12">
+    <ul class="pagination col-md-10">
+        <li><a asp-action="Index" asp-route-id="@Model.VorigePagina">Vorige</a></li>
+        @for (int i = 1; i <= Model.AantalPaginas; i++)
+        {
+            <li><a asp-action="Index" asp-route-id="@i">@i</a></li>
+        }
+        <li><a asp-action="Index" asp-route-id="@Model.VolgendePagina">Volgende</a></li>
+    </ul>
+    <a onclick="toonWinkelwagen()" class="btn btn-success col-md-2" >Bestellen</a>
+</div>
 
 @foreach (var artikel in Model.Artikelen)
 {
     <div>
-        <div class="col-md-4 column productbox">
+        <div class="border col-md-4 column productbox">
             <div class="producttitle">@Html.DisplayFor(a => artikel.Naam)</div>
             <img src="@artikel.AfbeeldingUrl" class="img-responsive customImg">
             <div class="productprice">
@@ -27,7 +30,6 @@
                 <div class="pricetext">&euro;@Html.DisplayFor(a => artikel.Prijs)</div>
            </div>
         </div>
-
     </div>
 }
 

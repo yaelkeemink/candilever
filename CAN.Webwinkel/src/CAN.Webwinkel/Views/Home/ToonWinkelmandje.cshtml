@@ -1,33 +1,28 @@
 @model WinkelmandjeViewModel
 
-<dl class="dl-horizontal">   
-    @foreach (var artikel in Model.Winkelmandje.Artikelen)
-    {       
-        <dt>
-            @Html.DisplayNameFor(model => artikel.Naam)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => artikel.Naam)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => artikel.Prijs)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => artikel.Prijs)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => artikel.Aantal)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => artikel.Aantal)
-        </dd>
-    }   
-    <dt>
-        @Html.DisplayNameFor(a => a.Totaalprijs)
-    </dt> 
-    <dd>
-        @Html.DisplayFor(a => a.Totaalprijs)
-    </dd>
-</dl>
+<div class="col-md-12">
+    @foreach (var artikel in Model.winkelmandje.Artikelen)
+    {
 
-<a asp-action="Registreren" class="btn btn-default">verder</a>
+        <div>
+            <div class="border column productbox">
+                <div class="producttitle">@Html.DisplayFor(a => artikel.Naam)</div>
+                <div class="productprice">
+                    <div class="productvoorraad">@Html.DisplayFor(a => artikel.Aantal)</div>
+                    <div class="pricetext">&euro;@Html.DisplayFor(a => artikel.Prijs)</div>
+                </div>
+            </div>
+        </div>
+    }
+    <div class="border column productbox">
+        <div class="producttitle">
+            @Html.DisplayNameFor(a => a.Totaalprijs)
+        </div>
+        <div class="productprice">
+           <div class="pricetext">&euro;@Html.DisplayFor(a => a.Totaalprijs)</div>
+        </div>
+    </div>
+</div>
+<div class="col-md-12">
+    <a asp-action="Registreren" class="btn btn-default">Verder</a>
+</div>
