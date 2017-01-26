@@ -2,6 +2,7 @@
 using CAN.Webwinkel.Infrastructure.DAL.Repositories;
 using CAN.Webwinkel.Infrastructure.Test.Provider;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -21,8 +22,6 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
         [TestInitialize]
         public void Init()
         {
-            // Use InMemory database for testing, records are not removed afterwards from Local Database
-            //_options = TestDatabaseProvider.CreateInMemoryDatabaseOptions();
             _options = TestDatabaseProvider.CreateInMemoryDatabaseOptions();
         }
 
@@ -30,21 +29,23 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
         [TestMethod]
         public void SaveArtikel()
         {
-
+            //Arrange
             var demo = new DemoEntities();
             var herenFiets = demo.HerenFiets;
+
+            //Act
             using (var context = new WinkelDatabaseContext(_options))
             using (var repo = new ArtikelRepository(context))
             {
                 repo.Insert(herenFiets);
-
             }
 
             using (var context = new WinkelDatabaseContext(_options))
             using (var repo = new ArtikelRepository(context))
             {
+                //Assert
                 Assert.AreEqual(1, repo.Count());
-                
+
                 var fiets = repo.Find(demo.HerenFiets.Artikelnummer);
                 Assert.AreEqual(herenFiets.Artikelnummer, fiets.Artikelnummer);
                 Assert.AreEqual(herenFiets.AfbeeldingUrl, fiets.AfbeeldingUrl);
@@ -55,6 +56,61 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
                 Assert.AreEqual(herenFiets.LeverancierCode, fiets.LeverancierCode);
                 Assert.AreEqual(herenFiets.Prijs, fiets.Prijs);
                 Assert.AreEqual(herenFiets.Naam, fiets.Naam);
+            }
+        }
+
+
+        [TestMethod]
+        public void UpdateArtikelTest()
+        {
+            //Arrange
+            var demo = new DemoEntities();
+
+            var herenfiets = demo.HerenFiets;
+
+            using (var context = new WinkelDatabaseContext(_options))
+            using (var repo = new ArtikelRepository(context))
+            {
+                repo.Insert(herenfiets);
+            }
+
+            using (var context = new WinkelDatabaseContext(_options))
+            using (var repo = new ArtikelRepository(context))
+            {
+                //Act
+                herenfiets.Prijs = 2000;
+                var success = repo.Update(herenfiets);
+
+                //Assert
+                var fiets = repo.FindBy(a => a.Artikelnummer == herenfiets.Artikelnummer).Single();
+
+                Assert.AreNotEqual(fiets.Prijs, demo.HerenFiets);
+            }
+
+        }
+
+        [TestMethod]
+        public void DeleteArtikelFromDatabaseTest()
+        {
+            //Arrange
+            var demo = new DemoEntities();
+
+            var herenfiets = demo.HerenFiets;
+
+            using (var context = new WinkelDatabaseContext(_options))
+            using (var repo = new ArtikelRepository(context))
+            {
+                repo.Insert(herenfiets);
+            }
+
+            using (var context = new WinkelDatabaseContext(_options))
+            using (var repo = new ArtikelRepository(context))
+            {
+                //Act
+                var success = repo.Delete(herenfiets.Artikelnummer);
+                
+                //Assert
+                Assert.AreEqual(1, success);
             }
         }
     }
