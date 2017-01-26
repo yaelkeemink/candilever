@@ -64,7 +64,7 @@ namespace CAN.Webwinkel.Controllers
         {
             if (string.IsNullOrEmpty(id))
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index/1");
             }
             var viewModel = new WinkelmandjeViewModel(_winkelmandjeservice.FindWinkelmandje(id));
             return View(viewModel);

@@ -6,6 +6,7 @@ using CAN.Klantbeheer.Infrastructure.Services;
 using InfoSupport.WSA.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
@@ -32,7 +33,8 @@ namespace CAN.Klantbeheer.Domain.Test
             //Arrange
             var publishMock = new Mock<IEventPublisher>();
             var repoMock = new KlantRepository(new DatabaseContext(CreateNewContextOptions()));
-            using (var service = new KlantService(repoMock, publishMock.Object))
+            var loggerMock = new Mock<ILogger<KlantService>>();
+            using (var service = new KlantService(repoMock, publishMock.Object, loggerMock.Object))
             {
                 var klant = new Klant
                 {
@@ -58,7 +60,8 @@ namespace CAN.Klantbeheer.Domain.Test
             //Arrange
             var publishMock = new Mock<IEventPublisher>();
             var repoMock = new KlantRepository(new DatabaseContext(CreateNewContextOptions()));
-            using (var service = new KlantService(repoMock, publishMock.Object))
+            var loggerMock = new Mock<ILogger<KlantService>>();
+            using (var service = new KlantService(repoMock, publishMock.Object, loggerMock.Object))
             {
                 var klant = new Klant
                 {
@@ -84,7 +87,8 @@ namespace CAN.Klantbeheer.Domain.Test
             //Arrange
             var publishMock = new Mock<IEventPublisher>();
             var repoMock = new Mock<IRepository<Klant, long>>();
-            using (var service = new KlantService(repoMock.Object, publishMock.Object))
+            var loggerMock = new Mock<ILogger<KlantService>>();
+            using (var service = new KlantService(repoMock.Object, publishMock.Object, loggerMock.Object))
             {
                 var klant = new Klant
                 {
@@ -116,7 +120,8 @@ namespace CAN.Klantbeheer.Domain.Test
             {
                 var repo = new KlantRepository(context);
                 var publisherMock = new Mock<IEventPublisher>();
-                using (var service = new KlantService(repo, publisherMock.Object))
+                var loggerMock = new Mock<ILogger<KlantService>>();
+                using (var service = new KlantService(repo, publisherMock.Object, loggerMock.Object))
                 {
                     Klant klant_yael = new Klant
                     {
