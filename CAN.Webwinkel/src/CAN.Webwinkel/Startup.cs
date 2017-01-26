@@ -16,7 +16,6 @@ using Swashbuckle.Swagger.Model;
 using CAN.Webwinkel.Agents.KlantAgent;
 using CAN.Webwinkel.Agents.WinkelwagenAgent;
 using CAN.Webwinkel.Infrastructure.Services;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace CAN.Webwinkel
 {
