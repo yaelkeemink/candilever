@@ -2,13 +2,14 @@
   "version": "1.0.0-*",
 
   "dependencies": {
-    "CAN.Common": "1.0.3",
+    "CAN.Common": "1.1.8",
     "NETStandard.Library": "1.6.1",
     "Kantilever.Catalogusbeheer.Common": "1.0.0",
     "Kantilever.Magazijnbeheer.Common": "1.0.0",
     "InfoSupport.WSA.InfraStructure": "1.7.0",
     "Microsoft.Extensions.Logging.Abstractions": "1.1.0",
-    "System.ComponentModel.Annotations": "4.3.0"
+    "System.ComponentModel.Annotations": "4.3.0",
+    "Microsoft.CodeCoverage": "1.0.2"
   },
 
 

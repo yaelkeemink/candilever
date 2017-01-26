@@ -53,7 +53,7 @@ namespace CAN.Webwinkel
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
             services.AddSwaggerGen();
-            
+
             services.ConfigureSwaggerGen(options =>
             {
                 options.SingleApiVersion(new Info

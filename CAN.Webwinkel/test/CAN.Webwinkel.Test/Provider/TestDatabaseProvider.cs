@@ -1,12 +1,8 @@
 ﻿using CAN.Webwinkel.Infrastructure.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace CAN.Webwinkel.Infrastructure.Test.Provider
+namespace CAN.Webwinkel.Test
 {
     public static class TestDatabaseProvider
     {
