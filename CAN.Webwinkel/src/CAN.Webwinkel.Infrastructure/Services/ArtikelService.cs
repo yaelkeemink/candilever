@@ -12,9 +12,9 @@ namespace CAN.Webwinkel.Infrastructure.Services
     public class ArtikelService : IArtikelService
     {
         private readonly ILogger<ArtikelService> _logger;
-        private readonly IRepository<Artikel, long> _repository;
+        private readonly IRepository<Artikel, int> _repository;
 
-        public ArtikelService(ILogger<ArtikelService> logger, IRepository<Artikel, long> repository)
+        public ArtikelService(ILogger<ArtikelService> logger, IRepository<Artikel, int> repository)
         {
             _logger = logger;
             _repository = repository;

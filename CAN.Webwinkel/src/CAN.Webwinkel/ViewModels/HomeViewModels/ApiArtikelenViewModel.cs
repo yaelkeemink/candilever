@@ -10,7 +10,7 @@ namespace CAN.Webwinkel.ViewModels.HomeViewModels
     public class ApiArtikelenViewModel
     {
         
-        public long Artikelnummer { get; set; }
+        public int Artikelnummer { get; set; }
         public string Naam { get; set; }
         public string Beschrijving { get; set; }
         public decimal Prijs { get; set; }

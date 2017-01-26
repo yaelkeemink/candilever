@@ -34,13 +34,12 @@ namespace CAN.Webwinkel.Test
 
             //Act
             var result = homeControl.Index() ;
+
+            Assert.IsInstanceOfType(result, typeof(ActionResult));
+
             var redirectToResult = result as RedirectToActionResult;
 
             //Assert
-            Assert.IsInstanceOfType(result, typeof(ActionResult));
-
-            Assert.IsNotNull(redirectToResult);
-
             Assert.AreEqual("id", redirectToResult.RouteValues.Keys.ToArray()[0]);
             Assert.AreEqual(1, (int)redirectToResult.RouteValues.Values.ToArray()[0]);
         }
@@ -64,14 +63,16 @@ namespace CAN.Webwinkel.Test
 
             //Act
             var result = homeControl.Index(2);
-            var viewResult = result as ViewResult;
-            var ArtikelOverzichtView = viewResult.Model as ArtikelOverzichtViewModel ;
 
-            //Assert
             Assert.IsInstanceOfType(result, typeof(ActionResult));
 
-            Assert.IsNotNull(viewResult);
+
+            var viewResult = result as ViewResult;
+
+            //Assert
             Assert.IsNotNull(viewResult.Model);
+
+            var ArtikelOverzichtView = viewResult.Model as ArtikelOverzichtViewModel;
 
             Assert.AreEqual(3, ArtikelOverzichtView.Artikelen.Count());
             Assert.AreEqual(4, ArtikelOverzichtView.AantalPaginas);
@@ -98,18 +99,21 @@ namespace CAN.Webwinkel.Test
 
             //Act
             var result = homeControl.ToonWinkelmandje("123456");
-            var viewResult = result as ViewResult;
-            var winkelmandjeView = viewResult.Model as WinkelmandjeViewModel;
-            var winkelmandjeViewArtikelen = winkelmandjeView.winkelmandje.Artikelen;
 
-            //Assert
             Assert.IsInstanceOfType(result, typeof(ActionResult));
 
-            Assert.IsNotNull(viewResult);
-            Assert.IsNotNull(viewResult.Model);
+            var viewResult = result as ViewResult;
 
-            Assert.AreEqual(1, winkelmandjeView.winkelmandje.Id);
-            Assert.AreEqual("123456", winkelmandjeView.winkelmandje.WinkelmandjeNummer);
+            Assert.IsInstanceOfType(viewResult, typeof(ViewResult));
+
+            var winkelmandjeView = viewResult.Model as WinkelmandjeViewModel;
+
+            Assert.IsNotNull(viewResult.Model);
+            var winkelmandjeViewArtikelen = winkelmandjeView.Winkelmandje.Artikelen;
+
+            //Assert
+            Assert.AreEqual(1, winkelmandjeView.Winkelmandje.Id);
+            Assert.AreEqual("123456", winkelmandjeView.Winkelmandje.WinkelmandjeNummer);
 
             Assert.AreEqual(demoDTOWinkelMand.Count(), winkelmandjeViewArtikelen.Count());
             Assert.IsFalse(winkelmandjeViewArtikelen.Contains(demo.HerenFietsDTO));
