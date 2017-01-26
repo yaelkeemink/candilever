@@ -24,6 +24,8 @@ services:
       can_backoffice_network:
     volumes:
       - "C:/Docker/.BackofficeData/Log:/var/log/Kantilever/BackofficeLogging/"
+    depends_on:
+      - can.backoffice.mssql
 
   can.backoffice.mssql:
     image: microsoft/mssql-server-linux
