@@ -10,7 +10,7 @@
       "version": "1.0.1"
     },
     "Microsoft.Extensions.Logging.Abstractions": "1.0.0",
-    "CAN.Common": "1.1.7"  },
+    "CAN.Common": "1.1.8" },
 
   "frameworks": {
     "netcoreapp1.0": {

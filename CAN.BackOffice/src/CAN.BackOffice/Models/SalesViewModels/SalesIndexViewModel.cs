@@ -10,7 +10,7 @@ namespace CAN.BackOffice.Models.SalesViewModels
     public class SalesIndexViewModel
     {
         public decimal TotaalPrijs { get; set; }
-        public long Id { get; set; }
+        public long Bestellingsnummer { get; set; }
         public string VolledigeNaam { get; set; }
 
         public DateTime BestelDatum { get; set; }
@@ -26,7 +26,7 @@ namespace CAN.BackOffice.Models.SalesViewModels
             {
                 TotaalPrijs = totaalprijs,
                 BestelDatum = model.BestelDatum,
-                Id = model.Id,
+                Bestellingsnummer = model.Bestellingsnummer,
                 VolledigeNaam = model.VolledigeNaam,
             };
         }

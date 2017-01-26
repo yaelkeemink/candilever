@@ -4,6 +4,7 @@ using CAN.Bestellingbeheer.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
 using System;
 using System.Net;
@@ -34,7 +35,7 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
                 if (ModelState.IsValid)
                 {
                     var response = _service.StatusNaarGoedgekeurd(id).Status.ToString();
-                    return Ok(response);
+                    return Json(response);
                 }
             }
             catch (DbUpdateException ex)
@@ -64,7 +65,7 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
                 if (ModelState.IsValid)
                 {
                     var response = _service.StatusNaarAfgekeurd(id).Status.ToString();
-                    return Ok(response);
+                    return Json(response);
                 }
             }
             catch (DbUpdateException ex)

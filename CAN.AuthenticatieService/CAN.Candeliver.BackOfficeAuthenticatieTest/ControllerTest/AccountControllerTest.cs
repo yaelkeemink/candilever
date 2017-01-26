@@ -33,7 +33,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatieTest.ControllerTest
             var optionsMock = MockProvider.CreateProviderOptionsMock();
 
 
-            accountServiceMock.Setup(e => e.Register("Rob", "tset123", "Sales")).ReturnsAsync(new ApplicationUser());
+            accountServiceMock.Setup(e => e.RegisterAsync("Rob", "tset123", "Sales")).ReturnsAsync(new ApplicationUser());
 
             var controller = new AccountController(logMock.Object, optionsMock.Object, accountServiceMock.Object);
 
@@ -46,7 +46,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatieTest.ControllerTest
             };
             var result = await controller.Register(registermodel);
 
-            accountServiceMock.Verify(e => e.Register("Rob", "tset123", "Sales"), Times.Once);
+            accountServiceMock.Verify(e => e.RegisterAsync("Rob", "tset123", "Sales"), Times.Once);
 
             Assert.IsInstanceOfType(result, typeof(JsonResult));
 
@@ -63,7 +63,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatieTest.ControllerTest
             var optionsMock = MockProvider.CreateProviderOptionsMock();
 
 
-            accountServiceMock.Setup(e => e.Register("Rob", "tset123", "Sales")).ReturnsAsync(null);
+            accountServiceMock.Setup(e => e.RegisterAsync("Rob", "tset123", "Sales")).ReturnsAsync(null);
 
             var controller = new AccountController(logMock.Object, optionsMock.Object, accountServiceMock.Object);
 
@@ -76,7 +76,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatieTest.ControllerTest
             };
             var result = await controller.Register(registermodel);
 
-            accountServiceMock.Verify(e => e.Register("Rob", "tset123", "Sales"), Times.Once);
+            accountServiceMock.Verify(e => e.RegisterAsync("Rob", "tset123", "Sales"), Times.Once);
 
             Assert.IsInstanceOfType(result, typeof(BadRequestObjectResult));
 
@@ -96,8 +96,8 @@ namespace CAN.Candeliver.BackOfficeAuthenticatieTest.ControllerTest
 
             var applicationUser = new ApplicationUser() { UserName = "Rob" };
             accountServiceMock.Setup(e => e.GetIdentityAsync("Rob", "tset123")).ReturnsAsync(new ClaimsIdentity());
-            accountServiceMock.Setup(e => e.GetUserAsync(It.IsAny<ClaimsPrincipal>())).ReturnsAsync(applicationUser);
-            accountServiceMock.Setup(e => e.CreateJwtTokenForUser(applicationUser)).Returns("SuperEncodedToken");
+            accountServiceMock.Setup(e => e.GetUserAsync("Rob")).Returns(applicationUser);
+            accountServiceMock.Setup(e => e.CreateJwtTokenForUserAsync(applicationUser)).ReturnsAsync("SuperEncodedToken");
 
             var controller = new AccountController(logMock.Object, optionsMock.Object, accountServiceMock.Object);
 
@@ -108,7 +108,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatieTest.ControllerTest
             };
             var result = await controller.Login(loginModel);
 
-            accountServiceMock.Verify(e => e.CreateJwtTokenForUser(applicationUser), Times.Once);
+            accountServiceMock.Verify(e => e.CreateJwtTokenForUserAsync(applicationUser), Times.Once);
 
             Assert.IsInstanceOfType(result, typeof(JsonResult));
 

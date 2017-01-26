@@ -17,6 +17,7 @@ namespace CAN.BackOffice.Infrastructure.DAL
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Bestelling>().HasAlternateKey(s => s.Bestellingsnummer);
             base.OnModelCreating(modelBuilder);
         }
 

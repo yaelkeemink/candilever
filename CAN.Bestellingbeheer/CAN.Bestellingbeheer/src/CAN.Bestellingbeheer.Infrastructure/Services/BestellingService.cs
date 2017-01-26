@@ -83,9 +83,9 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
             _publisher?.Dispose();
         }
 
-        public Bestelling StatusNaarGoedgekeurd(long id)
+        public Bestelling StatusNaarGoedgekeurd(long bestellingsnummer)
         {
-            var bestelling = _repository.Find(id);
+            var bestelling = _repository.FindBy(b => b.Bestellingnummer == bestellingsnummer).Single();
             if (bestelling.Status != BestelStatus.Goedgekeurd)
             {
                 bestelling.Status = BestelStatus.Goedgekeurd;
@@ -96,9 +96,9 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
             throw new InvalidBestelStatusException("Status staat al op goedgekeurd");
         }
 
-        public Bestelling StatusNaarAfgekeurd(long id)
+        public Bestelling StatusNaarAfgekeurd(long bestellingsnummer)
         {
-            var bestelling = _repository.Find(id);
+            var bestelling = _repository.FindBy(b => b.Bestellingnummer == bestellingsnummer).Single();
             if (bestelling.Status != BestelStatus.Afgekeurd)
             {
                 bestelling.Status = BestelStatus.Afgekeurd;

@@ -8,6 +8,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+
 namespace CAN.Bestellingbeheer.Domain.Test
 {
     [TestClass]
@@ -35,7 +37,9 @@ namespace CAN.Bestellingbeheer.Domain.Test
             };
             var mockPublisher = new Mock<IEventPublisher>();
             var mockRepository = new Mock<IRepository<Bestelling, long>>(MockBehavior.Strict);
-            mockRepository.Setup(n => n.Find(It.IsAny<long>())).Returns(bestelling);
+            mockRepository.Setup(n => n.FindBy(It.IsAny<Expression<Func<Bestelling, bool>>>()))
+                .Returns(new List<Bestelling>() { bestelling });
+            mockRepository.Setup(n => n.Update(It.IsAny<Bestelling>()));
             mockRepository.Setup(n => n.Dispose());
             var mockLogger = new Mock<ILogger<BestellingService>>(MockBehavior.Loose);
              

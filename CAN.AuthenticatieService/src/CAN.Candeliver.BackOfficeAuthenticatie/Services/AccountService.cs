@@ -12,6 +12,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
+using CAN.Candeliver.BackOfficeAuthenticatie.Data.Repository;
 
 namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
 {
@@ -22,6 +23,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IApplicationUserRepository _userRepo;
 
         /// <summary>
         /// Constructor
@@ -34,13 +36,14 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILoggerFactory loggerFactory,
-            IOptions<TokenProviderOptions> options, RoleManager<IdentityRole> roleManager)
+            IOptions<TokenProviderOptions> options, RoleManager<IdentityRole> roleManager, IApplicationUserRepository userRepo)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<AccountController>();
             _options = options.Value;
             _roleManager = roleManager;
+            _userRepo = userRepo;
         }
 
         /// <summary>
@@ -49,7 +52,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public string CreateJwtTokenForUser(ApplicationUser user)
+        public async Task<string> CreateJwtTokenForUserAsync(ApplicationUser user)
         {
             var now = DateTime.UtcNow;
             // Specifically add the jti (random nonce), iat (issued timestamp), and sub  (subject / user) claims.
@@ -58,8 +61,8 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
             {
                     new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                    new Claim(JwtRegisteredClaimNames.Iat, now.Ticks.ToString(),
-                    ClaimValueTypes.Integer64),
+                    new Claim(JwtRegisteredClaimNames.Iat, now.Ticks.ToString(),ClaimValueTypes.Integer64),
+                    new Claim("role", await GetUserRoles(user))
             };
 
             // Create the JWT and write it to a string
@@ -75,6 +78,14 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
 
         }
 
+        private async Task<string> GetUserRoles(ApplicationUser user)
+        {
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return string.Join(",", roles);
+        }
+
         /// <summary>
         /// Creates a user
         /// </summary>
@@ -83,24 +94,23 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         /// <param name="password"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        public async Task<ApplicationUser> Register(string username, string password, string role)
+        public async Task<ApplicationUser> RegisterAsync(string username, string password, string role)
         {
-            var user = new ApplicationUser { UserName = username};
+            var user = new ApplicationUser { UserName = username };
 
             var result = await _userManager.CreateAsync(user, password);
 
             if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(user, isPersistent: false);
-
-                var addToRoleResult = await AddRole(user, role);
+            {             
+                var addToRoleResult = await AddRoleAsync(user, role);
                 if (addToRoleResult)
                 {
-                    _logger.LogInformation(3, "User created a new account with password.");
+                    _logger.LogInformation($"New acount created: {username}");
                     return user;
-                } else
+                }
+                else
                 {
-                    _logger.LogInformation(3, "User created failed. deleting user");
+                    _logger.LogCritical($"User created failed. deleting user {username}");
                     await _userManager.DeleteAsync(user);
                 }
             }
@@ -116,22 +126,25 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         /// <returns></returns>
         public async Task<ClaimsIdentity> GetIdentityAsync(string username, string password)
         {
+
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, set lockoutOnFailure: true
             var result = await _signInManager.PasswordSignInAsync(username, password, false, lockoutOnFailure: false);
+
             if (result.Succeeded)
             {
-                _logger.LogInformation(1, "User logged in.");
+                _logger.LogInformation($"User {username} logged in.");
                 return new ClaimsIdentity(new GenericIdentity(username, "Token"), new Claim[] { });
             }
             if (result.IsLockedOut)
             {
-                _logger.LogWarning(2, $"User {username} locked out.");
+                _logger.LogWarning($"User {username} locked out.");
                 return null;
             }
             else
             {
-                _logger.LogWarning(2, $"Invalid user login for {username}");
+                _logger.LogWarning($"Invalid user login for {username}");
                 return null;
             }
         }
@@ -140,11 +153,11 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         /// <summary>
         /// Get a user. 
         /// </summary>
-        /// <param name="userClaim"></param>
+        /// <param name="userName"></param>
         /// <returns></returns>
-        public Task<ApplicationUser> GetUserAsync(ClaimsPrincipal userClaim)
+        public ApplicationUser GetUserAsync(string userName)
         {
-            return _userManager.GetUserAsync(userClaim);
+            return _userRepo.FindByUserName(userName);
         }
 
 
@@ -154,7 +167,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
         /// <param name="user"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        public async Task<bool> AddRole(ApplicationUser user, string role)
+        public async Task<bool> AddRoleAsync(ApplicationUser user, string role)
         {
             var userRole = await _roleManager.FindByNameAsync(role);
             if (userRole == null)
@@ -172,6 +185,12 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
             return true;
         }
 
-      
+        public void Dispose()
+        {
+            _userManager.Dispose();
+            _roleManager.Dispose();
+            _userRepo.Dispose();
+        }
+
     }
 }
