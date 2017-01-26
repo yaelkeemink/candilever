@@ -8,6 +8,6 @@
         </div>
         <br />
         @Html.EditorFor(a => a.Artikelen)
-        <a asp-action="VolgendeBestellingOphalen" asp-route-id="@Model.Bestellingsnummer" value="Volgende" class="btn btn-default">Volgende bestelling</a>
+        <a asp-controller="Factuur" asp-action="Details" asp-route-id="@Model.Bestellingsnummer" class="btn btn-default">Volgende bestelling</a>
     </div>
 </section>
