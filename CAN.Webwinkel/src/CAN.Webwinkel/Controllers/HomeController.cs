@@ -59,9 +59,13 @@ namespace CAN.Webwinkel.Controllers
         {
             return View();
         }
-        
+
         public IActionResult ToonWinkelmandje(string id)
         {
+            if (string.IsNullOrEmpty(id))
+            {
+                return RedirectToAction("Index");
+            }
             var viewModel = new WinkelmandjeViewModel(_winkelmandjeservice.FindWinkelmandje(id));
             return View(viewModel);
         }
