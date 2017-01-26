@@ -4,64 +4,68 @@
 {
 <div>
     <a class="btn btn-default" asp-action="Index" asp-route-id="@Model.Bestellingsnummer">Terug</a> |
-    <a class="btn btn-danger" asp-action="Goedkeuren" asp-route-id="@Model.Bestellingsnummer">Goedkeuren</a> |
-    <a class="btn btn-succes" asp-action="Afkeuren" asp-route-id="@Model.Bestellingsnummer">Afkeuren</a>
+    <a class="btn btn-success" asp-action="Goedkeuren" asp-route-id="@Model.Bestellingsnummer">Goedkeuren</a> |
+    <a class="btn btn-danger" asp-action="Afkeuren" asp-route-id="@Model.Bestellingsnummer">Afkeuren</a>
 </div>
 }
+<br />
+<br />
 <dl class="dl-horizontal">
     <dt>
-        @Html.DisplayNameFor(model => model.VolledigeNaam)
+        Klantnaam:
     </dt>
     <dd>
         @Html.DisplayFor(model => model.VolledigeNaam)
     </dd>
     <dt>
-        @Html.DisplayNameFor(model => model.Telefoonnummer)
+        @Html.DisplayNameFor(model => model.Telefoonnummer):
     </dt>
     <dd>
         @Html.DisplayFor(model => model.Telefoonnummer)
     </dd>
     <dt>
-        @Html.DisplayNameFor(model => model.Email)
+        @Html.DisplayNameFor(model => model.Email):
     </dt>
     <dd>
         @Html.DisplayFor(model => model.Email)
-    </dd>
+    </dd>    
+    <br />
     <dt>
-        @Html.DisplayNameFor(model => model.TotaalBedrag)
-    </dt>
-    <dd>
-        @Html.DisplayFor(model => model.TotaalBedrag)
-    </dd>
-    <dt>
-        @Html.DisplayNameFor(model => model.Artikelen)
+        @Html.DisplayNameFor(model => model.Artikelen):
     </dt>
     @foreach (var artikel in Model.Artikelen)
-    {     
+    {         
         <dt></dt>   
         <dd></dd>
         <dt>
-            @Html.DisplayNameFor(model => artikel.Artikelnaam)
+            @Html.DisplayNameFor(model => artikel.Artikelnaam):
         </dt>
         <dd>
             @Html.DisplayFor(model => artikel.Artikelnaam)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => artikel.Prijs)
+            @Html.DisplayNameFor(model => artikel.Prijs):
         </dt>
         <dd>
             @Html.DisplayFor(model => artikel.Prijs)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => artikel.Aantal)
+            @Html.DisplayNameFor(model => artikel.Aantal):
         </dt>
         <dd>
             @Html.DisplayFor(model => artikel.Aantal)
         </dd>
+        <br />
     }
+    <dt>
+        @Html.DisplayNameFor(model => model.TotaalBedrag):
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.TotaalBedrag)
+    </dd>
 </dl>
 <div>
     <a class="btn btn-default" asp-action="Index" asp-route-id="@Model.Bestellingsnummer">Terug</a> |
-    <a class="btn btn-danger" asp-action="Goedkeuren" asp-route-id="@Model.Bestellingsnummer">Goedkeuren</a> |
-    <a class="btn btn-succes" asp-action="Afkeuren" asp-route-id="@Model.Bestellingsnummer">Afkeuren</a>
+    <a class="btn btn-success" asp-action="Goedkeuren" asp-route-id="@Model.Bestellingsnummer">Goedkeuren</a> |
+    <a class="btn btn-danger" asp-action="Afkeuren" asp-route-id="@Model.Bestellingsnummer">Afkeuren</a>
 </div>
