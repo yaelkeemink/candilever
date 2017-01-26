@@ -17,7 +17,7 @@ namespace CAN.Webwinkel.ViewModels.HomeViewModels
             winkelmandje.Artikelen = winkelmandje.Artikelen.Select(a => new ArtikelDTO()
             {
                 Id = a.Id,
-                Prijs = Math.Round(a.Prijs * 1.21M, 2),
+                Prijs = Math.Round(a.Prijs * 1.21M * a.Aantal, 2),
                 Aantal = a.Aantal,
                 Artikelnummer = a.Artikelnummer,
                 Leverancier = a.Leverancier,
