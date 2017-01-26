@@ -37,12 +37,13 @@ namespace CAN.WinkelmandjeBeheer.Infrastructure.Test
                 WinkelmandjeNummer = guid
             };
 
-            var mockPublisher = new Mock<IEventPublisher>();
+            var mockPublisher = new Mock<IEventPublisher>(MockBehavior.Loose);
 
-            var mockRepository = new Mock<IRepository<Winkelmandje, string>>(MockBehavior.Loose);
+            var mockRepository = new Mock<IRepository<Winkelmandje, string>>(MockBehavior.Strict);
             mockRepository.Setup(n => n.Insert(winkelmandje)).Returns(1);
             mockRepository.Setup(n => n.Dispose());
             mockRepository.Setup(n => n.Find(winkelmandje.WinkelmandjeNummer)).Returns(winkelmandje);
+            mockRepository.Setup(n => n.Update(It.IsAny<Winkelmandje>())).Returns(1);
             var mockLogger = new Mock<ILogger<WinkelmandjeService>>(MockBehavior.Loose);
 
             using (var service = new WinkelmandjeService(mockRepository.Object, mockPublisher.Object, mockLogger.Object))

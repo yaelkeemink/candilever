@@ -5,6 +5,7 @@ using System;
 using CAN.Bestellingbeheer.Domain.Exceptions;
 using CAN.Bestellingbeheer.Infrastructure.Interfaces;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace CAN.Bestellingbeheer.Infrastructure.Services {
     public class BestellingService 
@@ -28,7 +29,7 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
             var createdEvent = new BestellingCreatedEvent("can.bestellingbeheer.bestellingcreated")
             {
                 Klantnummer = bestelling.Klantnummer,
-                Bestellingsnummer = bestellingsnummer,
+                Bestellingsnummer = bestelling.Bestellingnummer,
                 BestelDatum = bestelling.BestelDatum,
                 BestellingStatusNummer = (int)bestelling.Status,
                 BestellingStatusCode = bestelling.Status.ToString(),
@@ -60,7 +61,8 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
 
         public Bestelling StatusNaarOpgehaald(long id)
         {
-            var bestelling = _repository.Find(id);
+            var bestelling = _repository.FindBy(a => a.Bestellingnummer == id)
+                                    .Single();
             if (bestelling.Status != BestelStatus.Opgehaald)
             {
                 bestelling.Status = BestelStatus.Opgehaald;
@@ -81,9 +83,9 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
             _publisher?.Dispose();
         }
 
-        public Bestelling StatusNaarGoedgekeurd(long id)
+        public Bestelling StatusNaarGoedgekeurd(long bestellingsnummer)
         {
-            var bestelling = _repository.Find(id);
+            var bestelling = _repository.FindBy(b => b.Bestellingnummer == bestellingsnummer).Single();
             if (bestelling.Status != BestelStatus.Goedgekeurd)
             {
                 bestelling.Status = BestelStatus.Goedgekeurd;
@@ -94,9 +96,9 @@ namespace CAN.Bestellingbeheer.Infrastructure.Services {
             throw new InvalidBestelStatusException("Status staat al op goedgekeurd");
         }
 
-        public Bestelling StatusNaarAfgekeurd(long id)
+        public Bestelling StatusNaarAfgekeurd(long bestellingsnummer)
         {
-            var bestelling = _repository.Find(id);
+            var bestelling = _repository.FindBy(b => b.Bestellingnummer == bestellingsnummer).Single();
             if (bestelling.Status != BestelStatus.Afgekeurd)
             {
                 bestelling.Status = BestelStatus.Afgekeurd;

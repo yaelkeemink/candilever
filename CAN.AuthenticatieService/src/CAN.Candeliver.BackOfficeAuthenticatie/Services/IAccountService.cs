@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CAN.Candeliver.BackOfficeAuthenticatie.Services
 {
-    public interface IAccountService
+    public interface IAccountService : IDisposable
     {
         /// <summary>
         /// 

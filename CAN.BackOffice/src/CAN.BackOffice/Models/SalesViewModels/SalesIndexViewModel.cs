@@ -10,7 +10,7 @@ namespace CAN.BackOffice.Models.SalesViewModels
     public class SalesIndexViewModel
     {
         public decimal TotaalPrijs { get; set; }
-        public long Id { get; set; }
+        public long Bestellingsnummer { get; set; }
         public string VolledigeNaam { get; set; }
 
         public DateTime BestelDatum { get; set; }
@@ -20,13 +20,13 @@ namespace CAN.BackOffice.Models.SalesViewModels
             decimal totaalprijs = 0;
             foreach(var item in model.Artikelen)
             {
-                totaalprijs += item.Prijs * item.Aantal;
+                totaalprijs += item.Prijs * item.Aantal * 1.21M;
             }
             return new SalesIndexViewModel()
             {
                 TotaalPrijs = totaalprijs,
                 BestelDatum = model.BestelDatum,
-                Id = model.Id,
+                Bestellingsnummer = model.Bestellingsnummer,
                 VolledigeNaam = model.VolledigeNaam,
             };
         }

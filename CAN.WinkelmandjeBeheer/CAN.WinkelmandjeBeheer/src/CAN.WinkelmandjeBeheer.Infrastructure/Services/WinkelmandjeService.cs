@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace CAN.WinkelmandjeBeheer.Infrastructure.Services
 {
-    public class WinkelmandjeService : IWinkelmandjeService, IDisposable
+    public class WinkelmandjeService : IWinkelmandjeService
     {
         private readonly IRepository<Winkelmandje, string> _repository;
         private readonly IEventPublisher _publisher;

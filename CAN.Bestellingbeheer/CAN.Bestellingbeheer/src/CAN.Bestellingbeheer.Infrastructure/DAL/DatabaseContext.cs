@@ -24,10 +24,5 @@ namespace CAN.Bestellingbeheer.Infrastructure.DAL
 
             base.OnModelCreating(modelBuilder);
         }
-
-        internal void PurgeCachedData()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

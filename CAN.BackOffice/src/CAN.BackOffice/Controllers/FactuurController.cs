@@ -17,34 +17,37 @@ namespace CAN.BackOffice.Controllers
         private readonly IFactuurService _service;
 
         public FactuurController(ILogger<FactuurController> logger, IFactuurService service)
-            : base (logger)
+            : base(logger)
         {
             _service = service;
         }
-        [Authorize(Roles ="Sales")]
+
         // GET: Factuur/Details/5
-        public ActionResult Details(int bestellingsnummer)
+        [HttpGet]
+        [Authorize(Roles = "Magazijn,Sales")]
+        public ActionResult Details(int id)
         {
             try
             {
-                Bestelling bestelling = _service.ZoekBestelling(bestellingsnummer);
-                _logger.LogInformation($"Factuur met bestellingsnummer {bestellingsnummer} is gevonden", bestelling);
+                Bestelling bestelling = _service.ZoekBestelling(id);
+                _logger.LogInformation($"Factuur met bestellingsnummer {id} is gevonden", bestelling);
 
                 return View(new FactuurViewModel(bestelling));
             }
             catch (InvalidOperationException e)
             {
-                _logger.LogError($"Factuur met bestellingsnummer {bestellingsnummer} is niet gevonden", e);
+                _logger.LogError($"Factuur met bestellingsnummer {id} is niet gevonden", e);
                 return RedirectToAction("FactuurNietGevonden");
             }
             catch (Exception e)
             {
-                _logger.LogError($"Onbekende fout opgetreden bij factuur details met bestellingsnummer {bestellingsnummer}", e);
+                _logger.LogError($"Onbekende fout opgetreden bij factuur details met bestellingsnummer {id}", e);
                 return RedirectToAction("Error");
             }
         }
 
-        [Authorize(Roles = "Sales")]
+        [HttpGet]
+        [Authorize(Roles = "Magazijn,Sales")]
         // GET: Factuur/FactuurNietGevonden
         public ActionResult FactuurNietGevonden()
         {

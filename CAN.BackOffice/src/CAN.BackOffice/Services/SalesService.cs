@@ -29,12 +29,12 @@ namespace CAN.BackOffice.Services
             _logger = logger;
         }
 
-        public void BestellingGoedkeuren(long id)
+        public void BestellingGoedkeuren(long bestellingsnummer)
         {            
-            var response = _agent.BestellingGoedkeuren(id);
+            var response = _agent.BestellingGoedkeuren(bestellingsnummer);
             if(response is string)
             {                
-                var bestelling = _bestellingRepository.Find(id);
+                var bestelling = _bestellingRepository.FindBy(b => b.Bestellingsnummer == bestellingsnummer).Single();
                 bestelling.BestellingStatusCode = (response as string);
                 _bestellingRepository.Update(bestelling);
                 _logger.LogInformation($"Bestelling geupdate met status: {bestelling.BestellingStatusCode}");
@@ -54,12 +54,12 @@ namespace CAN.BackOffice.Services
                 .ToList();
         }       
 
-        public void BestellingAfkeuren(long id)
+        public void BestellingAfkeuren(long bestellingsnummer)
         {
-            var response = _agent.BestellingAfkeuren(id);
+            var response = _agent.BestellingAfkeuren(bestellingsnummer);
             if (response is string)
             {
-                var bestelling = _bestellingRepository.Find(id);
+                var bestelling = _bestellingRepository.FindBy(b => b.Bestellingsnummer == bestellingsnummer).Single();
                 bestelling.BestellingStatusCode = (response as string);
                 _bestellingRepository.Update(bestelling);
                 _logger.LogInformation($"Bestelling geupdate met status: {bestelling.BestellingStatusCode}");
@@ -79,10 +79,10 @@ namespace CAN.BackOffice.Services
                 .Single();
         }
 
-        public Bestelling FindBestelling(long id)
+        public Bestelling FindBestelling(long bestellingsnummer)
         {
             _logger.LogInformation("Zoek alle bestellingen");
-            return _bestellingRepository.Find(id);
+            return _bestellingRepository.FindBy(b => b.Bestellingsnummer == bestellingsnummer).Single();
         }
 
         public void Dispose()
