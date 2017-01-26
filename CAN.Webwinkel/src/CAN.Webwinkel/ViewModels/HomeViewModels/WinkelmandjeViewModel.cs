@@ -8,12 +8,12 @@ namespace CAN.Webwinkel.ViewModels.HomeViewModels
 {
     public class WinkelmandjeViewModel
     {
-        public Winkelmandje winkelmandje { get; set; }
+        public Winkelmandje Winkelmandje { get; set; }
         public decimal Totaalprijs { get; set; }
 
         public WinkelmandjeViewModel(Winkelmandje winkelmandje)
         {
-            this.winkelmandje = winkelmandje;
+            this.Winkelmandje = winkelmandje;
             winkelmandje.Artikelen = winkelmandje.Artikelen.Select(a => new ArtikelDTO()
             {
                 Id = a.Id,

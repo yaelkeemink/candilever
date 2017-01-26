@@ -25,6 +25,8 @@ namespace CAN.Webwinkel.Controllers
         [SwaggerOperation("KlantAanmaken")]
         public IActionResult KlantAanmaken([FromBody]Klant klant)
         {
+            //Very very dirty fix. Object from javascript on client-side has klantnummer = 0 before post is called. Somewhere between client and server side klantnummer
+            //get corrupted.
             try
             {
                 var response = _agent.Post(klant);

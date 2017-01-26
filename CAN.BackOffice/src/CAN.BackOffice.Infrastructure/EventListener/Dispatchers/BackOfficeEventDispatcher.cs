@@ -9,6 +9,7 @@ using CAN.BackOffice.Infrastructure.DAL.Repositories;
 using CAN.BackOffice.Domain.Entities;
 using System;
 using System.Threading;
+using System.Linq;
 
 namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
 {
@@ -77,7 +78,7 @@ namespace CAN.BackOffice.Infrastructure.EventListener.Dispatchers
             using (var context = new DatabaseContext(_dbOptions))
             using (var repo = new BestellingRepository(context))
             {
-                var bestelling = repo.Find(evt.BestellingsNummer);
+                var bestelling = repo.FindBy(b => b.Bestellingsnummer == evt.BestellingsNummer).Single(); ;
                 bestelling.BestellingStatusCode = evt.BestellingStatusCode;
                 repo.Update(bestelling);
             }
