@@ -25,7 +25,10 @@ namespace CAN.Backoffice.Facade.Test
             var loggerMock = new Mock<ILogger<FactuurController>>(MockBehavior.Loose);
 
             var serviceMock = new Mock<IFactuurService>(MockBehavior.Strict);
-            serviceMock.Setup(s => s.ZoekBestelling(1))
+
+            int bestellingsnummer = 1;
+
+            serviceMock.Setup(s => s.ZoekBestelling(bestellingsnummer))
                 .Returns(new Bestelling()
                 {
                     Klantnummer = 12,
@@ -34,7 +37,7 @@ namespace CAN.Backoffice.Facade.Test
                     Woonplaats = "Warmont",
                     Huisnummer = "14",
                     Postcode = "2361VJ",
-                    Bestellingsnummer = 1,
+                    Bestellingsnummer = bestellingsnummer,
                     Land = "Nederland",
                     BestelDatum = new DateTime(2017, 1, 24)
                 }
@@ -43,10 +46,10 @@ namespace CAN.Backoffice.Facade.Test
             FactuurController target = new FactuurController(loggerMock.Object, serviceMock.Object);
 
             // Act 
-            var response = target.Details(1);
+            var response = target.Details(bestellingsnummer);
 
             // Assert
-            serviceMock.Verify(s => s.ZoekBestelling(1), Times.Once);
+            serviceMock.Verify(s => s.ZoekBestelling(bestellingsnummer), Times.Once);
 
             Assert.IsInstanceOfType(response, typeof(ViewResult));
             var view = response as ViewResult;
@@ -79,7 +82,7 @@ namespace CAN.Backoffice.Facade.Test
             FactuurController target = new FactuurController(loggerMock.Object, serviceMock.Object);
 
             // Act 
-            var response = target.Details(5);
+            var response = target.Details(999);
 
             // Assert
             Assert.IsInstanceOfType(response, typeof(RedirectToActionResult));
@@ -101,7 +104,7 @@ namespace CAN.Backoffice.Facade.Test
             FactuurController target = new FactuurController(loggerMock.Object, serviceMock.Object);
 
             // Act 
-            var response = target.Details(5);
+            var response = target.Details(999);
 
             // Assert
             Assert.IsInstanceOfType(response, typeof(RedirectToActionResult));
