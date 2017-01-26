@@ -78,6 +78,7 @@ namespace CAN.BackOffice
             services.AddScoped<IMagazijnService, MagazijnService>();
             services.AddScoped<ILoginService, LoginService>();
             services.AddScoped<ISalesService, SalesService>();
+            services.AddScoped<IFactuurService, FactuurService>();
 
 
             services.AddSwaggerGen();
