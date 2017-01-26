@@ -35,11 +35,11 @@ namespace CAN.Webwinkel.Test
             //Act
             var result = homeControl.Index() ;
 
+            //Assert
             Assert.IsInstanceOfType(result, typeof(RedirectToActionResult));
 
             var redirectToResult = result as RedirectToActionResult;
 
-            //Assert
             Assert.AreEqual("id", redirectToResult.RouteValues.Keys.ToArray()[0]);
             Assert.AreEqual(1, (int)redirectToResult.RouteValues.Values.ToArray()[0]);
         }
@@ -64,14 +64,13 @@ namespace CAN.Webwinkel.Test
             //Act
             var result = homeControl.Index(2);
 
+            //Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
 
             var viewResult = result as ViewResult;
 
-            //Assert
-            Assert.IsNotNull(viewResult.Model);
-
             var ArtikelOverzichtView = viewResult.Model as ArtikelOverzichtViewModel;
+            Assert.IsNotNull(viewResult.Model);
 
             Assert.AreEqual(3, ArtikelOverzichtView.Artikelen.Count());
             Assert.AreEqual(4, ArtikelOverzichtView.AantalPaginas);
@@ -99,6 +98,7 @@ namespace CAN.Webwinkel.Test
             //Act
             var result = homeControl.ToonWinkelmandje("123456");
 
+            //Assert
             Assert.IsInstanceOfType(result, typeof(ViewResult));
 
             var viewResult = result as ViewResult;
@@ -110,7 +110,6 @@ namespace CAN.Webwinkel.Test
             Assert.IsNotNull(viewResult.Model);
             var winkelmandjeViewArtikelen = winkelmandjeView.Winkelmandje.Artikelen;
 
-            //Assert
             Assert.AreEqual(1, winkelmandjeView.Winkelmandje.Id);
             Assert.AreEqual("123456", winkelmandjeView.Winkelmandje.WinkelmandjeNummer);
 

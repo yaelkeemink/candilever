@@ -29,9 +29,11 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
         [TestMethod]
         public void SaveArtikel()
         {
-
+            //Arrange
             var demo = new DemoEntities();
             var herenFiets = demo.HerenFiets;
+
+            //Act
             using (var context = new WinkelDatabaseContext(_options))
             using (var repo = new ArtikelRepository(context))
             {
@@ -41,6 +43,7 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
             using (var context = new WinkelDatabaseContext(_options))
             using (var repo = new ArtikelRepository(context))
             {
+                //Assert
                 Assert.AreEqual(1, repo.Count());
 
                 var fiets = repo.Find(demo.HerenFiets.Artikelnummer);
@@ -105,7 +108,8 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
             {
                 //Act
                 var success = repo.Delete(herenfiets.Artikelnummer);
-
+                
+                //Assert
                 Assert.AreEqual(1, success);
             }
         }
