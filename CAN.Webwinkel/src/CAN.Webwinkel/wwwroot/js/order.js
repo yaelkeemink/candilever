@@ -52,7 +52,7 @@ function postBestelling(bestelling) {
         success: function (data) {
             localStorage.removeItem('cartGuid');
             localStorage.removeItem('klantnummer');
-            showMessage("success", "De Bestelling is Succesvol geplaatst.");
+            showMessage("success", "De bestelling is succesvol geplaatst.");
         }, error: function (err) {
             console.log(err);
             showMessage("error", "Er is iets misgegaan bij het plaatsen van de bestelling.");
