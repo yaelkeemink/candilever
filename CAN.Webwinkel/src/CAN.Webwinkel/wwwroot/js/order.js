@@ -23,7 +23,8 @@ function createKlant() {
         "telefoonnummer": document.getElementById('telefoonnummer').value,
         "email": document.getElementById('email').value,
         "huisnummer": document.getElementById('huisnummer').value,
-        "adres": document.getElementById('straatnaam').value,
+        "straatnaam": document.getElementById('straatnaam').value,
+        "woonplaats":document.getElementById('woonplaats').value,
         "land": value
     }
 }

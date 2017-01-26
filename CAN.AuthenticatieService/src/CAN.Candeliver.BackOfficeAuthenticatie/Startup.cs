@@ -44,6 +44,11 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            Log.Logger = new LoggerConfiguration()
+             .ReadFrom
+             .ConfigurationSection(Configuration.GetSection("Serilog"))
+             .CreateLogger();
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -54,6 +59,7 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie
 
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
+            
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Environment.GetEnvironmentVariable("dbconnectionstring")));
 

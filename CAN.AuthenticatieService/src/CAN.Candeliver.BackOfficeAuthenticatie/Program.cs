@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using System.Threading;
 
 namespace CAN.Candeliver.BackOfficeAuthenticatie
 {
@@ -11,6 +12,8 @@ namespace CAN.Candeliver.BackOfficeAuthenticatie
     {
         public static void Main(string[] args)
         {
+            Thread.Sleep(60000);
+
             var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())

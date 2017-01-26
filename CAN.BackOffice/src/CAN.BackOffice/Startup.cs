@@ -70,7 +70,7 @@ namespace CAN.BackOffice
             services.AddMvc();
 
             services.AddScoped<IBestellingBeheerService, BestellingBeheerService>(b => new BestellingBeheerService() { BaseUri = new Uri("http://can-bestellingbeheer") });
-            services.AddScoped<IAuthenticatieService, AuthenticatieService>(b => new AuthenticatieService() { BaseUri = new Uri("http://cancandeliverbackofficeauthenticatie_can.candeliver.backofficeauthenticatie_1") });
+            services.AddScoped<IAuthenticatieService, AuthenticatieService>(b => new AuthenticatieService() { BaseUri = new Uri("http://can-backofficeauthenticatie") });
 
             services.AddScoped<IRepository<Bestelling, long>, BestellingRepository>();
             services.AddScoped<IRepository<Klant, long>, KlantRepository>();

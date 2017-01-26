@@ -11,17 +11,18 @@ namespace CAN.Klantbeheer.Domain.Entities
         public string Voornaam { get; set; }
         [Required]
         public string Achternaam { get; set; }
-
         public string Tussenvoegsels { get; set; }
         [Required]
         public string Postcode { get; set; }
         public string Telefoonnummer { get; set; }
         public string Email { get; set; }
         [Required]
+        public string Woonplaats { get; set; }
+        [Required]
         public string Huisnummer { get; set; }
         [Required]
-        public string Adres { get; set; }
+        public string Straatnaam { get; set; }
         [Required]
-        public Land Land { get; set; }
+        public string Land { get; set; }
     }
 }
