@@ -1,4 +1,4 @@
-@model CAN.Webwinkel.Agents.KlantAgent.Models.Klant
+@model Klant
 
 @{
     ViewData["Title"] = "Registreren";
@@ -56,8 +56,8 @@
         <div class="form-group">
             <label asp-for="Land"></label>
             <select class="form-control dropdown" id="land">
-                <option value="0">Nederland</option>
-                <option value="50">Belgi&euml;</option>
+                <option value="Nederland">Nederland</option>
+                <option value="België">Belgi&euml;</option>
             </select>
         </div>
         <button onclick="placeOrder()" class="btn btn-default">Bestel</button>

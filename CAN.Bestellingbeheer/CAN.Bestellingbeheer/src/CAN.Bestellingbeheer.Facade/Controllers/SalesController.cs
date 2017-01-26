@@ -1,16 +1,13 @@
-﻿using CAN.Bestellingbeheer.Domain.DTO;
-using CAN.Bestellingbeheer.Domain.Entities;
-using CAN.Bestellingbeheer.Domain.Interfaces;
+﻿using CAN.Bestellingbeheer.Domain.Entities;
 using CAN.Bestellingbeheer.Facade.Errors;
+using CAN.Bestellingbeheer.Infrastructure.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Swashbuckle.SwaggerGen.Annotations;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 
 namespace CAN.Bestellingbeheer.Facade.Controllers
 {
@@ -29,7 +26,7 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
 
         [HttpPut]
         [SwaggerOperation("BestellingGoedkeuren")]
-        [ProducesResponseType(typeof(BestellingDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
         public IActionResult BestellingGoedkeuren([FromBody]long id)
         {
@@ -37,9 +34,8 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Bestelling response = _service.StatusNaarGoedgekeurd(id);
-                    var dto = new BestellingDTO(response);
-                    return Ok(dto);
+                    var response = _service.StatusNaarGoedgekeurd(id).Status.ToString();
+                    return Json(response);
                 }
             }
             catch (DbUpdateException ex)
@@ -60,7 +56,7 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
         }
         [HttpPost]
         [SwaggerOperation("BestellingAfkeuren")]
-        [ProducesResponseType(typeof(BestellingDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
         public IActionResult BestellingAfkeuren([FromBody]long id)
         {
@@ -68,9 +64,8 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Bestelling response = _service.StatusNaarAfgekeurd(id);
-                    var dto = new BestellingDTO(response);
-                    return Ok(dto);
+                    var response = _service.StatusNaarAfgekeurd(id).Status.ToString();
+                    return Json(response);
                 }
             }
             catch (DbUpdateException ex)

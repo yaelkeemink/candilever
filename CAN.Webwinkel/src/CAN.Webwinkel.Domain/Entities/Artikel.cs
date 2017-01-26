@@ -21,11 +21,9 @@ namespace CAN.Webwinkel.Domain.Entities
         public string Leverancier { get; set; }
         public int Voorraad { get; set; }
 
-        public List<ArtikelCategorie> ArtikelCategorie { get; set; }
 
         public Artikel()
         {
-            ArtikelCategorie = new List<ArtikelCategorie>();
         }
 
         public Artikel(ArtikelAanCatalogusToegevoegd evt)
@@ -38,26 +36,7 @@ namespace CAN.Webwinkel.Domain.Entities
             LeverbaarVanaf = evt.LeverbaarVanaf;
             LeverbaarTot = evt.LeverbaarTot;
             LeverancierCode = evt.LeverancierCode;
-            Leverancier = evt.Leverancier;
-
-            ArtikelCategorie = new List<ArtikelCategorie>();
-            foreach (var category in evt.Categorieen)
-            {
-                ArtikelCategorie.Add(
-                    new ArtikelCategorie()
-                    {
-                        Artikel = this,
-                        Categorie = new Categorie()
-                        {
-                            Naam = category
-                        }
-                    }
-                );
-            }
+            Leverancier = evt.Leverancier;            
         }
-
-
-
-
     }
 }

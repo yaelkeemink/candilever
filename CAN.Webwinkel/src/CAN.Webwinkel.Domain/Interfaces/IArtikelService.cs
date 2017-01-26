@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 namespace CAN.Webwinkel.Domain.Interfaces
 {
     public interface IArtikelService
+        :IDisposable
     {
-        IEnumerable<Artikel> ArtikelenBijCategorie(string categorieNaam);
         IEnumerable<Artikel> AlleArtikelen();
         IEnumerable<Artikel> AlleArtikelenPerPagina(int paginanummer, int aantalArtikelen);
         int AantalPaginas(int aantalArtikelenPerPagina);
+        string FindArtikelByArtikelNummer(long artikelnummer);
     }
 }

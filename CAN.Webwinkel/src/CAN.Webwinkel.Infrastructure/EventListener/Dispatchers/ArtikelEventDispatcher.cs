@@ -27,7 +27,10 @@ namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
         /// <param name="options"></param>
         /// <param name="dbOptions"></param>
         /// <param name="logger"></param>
-        public ArtikelEventDispatcher(BusOptions options, DbContextOptions<WinkelDatabaseContext> dbOptions, ILogger logger) : base(options)
+        public ArtikelEventDispatcher(BusOptions options, 
+            DbContextOptions<WinkelDatabaseContext> dbOptions, 
+            ILogger logger) 
+            : base(options)
         {
             _logger = logger;
             _dbOptions = dbOptions;
@@ -40,7 +43,11 @@ namespace CAN.Webwinkel.Infrastructure.EventListener.Dispatchers
         /// <param name="dbOptions"></param>
         /// <param name="logger"></param>
         /// <param name="locker"></param>
-        public ArtikelEventDispatcher(BusOptions options, DbContextOptions<WinkelDatabaseContext> dbOptions, ILogger logger, EventListenerLock locker) : base(options)
+        public ArtikelEventDispatcher(BusOptions options, 
+            DbContextOptions<WinkelDatabaseContext> dbOptions, 
+            ILogger logger, 
+            EventListenerLock locker) 
+            : base(options)
         {
             _logger = logger;
             _dbOptions = dbOptions;

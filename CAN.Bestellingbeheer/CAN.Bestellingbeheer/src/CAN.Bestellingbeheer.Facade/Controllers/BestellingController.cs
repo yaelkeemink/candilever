@@ -3,12 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.SwaggerGen.Annotations;
 using System.Net;
 using Microsoft.EntityFrameworkCore;
-using CAN.Bestellingbeheer.Domain.Services;
-using CAN.Bestellingbeheer.Domain.Entities;
 using CAN.Bestellingbeheer.Facade.Errors;
 using Microsoft.Extensions.Logging;
-using CAN.Bestellingbeheer.Domain.Interfaces;
-using CAN.Bestellingbeheer.Domain.DTO;
+using CAN.Bestellingbeheer.Infrastructure.Interfaces;
 
 namespace CAN.Bestellingbeheer.Facade.Controllers
 {
@@ -23,41 +20,10 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
             _service = service;
             _logger = logger;
         }
-
-        // POST api/values
-        [HttpPost]
-        [SwaggerOperation("Post")]
-        [ProducesResponseType(typeof(BestellingDTO), (int)HttpStatusCode.OK)]
-        [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
-        public IActionResult CreateBestelling([FromBody]BestellingDTO bestellingDTO)
-        {           
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    Bestelling bestelling = new Bestelling(bestellingDTO);
-                    var response = _service.CreateBestelling(bestelling);
-
-                    _logger.LogInformation("Create bestelling success", response);
-                    return Ok(response);
-                }                
-            }
-            catch (Exception ex)
-            {
-                var error = new ErrorMessage(ErrorTypes.Unknown, $"Onbekende fout in create bestelling: {bestellingDTO},/nException: {ex}");
-
-                _logger.LogError("Create bestelling failed, Unknown Error", bestellingDTO, ex);
-                return BadRequest(error);
-            }
-            var modelstateInvalidError = new ErrorMessage(ErrorTypes.BadRequest, "Modelstate Invalide");
-
-            _logger.LogWarning("Create bestelling failed, Modelstate Invalide", bestellingDTO);
-            return BadRequest(modelstateInvalidError);
-        }
  
         [HttpPut]
         [SwaggerOperation("BestellingStatusOpgehaald")]
-        [ProducesResponseType(typeof(BestellingDTO), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(string), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(ErrorMessage), (int)HttpStatusCode.BadRequest)]
         public IActionResult BestellingStatusOpgehaald([FromBody]long bestelling)
         {
@@ -65,8 +31,8 @@ namespace CAN.Bestellingbeheer.Facade.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var response = _service.StatusNaarOpgehaald(bestelling);
-                    return Ok(response);
+                    var response = _service.StatusNaarOpgehaald(bestelling).Status.ToString();
+                    return Json(response);
                 }
             }
             catch (DbUpdateException ex)

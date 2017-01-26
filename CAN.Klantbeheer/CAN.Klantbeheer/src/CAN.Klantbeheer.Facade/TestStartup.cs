@@ -11,8 +11,8 @@ using CAN.Klantbeheer.Domain.Interfaces;
 using CAN.Klantbeheer.Infrastructure.Repositories;
 using CAN.Klantbeheer.Domain.Entities;
 using InfoSupport.WSA.Infrastructure;
-using CAN.Klantbeheer.Domain.Services;
 using System;
+using CAN.Klantbeheer.Infrastructure.Services;
 
 namespace CAN.Klantbeheer.Facade
 {

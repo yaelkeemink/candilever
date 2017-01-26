@@ -14,7 +14,7 @@ namespace CAN.BackOffice.Services
         : ISalesService
     {
         private readonly IRepository<Bestelling, long> _bestellingRepository;
-        private readonly IBestellingBeheerService _service;
+        private readonly IBestellingBeheerService _agent;
         private readonly ILogger<SalesService> _logger;
         private readonly IRepository<Klant, long> _klantRepository;
 
@@ -25,17 +25,17 @@ namespace CAN.BackOffice.Services
         {
             _bestellingRepository = bestellingRepository;
             _klantRepository = klantRepository;
-            _service = service;
+            _agent = service;
             _logger = logger;
         }
 
-        public void BestellingGoedkeuren(long id)
+        public void BestellingGoedkeuren(long bestellingsnummer)
         {            
-            var response = _service.BestellingGoedkeuren(id);
-            if(response is BestellingDTO)
+            var response = _agent.BestellingGoedkeuren(bestellingsnummer);
+            if(response is string)
             {                
-                var bestelling = _bestellingRepository.Find(id);
-                bestelling.BestellingStatusCode = (response as BestellingDTO).Status.ToString();
+                var bestelling = _bestellingRepository.FindBy(b => b.Bestellingsnummer == bestellingsnummer).Single();
+                bestelling.BestellingStatusCode = (response as string);
                 _bestellingRepository.Update(bestelling);
                 _logger.LogInformation($"Bestelling geupdate met status: {bestelling.BestellingStatusCode}");
             }
@@ -54,13 +54,13 @@ namespace CAN.BackOffice.Services
                 .ToList();
         }       
 
-        public void BestellingAfkeuren(long id)
+        public void BestellingAfkeuren(long bestellingsnummer)
         {
-            var response = _service.BestellingAfkeuren(id);
-            if (response is BestellingDTO)
+            var response = _agent.BestellingAfkeuren(bestellingsnummer);
+            if (response is string)
             {
-                var bestelling = _bestellingRepository.Find(id);
-                bestelling.BestellingStatusCode = (response as BestellingDTO).Status.ToString();
+                var bestelling = _bestellingRepository.FindBy(b => b.Bestellingsnummer == bestellingsnummer).Single();
+                bestelling.BestellingStatusCode = (response as string);
                 _bestellingRepository.Update(bestelling);
                 _logger.LogInformation($"Bestelling geupdate met status: {bestelling.BestellingStatusCode}");
             }
@@ -79,10 +79,10 @@ namespace CAN.BackOffice.Services
                 .Single();
         }
 
-        public Bestelling FindBestelling(long id)
+        public Bestelling FindBestelling(long bestellingsnummer)
         {
             _logger.LogInformation("Zoek alle bestellingen");
-            return _bestellingRepository.Find(id);
+            return _bestellingRepository.FindBy(b => b.Bestellingsnummer == bestellingsnummer).Single();
         }
 
         public void Dispose()

@@ -1,8 +1,8 @@
 ﻿using CAN.Klantbeheer.Domain.Entities;
 using CAN.Klantbeheer.Domain.Interfaces;
-using CAN.Klantbeheer.Domain.Services;
 using CAN.Klantbeheer.Infrastructure.DAL;
 using CAN.Klantbeheer.Infrastructure.Repositories;
+using CAN.Klantbeheer.Infrastructure.Services;
 using InfoSupport.WSA.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
