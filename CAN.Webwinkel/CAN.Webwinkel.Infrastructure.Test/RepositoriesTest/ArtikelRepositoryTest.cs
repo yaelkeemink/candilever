@@ -72,19 +72,18 @@ namespace CAN.Webwinkel.Infrastructure.Test.RepositoriesTest
             }
 
             using (var context = new WinkelDatabaseContext(_options))
+            using (var repo = new ArtikelRepository(context))
             {
-                using (var repo = new ArtikelRepository(context))
-                {
-                    //Act
-                    herenfiets.Prijs = 2000;
-                    var success = repo.Update(herenfiets);
+                //Act
+                herenfiets.Prijs = 2000;
+                var success = repo.Update(herenfiets);
 
-                    //Assert
-                    var fiets = repo.FindBy(a => a.Artikelnummer == herenfiets.Artikelnummer).Single();
+                //Assert
+                var fiets = repo.FindBy(a => a.Artikelnummer == herenfiets.Artikelnummer).Single();
 
-                    Assert.AreNotEqual(fiets.Prijs, demo.HerenFiets);
-                }
+                Assert.AreNotEqual(fiets.Prijs, demo.HerenFiets);
             }
+
         }
 
         [TestMethod]
