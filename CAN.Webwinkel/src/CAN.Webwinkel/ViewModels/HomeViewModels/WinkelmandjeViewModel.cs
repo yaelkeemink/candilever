@@ -24,7 +24,7 @@ namespace CAN.Webwinkel.ViewModels.HomeViewModels
                 LeverancierCode = a.LeverancierCode,
                 Naam = a.Naam,
             }).ToList();    
-            Totaalprijs = winkelmandje.Artikelen.Sum(a => a.Prijs * 1.21M);
+            Totaalprijs = winkelmandje.Artikelen.Sum(a => a.Prijs);
         }
     }
 }

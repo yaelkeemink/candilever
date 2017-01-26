@@ -20,7 +20,7 @@ namespace CAN.BackOffice.Models.SalesViewModels
             decimal totaalprijs = 0;
             foreach(var item in model.Artikelen)
             {
-                totaalprijs += item.Prijs * item.Aantal;
+                totaalprijs += item.Prijs * item.Aantal * 1.21M;
             }
             return new SalesIndexViewModel()
             {
