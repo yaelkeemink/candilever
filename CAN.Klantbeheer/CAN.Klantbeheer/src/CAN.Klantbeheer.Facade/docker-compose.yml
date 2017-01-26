@@ -23,6 +23,8 @@ services:
           - can-klantbeheer
     volumes:
       - "C:/Docker/.KlantbeheerData/Log:/var/log/Kantilever/KlantbeheerLogging/"
+    depends_on:
+      - can.klantbeheer.mssql
 
   can.klantbeheer.mssql:
     image: microsoft/mssql-server-linux

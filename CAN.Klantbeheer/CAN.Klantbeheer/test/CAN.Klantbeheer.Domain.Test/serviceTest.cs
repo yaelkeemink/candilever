@@ -43,7 +43,7 @@ namespace CAN.Klantbeheer.Domain.Test
                     Straatnaam = "2361VJ",
                     Email = "yaelkeemink@gmail.com",
                     Huisnummer = "14",
-                    Land = Enums.Land.Nederland,
+                    Land = "Nederland",
                 };
 
                 //Act
@@ -69,7 +69,7 @@ namespace CAN.Klantbeheer.Domain.Test
                     Straatnaam = "2361VJ",
                     Telefoonnummer = "0640480381",
                     Huisnummer = "14",
-                    Land = Enums.Land.Nederland,
+                    Land = "Nederland",
                 };
 
                 //Act
@@ -95,7 +95,7 @@ namespace CAN.Klantbeheer.Domain.Test
                     Straatnaam = "2361VJ",
                     Telefoonnummer = "0640480381",
                     Huisnummer = "14",
-                    Land = Enums.Land.Nederland,
+                    Land = "Nederland",
                 };
                 repoMock.Setup(a => a.Insert(klant));
 
@@ -127,7 +127,7 @@ namespace CAN.Klantbeheer.Domain.Test
                         Straatnaam = "2361VJ",
                         Email = "yaelkeemink@gmail.com",
                         Huisnummer = "14",
-                        Land = Enums.Land.Nederland,
+                        Land = "Nederland",
                     };
 
                     Klant klant_rj = new Klant
@@ -139,7 +139,7 @@ namespace CAN.Klantbeheer.Domain.Test
                         Straatnaam = "2361VJ",
                         Email = "yaelkeemink@gmail.com",
                         Huisnummer = "14",
-                        Land = Enums.Land.Nederland,
+                        Land = "Nederland",
                     };
                     var returnval1 = service.CreateKlant(klant_yael);
                     var returnval2 = service.CreateKlant(klant_rj);

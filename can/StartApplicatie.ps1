@@ -64,6 +64,14 @@ cd ../../../../../../
 cd CAN.Webwinkel\src\CAN.Webwinkel\bin\Release
 start  docker-compose up -d
 
+cd ../../../../../
+cd CAN.AuthenticatieService\src\CAN.Candeliver.BackOfficeAuthenticatie\bin\Release
+start  docker-compose up -d
+
+cd ../../../../../
+cd CAN.WinkelmandjeBeheer\CAN.WinkelmandjeBeheer\src\CAN.WinkelmandjeBeheer.Facade\bin\Release
+start  docker-compose up -d
+
 if ($removeContainers -eq 'y') {
 	timeout /t 120 /nobreak
 } else {
